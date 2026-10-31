@@ -154,9 +154,53 @@ function changePhoto(imageElement, images, currentIndex) {
 
 }
 
+/* =========================================
+   ЕДИНЫЙ ТАЙМЕР И СМЕНА ФОТОГРАФИЙ
+========================================= */
 
-// Каждые 10 секунд меняется только одна фотография.
-// Через 20 секунд цикл повторяется.
+const timerProgress = document.querySelector(".timer-progress");
+const timerContainer = document.querySelector(".timer-container");
+
+const circleLength = 2 * Math.PI * 44;
+const totalTime = 20000;
+const photoChangeTime = 10000;
+
+let timerStart = null;
+let changeCounter = 0;
+
+if (timerProgress && timerContainer) {
+
+  timerProgress.style.strokeDasharray =
+    `${circleLength} ${circleLength}`;
+
+  timerProgress.style.strokeDashoffset = circleLength;
+
+  function animateTimer(timestamp) {
+
+    if (timerStart === null) {
+      timerStart = timestamp;
+    }
+
+    const elapsed = (timestamp - timerStart) % totalTime;
+    const progress = elapsed / totalTime;
+
+    // Движение кольца
+    timerProgress.style.strokeDashoffset =
+      circleLength * (1 - progress);
+
+    // Смена цвета в середине цикла
+    timerProgress.style.stroke =
+      elapsed < photoChangeTime ? "#608f91" : "#343330";
+
+    requestAnimationFrame(animateTimer);
+  }
+
+  requestAnimationFrame(animateTimer);
+}
+
+/* =========================================
+   СМЕНА ФОТОГРАФИЙ И СВЕТОВОЙ ИМПУЛЬС
+========================================= */
 
 setInterval(() => {
 
@@ -180,74 +224,17 @@ setInterval(() => {
 
   }
 
-}, 10000);
+  // Световой импульс при смене каждого снимка
+  if (timerContainer) {
 
+    timerContainer.classList.remove("timer-pulse");
 
+    void timerContainer.offsetWidth;
 
-/* =========================================
-   ВИЗУАЛЬНЫЙ ТАЙМЕР — 20 СЕКУНД
-========================================= */
-
-const timerProgress = document.querySelector(".timer-progress");
-const timerContainer = document.querySelector(".timer-container");
-
-if (timerProgress && timerContainer) {
-
-  const circleLength = 2 * Math.PI * 44;
-  const totalTime = 20000;
-  let timerStart = null;
-  let previousPhase = -1;
-
-  // Настройка движения линии
-  timerProgress.style.strokeDasharray =
-    `${circleLength} ${circleLength}`;
-
-  timerProgress.style.strokeDashoffset = circleLength;
-
-  function animateTimer(timestamp) {
-
-    if (timerStart === null) {
-      timerStart = timestamp;
-    }
-
-    const elapsed = (timestamp - timerStart) % totalTime;
-    const progress = elapsed / totalTime;
-
-    // Кольцо постепенно заполняется за 20 секунд
-    const offset = circleLength * (1 - progress);
-
-    timerProgress.style.strokeDashoffset = offset;
-
-    // Первые 10 секунд — бирюзовый цвет
-    // Следующие 10 секунд — тёмный цвет
-    const currentPhase = Math.floor(elapsed / 10000);
-
-    if (currentPhase === 0) {
-      timerProgress.style.stroke = "#608f91";
-    } else {
-      timerProgress.style.stroke = "#343330";
-    }
-
-    // Световой импульс на отметках 10 и 20 секунд
-    if (currentPhase !== previousPhase) {
-
-      timerContainer.classList.remove("timer-pulse");
-
-      // Перезапуск анимации импульса
-      void timerContainer.offsetWidth;
-
-      timerContainer.classList.add("timer-pulse");
-
-      previousPhase = currentPhase;
-    }
-
-    requestAnimationFrame(animateTimer);
+    timerContainer.classList.add("timer-pulse");
   }
 
-  requestAnimationFrame(animateTimer);
-}
-
-
+}, photoChangeTime);
 
 /* =========================================
    ФОРМА ЗАПИСИ
