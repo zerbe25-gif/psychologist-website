@@ -183,55 +183,70 @@ setInterval(() => {
 }, 10000);
 
 
+
 /* =========================================
-   КРУГОВОЙ ТАЙМЕР
+   ВИЗУАЛЬНЫЙ ТАЙМЕР — 20 СЕКУНД
 ========================================= */
 
 const timerProgress = document.querySelector(".timer-progress");
+const timerContainer = document.querySelector(".timer-container");
 
-const circleLength = 2 * Math.PI * 44;
+if (timerProgress && timerContainer) {
 
-const totalTime = 20000;
+  const circleLength = 2 * Math.PI * 44;
+  const totalTime = 20000;
+  let timerStart = null;
+  let previousPhase = -1;
 
-let timerStart = null;
+  // Настройка движения линии
+  timerProgress.style.strokeDasharray =
+    `${circleLength} ${circleLength}`;
 
+  timerProgress.style.strokeDashoffset = circleLength;
 
-timerProgress.style.strokeDasharray = circleLength;
+  function animateTimer(timestamp) {
 
-timerProgress.style.strokeDashoffset = 0;
+    if (timerStart === null) {
+      timerStart = timestamp;
+    }
 
+    const elapsed = (timestamp - timerStart) % totalTime;
+    const progress = elapsed / totalTime;
 
-function animateTimer(timestamp) {
+    // Кольцо постепенно заполняется за 20 секунд
+    const offset = circleLength * (1 - progress);
 
-  if (!timerStart) {
-    timerStart = timestamp;
-  }
+    timerProgress.style.strokeDashoffset = offset;
 
-  const elapsed = (timestamp - timerStart) % totalTime;
+    // Первые 10 секунд — бирюзовый цвет
+    // Следующие 10 секунд — тёмный цвет
+    const currentPhase = Math.floor(elapsed / 10000);
 
-  const progress = elapsed / totalTime;
+    if (currentPhase === 0) {
+      timerProgress.style.stroke = "#608f91";
+    } else {
+      timerProgress.style.stroke = "#343330";
+    }
 
-  const offset = circleLength * progress;
+    // Световой импульс на отметках 10 и 20 секунд
+    if (currentPhase !== previousPhase) {
 
-  timerProgress.style.strokeDashoffset = offset;
+      timerContainer.classList.remove("timer-pulse");
 
-  // Через каждые 10 секунд меняется цвет акцента.
+      // Перезапуск анимации импульса
+      void timerContainer.offsetWidth;
 
-  if (elapsed < 10000) {
+      timerContainer.classList.add("timer-pulse");
 
-    timerProgress.style.stroke = "#608f91";
+      previousPhase = currentPhase;
+    }
 
-  } else {
-
-    timerProgress.style.stroke = "#343330";
-
+    requestAnimationFrame(animateTimer);
   }
 
   requestAnimationFrame(animateTimer);
-
 }
 
-requestAnimationFrame(animateTimer);
 
 
 /* =========================================
