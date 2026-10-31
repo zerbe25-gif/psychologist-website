@@ -1,0 +1,634 @@
+
+/* =========================================
+   ОСНОВНЫЕ НАСТРОЙКИ
+========================================= */
+
+:root {
+  --header-color: rgba(243, 186, 151, 0.48);
+  --background-color: #faf9f6;
+  --panel-color: #eae3dc;
+  --accent-color: #608089;
+  --text-color: #343330;
+  --white: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--background-color);
+  color: var(--text-color);
+  font-family: "Lora", Georgia, serif;
+  overflow-x: hidden;
+}
+
+/* =========================================
+   ШАПКА
+========================================= */
+
+.header {
+  width: 100%;
+  min-height: 112px;
+  padding: 22px 4.5%;
+  background-color: var(--header-color);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  position: relative;
+  z-index: 5;
+  border-bottom: 1px solid rgba(255,255,255,0.55);
+}
+
+.site-name {
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 19px;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+.site-name span {
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+}
+
+.header-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 35px;
+}
+
+.nav-button {
+  border: none;
+  background: transparent;
+  padding: 9px 15px;
+  border-radius: 30px;
+  color: var(--text-color);
+  font-family: "Lora", Georgia, serif;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.nav-button:hover {
+  background: rgba(255,255,255,0.35);
+}
+
+.nav-button:active {
+  transform: scale(0.96);
+  outline: 1px solid #222;
+}
+
+.appointment-button {
+  justify-self: end;
+  border: none;
+  background: transparent;
+  color: var(--text-color);
+  font-family: "Lora", Georgia, serif;
+  font-size: 19px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  padding: 12px 20px;
+  border-radius: 35px;
+  transition: 0.25s ease;
+}
+
+.appointment-button:hover {
+  background: rgba(255,255,255,0.38);
+}
+
+.appointment-button:active {
+  transform: scale(0.96);
+  outline: 1px solid #222;
+}
+
+/* =========================================
+   ОСНОВНАЯ ЧАСТЬ
+========================================= */
+
+.main-content {
+  min-height: calc(100vh - 112px);
+  display: grid;
+  grid-template-columns: 42% 58%;
+  align-items: center;
+  padding: 55px 5% 65px;
+  position: relative;
+}
+
+/* =========================================
+   ЛЕВОЕ МЕНЮ
+========================================= */
+
+.menu-section {
+  min-height: 550px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+
+.section-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 27px;
+  padding-top: 35px;
+}
+
+.menu-item {
+  display: inline-block;
+  color: #393a37;
+  background: transparent;
+  border: none;
+  text-decoration: none;
+  font-family: "Playfair Display", Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(19px, 2vw, 24px);
+  cursor: pointer;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+  white-space: nowrap;
+}
+
+.menu-item:hover {
+  color: var(--accent-color);
+}
+
+.menu-item-1 {
+  margin-left: 0;
+}
+
+.menu-item-2 {
+  margin-left: 48px;
+}
+
+.menu-item-3 {
+  margin-left: 96px;
+}
+
+.menu-item-4 {
+  margin-left: 144px;
+}
+
+.social-links {
+  display: flex;
+  gap: 17px;
+  margin-top: 50px;
+}
+
+.social-links a {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(60,60,60,0.35);
+  border-radius: 50%;
+  text-decoration: none;
+  color: var(--text-color);
+  font-size: 11px;
+  transition: 0.25s ease;
+}
+
+.social-links a:hover {
+  background: var(--accent-color);
+  color: white;
+  border-color: var(--accent-color);
+}
+
+/* =========================================
+   ФОТОГРАФИИ
+========================================= */
+
+.gallery-section {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 580px;
+}
+
+.photo-gallery {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(14px, 2.5vw, 35px);
+  width: 100%;
+  position: relative;
+  isolation: isolate;
+}
+
+.photo-frame {
+  width: 40%;
+  max-width: 290px;
+  height: min(65vh, 490px);
+  min-height: 340px;
+  padding: 9px;
+  background: white;
+  box-shadow: 0 12px 35px rgba(60,50,40,0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.photo-frame-1 {
+  transform: translateY(-16px);
+}
+
+.photo-frame-2 {
+  transform: translateY(20px);
+}
+
+.photo-frame::before {
+  content: "";
+  position: absolute;
+  inset: -35px;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    rgba(190, 165, 145, 0.35),
+    rgba(96, 128, 137, 0.25),
+    rgba(180, 185, 155, 0.3)
+  );
+  filter: blur(35px);
+  transition: background 1.2s ease;
+}
+
+.gallery-photo {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  opacity: 1;
+  transition: opacity 0.8s ease;
+}
+
+.gallery-photo.changing {
+  opacity: 0;
+}
+
+/* =========================================
+   КРУГОВОЙ ТАЙМЕР
+========================================= */
+
+.timer-container {
+  width: 48px;
+  height: 48px;
+  position: absolute;
+  left: -12px;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+}
+
+.timer-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+  overflow: visible;
+}
+
+.timer-background,
+.timer-progress {
+  fill: none;
+  stroke-width: 2;
+}
+
+.timer-background {
+  stroke: #222;
+}
+
+.timer-progress {
+  stroke: #608f91;
+  stroke-linecap: round;
+  stroke-dasharray: 276.46;
+  stroke-dashoffset: 0;
+  transition: stroke 0.3s ease;
+}
+
+/* =========================================
+   ОКНА И ЗАТЕМНЕНИЕ
+========================================= */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  background: rgba(40, 40, 40, 0.13);
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal {
+  display: none;
+  width: min(100%, 570px);
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  padding: 55px 45px;
+  background: #eae3dc;
+  color: var(--text-color);
+  box-shadow: 0 20px 70px rgba(0,0,0,0.12);
+  border: 1px solid rgba(255,255,255,0.7);
+}
+
+.modal.active {
+  display: block;
+  animation: modalEnter 0.4s ease both;
+}
+
+@keyframes modalEnter {
+  from {
+    opacity: 0;
+    transform: translateY(-35px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  font-family: Arial, sans-serif;
+  font-size: 32px;
+  font-weight: 300;
+  cursor: pointer;
+  color: var(--text-color);
+}
+
+.modal h2 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 30px;
+  font-weight: 500;
+  margin-bottom: 22px;
+}
+
+.modal-subtitle {
+  font-size: 14px;
+  margin-bottom: 25px;
+}
+
+.modal-content-text {
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+#appointment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#appointment-form input,
+#appointment-form textarea {
+  width: 100%;
+  border: 1px solid rgba(70,70,70,0.2);
+  background: rgba(255,255,255,0.65);
+  padding: 14px;
+  font-family: "Lora", Georgia, serif;
+  font-size: 14px;
+  color: var(--text-color);
+  outline: none;
+}
+
+#appointment-form input:focus,
+#appointment-form textarea:focus {
+  border-color: var(--accent-color);
+}
+
+#appointment-form textarea {
+  resize: vertical;
+}
+
+.form-submit {
+  border: none;
+  background: var(--accent-color);
+  color: white;
+  padding: 14px;
+  font-family: "Lora", Georgia, serif;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.form-submit:hover {
+  background: #4e7077;
+}
+
+.modal-contacts {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 13px;
+  color: #68645f;
+}
+
+/* =========================================
+   АДАПТАЦИЯ ДЛЯ ПЛАНШЕТОВ
+========================================= */
+
+@media (max-width: 900px) {
+
+  .header {
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+
+  .header-nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-content: flex-start;
+  }
+
+  .main-content {
+    grid-template-columns: 38% 62%;
+    padding-left: 4%;
+    padding-right: 4%;
+  }
+
+  .menu-item-2 {
+    margin-left: 20px;
+  }
+
+  .menu-item-3 {
+    margin-left: 40px;
+  }
+
+  .menu-item-4 {
+    margin-left: 60px;
+  }
+
+  .photo-frame {
+    height: 430px;
+  }
+
+}
+
+/* =========================================
+   АДАПТАЦИЯ ДЛЯ ТЕЛЕФОНОВ
+========================================= */
+
+@media (max-width: 600px) {
+
+  .header {
+    min-height: auto;
+    padding: 17px 5%;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+  }
+
+  .site-name {
+    font-size: 16px;
+  }
+
+  .site-name span {
+    font-size: 10px;
+  }
+
+  .appointment-button {
+    font-size: 13px;
+    letter-spacing: 1px;
+    padding: 9px 11px;
+  }
+
+  .header-nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .nav-button {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 25px 5% 35px;
+    min-height: auto;
+  }
+
+  .menu-section {
+    min-height: auto;
+  }
+
+  .section-menu {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 17px 10px;
+    padding: 10px 0 25px;
+  }
+
+  .menu-item {
+    font-size: clamp(16px, 4.5vw, 20px);
+    white-space: normal;
+  }
+
+  .menu-item-1,
+  .menu-item-2,
+  .menu-item-3,
+  .menu-item-4 {
+    margin-left: 0;
+  }
+
+  .menu-item-2 {
+    padding-left: 10px;
+  }
+
+  .menu-item-3 {
+    padding-left: 5px;
+  }
+
+  .menu-item-4 {
+    padding-left: 15px;
+  }
+
+  .social-links {
+    order: 2;
+    margin-top: 25px;
+  }
+
+  .gallery-section {
+    min-height: 390px;
+    margin-top: 15px;
+  }
+
+  .photo-gallery {
+    gap: 12px;
+  }
+
+  .photo-frame {
+    width: 46%;
+    height: 340px;
+    min-height: 0;
+    padding: 6px;
+  }
+
+  .photo-frame-1 {
+    transform: translateY(-10px);
+  }
+
+  .photo-frame-2 {
+    transform: translateY(10px);
+  }
+
+  .timer-container {
+    width: 36px;
+    height: 36px;
+    left: 0;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .modal {
+    padding: 45px 23px 30px;
+  }
+
+  .modal h2 {
+    font-size: 25px;
+  }
+
+}
+
+/* =========================================
+   УМЕНЬШЕНИЕ АНИМАЦИЙ ПО ЗАПРОСУ
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
