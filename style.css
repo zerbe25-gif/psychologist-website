@@ -229,19 +229,20 @@ body {
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
-  gap: clamp(18px, 2vw, 30px);
+  gap: clamp(18px, 2vw, 30px); 
   width: 100%;
-  max-width: 500px;
+  max-width: 600px;
   position: relative;
   isolation: isolate;
 }
 
 .photo-frame {
-  flex: 1 1 0;
-  width: 46%;
-  max-width: 225px;
-  height: min(60vh, 440px);
-  min-height: 320px;
+  flex: 0 0 44%;
+  width: 44%;
+  max-width: 240px;
+  height: auto;
+  aspect-ratio: 2252 / 3600;
+  min-height: 0;
   padding: 9px;
   background: white;
   position: relative;
@@ -249,14 +250,9 @@ body {
   animation: photoShadow 6s ease-in-out infinite;
 }
 
-.photo-frame-1 {
-  transform: translateY(-16px);
-  animation-delay: 0s;
-}
-
+.photo-frame-1,
 .photo-frame-2 {
-  transform: translateY(20px);
-  animation-delay: 3s;
+  transform: none;
 }
 
 .photo-frame::before {
@@ -303,15 +299,31 @@ body {
 /* =========================================
    КРУГОВОЙ ТАЙМЕР
 ========================================= */
+/* =========================================
+   ВИЗУАЛЬНЫЙ ТАЙМЕР
+========================================= */
 
 .timer-container {
-  width: 48px;
-  height: 48px;
+  width: 66px;
+  height: 66px;
   position: absolute;
   left: -12px;
   top: 50%;
   transform: translate(-50%, -50%);
-  z-index: 3;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timer-container::before {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+  border: 1px solid rgba(96, 143, 145, 0.3);
+  box-shadow: 0 0 16px rgba(96, 143, 145, 0.22);
+  animation: timerHalo 3s ease-in-out infinite;
 }
 
 .timer-svg {
@@ -319,26 +331,41 @@ body {
   height: 100%;
   transform: rotate(-90deg);
   overflow: visible;
+  filter: drop-shadow(0 0 4px rgba(96, 143, 145, 0.45));
 }
 
 .timer-background,
 .timer-progress {
   fill: none;
-  stroke-width: 2;
 }
 
 .timer-background {
-  stroke: #222;
+  stroke: rgba(40, 45, 43, 0.35);
+  stroke-width: 2.5;
 }
 
 .timer-progress {
   stroke: #608f91;
+  stroke-width: 4;
   stroke-linecap: round;
   stroke-dasharray: 276.46;
   stroke-dashoffset: 0;
-  transition: stroke 0.3s ease;
+  transition:
+    stroke-dashoffset 0.25s linear,
+    stroke 0.5s ease;
 }
 
+@keyframes timerHalo {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(0.96);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
 /* =========================================
    ОКНА И ЗАТЕМНЕНИЕ
 ========================================= */
@@ -639,6 +666,69 @@ body {
     font-size: 25px;
   }
 
+}
+
+/* =========================================
+   КОМПОЗИЦИЯ ДЛЯ ЭКРАНА НОУТБУКА
+========================================= */
+
+@media (min-width: 901px) {
+
+  body {
+    height: 100vh;
+    min-height: 0;
+    overflow-y: hidden;
+  }
+
+  .header {
+    height: 112px;
+    min-height: 112px;
+  }
+
+  .main-content {
+    height: calc(100vh - 112px);
+    min-height: 0;
+    padding: 25px 6%;
+    grid-template-columns: 1fr 1fr;
+    gap: 4vw;
+  }
+
+  .menu-section {
+    min-height: 0;
+    height: 100%;
+    justify-content: space-evenly;
+  }
+
+  .section-menu {
+    gap: clamp(12px, 2vh, 24px);
+    padding-top: 0;
+  }
+
+  .gallery-section {
+    min-height: 0;
+    height: 100%;
+  }
+
+  .photo-gallery {
+    max-width: 560px;
+    gap: clamp(12px, 1.5vw, 25px);
+  }
+
+  .photo-frame {
+    max-width: 260px;
+    height: auto;
+    aspect-ratio: 2252 / 3600;
+    min-height: 0;
+  }
+
+  .photo-frame-1,
+  .photo-frame-2 {
+    transform: none;
+  }
+
+  .social-links {
+    margin-top: 15px;
+  }
 }
 
 /* =========================================
