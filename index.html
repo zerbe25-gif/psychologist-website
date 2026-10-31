@@ -1,0 +1,267 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f3ba97">
+
+  <title>Сергей Цербе — психологическое консультирование</title>
+
+  <meta name="description" content="Сергей Цербе. Психологическое консультирование онлайн.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Playfair+Display:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body id="top">
+
+  <!-- ШАПКА САЙТА -->
+
+  <header class="header">
+
+    <a href="#top" class="site-name">
+      Сергей Цербе
+      <span>психологическое консультирование онлайн</span>
+    </a>
+
+    <nav class="header-nav">
+      <button class="nav-button" data-modal="price-modal">
+        Стоимость
+      </button>
+
+      <button class="nav-button" data-modal="contacts-modal">
+        Контактные данные
+      </button>
+    </nav>
+
+    <button class="appointment-button" data-modal="appointment-modal">
+      ЗАПИСАТЬСЯ
+    </button>
+
+  </header>
+
+
+  <!-- ОСНОВНОЙ КОНТЕНТ -->
+
+  <main class="main-content">
+
+    <!-- ЛЕВАЯ ЧАСТЬ: МЕНЮ -->
+
+    <section class="menu-section">
+
+      <div class="section-menu">
+
+        <button class="menu-item menu-item-1" data-modal="requests-modal">
+          ЗАПРОСЫ
+        </button>
+
+        <button class="menu-item menu-item-2" data-modal="format-modal">
+          ФОРМАТ РАБОТЫ
+        </button>
+
+        <button class="menu-item menu-item-3" data-modal="education-modal">
+          ОБРАЗОВАНИЕ
+        </button>
+
+        <a href="articles.html" class="menu-item menu-item-4">
+          СТАТЬИ
+        </a>
+
+      </div>
+
+      <!-- СОЦИАЛЬНЫЕ СЕТИ -->
+
+      <div class="social-links">
+
+        <a href="#" target="_blank" rel="noopener noreferrer"
+           aria-label="Facebook">
+          FB
+        </a>
+
+        <a href="#" target="_blank" rel="noopener noreferrer"
+           aria-label="Telegram">
+          TG
+        </a>
+
+      </div>
+
+    </section>
+
+
+    <!-- ПРАВАЯ ЧАСТЬ: ФОТОГРАФИИ -->
+
+    <section class="gallery-section">
+
+      <!-- КРУГОВОЙ ТАЙМЕР -->
+
+      <div class="timer-container">
+
+        <svg class="timer-svg" viewBox="0 0 100 100">
+
+          <circle
+            class="timer-background"
+            cx="50"
+            cy="50"
+            r="44"
+          />
+
+          <circle
+            class="timer-progress"
+            cx="50"
+            cy="50"
+            r="44"
+          />
+
+        </svg>
+
+      </div>
+
+
+      <!-- КОНТЕЙНЕРЫ ФОТОГРАФИЙ -->
+
+      <div class="photo-gallery">
+
+        <div class="photo-frame photo-frame-1">
+          <img
+            class="gallery-photo"
+            id="photo-one"
+            src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=900"
+            alt="Природный пейзаж"
+          >
+        </div>
+
+        <div class="photo-frame photo-frame-2">
+          <img
+            class="gallery-photo"
+            id="photo-two"
+            src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=900"
+            alt="Лесной пейзаж"
+          >
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- ЗАТЕМНЕНИЕ И ОКНА -->
+
+  <div class="modal-overlay" id="modal-overlay">
+
+    <!-- ОКНО ЗАПИСИ -->
+
+    <div class="modal appointment-modal" id="appointment-modal">
+
+      <button class="modal-close" aria-label="Закрыть">&times;</button>
+
+      <h2>Запись на консультацию</h2>
+
+      <p class="modal-subtitle">
+        Оставьте свои контактные данные
+      </p>
+
+      <form id="appointment-form">
+
+        <input
+          type="text"
+          name="name"
+          placeholder="Ваше имя"
+          required
+        >
+
+        <input
+          type="text"
+          name="contact"
+          placeholder="Телефон или электронная почта"
+          required
+        >
+
+        <textarea
+          name="message"
+          placeholder="Комментарий (необязательно)"
+          rows="3"
+        ></textarea>
+
+        <button type="submit" class="form-submit">
+          Отправить
+        </button>
+
+      </form>
+
+      <div class="modal-contacts">
+        Контактные данные
+      </div>
+
+    </div>
+
+
+    <!-- ОКНО СТОИМОСТИ -->
+
+    <div class="modal content-modal" id="price-modal">
+      <button class="modal-close" aria-label="Закрыть">&times;</button>
+      <h2>Стоимость</h2>
+      <div class="modal-content-text">
+        Информация будет добавлена позже.
+      </div>
+    </div>
+
+
+    <!-- ОКНО КОНТАКТОВ -->
+
+    <div class="modal content-modal" id="contacts-modal">
+      <button class="modal-close" aria-label="Закрыть">&times;</button>
+      <h2>Контактные данные</h2>
+      <div class="modal-content-text">
+        Контактная информация будет добавлена позже.
+      </div>
+    </div>
+
+
+    <!-- ОКНО ЗАПРОСОВ -->
+
+    <div class="modal content-modal" id="requests-modal">
+      <button class="modal-close" aria-label="Закрыть">&times;</button>
+      <h2>Запросы</h2>
+      <div class="modal-content-text">
+        Информация будет добавлена позже.
+      </div>
+    </div>
+
+
+    <!-- ОКНО ФОРМАТА РАБОТЫ -->
+
+    <div class="modal content-modal" id="format-modal">
+      <button class="modal-close" aria-label="Закрыть">&times;</button>
+      <h2>Формат работы</h2>
+      <div class="modal-content-text">
+        Информация будет добавлена позже.
+      </div>
+    </div>
+
+
+    <!-- ОКНО ОБРАЗОВАНИЯ -->
+
+    <div class="modal content-modal" id="education-modal">
+      <button class="modal-close" aria-label="Закрыть">&times;</button>
+      <h2>Образование</h2>
+      <div class="modal-content-text">
+        Информация будет добавлена позже.
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ФАЙЛ С ФУНКЦИЯМИ САЙТА -->
+
+  <script src="script.js"></script>
+
+</body>
+</html>
