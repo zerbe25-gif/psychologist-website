@@ -3,8 +3,10 @@
    ОСНОВНЫЕ НАСТРОЙКИ
 ========================================= */
 
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap');
+
 :root {
-  --header-color: rgba(243, 186, 151, 0.48);
+  --header-color: rgba(240, 232, 228, 0.48));
   --background-color: #faf9f6;
   --panel-color: #eae3dc;
   --accent-color: #608089;
@@ -35,8 +37,8 @@ body {
 ========================================= */
 
 .header {
-  width: 100%;
-  min-height: 112px;
+  width: 105%;
+  min-height: 100px;
   padding: 22px 4.5%;
   background-color: var(--header-color);
   display: grid;
@@ -120,9 +122,10 @@ body {
 .main-content {
   min-height: calc(100vh - 112px);
   display: grid;
-  grid-template-columns: 42% 58%;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
-  padding: 55px 5% 65px;
+  gap: 5vw;
+  padding: 45px 6%;
   position: relative;
 }
 
@@ -143,8 +146,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 27px;
-  padding-top: 35px;
+  gap: 20px;
+  padding-top: 25px;
 }
 
 .menu-item {
@@ -153,12 +156,13 @@ body {
   background: transparent;
   border: none;
   text-decoration: none;
-  font-family: "Playfair Display", Georgia, serif;
+  font-family: "Cormorant Garamond", Georgia, serif;
   font-style: italic;
   font-weight: 600;
-  font-size: clamp(19px, 2vw, 24px);
+  font-size: clamp(34px, 3vw, 46px);
+  line-height: 1.05;
   cursor: pointer;
-  transition: transform 0.35s ease, opacity 0.35s ease;
+  transition: transform 0.35s ease, opacity 0.35s ease, color 0.35s ease;
   white-space: nowrap;
 }
 
@@ -171,15 +175,15 @@ body {
 }
 
 .menu-item-2 {
-  margin-left: 48px;
+  margin-left: 45px;
 }
 
 .menu-item-3 {
-  margin-left: 96px;
+  margin-left: 90px;
 }
 
 .menu-item-4 {
-  margin-left: 144px;
+  margin-left: 135px;
 }
 
 .social-links {
@@ -216,53 +220,60 @@ body {
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   min-height: 580px;
 }
 
 .photo-gallery {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  gap: clamp(14px, 2.5vw, 35px);
+  justify-content: flex-end;
+  gap: clamp(18px, 2vw, 30px);
   width: 100%;
+  max-width: 500px;
   position: relative;
   isolation: isolate;
 }
 
 .photo-frame {
-  width: 40%;
-  max-width: 290px;
-  height: min(65vh, 490px);
-  min-height: 340px;
+  flex: 1 1 0;
+  width: 46%;
+  max-width: 225px;
+  height: min(60vh, 440px);
+  min-height: 320px;
   padding: 9px;
   background: white;
-  box-shadow: 0 12px 35px rgba(60,50,40,0.08);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+  animation: photoShadow 6s ease-in-out infinite;
 }
 
 .photo-frame-1 {
   transform: translateY(-16px);
+  animation-delay: 0s;
 }
 
 .photo-frame-2 {
   transform: translateY(20px);
+  animation-delay: 3s;
 }
 
 .photo-frame::before {
   content: "";
   position: absolute;
-  inset: -35px;
+  inset: -20px;
   z-index: -1;
   background: linear-gradient(
-    180deg,
-    rgba(190, 165, 145, 0.35),
-    rgba(96, 128, 137, 0.25),
-    rgba(180, 185, 155, 0.3)
+    135deg,
+    rgba(190, 165, 145, 0.42),
+    rgba(96, 128, 137, 0.32),
+    rgba(180, 185, 155, 0.38)
   );
-  filter: blur(35px);
-  transition: background 1.2s ease;
+  filter: blur(28px);
+  opacity: 0.8;
+  transition: background 1.2s ease, opacity 1.2s ease;
+  pointer-events: none;
 }
 
 .gallery-photo {
@@ -270,12 +281,23 @@ body {
   height: 100%;
   display: block;
   object-fit: cover;
+  position: relative;
+  z-index: 1;
   opacity: 1;
   transition: opacity 0.8s ease;
 }
 
 .gallery-photo.changing {
   opacity: 0;
+}
+
+@keyframes photoShadow {
+  0%, 100% {
+    box-shadow: 0 15px 35px rgba(65, 55, 45, 0.13);
+  }
+  50% {
+    box-shadow: 0 25px 55px rgba(65, 55, 45, 0.27);
+  }
 }
 
 /* =========================================
