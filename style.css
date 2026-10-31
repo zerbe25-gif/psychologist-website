@@ -159,7 +159,7 @@ body {
   font-family: "Cormorant Garamond", Georgia, serif;
   font-style: italic;
   font-weight: 600;
-  font-size: clamp(34px, 3vw, 46px);
+  font-size: clamp(34px, 3.2vw, 60px);
   line-height: 1.05;
   cursor: pointer;
   transition: transform 0.35s ease, opacity 0.35s ease, color 0.35s ease;
@@ -772,7 +772,7 @@ body {
   }
 
   .photo-gallery {
-    max-width: 560px;
+    max-width: min(100%, 850px);
     gap: clamp(12px, 1.5vw, 25px);
   }
 
@@ -804,5 +804,128 @@ body {
     scroll-behavior: auto !important;
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* =========================================
+   АДАПТИВНОСТЬ ДЛЯ БОЛЬШИХ ЭКРАНОВ
+========================================= */
+
+@media (min-width: 901px) {
+
+  /* Высота страницы подстраивается под окно браузера */
+
+  body {
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .main-content {
+    height: calc(100vh - 112px);
+    height: calc(100dvh - 112px);
+    min-height: 0;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(25px, 4vw, 80px);
+    padding: clamp(20px, 3vh, 45px)
+             clamp(35px, 6vw, 110px);
+  }
+
+  /* Левая часть — названия разделов */
+
+  .menu-section {
+    height: 100%;
+    min-height: 0;
+    justify-content: space-evenly;
+  }
+
+  .section-menu {
+    gap: clamp(12px, 2.2vh, 32px);
+    padding-top: 0;
+  }
+
+  .menu-item {
+    font-size: clamp(34px, 2.6vw, 60px);
+    line-height: 1.05;
+  }
+
+  .menu-item-1 {
+    margin-left: 0;
+  }
+
+  .menu-item-2 {
+    margin-left: clamp(25px, 3vw, 65px);
+  }
+
+  .menu-item-3 {
+    margin-left: clamp(50px, 6vw, 130px);
+  }
+
+  .menu-item-4 {
+    margin-left: clamp(75px, 9vw, 195px);
+  }
+
+  .social-links {
+    margin-top: 15px;
+  }
+
+  /* Правая часть — фотографии */
+
+  .gallery-section {
+    height: 100%;
+    min-height: 0;
+    justify-content: flex-end;
+  }
+
+  .photo-gallery {
+    width: 100%;
+    max-width: none;
+    justify-content: flex-end;
+    align-items: center;
+    gap: clamp(12px, 2vw, 38px);
+  }
+
+  .photo-frame {
+    flex: 0 1 auto;
+    width: auto;
+    max-width: none;
+    height: clamp(280px, 55vh, 620px);
+    min-height: 0;
+    aspect-ratio: 2252 / 3600;
+  }
+
+  .photo-frame-1,
+  .photo-frame-2 {
+    transform: none;
+  }
+
+  /* Таймер тоже немного увеличивается */
+
+  .timer-container {
+    width: clamp(58px, 4vw, 86px);
+    height: clamp(58px, 4vw, 86px);
+  }
+}
+
+/* Невысокие окна ноутбуков */
+
+@media (min-width: 901px) and (max-height: 720px) {
+
+  .menu-item {
+    font-size: clamp(30px, 2.3vw, 44px);
+  }
+
+  .section-menu {
+    gap: 12px;
+  }
+
+  .photo-frame {
+    height: min(50vh, 380px);
+  }
+
+  .timer-container {
+    width: 56px;
+    height: 56px;
   }
 }
