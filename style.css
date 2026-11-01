@@ -1000,3 +1000,32 @@ body {
     transform: translateY(-3px);
 }
 
+/* Убираем фон и рамки у заголовков */
+.menu-item {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none;
+}
+
+/* Раздел «Образование» */
+.menu-item-3 {
+    margin-left: clamp(50px, 10vw, 254px);
+}
+
+/* Раздел «Статьи» */
+.menu-item-4 {
+    font-size: clamp(70px, 2vw, 218px);
+    position: relative;
+    top: 5px;
+}
+
+/* Увеличение заголовка при наведении */
+.menu-item:hover {
+    background: none !important;
+    background-image: none !important;
+    -webkit-text-fill-color: #0F172A;
+    -webkit-text-stroke: 0.35px rgba(15, 23, 42, 0.22);
+    transform: scale(1.03);
+}
+
