@@ -1015,7 +1015,7 @@ body {
 
 /* Раздел «Статьи» */
 .menu-item-4 {
-    font-size: clamp(70px, 2vw, 218px);
+    font-size: clamp(60px, 2vw, 218px);
     position: relative;
     top: 5px;
 }
