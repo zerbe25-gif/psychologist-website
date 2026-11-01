@@ -937,7 +937,7 @@ body {
 .menu-label {
     position: absolute;
     left: 0;
-    top: 50%;
+    top: 46%;
     transform: translateY(-50%) rotate(180deg);
     writing-mode: vertical-rl;
     font-family: 'Montserrat', sans-serif;
