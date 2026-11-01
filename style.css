@@ -947,13 +947,13 @@ body {
 /* Названия разделов */
 .menu-item {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(65px, 5vw, 92px);
+    font-size: clamp(65px, 5vw, 80px);
     font-weight: 700;
     font-style: normal;
     line-height: 1;
     letter-spacing: -0.02em;
     text-transform: uppercase;
-    color: #0F172A;
+    color: #1A1A1A;
     text-decoration: none;
     display: block;
     margin-bottom: 0;
