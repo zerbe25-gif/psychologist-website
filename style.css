@@ -1110,20 +1110,20 @@ body {
 /* Задержки появления */
 
 .menu-item-1 .word-from-bottom {
-    animation-delay: 0.1s;
+    animation-delay: 0.3s;
 }
 
 .menu-item-2 .word-from-top,
 .menu-item-2 .word-from-bottom {
-    animation-delay: 0.7s;
+    animation-delay: 1.0s;
 }
 
 .menu-item-3 .word-from-bottom {
-    animation-delay: 0.3s;
+    animation-delay: 0.5s;
 }
 
 .menu-item-4 .word-from-bottom {
-    animation-delay: 0.4s;
+    animation-delay: 0.6s;
 }
 
 /* Увеличение заголовка при наведении */
@@ -1155,20 +1155,20 @@ body {
 .menu-item-3,
 .menu-item-4 {
     opacity: 0;
-    animation: categoryRiseFinal 3.5s
+    animation: categoryRiseFinal 1.3s
         cubic-bezier(.22, 1, .36, 1) forwards;
 }
 
 .menu-item-1 {
-    animation-delay: 0.8s;
+    animation-delay: 0.2s;
 }
 
 .menu-item-3 {
-    animation-delay: 0.8s;
+    animation-delay: 0.4s;
 }
 
 .menu-item-4 {
-    animation-delay: 0.8s;
+    animation-delay: 0.5s;
 }
 
 /* Не запускаем отдельную анимацию на всей кнопке «Формат работы» */
@@ -1196,6 +1196,6 @@ body {
 .menu-item-4 {
     margin-top: 35px;
    position: relative;
-    left: -30px;
+    left: -10px;
 
 }
