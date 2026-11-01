@@ -155,50 +155,6 @@ function changePhoto(imageElement, images, currentIndex) {
 }
 
 /* =========================================
-   ЕДИНЫЙ ТАЙМЕР И СМЕНА ФОТОГРАФИЙ
-========================================= */
-
-const timerProgress = document.querySelector(".timer-progress");
-const timerContainer = document.querySelector(".timer-container");
-
-const circleLength = 2 * Math.PI * 44;
-const totalTime = 20000;
-const photoChangeTime = 10000;
-
-let timerStart = null;
-let changeCounter = 0;
-
-if (timerProgress && timerContainer) {
-
-  timerProgress.style.strokeDasharray =
-    `${circleLength} ${circleLength}`;
-
-  timerProgress.style.strokeDashoffset = circleLength;
-
-  function animateTimer(timestamp) {
-
-    if (timerStart === null) {
-      timerStart = timestamp;
-    }
-
-    const elapsed = (timestamp - timerStart) % totalTime;
-    const progress = elapsed / totalTime;
-
-    // Движение кольца
-    timerProgress.style.strokeDashoffset =
-      circleLength * (1 - progress);
-
-    // Смена цвета в середине цикла
-    timerProgress.style.stroke =
-      elapsed < photoChangeTime ? "#608f91" : "#343330";
-
-    requestAnimationFrame(animateTimer);
-  }
-
-  requestAnimationFrame(animateTimer);
-}
-
-/* =========================================
    СМЕНА ФОТОГРАФИЙ И СВЕТОВОЙ ИМПУЛЬС
 ========================================= */
 
