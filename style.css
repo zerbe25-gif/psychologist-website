@@ -858,7 +858,7 @@ body {
   }
 
   .menu-item-4 {
-    margin-left: clamp(75px, 9vw, 195px);
+    margin-left: clamp(50px, 9vw, 60px);
   }
 
   .social-links {
@@ -961,7 +961,7 @@ body {
     letter-spacing: -0.02em;
     text-transform: uppercase;
 
-    color: #0F172A;
+    color: #1C1917;
     background: none;
     border: none;
     box-shadow: none;
@@ -1129,7 +1129,7 @@ body {
 /* Увеличение заголовка при наведении */
 
 .menu-item:hover {
-    transform: scale(1.08);
+    transform: scale(1.05);
     color: #334155;
 }
 
