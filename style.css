@@ -167,7 +167,7 @@ body {
     text-decoration: none;
     display: block;
     margin-bottom: 0;
-    transition: transform 0.4s ease, color 0.4s ease, opacity 0.4s ease;
+  transition: transform 0.5s ease-out;
 }
 
 
@@ -1026,6 +1026,7 @@ body {
     background-image: none !important;
     -webkit-text-fill-color: #0F172A;
     -webkit-text-stroke: 0.35px rgba(15, 23, 42, 0.22);
-    transform: scale(1.03);
+    transform: scale(1.08);
+   transition: transform 0.5s ease;
 }
 
