@@ -1042,3 +1042,93 @@ body {
         font-size: clamp(52px, 4vw, 65px);
     }
 }
+
+/* Контейнеры слов обрезают текст по его границам */
+
+.menu-item {
+    display: block;
+    overflow: visible;
+    opacity: 1;
+    animation: none;
+}
+
+/* Маска каждого отдельного слова */
+
+.word-mask {
+    display: block;
+    overflow: hidden;
+    line-height: 1;
+}
+
+/* Сами слова */
+
+.word-from-bottom,
+.word-from-top {
+    display: inline-block;
+    opacity: 0;
+    animation-duration: 0.8s;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    animation-fill-mode: forwards;
+}
+
+/* Появление снизу вверх */
+
+.word-from-bottom {
+    animation-name: revealFromBottom;
+}
+
+/* Появление сверху вниз */
+
+.word-from-top {
+    animation-name: revealFromTop;
+}
+
+@keyframes revealFromBottom {
+    from {
+        transform: translateY(105%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes revealFromTop {
+    from {
+        transform: translateY(-105%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Задержки появления */
+
+.menu-item-1 .word-from-bottom {
+    animation-delay: 0.1s;
+}
+
+.menu-item-2 .word-from-top,
+.menu-item-2 .word-from-bottom {
+    animation-delay: 0.7s;
+}
+
+.menu-item-3 .word-from-bottom {
+    animation-delay: 0.3s;
+}
+
+.menu-item-4 .word-from-bottom {
+    animation-delay: 0.4s;
+}
+
+/* Увеличение заголовка при наведении */
+
+.menu-item:hover {
+    transform: scale(1.08);
+    color: #334155;
+}
