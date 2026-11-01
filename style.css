@@ -1011,23 +1011,6 @@ body {
     }
 }
 
-/* Базовое состояние заголовков */
-.menu-item-1,
-.menu-item-2,
-.menu-item-3,
-.menu-item-4 {
-    transition: transform 0.4s ease, color 0.4s ease;
-}
-
-/* Увеличение при наведении */
-.menu-item-1:hover,
-.menu-item-2:hover,
-.menu-item-3:hover,
-.menu-item-4:hover {
-    transform: scale(1.03);
-    color: #334155;
-    -webkit-text-stroke: 0.25px rgba(15, 23, 42, 0.22);
-}
 
 /* Планшеты */
 
@@ -1223,21 +1206,20 @@ body {
 }
 
 
-/* Увеличение заголовков при наведении */
-.menu-item-1:hover,
-.menu-item-2:hover,
-.menu-item-3:hover,
-.menu-item-4:hover {
-    transform: scale(1.05);
-    transform-origin: center;
-    transition: transform 0.4s ease, color 0.5s ease;
-    color: #608089;
-}
-
-/* Плавное возвращение в исходный размер */
+/* Базовое состояние заголовков */
 .menu-item-1,
 .menu-item-2,
 .menu-item-3,
 .menu-item-4 {
-    transition: transform 0.3s ease, color 0.3s ease;
+    transition: transform 0.4s ease, color 0.4s ease;
+}
+
+/* Увеличение при наведении */
+.menu-item-1:hover,
+.menu-item-2:hover,
+.menu-item-3:hover,
+.menu-item-4:hover {
+    transform: scale(1.03);
+    color: #334155;
+    -webkit-text-stroke: 0.25px rgba(15, 23, 42, 0.22);
 }
