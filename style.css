@@ -1143,42 +1143,10 @@ body {
     display: inline-block;
 }
 
-/* Появление остальных разделов снизу вверх */
-.menu-item-1,
-.menu-item-3,
-.menu-item-4 {
-    opacity: 0;
-    animation: categoryRiseFinal 1.5s
-        cubic-bezier(.18, 1, .36, 1) forwards;
-}
-
-.menu-item-1 {
-    animation-delay: 0.2s;
-}
-
-.menu-item-3 {
-    animation-delay: 0.4s;
-}
-
-.menu-item-4 {
-    animation-delay: 0.5s;
-}
-
 /* Не запускаем отдельную анимацию на всей кнопке «Формат работы» */
 .menu-item-2 {
     opacity: 1;
     animation: none;
-}
-
-@keyframes categoryRiseFinal {
-    from {
-        opacity: 0;
-        transform: translateY(105%);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 .menu-item-3 {
@@ -1223,3 +1191,53 @@ body {
     color: #334155;
     -webkit-text-stroke: 0.25px rgba(15, 23, 42, 0.22);
 }
+
+/* Область, из которой появляется текст */
+.word-mask {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    line-height: 1.15;
+}
+
+/* Выезд всех заголовков снизу вверх */
+.menu-item-1 .word-from-bottom,
+.menu-item-3 .word-from-bottom,
+.menu-item-4 .word-from-bottom {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(105%);
+    animation: revealFromBottom 1.5s
+        cubic-bezier(.18, 1, .36, 1) forwards;
+}
+
+/* Задержки появления */
+.menu-item-1 .word-from-bottom {
+    animation-delay: 0.3s;
+}
+
+.menu-item-3 .word-from-bottom {
+    animation-delay: 0.5s;
+}
+
+.menu-item-4 .word-from-bottom {
+    animation-delay: 0.6s;
+}
+
+/* Анимация увеличения при наведении */
+.menu-item-1,
+.menu-item-2,
+.menu-item-3,
+.menu-item-4 {
+    transition: transform 0.4s ease, color 0.4s ease;
+}
+
+.menu-item-1:hover,
+.menu-item-2:hover,
+.menu-item-3:hover,
+.menu-item-4:hover {
+    transform: scale(1.05);
+    color: #334155;
+}
+
+
