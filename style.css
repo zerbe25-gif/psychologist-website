@@ -1155,20 +1155,20 @@ body {
 .menu-item-3,
 .menu-item-4 {
     opacity: 0;
-    animation: categoryRiseFinal 1.5s
+    animation: categoryRiseFinal 3.5s
         cubic-bezier(.22, 1, .36, 1) forwards;
 }
 
 .menu-item-1 {
-    animation-delay: 0.2s;
+    animation-delay: 0.8s;
 }
 
 .menu-item-3 {
-    animation-delay: 0.4s;
+    animation-delay: 0.8s;
 }
 
 .menu-item-4 {
-    animation-delay: 0.5s;
+    animation-delay: 0.8s;
 }
 
 /* Не запускаем отдельную анимацию на всей кнопке «Формат работы» */
@@ -1196,6 +1196,6 @@ body {
 .menu-item-4 {
     margin-top: 35px;
    position: relative;
-    left: -50px;
+    left: -30px;
 
 }
