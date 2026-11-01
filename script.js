@@ -158,6 +158,7 @@ function changePhoto(imageElement, images, currentIndex) {
    СМЕНА ФОТОГРАФИЙ И СВЕТОВОЙ ИМПУЛЬС
 ========================================= */
 
+
 setInterval(() => {
 
   changeCounter++;
@@ -178,16 +179,6 @@ setInterval(() => {
       secondPhotoIndex
     );
 
-  }
-
-  // Световой импульс при смене каждого снимка
-  if (timerContainer) {
-
-    timerContainer.classList.remove("timer-pulse");
-
-    void timerContainer.offsetWidth;
-
-    timerContainer.classList.add("timer-pulse");
   }
 
 }, photoChangeTime);
