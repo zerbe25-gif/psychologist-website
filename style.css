@@ -1010,14 +1010,14 @@ body {
 
 /* Раздел «Образование» */
 .menu-item-3 {
-    margin-left: clamp(50px, 10vw, 254px);
+    margin-left: clamp(50px, 10vw, 264px);
 }
 
 /* Раздел «Статьи» */
 .menu-item-4 {
-    font-size: clamp(60px, 2vw, 218px);
+    font-size: clamp(60px, 2vw, 93px);
     position: relative;
-    top: 5px;
+    top: 12px;
 }
 
 /* Увеличение заголовка при наведении */
