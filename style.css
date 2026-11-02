@@ -299,15 +299,15 @@ body {
 /* Первая рамка */
 .photo-frame-1 {
     position: relative;
-    left: -20px;
-    top: 15px;
+    left: -10px;
+    top: 25px;
 }
 
 /* Вторая рамка */
 .photo-frame-2 {
     position: relative;
-    left: 20px;
-    top: -15px;
+    left: 10px;
+    top: -25px;
 }
 
 /* =========================================
@@ -1131,4 +1131,5 @@ body {
 .menu-item-4 {
     font-family: 'Unbounded', sans-serif;
     font-weight: 400;
+font-size: clamp(50px, 4vw, 80px);
 }
