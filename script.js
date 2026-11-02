@@ -119,10 +119,11 @@ const photoOne = document.getElementById("photo-one");
 
 const photoTwo = document.getElementById("photo-two");
 
+// Интервал смены фотографии — 10 секунд
+const photoChangeTime = 10000;
+
 let firstPhotoIndex = 0;
-
 let secondPhotoIndex = 0;
-
 let changeCounter = 0;
 
 
