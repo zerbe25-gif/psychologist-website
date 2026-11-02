@@ -275,10 +275,30 @@ body {
   height: 100%;
   display: block;
   object-fit: cover;
+   object-position: center 50%;
   position: relative;
   z-index: 1;
   opacity: 1;
   transition: opacity 0.8s ease;
+}
+
+#photo-one {
+    object-position: center 30%;
+}
+
+#photo-two {
+    object-position: center 65%;
+}
+/* Первая рамка */
+#photo-one {
+    position: relative;
+    left: -20px;
+}
+
+/* Вторая рамка */
+#photo-two {
+    position: relative;
+    left: 20px;
 }
 
 .gallery-photo.changing {
