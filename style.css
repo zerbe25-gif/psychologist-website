@@ -1131,5 +1131,5 @@ body {
 .menu-item-4 {
     font-family: 'Unbounded', sans-serif;
     font-weight: 400;
-font-size: clamp(50px, 4vw, 80px);
+font-size: 70px;
 }
