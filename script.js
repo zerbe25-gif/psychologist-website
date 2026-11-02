@@ -100,20 +100,21 @@ document.addEventListener("keydown", event => {
 
 const photoSets = {
 
-  first: [
-    "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=900",
-    "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=900",
-    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=900"
-  ],
+    // Фотографии первой рамки
+    first: [
+        "images/photos/Sergey-A.jpg",
+        "images/photos/Sergey-C.jpg",
+        "images/photos/first-3.jpg"
+    ],
 
-  second: [
-    "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=900",
-    "https://images.unsplash.com/photo-1448375240586-882707db888b?w=900",
-    "https://images.unsplash.com/photo-1511497584788-876760111969?w=900"
-  ]
+    // Фотографии второй рамки
+    second: [
+        "images/photos/second-1.jpg",
+        "images/photos/second-2.jpg",
+        "images/photos/Sergey-B.jpg"
+    ]
 
 };
-
 
 const photoOne = document.getElementById("photo-one");
 
