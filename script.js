@@ -103,7 +103,7 @@ const photoSets = {
     // Фотографии первой рамки
     first: [
         "images/photos/Sergey-A.jpg",
-        "images/photos/Sergey-C.jpg",
+        "images/photos/Sergey-B.jpg",
         "images/photos/first-3.jpg"
     ],
 
@@ -111,7 +111,7 @@ const photoSets = {
     second: [
         "images/photos/second-1.jpg",
         "images/photos/second-2.jpg",
-        "images/photos/Sergey-B.jpg"
+        "images/photos/Sergey-C.jpg"
     ]
 
 };
