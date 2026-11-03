@@ -340,9 +340,12 @@ body {
     animation: photoShadow 6s ease-in-out infinite;
 }
 .photo-frame-2 {
-    transform: scale(0.6);
-    transform-origin: center center;
+    flex: 0 0 26.4%;
+    width: 26.4%;
+    max-width: 144px;
+    transform: none;
 }
+
 /* =========================================
    ОКНА И ЗАТЕМНЕНИЕ
 ========================================= */
