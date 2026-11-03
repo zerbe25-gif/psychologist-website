@@ -211,7 +211,7 @@ body {
 }
 
 /* =========================================
-   ФОТОГРАФИИ
+   ФОТОГРАФИИ 
 ========================================= */
 
 .gallery-section {
@@ -291,10 +291,7 @@ body {
   0%, 100% {
     box-shadow: 0 15px 35px rgba(65, 55, 45, 0.13);
   }
-  50% {
-    box-shadow: 0 25px 55px rgba(65, 55, 45, 0.27);
-  }
-}
+ }
 
 /* Первая рамка */
 .photo-frame-1 {
@@ -303,12 +300,33 @@ body {
     top: -25px;
 }
 
-/* Вторая рамка */
+
+/* КАПСУЛА-РАМКА для второй фотографии */
 .photo-frame-2 {
+    border-radius: 9999px;
+    aspect-ratio: 2 / 3;
+    overflow: visible;
+    background: #fff;
+    padding: 4px;
+
+    /* Положение сохраняем */
     position: relative;
     left: -25px;
     top: -150px;
 }
+
+/* Скругление самой фотографии */
+.photo-frame-2 .gallery-photo {
+    border-radius: 9999px;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Мягкая объёмная тень капсулы */
+.photo-frame-2 {
+    box-shadow: 0 20px 45px rgba(65, 55, 45, 0.20);
+}
+
 
 /* =========================================
    ОКНА И ЗАТЕМНЕНИЕ
