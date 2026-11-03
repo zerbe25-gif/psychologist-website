@@ -306,8 +306,8 @@ body {
 /* Вторая рамка */
 .photo-frame-2 {
     position: relative;
-    left: 30px;
-    top: -25px;
+    left: -25px;
+    top: -150px;
 }
 
 /* =========================================
