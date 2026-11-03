@@ -308,11 +308,10 @@ body {
     overflow: visible;
     background: #fff;
     padding: 4px;
-    z-index: 2;
 
     /* Положение сохраняем */
     position: relative;
-    left: -35px;
+    left: -15px;
     top: -180px;
 }
 
@@ -341,7 +340,7 @@ body {
     animation: photoShadow 6s ease-in-out infinite;
 }
 .photo-frame-2 {
-    transform: scale(0.8);
+    transform: scale(0.6);
     transform-origin: center center;
 }
 /* =========================================
