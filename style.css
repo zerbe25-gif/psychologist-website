@@ -339,10 +339,11 @@ body {
     overflow: visible;
     animation: photoShadow 6s ease-in-out infinite;
 }
+
 .photo-frame-2 {
-    flex: 0 0 26.4%;
-    width: 26.4%;
-    max-width: 144px;
+    flex: 0 0 19.8%;
+    width: 19.8%;
+    max-width: 108px;
     transform: none;
 }
 
