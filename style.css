@@ -299,14 +299,14 @@ body {
 /* Первая рамка */
 .photo-frame-1 {
     position: relative;
-    left: -10px;
-    top: 25px;
+    left: 10px;
+    top: -25px;
 }
 
 /* Вторая рамка */
 .photo-frame-2 {
     position: relative;
-    left: 10px;
+    left: 30px;
     top: -25px;
 }
 
