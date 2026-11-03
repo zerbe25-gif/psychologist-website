@@ -215,117 +215,26 @@ body {
 ========================================= */
 
 .gallery-section {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  min-height: 580px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-height: 580px;
 }
 
 .photo-gallery {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
-  gap: clamp(18px, 2vw, 30px); 
-  width: 100%;
-  max-width: 600px;
-  position: relative;
-  isolation: isolate;
-}
-
-.photo-frame {
-  flex: 0 0 44%;
-  width: 44%;
-  max-width: 240px;
-  height: auto;
-  aspect-ratio: 2252 / 3600;
-  min-height: 0;
-  padding: 4px;
-  background: white;
-  position: relative;
-  overflow: visible;
-  animation: photoShadow 6s ease-in-out infinite;
-}
-
-.photo-frame-1,
-.photo-frame-2 {
-  transform: none;
-}
-
-.photo-frame::before {
-  content: "";
-  position: absolute;
-  inset: -20px;
-  z-index: -1;
-  background: linear-gradient(
-    135deg,
-    rgba(190, 165, 145, 0.42),
-    rgba(96, 128, 137, 0.32),
-    rgba(180, 185, 155, 0.38)
-  );
-  filter: blur(28px);
-  opacity: 0.8;
-  transition: background 1.2s ease, opacity 1.2s ease;
-  pointer-events: none;
-}
-
-.gallery-photo {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-   object-position: center 50%;
-  position: relative;
-  z-index: 1;
-  opacity: 1;
-  transition: opacity 0.8s ease;
-}
-
-
-.gallery-photo.changing {
-  opacity: 0;
-}
-
-@keyframes photoShadow {
-  0%, 100% {
-    box-shadow: 0 15px 35px rgba(65, 55, 45, 0.13);
-  }
- }
-
-/* Первая рамка */
-.photo-frame-1 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: clamp(18px, 2vw, 30px);
+    width: 100%;
+    max-width: 600px;
     position: relative;
-    left: 10px;
-    top: -25px;
+    isolation: isolate;
 }
 
-
-/* КАПСУЛА-РАМКА для второй фотографии */
-.photo-frame-2 {
-    border-radius: 9999px;
-    aspect-ratio: 2 / 3;
-    overflow: visible;
-    background: #fff;
-    padding: 4px;
-
-    /* Положение сохраняем */
-    position: relative;
-    left: -15px;
-    top: -180px;
-}
-
-/* Скругление самой фотографии */
-.photo-frame-2 .gallery-photo {
-    border-radius: 9999px;
-    object-fit: cover;
-    object-position: center;
-}
-
-/* Мягкая объёмная тень капсулы */
-.photo-frame-2 {
-    box-shadow: 0 20px 45px rgba(65, 55, 45, 0.20);
-}
+/* Общие настройки рамок */
 .photo-frame {
     flex: 0 0 44%;
     width: 44%;
@@ -340,11 +249,80 @@ body {
     animation: photoShadow 6s ease-in-out infinite;
 }
 
+/* Мягкая градиентная тень */
+.photo-frame::before {
+    content: "";
+    position: absolute;
+    inset: -20px;
+    z-index: -1;
+    background: linear-gradient(
+        135deg,
+        rgba(190, 165, 145, 0.42),
+        rgba(96, 128, 137, 0.32),
+        rgba(180, 185, 155, 0.38)
+    );
+    filter: blur(28px);
+    opacity: 0.8;
+    transition: background 1.2s ease, opacity 1.2s ease;
+    pointer-events: none;
+}
+
+/* Фотографии */
+.gallery-photo {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center 50%;
+    position: relative;
+    z-index: 1;
+    opacity: 1;
+    transition: opacity 0.8s ease;
+}
+
+.gallery-photo.changing {
+    opacity: 0;
+}
+
+/* Анимация теней */
+@keyframes photoShadow {
+    0%, 100% {
+        box-shadow: 0 15px 35px rgba(65, 55, 45, 0.13);
+    }
+}
+
+/* Первая рамка */
+.photo-frame-1 {
+    position: relative;
+    left: 10px;
+    top: -25px;
+}
+
+/* Вторая рамка — уменьшенная капсула */
 .photo-frame-2 {
     flex: 0 0 19.8%;
     width: 19.8%;
     max-width: 108px;
-    transform: none;
+    height: auto;
+    aspect-ratio: 2 / 3;
+
+    border-radius: 9999px;
+    overflow: visible;
+    background: #fff;
+    padding: 4px;
+
+    position: relative;
+    left: -15px;
+    top: -180px;
+
+    box-shadow: 0 20px 45px rgba(65, 55, 45, 0.20);
+}
+
+/* Скругление фотографии внутри капсулы */
+.photo-frame-2 .gallery-photo {
+    border-radius: 9999px;
+    object-fit: cover;
+    object-position: center;
 }
 
 /* =========================================
