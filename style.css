@@ -1122,22 +1122,30 @@ body {
 font-size: 60px;
 }
 
-/* Вторая рамка — уменьшенная капсула */
+
+/* Первая рамка — основная */
+.photo-frame-1 {
+    position: relative;
+    left: 10px;
+    top: -25px;
+}
+
+/* Вторая рамка — капсула, на 10% меньше первой */
 .photo-frame-2 {
-    flex: 0 0 26.4%;
-    width: 26.4%;
-    max-width: 144px;
+    flex: 0 0 39.6%;
+    width: 39.6%;
+    max-width: 216px;
     height: auto;
-    aspect-ratio: 2 / 3;
+    aspect-ratio: 2252 / 3600;
 
     border-radius: 9999px;
-    overflow: visible;
-    background: #fff;
+    overflow: hidden;
     padding: 4px;
+    background: white;
 
     position: relative;
-    left: -15px;
-    top: -180px;
+    left: 0px;
+    top: -25px;
 
     box-shadow: 0 20px 45px rgba(65, 55, 45, 0.20);
 }
