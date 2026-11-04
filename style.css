@@ -298,33 +298,6 @@ body {
     top: -25px;
 }
 
-/* Вторая рамка — уменьшенная капсула */
-.photo-frame-2 {
-    flex: 0 0 19.8%;
-    width: 19.8%;
-    max-width: 108px;
-    height: auto;
-    aspect-ratio: 2 / 3;
-
-    border-radius: 9999px;
-    overflow: visible;
-    background: #fff;
-    padding: 4px;
-
-    position: relative;
-    left: -15px;
-    top: -180px;
-
-    box-shadow: 0 20px 45px rgba(65, 55, 45, 0.20);
-}
-
-/* Скругление фотографии внутри капсулы */
-.photo-frame-2 .gallery-photo {
-    border-radius: 9999px;
-    object-fit: cover;
-    object-position: center;
-}
-
 /* =========================================
    ОКНА И ЗАТЕМНЕНИЕ
 ========================================= */
@@ -1147,4 +1120,31 @@ body {
     font-family: 'Unbounded', sans-serif;
     font-weight: 400;
 font-size: 60px;
+}
+
+/* Вторая рамка — уменьшенная капсула */
+.photo-frame-2 {
+    flex: 0 0 19.8%;
+    width: 19.8%;
+    max-width: 108px;
+    height: auto;
+    aspect-ratio: 2 / 3;
+
+    border-radius: 9999px;
+    overflow: visible;
+    background: #fff;
+    padding: 4px;
+
+    position: relative;
+    left: -15px;
+    top: -180px;
+
+    box-shadow: 0 20px 45px rgba(65, 55, 45, 0.20);
+}
+
+/* Скругление фотографии внутри капсулы */
+.photo-frame-2 .gallery-photo {
+    border-radius: 9999px;
+    object-fit: cover;
+    object-position: center;
 }
