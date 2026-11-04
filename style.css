@@ -1157,3 +1157,30 @@ body {
 font-size: 60px;
 }
 
+
+/* Вторая рамка — капсула, размер как у первой */
+.photo-frame-2 {
+    flex: 0 0 24%;
+    width: 24%;
+    max-width: 240px;
+    height: auto;
+    aspect-ratio: 2252 / 3600;
+
+    border-radius: 9999px;
+    overflow: hidden;
+    padding: 4px;
+    background: white;
+
+    position: relative;
+    left: -20px;
+    top: -50px;
+}
+
+/* Фотография внутри капсулы */
+.photo-frame-2 .gallery-photo {
+    width: 100%;
+    height: 100%;
+    border-radius: 9999px;
+    object-fit: cover;
+    object-position: center;
+}
