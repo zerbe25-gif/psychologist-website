@@ -297,11 +297,18 @@ body {
     left: 10px;
     top: -25px;
 }
+/* Размер первой рамки */
+.photo-frame-1 {
+    flex: 0 0 44%;
+    width: 44%;
+    max-width: 240px;
+}
+
 
 /* Вторая рамка — капсула, размер как у первой */
 .photo-frame-2 {
-    flex: 0 0 44%;
-    width: 44%;
+    flex: 0 0 34%;
+    width: 34%;
     max-width: 240px;
     height: auto;
     aspect-ratio: 2252 / 3600;
@@ -312,8 +319,8 @@ body {
     background: white;
 
     position: relative;
-    left: 0;
-    top: 0;
+    left: 10px;
+    top: -30px;
 }
 
 /* Фотография внутри капсулы */
@@ -324,6 +331,7 @@ body {
     object-fit: cover;
     object-position: center;
 }
+
 
 /* =========================================
    ОКНА И ЗАТЕМНЕНИЕ
