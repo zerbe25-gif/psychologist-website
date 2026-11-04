@@ -1124,9 +1124,9 @@ font-size: 60px;
 
 /* Вторая рамка — уменьшенная капсула */
 .photo-frame-2 {
-    flex: 0 0 19.8%;
-    width: 19.8%;
-    max-width: 108px;
+    flex: 0 0 26.4%;
+    width: 26.4%;
+    max-width: 144px;
     height: auto;
     aspect-ratio: 2 / 3;
 
