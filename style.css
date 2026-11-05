@@ -1641,3 +1641,68 @@ body {
     }
 }
 
+
+/* =====================================================
+   УПРАВЛЕНИЕ ГЛУБИНОЙ И ОБЪЁМОМ БУМАГИ
+   ===================================================== */
+
+// 5. Глубина зерна
+function updateDepth(val) {
+    document.documentElement.style.setProperty(
+        '--paper-depth',
+        val
+    );
+
+    const label = document.getElementById('val-depth');
+
+    if (label) {
+        label.textContent = Math.round(val * 100) + '%';
+    }
+}
+
+// 6. Рельеф бумаги
+function updateRelief(val) {
+    document.documentElement.style.setProperty(
+        '--paper-relief',
+        val
+    );
+
+    const label = document.getElementById('val-relief');
+
+    if (label) {
+        label.textContent = Math.round(val * 100) + '%';
+    }
+
+    const depthLight = document.getElementById('svg-depth-light');
+
+    if (depthLight) {
+        const surfaceScale = (0.2 + val * 5).toFixed(2);
+
+        depthLight.setAttribute(
+            'surfaceScale',
+            surfaceScale
+        );
+    }
+}
+
+// 7. Глубина освещения
+function updateLighting(val) {
+    document.documentElement.style.setProperty(
+        '--paper-vignette',
+        val
+    );
+
+    const label = document.getElementById('val-lighting');
+
+    if (label) {
+        label.textContent = Math.round(val * 100) + '%';
+    }
+}
+
+// Начальные значения новых настроек
+document.addEventListener('DOMContentLoaded', () => {
+    updateDepth(0.45);
+    updateRelief(0.35);
+    updateLighting(0.35);
+});
+
