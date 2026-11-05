@@ -73,15 +73,95 @@
                     0 0 0 0.35 0"
         />
     </filter>
+
+  
+<filter id="paper-depth-filter"
+        x="0%" y="0%" width="100%" height="100%">
+    <feTurbulence
+        id="svg-depth-turb"
+        type="fractalNoise"
+        baseFrequency="0.045"
+        numOctaves="3"
+        stitchTiles="stitch"
+        result="depthNoise"
+    />
+    <feDiffuseLighting
+        id="svg-depth-light"
+        in="depthNoise"
+        lighting-color="#ffffff"
+        surfaceScale="2"
+        diffuseConstant="1"
+        result="depthLighting">
+        <feDistantLight
+            azimuth="225"
+            elevation="45"
+        />
+    </feDiffuseLighting>
+    <feBlend
+        in="SourceGraphic"
+        in2="depthLighting"
+        mode="soft-light"
+    />
+</filter>
+
 </svg>
 
 <div class="paper-lighting-layer"></div>
 <div id="paper-texture" class="paper-texture-layer"></div>
+  
+<div id="paper-depth" class="paper-depth-layer"></div>
+
 
 <!-- ПАНЕЛЬ УПРАВЛЕНИЯ ФАКТУРОЙ БУМАГИ -->
 <div id="paper-control-panel">
     <div class="paper-panel-heading">
         ТЕКСТУРА БУМАГИ
+      
+<!-- 5. ГЛУБИНА ЗЕРНА -->
+<label for="input-depth">
+    Глубина зерна:
+    <span id="val-depth">45%</span>
+</label>
+<input
+    id="input-depth"
+    type="range"
+    min="0"
+    max="1"
+    step="0.05"
+    value="0.45"
+    oninput="updateDepth(this.value)"
+>
+
+<!-- 6. РЕЛЬЕФ БУМАГИ -->
+<label for="input-relief">
+    Рельеф бумаги:
+    <span id="val-relief">35%</span>
+</label>
+<input
+    id="input-relief"
+    type="range"
+    min="0"
+    max="1"
+    step="0.05"
+    value="0.35"
+    oninput="updateRelief(this.value)"
+>
+
+<!-- 7. ГЛУБИНА ОСВЕЩЕНИЯ -->
+<label for="input-lighting">
+    Глубина освещения:
+    <span id="val-lighting">35%</span>
+</label>
+<input
+    id="input-lighting"
+    type="range"
+    min="0"
+    max="1"
+    step="0.05"
+    value="0.35"
+    oninput="updateLighting(this.value)"
+>
+
     </div>
 
     <label>Оттенок бумаги</label>
