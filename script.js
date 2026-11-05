@@ -251,3 +251,112 @@ document.querySelectorAll(".animation-tab").forEach(button => {
 
 /* Начальный режим */
 setMenuAnimation(1);
+
+
+/* =====================================================
+   УПРАВЛЕНИЕ ФАКТУРОЙ БУМАГИ
+   ===================================================== */
+
+// 1. Выбор оттенка бумаги
+function setPaperColor(colorHex, btn) {
+    document.documentElement.style.setProperty(
+        '--paper-bg-color',
+        colorHex
+    );
+
+    document.querySelectorAll('.paper-colors button')
+        .forEach(button => {
+            button.classList.remove('active-color');
+        });
+
+    if (btn) {
+        btn.classList.add('active-color');
+    }
+}
+
+// 2. Управление выраженностью фактуры
+function updateOpacity(val) {
+    document.documentElement.style.setProperty(
+        '--paper-opacity',
+        val
+    );
+
+    const valueLabel = document.getElementById('val-opacity');
+
+    if (valueLabel) {
+        valueLabel.textContent = Math.round(val * 100) + '%';
+    }
+
+    const matrix = document.getElementById('svg-matrix');
+
+    if (matrix) {
+        const alpha = (val * 0.6).toFixed(2);
+
+        matrix.setAttribute(
+            'values',
+            `0 0 0 0 0.94
+             0 0 0 0 0.91
+             0 0 0 0 0.85
+             0 0 0 ${alpha} 0`
+        );
+    }
+}
+
+// 3. Управление размером зерна
+function updateGrain(val) {
+    document.documentElement.style.setProperty(
+        '--paper-grain-scale',
+        val
+    );
+
+    const label = val < 0.025
+        ? 'Крупное'
+        : (val > 0.05 ? 'Мелкое' : 'Среднее');
+
+    const valueLabel = document.getElementById('val-grain');
+
+    if (valueLabel) {
+        valueLabel.textContent = label;
+    }
+
+    const turb = document.getElementById('svg-turb');
+
+    if (turb) {
+        const freqY = (val * 0.85).toFixed(3);
+
+        turb.setAttribute(
+            'baseFrequency',
+            `${val} ${freqY}`
+        );
+    }
+}
+
+// 4. Управление мягкостью волокон
+function updateBlur(val) {
+    document.documentElement.style.setProperty(
+        '--paper-blur',
+        val + 'px'
+    );
+
+    const valueLabel = document.getElementById('val-blur');
+
+    if (valueLabel) {
+        valueLabel.textContent = val + 'px';
+    }
+}
+
+// Начальные настройки
+document.addEventListener('DOMContentLoaded', () => {
+
+    updateOpacity(0.55);
+    updateGrain(0.035);
+    updateBlur(0.4);
+
+    const firstColorButton = document.querySelector(
+        '.paper-colors button'
+    );
+
+    if (firstColorButton) {
+        firstColorButton.classList.add('active-color');
+    }
+});
