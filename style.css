@@ -1184,3 +1184,212 @@ font-size: 60px;
     object-fit: cover;
     object-position: center;
 }
+
+
+/* ==========================================
+   ПАНЕЛЬ УПРАВЛЕНИЯ АНИМАЦИЕЙ
+   ========================================== */
+
+#animation-control-panel {
+    position: relative;
+    z-index: 9999;
+    width: 100%;
+    padding: 16px 20px;
+    background: rgba(250, 248, 243, 0.97);
+    border-bottom: 1px solid rgba(166, 75, 42, 0.18);
+    box-shadow: 0 4px 20px rgba(65, 55, 45, 0.08);
+    font-family: 'Inter', sans-serif;
+}
+
+.animation-panel-title {
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: #2B4C6F;
+    margin-bottom: 12px;
+}
+
+.animation-panel-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.animation-tab {
+    padding: 9px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(166, 75, 42, 0.15);
+    background: #F3EFE4;
+    color: #334155;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.animation-tab:hover {
+    background: rgba(166, 75, 42, 0.10);
+}
+
+.animation-tab.active {
+    background: #2B4C6F;
+    color: white;
+    border-color: #2B4C6F;
+    box-shadow: 0 3px 10px rgba(43, 76, 111, 0.18);
+}
+
+#animation-description {
+    margin-top: 12px;
+    text-align: center;
+    font-size: 11px;
+    color: #A64B2A;
+}
+
+/* Панель на телефонах */
+@media (max-width: 600px) {
+    .animation-panel-buttons {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .animation-tab {
+        padding: 9px 5px;
+        font-size: 10px;
+    }
+}
+
+
+/* ==========================================
+   РЕЖИМ 1 — ГРАДИЕНТ + ФОКУС + КАПСУЛА
+   ========================================== */
+
+.effect-mode-1 .section-menu:hover .menu-item:not(:hover) {
+    opacity: 0.3;
+    filter: blur(1.5px);
+    transform: scale(0.98);
+}
+
+.effect-mode-1 .menu-item {
+    color: #2B4C6F;
+    transition:
+        opacity 0.4s ease,
+        filter 0.4s ease,
+        transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+        color 0.4s ease;
+}
+
+.effect-mode-1 .menu-item:hover {
+    transform: translateX(14px);
+    color: #A64B2A;
+}
+
+.effect-mode-1 .menu-item::before {
+    content: "";
+    width: 0;
+    height: 24px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #C25936, #A64B2A);
+    margin-right: 0;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 4px 10px rgba(166, 75, 42, 0.3);
+}
+
+.effect-mode-1 .menu-item:hover::before {
+    width: 10px;
+    margin-right: 14px;
+    opacity: 1;
+}
+
+
+/* ==========================================
+   РЕЖИМ 2 — МАСЛЯНАЯ ТЕКСТУРА
+   ========================================== */
+
+.effect-mode-2 .menu-item {
+    background: linear-gradient(
+        120deg,
+        #1E3A5F 0%,
+        #2B4C6F 40%,
+        #A64B2A 70%,
+        #C5A059 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition:
+        background-position 0.8s ease,
+        transform 0.4s ease,
+        filter 0.4s ease;
+}
+
+.effect-mode-2 .menu-item:hover {
+    background-position: right center;
+    transform: translateY(-3px) scale(1.02);
+    filter: drop-shadow(0 8px 12px rgba(43, 76, 111, 0.15));
+}
+
+.effect-mode-2 .section-menu:hover .menu-item:not(:hover) {
+    opacity: 0.4;
+}
+
+
+/* ==========================================
+   РЕЖИМ 3 — ОБЪЕМНЫЙ БАРЕЛЬЕФ
+   ========================================== */
+
+.effect-mode-3 .menu-item {
+    color: #2C2C2C;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+    transition: all 0.4s ease;
+}
+
+.effect-mode-3 .menu-item:hover {
+    color: #1E3A5F;
+    transform: translateY(-2px);
+    filter:
+        drop-shadow(0 12px 20px rgba(166, 75, 42, 0.25))
+        drop-shadow(0 2px 4px rgba(43, 76, 111, 0.15));
+}
+
+.effect-mode-3 .section-menu:hover .menu-item:not(:hover) {
+    opacity: 0.35;
+}
+
+
+/* ==========================================
+   РЕЖИМ 4 — МИНИМАЛИЗМ + ЛИНИЯ
+   ========================================== */
+
+.effect-mode-4 .menu-item {
+    color: #2B4C6F;
+    transition: all 0.4s ease;
+}
+
+.effect-mode-4 .menu-item::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, #A64B2A, #C5A059);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.effect-mode-4 .menu-item:hover {
+    color: #A64B2A;
+    letter-spacing: 0.08em;
+}
+
+.effect-mode-4 .menu-item:hover::after {
+    transform: scaleX(1);
+}
+
+.effect-mode-4 .section-menu:hover .menu-item:not(:hover) {
+    opacity: 0.25;
+    filter: blur(2px);
+}
