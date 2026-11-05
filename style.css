@@ -1162,7 +1162,7 @@ font-size: 60px;
 .photo-frame-2 {
     flex: 0 0 54%;
     width: 54%;
-    max-width: 240px;
+    max-width: 340px;
     height: auto;
     aspect-ratio: 2252 / 3600;
 
