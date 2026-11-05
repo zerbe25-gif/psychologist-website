@@ -206,3 +206,48 @@ appointmentForm.addEventListener("submit", event => {
   );
 
 });
+
+
+/* ==========================================
+   ПЕРЕКЛЮЧЕНИЕ СТИЛЕЙ АНИМАЦИИ МЕНЮ
+   ========================================== */
+
+const animationDescriptions = {
+    1: "Градиент + Мягкое смещение вправо + Овальный маркер + Расфокусировка",
+    2: "Динамический градиент внутри букв + Лёгкий подъём надписи",
+    3: "Глубокая многослойная тень + Эффект тиснения и барельефа",
+    4: "Раскрывающаяся линия + Увеличенный трекинг шрифта"
+};
+
+function setMenuAnimation(mode) {
+    const menu = document.querySelector(".section-menu");
+    const description = document.getElementById("animation-description");
+
+    if (!menu || !description) return;
+
+    menu.classList.remove(
+        "effect-mode-1",
+        "effect-mode-2",
+        "effect-mode-3",
+        "effect-mode-4"
+    );
+
+    menu.classList.add(`effect-mode-${mode}`);
+
+    description.textContent = animationDescriptions[mode];
+
+    document.querySelectorAll(".animation-tab").forEach(button => {
+        const isActive = button.dataset.effect === String(mode);
+
+        button.classList.toggle("active", isActive);
+    });
+}
+
+document.querySelectorAll(".animation-tab").forEach(button => {
+    button.addEventListener("click", () => {
+        setMenuAnimation(button.dataset.effect);
+    });
+});
+
+/* Начальный режим */
+setMenuAnimation(1);
