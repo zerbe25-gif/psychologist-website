@@ -1578,3 +1578,66 @@ body {
         font-size: 11px;
     }
 }
+
+/* =====================================================
+   ДОПОЛНИТЕЛЬНАЯ ГЛУБИНА И МИКРОРЕЛЬЕФ БУМАГИ
+   ===================================================== */
+
+:root {
+    --paper-depth: 0.45;
+    --paper-relief: 0.35;
+}
+
+/* Создаём общий слой фона, не перекрывающий сайт */
+body {
+    isolation: isolate;
+}
+
+/* Переносим фоновые слои за содержимое сайта */
+.paper-lighting-layer {
+    z-index: -3;
+}
+
+.paper-texture-layer {
+    z-index: -2;
+}
+
+/* Новый слой объёмной фактуры */
+.paper-depth-layer {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+
+    opacity: var(--paper-depth);
+    mix-blend-mode: soft-light;
+
+    transition: opacity 0.25s ease;
+}
+
+/* Микрорельеф волокон */
+.paper-depth-layer::before {
+    content: "";
+    position: absolute;
+    inset: -2%;
+
+    background: rgba(128, 128, 128, 0.55);
+
+    filter: url(#paper-depth-filter);
+
+    opacity: var(--paper-relief);
+}
+
+/* Дополнительная глубина световых переходов */
+.paper-lighting-layer {
+    transition: opacity 0.25s ease;
+}
+
+/* Более мягкое отображение на небольших экранах */
+@media (max-width: 600px) {
+    .paper-depth-layer::before {
+        inset: 0;
+    }
+}
+
