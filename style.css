@@ -2438,3 +2438,23 @@ body.tech-3-active {
         grid-template-columns: 1fr 1fr;
     }
 }
+
+/* КОМПАКТНАЯ ПАНЕЛЬ НАСТРОЕК ФОНА */
+
+#background-control-panel {
+    width: 520px;
+    max-width: 100%;
+    padding: 6px 4px;
+}
+
+#background-control-panel #background-panel-content {
+    max-width: 500px;
+}
+
+#background-control-panel .background-tech-tabs {
+    max-width: 420px;
+}
+
+#background-control-panel .background-control {
+    max-width: 460px;
+}
