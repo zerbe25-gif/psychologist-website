@@ -1627,7 +1627,7 @@ body {
     filter: url(#paper-depth-filter);
 
     opacity: var(--paper-relief);
-
+}
 
 /* Дополнительная глубина световых переходов */
 .paper-lighting-layer {
