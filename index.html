@@ -286,11 +286,51 @@
     </div>
 </aside>
   
-          <div id="photos-panel-content" hidden>
-            <div class="background-panel-label">
-                Настройки фотографий будут добавлены здесь.
-            </div>
+         <div id="photos-panel-content" hidden>
+    <div class="lens-controls-row">
+
+        <div class="lens-control">
+            <label for="lens-radius">Скругление</label>
+            <span id="val-lens-radius">34 px</span>
+            <input id="lens-radius" type="range"
+                   min="12" max="60" step="1" value="34"
+                   oninput="updateLensRadius(this.value)">
         </div>
+
+        <div class="lens-control">
+            <label for="lens-shadow-y">Высота тени</label>
+            <span id="val-lens-shadow-y">20 px</span>
+            <input id="lens-shadow-y" type="range"
+                   min="0" max="40" step="1" value="20"
+                   oninput="updateLensShadowY(this.value)">
+        </div>
+
+        <div class="lens-control">
+            <label for="lens-shadow-blur">Мягкость тени</label>
+            <span id="val-lens-shadow-blur">42 px</span>
+            <input id="lens-shadow-blur" type="range"
+                   min="5" max="80" step="1" value="42"
+                   oninput="updateLensShadowBlur(this.value)">
+        </div>
+
+        <div class="lens-control">
+            <label for="lens-shadow-depth">Глубина тени</label>
+            <span id="val-lens-shadow-depth">18%</span>
+            <input id="lens-shadow-depth" type="range"
+                   min="0" max="40" step="1" value="18"
+                   oninput="updateLensShadowDepth(this.value)">
+        </div>
+
+        <div class="lens-control">
+            <label for="lens-glare">Стеклянный блик</label>
+            <span id="val-lens-glare">48%</span>
+            <input id="lens-glare" type="range"
+                   min="0" max="100" step="1" value="48"
+                   oninput="updateLensGlare(this.value)">
+        </div>
+
+    </div>
+</div>
 
     </div>
 </div>
