@@ -460,3 +460,25 @@ function togglePaperPanel() {
         arrow.textContent = isOpen ? '＋' : '－';
     }
 }
+
+// ========================================
+// ПАНЕЛЬ УПРАВЛЕНИЯ ФОНОМ
+// ========================================
+
+function toggleBackgroundPanel() {
+    const content = document.getElementById('background-panel-content');
+    const button = document.querySelector('.background-panel-heading');
+    const arrow = document.getElementById('background-panel-arrow');
+
+    if (!content || !button) return;
+
+    const isOpen = !content.hidden;
+
+    content.hidden = isOpen;
+
+    button.setAttribute('aria-expanded', String(!isOpen));
+
+    if (arrow) {
+        arrow.textContent = isOpen ? '＋' : '－';
+    }
+}
