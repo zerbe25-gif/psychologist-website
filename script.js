@@ -482,3 +482,115 @@ function toggleBackgroundPanel() {
         arrow.textContent = isOpen ? '＋' : '－';
     }
 }
+
+// =======================================================
+// УПРАВЛЕНИЕ ФОНОМ: ШТРИХОВКА И ТЕНЬ ЛИСТА
+// =======================================================
+
+// 1. ПЕРЕКЛЮЧЕНИЕ МЕЖДУ ДВУМЯ СТИЛЯМИ
+
+function switchTechnique(techNum, btnEl) {
+    const container1 = document.getElementById('tech-hatching');
+    const container2 = document.getElementById('tech-floating-paper');
+    const controls1 = document.getElementById('controls-hatching');
+    const controls2 = document.getElementById('controls-paper-shadow');
+
+    if (!container1 || !container2 || !controls1 || !controls2) return;
+
+    // Снимаем активное состояние со всех кнопок
+    document.querySelectorAll('#background-control-panel .tech-tab').forEach(button => {
+        button.classList.remove('active');
+    });
+
+    if (btnEl) {
+        btnEl.classList.add('active');
+    }
+
+    if (techNum === 1) {
+        document.body.classList.remove('tech-2-active');
+        document.body.classList.add('tech-1-active');
+
+        container1.classList.add('active-tech');
+        container2.classList.remove('active-tech');
+
+        controls1.hidden = false;
+        controls2.hidden = true;
+
+    } else if (techNum === 2) {
+        document.body.classList.remove('tech-1-active');
+        document.body.classList.add('tech-2-active');
+
+        container1.classList.remove('active-tech');
+        container2.classList.add('active-tech');
+
+        controls1.hidden = true;
+        controls2.hidden = false;
+    }
+}
+
+
+// 2. НАСТРОЙКИ ТЕХНИКИ 1: ШТРИХОВКА
+
+function updateHatchAngle(val) {
+    document.documentElement.style.setProperty('--hatch-angle', val + 'deg');
+
+    const label = document.getElementById('val-hatch-angle');
+    if (label) label.textContent = val + '°';
+}
+
+function updateHatchOpacity(val) {
+    document.documentElement.style.setProperty('--hatch-opacity', val);
+
+    const label = document.getElementById('val-hatch-opacity');
+    if (label) label.textContent = Math.round(val * 100) + '%';
+}
+
+function updateHatchSpacing(val) {
+    document.documentElement.style.setProperty('--hatch-spacing', val + 'px');
+
+    const label = document.getElementById('val-hatch-spacing');
+    if (label) label.textContent = val + 'px';
+}
+
+function setHatchColor(colorHex, btnEl) {
+    document.documentElement.style.setProperty('--hatch-color', colorHex);
+
+    if (btnEl && btnEl.parentElement) {
+        btnEl.parentElement.querySelectorAll('button').forEach(button => {
+            button.classList.remove('selected');
+        });
+
+        btnEl.classList.add('selected');
+    }
+}
+
+
+// 3. НАСТРОЙКИ ТЕХНИКИ 2: ТЕНЬ ЛИСТА
+
+function updateShadowElevation(val) {
+    document.documentElement.style.setProperty('--paper-elevation-y', val + 'px');
+
+    const label = document.getElementById('val-shadow-elevation');
+    if (label) label.textContent = val + 'px';
+}
+
+function updateShadowBlur(val) {
+    document.documentElement.style.setProperty('--paper-shadow-blur', val + 'px');
+
+    const label = document.getElementById('val-shadow-blur');
+    if (label) label.textContent = val + 'px';
+}
+
+function updateShadowOpacity(val) {
+    document.documentElement.style.setProperty('--paper-shadow-opacity', val);
+
+    const label = document.getElementById('val-shadow-opacity');
+    if (label) label.textContent = Math.round(val * 100) + '%';
+}
+
+function updateShadowAngle(val) {
+    document.documentElement.style.setProperty('--paper-elevation-x', val + 'px');
+
+    const label = document.getElementById('val-shadow-angle');
+    if (label) label.textContent = val + 'px';
+}
