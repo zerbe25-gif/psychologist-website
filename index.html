@@ -32,7 +32,61 @@
 
 <!-- 4. СЛОЙ АНИМИРОВАННОЙ ВУАЛИ СВЕТА -->
 <div id="tech-ambient-light" class="ambient-light-bg-layer"></div>
-  
+
+  <!-- ЕДИНАЯ ПАНЕЛЬ РАЗРАБОТКИ -->
+<div id="developer-panel">
+
+    <div class="developer-panel-bar">
+        <span class="developer-panel-caption">ПАНЕЛЬ РАЗРАБОТКИ</span>
+
+        <button type="button" class="developer-panel-tab"
+                data-panel-section="animation"
+                onclick="toggleDevPanelSection('animation')">
+            АНИМАЦИЯ
+        </button>
+
+        <button type="button" class="developer-panel-tab"
+                data-panel-section="background"
+                onclick="toggleDevPanelSection('background')">
+            ФОН
+        </button>
+
+        <button type="button" class="developer-panel-tab"
+                data-panel-section="photos"
+                onclick="toggleDevPanelSection('photos')">
+            ФОТОГРАФИИ
+        </button>
+    </div>
+
+    <div id="developer-panel-content" hidden>
+      <div id="animation-control-panel" hidden>
+    <div class="animation-panel-title">
+        ПАНЕЛЬ РАЗРАБОТКИ · АНИМАЦИЯ ЗАГОЛОВКОВ
+    </div>
+
+    <div class="animation-panel-buttons">
+        <button class="animation-tab active" data-effect="1">
+            1. Градиент + Фокус
+        </button>
+
+        <button class="animation-tab" data-effect="2">
+            2. Масляная текстура
+        </button>
+
+        <button class="animation-tab" data-effect="3">
+            3. Объемный барельеф
+        </button>
+
+        <button class="animation-tab" data-effect="4">
+            4. Минимализм + Линия
+        </button>
+    </div>
+
+    <div id="animation-description">
+        Градиент + Мягкое смещение + Овальный маркер
+    </div>
+</div>
+
 <!-- ПАНЕЛЬ УПРАВЛЕНИЯ ФОНОМ -->
 <aside id="background-control-panel" hidden>
     <button class="background-panel-heading"
@@ -242,62 +296,6 @@
 </div>
 <!-- КОНЕЦ ЕДИНОЙ ПАНЕЛИ РАЗРАБОТКИ -->
   
-  
-<!-- ПАНЕЛЬ ВРЕМЕННОГО УПРАВЛЕНИЯ АНИМАЦИЯМИ -->
-  <!-- ЕДИНАЯ ПАНЕЛЬ РАЗРАБОТКИ -->
-<div id="developer-panel">
-
-    <div class="developer-panel-bar">
-        <span class="developer-panel-caption">ПАНЕЛЬ РАЗРАБОТКИ</span>
-
-        <button type="button" class="developer-panel-tab"
-                data-panel-section="animation"
-                onclick="toggleDevPanelSection('animation')">
-            АНИМАЦИЯ
-        </button>
-
-        <button type="button" class="developer-panel-tab"
-                data-panel-section="background"
-                onclick="toggleDevPanelSection('background')">
-            ФОН
-        </button>
-
-        <button type="button" class="developer-panel-tab"
-                data-panel-section="photos"
-                onclick="toggleDevPanelSection('photos')">
-            ФОТОГРАФИИ
-        </button>
-    </div>
-
-    <div id="developer-panel-content" hidden>
-<div id="animation-control-panel" hidden>
-    <div class="animation-panel-title">
-        ПАНЕЛЬ РАЗРАБОТКИ · АНИМАЦИЯ ЗАГОЛОВКОВ
-    </div>
-
-    <div class="animation-panel-buttons">
-        <button class="animation-tab active" data-effect="1">
-            1. Градиент + Фокус
-        </button>
-
-        <button class="animation-tab" data-effect="2">
-            2. Масляная текстура
-        </button>
-
-        <button class="animation-tab" data-effect="3">
-            3. Объемный барельеф
-        </button>
-
-        <button class="animation-tab" data-effect="4">
-            4. Минимализм + Линия
-        </button>
-    </div>
-
-    <div id="animation-description">
-        Градиент + Мягкое смещение + Овальный маркер
-    </div>
-</div>
-
   
   <!-- ШАПКА САЙТА -->
 
