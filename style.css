@@ -2018,3 +2018,8 @@ body:not(.tech-2-active) .capsule-frame {
     outline: 2px solid #2B4C6F;
     outline-offset: 2px;
 }
+
+.hatch-color-buttons button.selected {
+    outline: 2px solid #2B4C6F;
+    outline-offset: 2px;
+}
