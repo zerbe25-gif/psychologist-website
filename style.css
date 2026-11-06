@@ -1660,3 +1660,72 @@ body {
     display: none !important;
 }
 
+
+/* =========================================
+   СТРАНИЦА СТАТЕЙ
+========================================= */
+
+body.articles-page {
+    min-height: 100vh;
+    height: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    --paper-bg-color: #FAF8F3;
+    --paper-opacity: 0.55;
+    --paper-grain-scale: 0.035;
+    --paper-blur: 0.4px;
+    --paper-depth: 0.45;
+    --paper-relief: 0.35;
+    --paper-vignette: 0.35;
+
+    background: var(--paper-bg-color);
+}
+
+.articles-page .header {
+    position: relative;
+    z-index: 2;
+}
+
+.articles-home-link {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+}
+
+.articles-content {
+    position: relative;
+    z-index: 2;
+    min-height: 70vh;
+    padding: 65px 8%;
+}
+
+.articles-content h1 {
+    font-family: "Lora", Georgia, serif;
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 400;
+    color: var(--text-color);
+}
+
+/* Сворачивание панели бумаги */
+
+#paper-control-panel .paper-panel-heading {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    color: #2B4C6F;
+}
+
+#paper-control-panel #paper-panel-content[hidden] {
+    display: none !important;
+}
