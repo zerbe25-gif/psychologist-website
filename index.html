@@ -20,6 +20,120 @@
 
 <body id="top">
 
+  <!-- ФОНОВЫЕ СЛОИ: ШТРИХОВКА И ТЕНЬ ЛИСТА -->
+<div id="tech-hatching" class="hatching-bg-layer active-tech">
+    <div class="hatching-canvas"></div>
+</div>
+
+<div id="tech-floating-paper" class="floating-paper-layer"></div>
+
+<!-- ПАНЕЛЬ УПРАВЛЕНИЯ ФОНОМ -->
+<aside id="background-control-panel">
+    <button class="background-panel-heading"
+            type="button"
+            onclick="toggleBackgroundPanel()"
+            aria-expanded="false">
+        <span>УПРАВЛЕНИЕ ФОНОМ</span>
+        <span id="background-panel-arrow">＋</span>
+    </button>
+
+    <div id="background-panel-content" hidden>
+
+        <div class="background-panel-label">
+            Техника визуализации
+        </div>
+
+        <div class="background-tech-tabs">
+            <button onclick="switchTechnique(1, this)"
+                    class="tech-tab active"
+                    type="button">
+                1. Штриховка
+            </button>
+
+            <button onclick="switchTechnique(2, this)"
+                    class="tech-tab"
+                    type="button">
+                2. Тень листа
+            </button>
+        </div>
+
+        <!-- НАСТРОЙКИ ШТРИХОВКИ -->
+        <div id="controls-hatching">
+
+            <div class="background-control">
+                <label for="hatch-angle-input">Угол наклона:</label>
+                <span id="val-hatch-angle">45°</span>
+                <input id="hatch-angle-input" type="range"
+                       min="0" max="180" step="15" value="45"
+                       oninput="updateHatchAngle(this.value)">
+            </div>
+
+            <div class="background-control">
+                <label for="hatch-opacity-input">Интенсивность линий:</label>
+                <span id="val-hatch-opacity">12%</span>
+                <input id="hatch-opacity-input" type="range"
+                       min="0.04" max="0.35" step="0.01" value="0.12"
+                       oninput="updateHatchOpacity(this.value)">
+            </div>
+
+            <div class="background-control">
+                <label for="hatch-spacing-input">Частота (шаг):</label>
+                <span id="val-hatch-spacing">12px</span>
+                <input id="hatch-spacing-input" type="range"
+                       min="4" max="32" step="2" value="12"
+                       oninput="updateHatchSpacing(this.value)">
+            </div>
+
+            <div class="background-control">
+                <label>Цвет штриховки:</label>
+                <div class="hatch-color-buttons">
+                    <button type="button" onclick="setHatchColor('#2B4C6F', this)" style="background:#2B4C6F" title="Деним"></button>
+                    <button type="button" onclick="setHatchColor('#384E22', this)" style="background:#384E22" title="Олива"></button>
+                    <button type="button" onclick="setHatchColor('#A64B2A', this)" style="background:#A64B2A" title="Терракота"></button>
+                    <button type="button" onclick="setHatchColor('#9B8456', this)" style="background:#9B8456" title="Охра"></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- НАСТРОЙКИ ТЕНИ ЛИСТА -->
+        <div id="controls-paper-shadow" hidden>
+
+            <div class="background-control">
+                <label for="shadow-elevation-input">Высота подъёма (Y):</label>
+                <span id="val-shadow-elevation">18px</span>
+                <input id="shadow-elevation-input" type="range"
+                       min="4" max="40" step="2" value="18"
+                       oninput="updateShadowElevation(this.value)">
+            </div>
+
+            <div class="background-control">
+                <label for="shadow-blur-input">Мягкость тени (Blur):</label>
+                <span id="val-shadow-blur">36px</span>
+                <input id="shadow-blur-input" type="range"
+                       min="10" max="70" step="2" value="36"
+                       oninput="updateShadowBlur(this.value)">
+            </div>
+
+            <div class="background-control">
+                <label for="shadow-opacity-input">Плотность тени:</label>
+                <span id="val-shadow-opacity">8%</span>
+                <input id="shadow-opacity-input" type="range"
+                       min="0.02" max="0.22" step="0.01" value="0.08"
+                       oninput="updateShadowOpacity(this.value)">
+            </div>
+
+            <div class="background-control">
+                <label for="shadow-angle-input">Направление света (X):</label>
+                <span id="val-shadow-angle">0px</span>
+                <input id="shadow-angle-input" type="range"
+                       min="-20" max="20" step="2" value="0"
+                       oninput="updateShadowAngle(this.value)">
+            </div>
+
+        </div>
+    </div>
+</aside>
+  
   
 <!-- ПАНЕЛЬ ВРЕМЕННОГО УПРАВЛЕНИЯ АНИМАЦИЯМИ -->
 <div id="animation-control-panel">
