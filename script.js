@@ -490,15 +490,30 @@ function toggleBackgroundPanel() {
 // 1. ПЕРЕКЛЮЧЕНИЕ МЕЖДУ ДВУМЯ СТИЛЯМИ
 
 function switchTechnique(techNum, btnEl) {
-    const container1 = document.getElementById('tech-hatching');
-    const container2 = document.getElementById('tech-floating-paper');
-    const controls1 = document.getElementById('controls-hatching');
-    const controls2 = document.getElementById('controls-paper-shadow');
+    const layers = [
+        document.getElementById('tech-hatching'),
+        document.getElementById('tech-floating-paper'),
+        document.getElementById('tech-watercolor'),
+        document.getElementById('tech-ambient-light')
+    ];
 
-    if (!container1 || !container2 || !controls1 || !controls2) return;
+    const controls = [
+        document.getElementById('controls-hatching'),
+        document.getElementById('controls-paper-shadow'),
+        document.getElementById('controls-watercolor'),
+        document.getElementById('controls-ambient-light')
+    ];
 
-    // Снимаем активное состояние со всех кнопок
-    document.querySelectorAll('#background-control-panel .tech-tab').forEach(button => {
+    if (techNum < 1 || techNum > 4) return;
+
+    if (layers.some(layer => !layer) ||
+        controls.some(control => !control)) {
+        return;
+    }
+
+    document.querySelectorAll(
+        '#background-control-panel .tech-tab'
+    ).forEach(button => {
         button.classList.remove('active');
     });
 
@@ -506,26 +521,22 @@ function switchTechnique(techNum, btnEl) {
         btnEl.classList.add('active');
     }
 
-    if (techNum === 1) {
-        document.body.classList.remove('tech-2-active');
-        document.body.classList.add('tech-1-active');
+    document.body.classList.remove(
+        'tech-1-active',
+        'tech-2-active',
+        'tech-3-active',
+        'tech-4-active'
+    );
 
-        container1.classList.add('active-tech');
-        container2.classList.remove('active-tech');
+    document.body.classList.add('tech-' + techNum + '-active');
 
-        controls1.hidden = false;
-        controls2.hidden = true;
+    layers.forEach((layer, index) => {
+        layer.classList.toggle('active-tech', index === techNum - 1);
+    });
 
-    } else if (techNum === 2) {
-        document.body.classList.remove('tech-1-active');
-        document.body.classList.add('tech-2-active');
-
-        container1.classList.remove('active-tech');
-        container2.classList.add('active-tech');
-
-        controls1.hidden = true;
-        controls2.hidden = false;
-    }
+    controls.forEach((control, index) => {
+        control.hidden = index !== techNum - 1;
+    });
 }
 
 
@@ -593,4 +604,95 @@ function updateShadowAngle(val) {
 
     const label = document.getElementById('val-shadow-angle');
     if (label) label.textContent = val + 'px';
+}
+
+// =======================================================
+// ТЕХНИКА 3: УПРАВЛЕНИЕ АКВАРЕЛЬЮ
+// =======================================================
+
+function updateWatercolorOpacity(val) {
+    document.documentElement.style.setProperty(
+        '--watercolor-opacity', val
+    );
+
+    const label = document.getElementById('val-watercolor-opacity');
+    if (label) label.textContent = Math.round(val * 100) + '%';
+}
+
+function updateWatercolorSize(val) {
+    document.documentElement.style.setProperty(
+        '--watercolor-size', val + '%'
+    );
+
+    const label = document.getElementById('val-watercolor-size');
+    if (label) label.textContent = val + '%';
+}
+
+function updateWatercolorBlur(val) {
+    document.documentElement.style.setProperty(
+        '--watercolor-blur', val + 'px'
+    );
+
+    const label = document.getElementById('val-watercolor-blur');
+    if (label) label.textContent = val + 'px';
+}
+
+
+// Выбор цветовой палитры акварели
+function setWatercolorPalette(name, btnEl) {
+    const palettes = {
+        blue: ['#829BAA', '#C6D2D2', '#D8C9B5'],
+        olive: ['#A1A889', '#D2CFB5', '#D5BDA3'],
+        rose: ['#C99E98', '#E4C9BE', '#B7B9B0'],
+        sand: ['#C9B99C', '#E6DCCB', '#A9B6B4']
+    };
+
+    const colors = palettes[name];
+    if (!colors) return;
+
+    const root = document.documentElement;
+
+    root.style.setProperty('--watercolor-color-1', colors[0]);
+    root.style.setProperty('--watercolor-color-2', colors[1]);
+    root.style.setProperty('--watercolor-color-3', colors[2]);
+
+    if (btnEl && btnEl.parentElement) {
+        btnEl.parentElement.querySelectorAll('button').forEach(button => {
+            button.classList.remove('selected');
+        });
+
+        btnEl.classList.add('selected');
+    }
+}
+
+
+// =======================================================
+// ТЕХНИКА 4: УПРАВЛЕНИЕ СВЕТОВОЙ ВУАЛЬЮ
+// =======================================================
+
+function updateAmbientOpacity(val) {
+    document.documentElement.style.setProperty(
+        '--ambient-opacity', val
+    );
+
+    const label = document.getElementById('val-ambient-opacity');
+    if (label) label.textContent = Math.round(val * 100) + '%';
+}
+
+function updateAmbientSize(val) {
+    document.documentElement.style.setProperty(
+        '--ambient-size', val + '%'
+    );
+
+    const label = document.getElementById('val-ambient-size');
+    if (label) label.textContent = val + '%';
+}
+
+function updateAmbientSpeed(val) {
+    document.documentElement.style.setProperty(
+        '--ambient-speed', val + 's'
+    );
+
+    const label = document.getElementById('val-ambient-speed');
+    if (label) label.textContent = val + ' сек.';
 }
