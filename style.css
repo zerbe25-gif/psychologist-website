@@ -61,7 +61,7 @@ body {
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
   position: relative;
-  z-index: 5;
+  z-index: 2;
   border-bottom: 1px solid rgba(255,255,255,0.55);
 }
 
@@ -2279,12 +2279,6 @@ body.tech-3-active {
     background-color: var(--bg-base-color);
 }
 
-/* Шапка и содержимое страницы располагаются над фоном */
-body > header,
-body header {
-    position: relative;
-    z-index: 2;
-}
 
 /* Панель управления всегда выше фоновых слоёв */
 #background-control-panel {
