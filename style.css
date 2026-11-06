@@ -19,6 +19,15 @@
   --accent-color: #608089;
   --text-color: #343330;
   --white: #608089;
+
+    --paper-bg-color: #FAF8F3;
+    --paper-opacity: 0.55;
+    --paper-grain-scale: 0.035;
+    --paper-blur: 0.4px;
+    --paper-depth: 0.45;
+    --paper-relief: 0.35;
+    --paper-vignette: 0.35;
+   
 }
 
 * {
@@ -1665,22 +1674,16 @@ body {
    СТРАНИЦА СТАТЕЙ
 ========================================= */
 
+
 body.articles-page {
     min-height: 100vh;
     height: auto;
     overflow-x: hidden;
     overflow-y: auto;
 
-    --paper-bg-color: #FAF8F3;
-    --paper-opacity: 0.55;
-    --paper-grain-scale: 0.035;
-    --paper-blur: 0.4px;
-    --paper-depth: 0.45;
-    --paper-relief: 0.35;
-    --paper-vignette: 0.35;
-
     background: var(--paper-bg-color);
 }
+
 
 .articles-page .header {
     position: relative;
