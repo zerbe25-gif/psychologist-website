@@ -1732,3 +1732,289 @@ body.articles-page {
 #paper-control-panel #paper-panel-content[hidden] {
     display: none !important;
 }
+
+/* =======================================================
+   НОВЫЕ ФОНОВЫЕ СТИЛИ: ШТРИХОВКА И ТЕНЬ ЛИСТА
+   ======================================================= */
+
+/* 1. ПЕРЕМЕННЫЕ ФОНА */
+:root {
+    --bg-base-color: #FAF8F3;
+
+    /* ТЕХНИКА 1: Штриховка */
+    --hatch-angle: 45deg;
+    --hatch-opacity: 0.12;
+    --hatch-spacing: 12px;
+    --hatch-color: #2B4C6F;
+
+    /* ТЕХНИКА 2: Тень листа */
+    --paper-elevation-x: 0px;
+    --paper-elevation-y: 18px;
+    --paper-shadow-blur: 36px;
+    --paper-shadow-opacity: 0.08;
+    --paper-shadow-color: rgba(30, 42, 56, 1);
+}
+
+/* Базовый цвет первого стиля */
+body:not(.tech-2-active) {
+    background-color: var(--bg-base-color);
+}
+
+/* Цвет второго стиля */
+body.tech-2-active {
+    background-color: #F4F1EA;
+}
+
+/* =======================================================
+   ТЕХНИКА 1: FINE LINE HATCHING / LETTERPRESS
+   ======================================================= */
+
+.hatching-bg-layer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.hatching-bg-layer.active-tech {
+    opacity: 1;
+}
+
+.hatching-canvas {
+    width: 100%;
+    height: 100%;
+    background-image: repeating-linear-gradient(
+        var(--hatch-angle),
+        var(--hatch-color) 0,
+        var(--hatch-color) 1px,
+        transparent 1px,
+        transparent var(--hatch-spacing)
+    );
+    opacity: var(--hatch-opacity);
+}
+
+/* =======================================================
+   ТЕХНИКА 2: FLOATING PAPER SHADOW
+   ======================================================= */
+
+.floating-paper-layer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    background-color: #F4F1EA;
+}
+
+.floating-paper-layer.active-tech {
+    opacity: 1;
+}
+
+/* Карточки при включенной Технике 2 */
+body.tech-2-active .paper-card {
+    background-color: #FFFFFF;
+    box-shadow:
+        var(--paper-elevation-x) var(--paper-elevation-y) var(--paper-shadow-blur)
+        rgba(30, 42, 56, var(--paper-shadow-opacity)),
+        0px 2px 6px rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    transition: box-shadow 0.2s ease, transform 0.3s ease;
+}
+
+/* Карточки при включенной Технике 1 */
+body:not(.tech-2-active) .paper-card {
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.03);
+}
+
+/* =======================================================
+   КАПСУЛА ДЛЯ ФОТО
+   ======================================================= */
+
+.capsule-frame {
+    border-radius: 140px;
+    overflow: hidden;
+    background-color: #FFFFFF;
+    position: relative;
+    transition: box-shadow 0.3s ease;
+}
+
+/* Капсула при включенной Технике 2 */
+body.tech-2-active .capsule-frame {
+    box-shadow:
+        calc(var(--paper-elevation-x) * 1.2)
+        calc(var(--paper-elevation-y) * 1.2)
+        calc(var(--paper-shadow-blur) * 1.1)
+        rgba(30, 42, 56, calc(var(--paper-shadow-opacity) * 1.2)),
+        0 0 0 1px rgba(255, 255, 255, 0.9) inset;
+}
+
+/* Капсула при включенной Технике 1 */
+body:not(.tech-2-active) .capsule-frame {
+    box-shadow:
+        0 20px 40px -10px rgba(43, 76, 111, 0.12),
+        0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+}
+
+/* =======================================================
+   ПАНЕЛЬ УПРАВЛЕНИЯ ФОНОМ
+   ======================================================= */
+
+#background-control-panel {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 10000;
+    width: 270px;
+    max-width: calc(100vw - 32px);
+    padding: 16px;
+    box-sizing: border-box;
+
+    background: rgba(250, 248, 243, 0.95);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    border: 1px solid rgba(43, 76, 111, 0.15);
+    border-radius: 16px;
+
+    box-shadow:
+        0 12px 35px rgba(44, 44, 44, 0.12),
+        0 2px 8px rgba(44, 44, 44, 0.04);
+
+    color: #2C2C2C;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+}
+
+/* Заголовок панели */
+#background-control-panel .background-panel-heading {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 0 10px;
+    background: none;
+    border: none;
+    border-bottom: 1px solid rgba(43, 76, 111, 0.15);
+
+    cursor: pointer;
+    text-align: left;
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: #2B4C6F;
+}
+
+/* Содержимое панели */
+#background-panel-content {
+    padding-top: 12px;
+}
+
+#background-panel-content[hidden],
+#controls-paper-shadow[hidden],
+#controls-hatching[hidden] {
+    display: none !important;
+}
+
+/* Подписи */
+.background-panel-label,
+.background-control label {
+    display: block;
+    font-weight: 500;
+    color: #5D6875;
+}
+
+.background-panel-label {
+    margin-bottom: 8px;
+}
+
+/* Кнопки переключения стилей */
+.background-tech-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 14px;
+}
+
+#background-control-panel .tech-tab {
+    padding: 8px 5px;
+    border: 1px solid #DCE2E8;
+    border-radius: 8px;
+    background: #F8F9FA;
+    color: #475569;
+
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 500;
+
+    transition: all 0.2s ease;
+}
+
+#background-control-panel .tech-tab.active {
+    background-color: #2B4C6F;
+    color: #FFFFFF;
+    border-color: #2B4C6F;
+    box-shadow: 0 2px 8px rgba(43, 76, 111, 0.25);
+}
+
+/* Блоки настроек */
+.background-control {
+    margin-bottom: 13px;
+}
+
+.background-control label {
+    margin-bottom: 4px;
+}
+
+.background-control span {
+    display: block;
+    margin-top: 2px;
+    margin-bottom: 4px;
+    color: #64748B;
+    font-family: monospace;
+    font-size: 11px;
+}
+
+/* Ползунки */
+#background-control-panel input[type="range"] {
+    display: block;
+    width: 100%;
+    margin: 5px 0;
+    accent-color: #2B4C6F;
+    cursor: pointer;
+}
+
+/* Цвета штриховки */
+.hatch-color-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 7px;
+    margin-top: 8px;
+}
+
+.hatch-color-buttons button {
+    height: 26px;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.hatch-color-buttons button:hover {
+    transform: scale(1.08);
+}
+
+.hatch-color-buttons button:first-child {
+    outline: 2px solid #2B4C6F;
+    outline-offset: 2px;
+}
