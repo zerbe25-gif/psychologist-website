@@ -116,11 +116,16 @@
 <!-- ПАНЕЛЬ УПРАВЛЕНИЯ ФАКТУРОЙ БУМАГИ -->
 <div id="paper-control-panel">
 
-    <div class="paper-panel-heading">
-        ТЕКСТУРА БУМАГИ
-    </div>
+    <button class="paper-panel-heading"
+            type="button"
+            onclick="togglePaperPanel()"
+            aria-expanded="false">
+        ТЕКСТУРА БУМАГИ <span id="paper-panel-arrow">＋</span>
+    </button>
 
-    <!-- 1. ОТТЕНОК БУМАГИ -->
+    <div id="paper-panel-content" hidden>
+      
+      <!-- 1. ОТТЕНОК БУМАГИ -->
     <label>Оттенок бумаги</label>
 
     <div class="paper-colors">
@@ -197,6 +202,7 @@
         min="0" max="1" step="0.05" value="0.35"
         oninput="updateLighting(this.value)">
 
+      </div>
 </div>
 
 
