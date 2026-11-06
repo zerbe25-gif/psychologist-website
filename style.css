@@ -2290,3 +2290,151 @@ body.tech-3-active {
 #controls-ambient-light[hidden] {
     display: none !important;
 }
+
+/* =======================================================
+   ЕДИНАЯ ПАНЕЛЬ РАЗРАБОТКИ
+   ======================================================= */
+
+#developer-panel {
+    position: relative;
+    z-index: 10000;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 16px;
+    background: rgba(250, 248, 243, 0.97);
+    border-bottom: 1px solid rgba(43, 76, 111, 0.16);
+    box-shadow: 0 4px 16px rgba(65, 55, 45, 0.07);
+    font-family: 'Inter', sans-serif;
+}
+
+/* Верхняя узкая строка */
+.developer-panel-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-height: 34px;
+}
+
+.developer-panel-caption {
+    margin-right: auto;
+    color: #2B4C6F;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+}
+
+/* Кнопки разделов */
+.developer-panel-tab {
+    padding: 8px 13px;
+    border: 1px solid rgba(43, 76, 111, 0.18);
+    border-radius: 8px;
+    background: #F3EFE4;
+    color: #334155;
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.developer-panel-tab:hover {
+    background: rgba(43, 76, 111, 0.10);
+}
+
+.developer-panel-tab.active {
+    background: #2B4C6F;
+    color: white;
+    border-color: #2B4C6F;
+}
+
+/* Область раскрытых настроек */
+#developer-panel-content {
+    padding: 12px 4px 4px;
+    border-top: 1px solid rgba(43, 76, 111, 0.12);
+    margin-top: 8px;
+}
+
+#developer-panel-content[hidden],
+#animation-control-panel[hidden],
+#background-control-panel[hidden],
+#photos-panel-content[hidden] {
+    display: none !important;
+}
+
+/* Убираем старое самостоятельное оформление панелей */
+#animation-control-panel,
+#background-control-panel {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 100%;
+    max-width: none;
+    padding: 8px 4px;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+}
+
+/* Старые заголовки заменены общей верхней строкой */
+#animation-control-panel .animation-panel-title,
+#background-control-panel .background-panel-heading {
+    display: none;
+}
+
+/* Компактное расположение кнопок анимации */
+#animation-control-panel .animation-panel-buttons {
+    justify-content: flex-start;
+    gap: 7px;
+}
+
+#animation-control-panel .animation-tab {
+    padding: 7px 11px;
+    font-size: 11px;
+}
+
+#animation-control-panel #animation-description {
+    margin-top: 8px;
+    text-align: left;
+}
+
+/* Настройки фона */
+#background-control-panel #background-panel-content {
+    padding-top: 4px;
+}
+
+#background-control-panel .background-tech-tabs {
+    max-width: 420px;
+}
+
+/* Мобильное отображение */
+@media (max-width: 600px) {
+    #developer-panel {
+        padding: 8px 10px;
+    }
+
+    .developer-panel-bar {
+        justify-content: flex-start;
+        gap: 5px;
+    }
+
+    .developer-panel-caption {
+        width: 100%;
+        margin-bottom: 3px;
+    }
+
+    .developer-panel-tab {
+        flex: 1;
+        padding: 8px 5px;
+        font-size: 9px;
+    }
+
+    #animation-control-panel .animation-panel-buttons {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+}
