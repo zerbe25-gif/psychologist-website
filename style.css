@@ -304,6 +304,7 @@ border-radius: var(--lens-radius);
     inset 0 1px 3px rgba(255, 255, 255, 0.95);
 
 animation: none;
+}
 
 /* Фотография внутри линзы */
 .photo-frame-1 .gallery-photo {
