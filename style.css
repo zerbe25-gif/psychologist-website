@@ -278,7 +278,13 @@ body {
     left: 10px;
     top: -25px;
 
-    border-radius: 34px;
+    --lens-radius: 34px;
+--lens-shadow-y: 20px;
+--lens-shadow-blur: 42px;
+--lens-shadow-opacity: 0.18;
+--lens-glare-opacity: 0.48;
+
+border-radius: var(--lens-radius);
     overflow: hidden;
     isolation: isolate;
 
@@ -292,10 +298,12 @@ body {
     );
 
     box-shadow:
-        0 20px 42px rgba(35, 45, 55, 0.18),
-        0 5px 15px rgba(35, 45, 55, 0.08),
-        inset 0 1px 3px rgba(255, 255, 255, 0.95);
-}
+    0 var(--lens-shadow-y) var(--lens-shadow-blur)
+    rgba(35, 45, 55, var(--lens-shadow-opacity)),
+    0 5px 15px rgba(35, 45, 55, 0.08),
+    inset 0 1px 3px rgba(255, 255, 255, 0.95);
+
+animation: none;
 
 /* Фотография внутри линзы */
 .photo-frame-1 .gallery-photo {
@@ -308,7 +316,7 @@ body {
     position: relative;
     z-index: 1;
 
-    border-radius: 29px;
+   border-radius: calc(var(--lens-radius) - 5px);
     transform: scale(1.015);
     transition:
         opacity 0.8s ease,
@@ -322,7 +330,7 @@ body {
     inset: 4px;
     z-index: 2;
 
-    border-radius: 29px;
+   border-radius: calc(var(--lens-radius) - 5px);
     pointer-events: none;
 
     background: linear-gradient(
@@ -347,7 +355,7 @@ body {
     inset: 0;
     z-index: 3;
 
-    border-radius: 34px;
+   border-radius: var(--lens-radius);
     border: 1px solid rgba(255, 255, 255, 0.75);
 
     box-shadow:
@@ -2562,4 +2570,51 @@ body.tech-3-active {
     flex-wrap: nowrap;
     gap: 3px;
     align-items: center;
+}
+
+/* УПРАВЛЕНИЕ ЭФФЕКТОМ ЛИНЗЫ */
+
+#photos-panel-content {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 8px 5px;
+}
+
+.lens-controls-row {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    overflow-x: auto;
+    padding: 4px 2px 8px;
+    box-sizing: border-box;
+}
+
+.lens-control {
+    flex: 1 0 125px;
+    min-width: 125px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-family: 'Inter', sans-serif;
+}
+
+.lens-control label {
+    font-size: 10px;
+    color: #2B4C6F;
+    white-space: nowrap;
+}
+
+.lens-control span {
+    font-size: 11px;
+    color: #A64B2A;
+}
+
+.lens-control input[type="range"] {
+    width: 100%;
+    margin: 2px 0;
+    accent-color: #2B4C6F;
+    cursor: pointer;
 }
