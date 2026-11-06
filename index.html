@@ -34,7 +34,7 @@
 <div id="tech-ambient-light" class="ambient-light-bg-layer"></div>
   
 <!-- ПАНЕЛЬ УПРАВЛЕНИЯ ФОНОМ -->
-<aside id="background-control-panel">
+<aside id="background-control-panel" hidden>
     <button class="background-panel-heading"
             type="button"
             onclick="toggleBackgroundPanel()"
@@ -43,7 +43,7 @@
         <span id="background-panel-arrow">＋</span>
     </button>
 
-    <div id="background-panel-content" hidden>
+<div id="background-panel-content">
 
         <div class="background-panel-label">
             Техника визуализации
@@ -232,9 +232,45 @@
     </div>
 </aside>
   
+          <div id="photos-panel-content" hidden>
+            <div class="background-panel-label">
+                Настройки фотографий будут добавлены здесь.
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- КОНЕЦ ЕДИНОЙ ПАНЕЛИ РАЗРАБОТКИ -->
+  
   
 <!-- ПАНЕЛЬ ВРЕМЕННОГО УПРАВЛЕНИЯ АНИМАЦИЯМИ -->
-<div id="animation-control-panel">
+  <!-- ЕДИНАЯ ПАНЕЛЬ РАЗРАБОТКИ -->
+<div id="developer-panel">
+
+    <div class="developer-panel-bar">
+        <span class="developer-panel-caption">ПАНЕЛЬ РАЗРАБОТКИ</span>
+
+        <button type="button" class="developer-panel-tab"
+                data-panel-section="animation"
+                onclick="toggleDevPanelSection('animation')">
+            АНИМАЦИЯ
+        </button>
+
+        <button type="button" class="developer-panel-tab"
+                data-panel-section="background"
+                onclick="toggleDevPanelSection('background')">
+            ФОН
+        </button>
+
+        <button type="button" class="developer-panel-tab"
+                data-panel-section="photos"
+                onclick="toggleDevPanelSection('photos')">
+            ФОТОГРАФИИ
+        </button>
+    </div>
+
+    <div id="developer-panel-content" hidden>
+<div id="animation-control-panel" hidden>
     <div class="animation-panel-title">
         ПАНЕЛЬ РАЗРАБОТКИ · АНИМАЦИЯ ЗАГОЛОВКОВ
     </div>
