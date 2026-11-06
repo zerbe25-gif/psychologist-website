@@ -177,7 +177,14 @@
                min="5" max="70" step="5" value="35"
                oninput="updateWatercolorBlur(this.value)">
     </div>
-
+  
+<div class="background-control">
+    <label for="watercolor-origin-input">Начало распространения цвета:</label>
+    <span id="val-watercolor-origin">25%</span>
+    <input id="watercolor-origin-input" type="range"
+           min="0" max="100" step="5" value="25"
+           oninput="updateWatercolorOrigin(this.value)">
+</div>
     <div class="background-control">
         <label>Цветовая палитра:</label>
         <div class="hatch-color-buttons watercolor-palettes">
