@@ -905,3 +905,49 @@ function toggleDevPanelSection(section) {
         activeButton.setAttribute('aria-expanded', 'true');
     }
 }
+
+
+// =======================================================
+// УПРАВЛЕНИЕ ГЛАВНОЙ ФОТОРАМКОЙ — ЭФФЕКТ ЛИНЗА
+// =======================================================
+
+function getLensFrame() {
+    return document.querySelector('.photo-frame-1');
+}
+
+function setLensValue(property, value) {
+    const frame = getLensFrame();
+    if (frame) {
+        frame.style.setProperty(property, value);
+    }
+}
+
+function updateLensRadius(value) {
+    setLensValue('--lens-radius', value + 'px');
+    document.getElementById('val-lens-radius').textContent =
+        value + ' px';
+}
+
+function updateLensShadowY(value) {
+    setLensValue('--lens-shadow-y', value + 'px');
+    document.getElementById('val-lens-shadow-y').textContent =
+        value + ' px';
+}
+
+function updateLensShadowBlur(value) {
+    setLensValue('--lens-shadow-blur', value + 'px');
+    document.getElementById('val-lens-shadow-blur').textContent =
+        value + ' px';
+}
+
+function updateLensShadowDepth(value) {
+    setLensValue('--lens-shadow-opacity', Number(value) / 100);
+    document.getElementById('val-lens-shadow-depth').textContent =
+        value + '%';
+}
+
+function updateLensGlare(value) {
+    setLensValue('--lens-glare-opacity', Number(value) / 100);
+    document.getElementById('val-lens-glare').textContent =
+        value + '%';
+}
