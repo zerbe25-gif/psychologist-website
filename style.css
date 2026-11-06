@@ -1627,7 +1627,7 @@ body {
     filter: url(#paper-depth-filter);
 
     opacity: var(--paper-relief);
-}
+
 
 /* Дополнительная глубина световых переходов */
 .paper-lighting-layer {
@@ -1641,4 +1641,22 @@ body {
     }
 }
 
+
+/* Кнопка раскрытия панели бумаги */
+#paper-control-panel .paper-panel-heading {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font: inherit;
+    color: #2B4C6F;
+}
+
+#paper-control-panel #paper-panel-content[hidden] {
+    display: none !important;
+}
 
