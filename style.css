@@ -2458,3 +2458,25 @@ body.tech-3-active {
 #background-control-panel .background-control {
     max-width: 460px;
 }
+
+/* КОМПАКТНОЕ РАСПОЛОЖЕНИЕ НАСТРОЕК ФОНА */
+
+#background-control-panel .background-tech-tabs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 5px;
+    margin-bottom: 8px;
+}
+
+#background-control-panel .background-control {
+    margin-bottom: 6px;
+}
+
+#background-control-panel .background-control label {
+    margin-bottom: 2px;
+}
+
+#background-control-panel .background-control input[type="range"] {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
