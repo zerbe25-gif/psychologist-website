@@ -112,91 +112,93 @@
 <div id="paper-depth" class="paper-depth-layer"></div>
 
 
+
 <!-- ПАНЕЛЬ УПРАВЛЕНИЯ ФАКТУРОЙ БУМАГИ -->
 <div id="paper-control-panel">
+
     <div class="paper-panel-heading">
         ТЕКСТУРА БУМАГИ
-      
-<!-- 5. ГЛУБИНА ЗЕРНА -->
-<label for="input-depth">
-    Глубина зерна:
-    <span id="val-depth">45%</span>
-</label>
-<input
-    id="input-depth"
-    type="range"
-    min="0"
-    max="1"
-    step="0.05"
-    value="0.45"
-    oninput="updateDepth(this.value)"
->
-
-<!-- 6. РЕЛЬЕФ БУМАГИ -->
-<label for="input-relief">
-    Рельеф бумаги:
-    <span id="val-relief">35%</span>
-</label>
-<input
-    id="input-relief"
-    type="range"
-    min="0"
-    max="1"
-    step="0.05"
-    value="0.35"
-    oninput="updateRelief(this.value)"
->
-
-<!-- 7. ГЛУБИНА ОСВЕЩЕНИЯ -->
-<label for="input-lighting">
-    Глубина освещения:
-    <span id="val-lighting">35%</span>
-</label>
-<input
-    id="input-lighting"
-    type="range"
-    min="0"
-    max="1"
-    step="0.05"
-    value="0.35"
-    oninput="updateLighting(this.value)"
->
-
     </div>
 
+    <!-- 1. ОТТЕНОК БУМАГИ -->
     <label>Оттенок бумаги</label>
+
     <div class="paper-colors">
         <button style="background:#FAF8F3"
             onclick="setPaperColor('#FAF8F3',this)"></button>
+
         <button style="background:#F3EFE4"
             onclick="setPaperColor('#F3EFE4',this)"></button>
+
         <button style="background:#EBE5D8"
             onclick="setPaperColor('#EBE5D8',this)"></button>
+
         <button style="background:#FAFAFA"
             onclick="setPaperColor('#FAFAFA',this)"></button>
     </div>
 
-    <label for="input-opacity">Выраженность:
+    <!-- 2. ВЫРАЖЕННОСТЬ ФАКТУРЫ -->
+    <label for="input-opacity">
+        Выраженность:
         <span id="val-opacity">55%</span>
     </label>
+
     <input id="input-opacity" type="range"
         min="0.1" max="0.9" step="0.05" value="0.55"
         oninput="updateOpacity(this.value)">
 
-    <label for="input-grain">Размер зерна:
+    <!-- 3. РАЗМЕР ЗЕРНА -->
+    <label for="input-grain">
+        Размер зерна:
         <span id="val-grain">Среднее</span>
     </label>
+
     <input id="input-grain" type="range"
         min="0.015" max="0.08" step="0.005" value="0.035"
         oninput="updateGrain(this.value)">
 
-    <label for="input-blur">Мягкость волокон:
+    <!-- 4. МЯГКОСТЬ ВОЛОКОН -->
+    <label for="input-blur">
+        Мягкость волокон:
         <span id="val-blur">0.4px</span>
     </label>
+
     <input id="input-blur" type="range"
         min="0" max="1.2" step="0.1" value="0.4"
         oninput="updateBlur(this.value)">
+
+    <!-- 5. ГЛУБИНА ЗЕРНА -->
+    <label for="input-depth">
+        Глубина зерна:
+        <span id="val-depth">45%</span>
+    </label>
+
+    <input id="input-depth" type="range"
+        min="0" max="1" step="0.05" value="0.45"
+        oninput="updateDepth(this.value)">
+
+    <!-- 6. РЕЛЬЕФ БУМАГИ -->
+    <label for="input-relief">
+        Рельеф бумаги:
+        <span id="val-relief">35%</span>
+    </label>
+
+    <input id="input-relief" type="range"
+        min="0" max="1" step="0.05" value="0.35"
+        oninput="updateRelief(this.value)">
+
+    <!-- 7. ГЛУБИНА ОСВЕЩЕНИЯ -->
+    <label for="input-lighting">
+        Глубина освещения:
+        <span id="val-lighting">35%</span>
+    </label>
+
+    <input id="input-lighting" type="range"
+        min="0" max="1" step="0.05" value="0.35"
+        oninput="updateLighting(this.value)">
+
 </div>
+
 
   <!-- ШАПКА САЙТА -->
 
