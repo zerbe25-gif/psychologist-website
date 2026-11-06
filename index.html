@@ -27,6 +27,12 @@
 
 <div id="tech-floating-paper" class="floating-paper-layer"></div>
 
+  <!-- 3. СЛОЙ ОРГАНИЧЕСКОЙ АКВАРЕЛИ -->
+<div id="tech-watercolor" class="watercolor-bg-layer"></div>
+
+<!-- 4. СЛОЙ АНИМИРОВАННОЙ ВУАЛИ СВЕТА -->
+<div id="tech-ambient-light" class="ambient-light-bg-layer"></div>
+  
 <!-- ПАНЕЛЬ УПРАВЛЕНИЯ ФОНОМ -->
 <aside id="background-control-panel">
     <button class="background-panel-heading"
@@ -43,20 +49,34 @@
             Техника визуализации
         </div>
 
-        <div class="background-tech-tabs">
-            <button onclick="switchTechnique(1, this)"
-                    class="tech-tab active"
-                    type="button">
-                1. Штриховка
-            </button>
+      <div class="background-tech-tabs">
 
-            <button onclick="switchTechnique(2, this)"
-                    class="tech-tab"
-                    type="button">
-                2. Тень листа
-            </button>
-        </div>
+    <button onclick="switchTechnique(1, this)"
+            class="tech-tab active"
+            type="button">
+        1. Штриховка
+    </button>
 
+    <button onclick="switchTechnique(2, this)"
+            class="tech-tab"
+            type="button">
+        2. Тень листа
+    </button>
+
+    <button onclick="switchTechnique(3, this)"
+            class="tech-tab"
+            type="button">
+        3. Акварель
+    </button>
+
+    <button onclick="switchTechnique(4, this)"
+            class="tech-tab"
+            type="button">
+        4. Вуаль света
+    </button>
+
+</div>
+      
         <!-- НАСТРОЙКИ ШТРИХОВКИ -->
         <div id="controls-hatching">
 
@@ -131,6 +151,77 @@
             </div>
 
         </div>
+      <!-- НАСТРОЙКИ ТЕХНИКИ 3: АКВАРЕЛЬ -->
+<div id="controls-watercolor" hidden>
+
+    <div class="background-control">
+        <label for="watercolor-opacity-input">Интенсивность акварели:</label>
+        <span id="val-watercolor-opacity">45%</span>
+        <input id="watercolor-opacity-input" type="range"
+               min="0.10" max="1" step="0.05" value="0.45"
+               oninput="updateWatercolorOpacity(this.value)">
+    </div>
+
+    <div class="background-control">
+        <label for="watercolor-size-input">Размер мазков:</label>
+        <span id="val-watercolor-size">100%</span>
+        <input id="watercolor-size-input" type="range"
+               min="60" max="180" step="5" value="100"
+               oninput="updateWatercolorSize(this.value)">
+    </div>
+
+    <div class="background-control">
+        <label for="watercolor-blur-input">Мягкость переходов:</label>
+        <span id="val-watercolor-blur">35px</span>
+        <input id="watercolor-blur-input" type="range"
+               min="5" max="70" step="5" value="35"
+               oninput="updateWatercolorBlur(this.value)">
+    </div>
+
+    <div class="background-control">
+        <label>Цветовая палитра:</label>
+        <div class="hatch-color-buttons watercolor-palettes">
+            <button type="button" onclick="setWatercolorPalette('blue', this)"
+                    style="background:#829BAA" title="Голубая"></button>
+            <button type="button" onclick="setWatercolorPalette('olive', this)"
+                    style="background:#A1A889" title="Оливковая"></button>
+            <button type="button" onclick="setWatercolorPalette('rose', this)"
+                    style="background:#C99E98" title="Розовая"></button>
+            <button type="button" onclick="setWatercolorPalette('sand', this)"
+                    style="background:#C9B99C" title="Песочная"></button>
+        </div>
+    </div>
+
+</div>
+
+<!-- НАСТРОЙКИ ТЕХНИКИ 4: ВУАЛЬ СВЕТА -->
+<div id="controls-ambient-light" hidden>
+
+    <div class="background-control">
+        <label for="ambient-opacity-input">Интенсивность свечения:</label>
+        <span id="val-ambient-opacity">35%</span>
+        <input id="ambient-opacity-input" type="range"
+               min="0.05" max="0.8" step="0.05" value="0.35"
+               oninput="updateAmbientOpacity(this.value)">
+    </div>
+
+    <div class="background-control">
+        <label for="ambient-size-input">Размер световых областей:</label>
+        <span id="val-ambient-size">100%</span>
+        <input id="ambient-size-input" type="range"
+               min="60" max="180" step="5" value="100"
+               oninput="updateAmbientSize(this.value)">
+    </div>
+
+    <div class="background-control">
+        <label for="ambient-speed-input">Скорость движения:</label>
+        <span id="val-ambient-speed">20 сек.</span>
+        <input id="ambient-speed-input" type="range"
+               min="8" max="50" step="2" value="20"
+               oninput="updateAmbientSpeed(this.value)">
+    </div>
+
+</div>
     </div>
 </aside>
   
