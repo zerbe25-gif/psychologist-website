@@ -858,3 +858,50 @@ function updateAmbientSpeed(val) {
     const label = document.getElementById('val-ambient-speed');
     if (label) label.textContent = val + ' сек.';
 }
+
+// =======================================================
+// ЕДИНАЯ ПАНЕЛЬ РАЗРАБОТКИ
+// =======================================================
+
+function toggleDevPanelSection(section) {
+    const content = document.getElementById('developer-panel-content');
+
+    const sections = {
+        animation: document.getElementById('animation-control-panel'),
+        background: document.getElementById('background-control-panel'),
+        photos: document.getElementById('photos-panel-content')
+    };
+
+    if (!content || !sections[section]) return;
+
+    const clickedSectionIsOpen =
+        !content.hidden && !sections[section].hidden;
+
+    // Закрываем все разделы
+    Object.values(sections).forEach(panel => {
+        panel.hidden = true;
+    });
+
+    document.querySelectorAll('.developer-panel-tab').forEach(button => {
+        button.classList.remove('active');
+        button.setAttribute('aria-expanded', 'false');
+    });
+
+    if (clickedSectionIsOpen) {
+        content.hidden = true;
+        return;
+    }
+
+    // Открываем выбранный раздел
+    content.hidden = false;
+    sections[section].hidden = false;
+
+    const activeButton = document.querySelector(
+        `.developer-panel-tab[data-panel-section="${section}"]`
+    );
+
+    if (activeButton) {
+        activeButton.classList.add('active');
+        activeButton.setAttribute('aria-expanded', 'true');
+    }
+}
