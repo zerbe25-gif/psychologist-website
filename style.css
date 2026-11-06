@@ -2439,44 +2439,84 @@ body.tech-3-active {
     }
 }
 
-/* КОМПАКТНАЯ ПАНЕЛЬ НАСТРОЕК ФОНА */
+
+/* КОМПАКТНАЯ ГОРИЗОНТАЛЬНАЯ ПАНЕЛЬ НАСТРОЕК ФОНА */
 
 #background-control-panel {
-    width: 520px;
+    width: 100%;
     max-width: 100%;
-    padding: 6px 4px;
+    padding: 5px 8px;
+    box-sizing: border-box;
 }
 
 #background-control-panel #background-panel-content {
-    max-width: 500px;
+    max-width: 100%;
+    padding-top: 6px;
 }
+
+/* Техники визуализации — в одну строку */
 
 #background-control-panel .background-tech-tabs {
-    max-width: 420px;
-}
-
-#background-control-panel .background-control {
-    max-width: 460px;
-}
-
-/* КОМПАКТНОЕ РАСПОЛОЖЕНИЕ НАСТРОЕК ФОНА */
-
-#background-control-panel .background-tech-tabs {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 5px;
-    margin-bottom: 8px;
-}
-
-#background-control-panel .background-control {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 4px;
+    max-width: 100%;
     margin-bottom: 6px;
 }
 
-#background-control-panel .background-control label {
-    margin-bottom: 2px;
+#background-control-panel .tech-tab {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 5px 3px;
+    font-size: 10px;
+    white-space: nowrap;
 }
 
+/* Все настройки — горизонтально */
+
+#background-control-panel .background-control {
+    display: inline-flex;
+    flex-direction: column;
+    vertical-align: top;
+    width: 105px;
+    max-width: 105px;
+    margin: 2px 5px 4px 0;
+    gap: 2px;
+}
+
+/* Подписи */
+
+#background-control-panel .background-control label {
+    font-size: 10px;
+    line-height: 1.2;
+    margin-bottom: 0;
+}
+
+/* Короткие ползунки */
+
 #background-control-panel .background-control input[type="range"] {
-    margin-top: 2px;
-    margin-bottom: 2px;
+    width: 100px;
+    max-width: 100%;
+    margin: 2px 0;
+}
+
+/* Компактные цветовые кнопки */
+
+#background-control-panel .background-color-btn,
+#background-control-panel .color-button {
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    padding: 0;
+    margin: 2px;
+}
+
+/* Палитры — горизонтально */
+
+#background-control-panel .background-colors,
+#background-control-panel .color-palette {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 3px;
+    align-items: center;
 }
