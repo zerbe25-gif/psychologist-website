@@ -369,49 +369,235 @@ body {
     pointer-events: none;
 }
 
+
 /* =========================================
-   ОКНА И ЗАТЕМНЕНИЕ
+   ОКНА САЙТА И АНИМАЦИЯ ВЫЕЗДА СПРАВА
 ========================================= */
 
 .modal-overlay {
+
   position: fixed;
   inset: 0;
   z-index: 20;
+
   background: rgba(40, 40, 40, 0.13);
+
   backdrop-filter: blur(9px);
   -webkit-backdrop-filter: blur(9px);
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   padding: 20px;
+
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+
 }
 
 .modal-overlay.active {
+
   opacity: 1;
   visibility: visible;
+
 }
 
+
+/* Общие настройки окон */
+
 .modal {
+
   display: none;
+
   width: min(100%, 570px);
+
   max-height: 85vh;
   overflow-y: auto;
+
   position: relative;
+
   padding: 55px 45px;
+
   background: #eae3dc;
+
   color: var(--text-color);
+
   box-shadow: 0 20px 70px rgba(0,0,0,0.12);
+
   border: 1px solid rgba(255,255,255,0.7);
+
 }
 
 .modal.active {
+
   display: block;
+
   animation: modalEnter 0.4s ease both;
+
 }
 
+
+/* =========================================
+   ПЯТЬ ИНФОРМАЦИОННЫХ ОКОН
+========================================= */
+.content-modal {
+  display: block;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 21;
+  width: min(56vw, 1050px);
+  height: 100vh;
+  height: 100dvh;
+  max-height: none;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 75px 65px 55px 115px;
+  background: #ffffff;
+  color: var(--text-color);
+  border: none;
+  border-radius: 0;
+  box-shadow: -25px 0 65px rgba(0,0,0,0.12);
+
+  /* Диагональная левая граница */
+  clip-path: polygon(
+    30% 0,
+    100% 0,
+    100% 100%,
+    0 100%
+  );
+
+  transform: translateX(105%);
+
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform 0.95s cubic-bezier(0.22, 0.75, 0.25, 1),
+    visibility 0s linear 0.95s;
+}
+
+
+/* Открытое окно */
+.content-modal.active {
+  display: block;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(0);
+  animation: none;
+  transition:
+    transform 0.95s cubic-bezier(0.22, 0.75, 0.25, 1),
+    visibility 0s;
+}
+
+
+/* Плавное появление заголовка и текста */
+.content-modal h2,
+.content-modal .modal-content-text {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.65s ease,
+    transform 0.65s cubic-bezier(0.22, 0.75, 0.25, 1);
+}
+
+.content-modal.active h2 {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.32s;
+}
+
+.content-modal.active .modal-content-text {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.48s;
+}
+
+
+/* =========================================
+   РАЗМЫТИЕ ФОНА ДЛЯ БОКОВЫХ ОКОН
+========================================= */
+
+.modal-overlay.drawer-mode {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  opacity: 1;
+  visibility: hidden;
+  pointer-events: none;
+
+  /* Оставляем слой до окончания анимации */
+  transition: visibility 0s linear 1.95s;
+}
+
+
+/* Слой размытия */
+.modal-overlay.drawer-mode::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: rgba(255,255,255,0.06);
+  opacity: 0;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  pointer-events: none;
+  transition:
+    opacity 1.45s cubic-bezier(0.16, 1, 0.3, 1) 0.45s,
+    backdrop-filter 1.45s cubic-bezier(0.16, 1, 0.3, 1) 0.45s;
+
+}
+
+
+/* Размытие включается не сразу, а в середине выезда */
+.modal-overlay.drawer-mode.active {
+  visibility: visible;
+  pointer-events: auto;
+  transition: visibility 0s;
+}
+
+.modal-overlay.drawer-mode.active::before {
+  opacity: 1;
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+}
+
+
+/* =========================================
+   АДАПТАЦИЯ БОКОВЫХ ОКОН
+========================================= */
+@media (max-width: 900px) {
+  .content-modal {
+    width: min(94vw, 680px);
+    padding: 65px 38px 45px 90px;
+    clip-path: polygon(
+      22% 0,
+      100% 0,
+      100% 100%,
+      0 100%
+    );
+  }
+}
+
+@media (max-width: 600px) {
+  .content-modal {
+    width: 100vw;
+    padding: 65px 25px 40px 60px;
+    clip-path: polygon(
+      12% 0,
+      100% 0,
+      100% 100%,
+      0 100%
+    );
+  }
+}
+
+/* Старая анимация сохраняется для окна записи */
 @keyframes modalEnter {
   from {
     opacity: 0;
@@ -422,6 +608,7 @@ body {
     transform: translateY(0);
   }
 }
+
 
 .modal-close {
   position: absolute;
