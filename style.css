@@ -2567,9 +2567,9 @@ body.tech-3-active {
 /* Ноутбуки: увеличение на 10% */
 @media (min-width: 901px) and (max-width: 1399px) {
     .photo-frame-1 {
-        width: 58.4%;
-        flex: 0 0 58.4%;
-        max-width: 264px;
+        width: 68.4%;
+        flex: 0 0 68.4%;
+        max-width: 290px;
         height: auto;
         aspect-ratio: 3 / 4;
 
@@ -2586,7 +2586,7 @@ body.tech-3-active {
     .photo-frame-1 {
         width: 88%;
         flex: 0 0 88%;
-        max-width: 480px;
+        max-width: 580px;
         height: auto;
         aspect-ratio: 3 / 4;
 
