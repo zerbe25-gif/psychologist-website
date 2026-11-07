@@ -107,15 +107,7 @@ const photoSets = {
         "images/photos/first-6.jpg"
     ],
 
-    // Фотографии второй рамки
-    second: [
-        "images/photos/second-1.jpg",
-        "images/photos/second-2.jpg",
-        "images/photos/second-3.jpg",
-       "images/photos/second-4.jpg",
-       "images/photos/second-5.jpg"
-    ]
-
+ 
 };
 
 const photoOne = document.getElementById("photo-one");
