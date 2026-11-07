@@ -275,7 +275,7 @@ body {
 /* Главная рамка — оптическая линза */
 .photo-frame-1 {
     position: relative;
-    left: 10px;
+    left: 20px;
     top: -25px;
 
     --lens-radius: 34px;
@@ -1221,8 +1221,8 @@ font-size: 60px;
 
 /* Вторая рамка — капсула, размер как у первой */
 .photo-frame-2 {
-    flex: 0 0 24%;
-    width: 24%;
+    flex: 0 0 34%;
+    width: 34%;
     max-width: 240px;
     height: auto;
     aspect-ratio: 2252 / 3600;
@@ -1233,8 +1233,8 @@ font-size: 60px;
     background: white;
 
     position: relative;
-    left: -20px;
-    top: -120px;
+    left: 0px;
+    top: -100px;
 }
 
 /* Фотография внутри капсулы */
