@@ -2592,7 +2592,5 @@ body.tech-3-active {
         height: auto;
         aspect-ratio: 3 / 4;
         flex: 0 0 auto;
-
-        translate: 10.% 0;
     }
 }
