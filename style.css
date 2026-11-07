@@ -252,7 +252,7 @@ body {
 .photo-frame {
     flex: 0 1 54%;
     width: 54%;
-    max-width: 240px;
+    max-width: 420px;
     height: auto;
     aspect-ratio: 3 / 4;
     min-height: 0;
@@ -725,7 +725,7 @@ animation: none;
     min-height: 0;
   }
 
-  .photo-frame-1,{
+  .photo-frame-1 {
     transform: none;
   }
 
@@ -827,15 +827,15 @@ animation: none;
     gap: clamp(12px, 2vw, 38px);
   }
 
-  .photo-frame {
+ .photo-frame {
     flex: 0 1 auto;
     width: auto;
-    max-width: none;
-    height: clamp(280px, 61vh, 620px);
+    max-width: 420px;
+    height: clamp(280px, 45vh, 480px);
     min-height: 0;
     aspect-ratio: 3 / 4;
-  }
-
+}
+   
   .photo-frame-1,{
       transform: none;
   }
