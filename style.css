@@ -2576,21 +2576,3 @@ body.tech-3-active {
         flex: 0 0 auto;
     }
 }
-
-/* Скрываем старую вторую фоторамку на компьютерах */
-@media (min-width: 901px) {
-    .photo-frame-2 {
-        display: none;
-    }
-}
-
-/* Увеличение и смещение фотографии на больших мониторах */
-@media (min-width: 1400px) {
-    .photo-frame-1 {
-        width: clamp(280px, 26vw, 360px);
-        max-width: 360px;
-        height: auto;
-        aspect-ratio: 3 / 4;
-        flex: 0 0 auto;
-    }
-}
