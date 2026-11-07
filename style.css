@@ -828,7 +828,7 @@ animation: none;
   }
 
   .photo-frame {
-    flex: 0 -1 auto;
+    flex: 0 1 auto;
     width: auto;
     max-width: none;
     height: clamp(280px, 61vh, 620px);
