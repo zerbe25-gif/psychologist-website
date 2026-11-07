@@ -12,7 +12,7 @@
 
 
 :root {
-  --header-color: rgba(240, 232, 228, 0.48);
+ --header-color: rgba(255, 255, 255, 0.90);
   --background-color: #ffffff;
   --panel-color: #eae3dc;
   --accent-color: #608089;
@@ -52,16 +52,17 @@ body {
 ========================================= */
 
 .header {
-  width: 90%;
+  width: 94%;
+  margin: 0 auto;
   min-height: 80px;
-  padding: 22px 4.5%;
+  padding: 12px 3%;
   background-color: var(--header-color);
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: minmax(220px, 1fr) auto minmax(190px, 1fr);
   align-items: center;
   position: relative;
   z-index: 2;
-  border-bottom: 1px solid rgba(255,255,255,0.55);
+  border-bottom: 1px solid rgba(255,255,255,0.7);
 }
 
 .site-name {
@@ -679,11 +680,20 @@ body {
     overflow: hidden;
   }
 
-  .header {
-    height: 53px;
-    min-height: 50px;
-  }
+ .header {
+  height: auto;
+  min-height: 82px;
+  padding: 12px 3%;
+  width: 94%;
+  margin: 0 auto;
+}
 
+.header-nav,
+.appointment-button {
+  position: relative;
+  top: -4px;
+}
+   
   .main-content {
     height: calc(100vh - 112px);
     height: calc(100dvh - 112px);
