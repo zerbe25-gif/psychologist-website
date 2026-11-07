@@ -718,12 +718,6 @@ body {
     gap: clamp(12px, 1.5vw, 25px);
   }
 
-  .photo-frame {
-    max-width: 260px;
-    height: auto;
-    aspect-ratio: 3 / 4;
-    min-height: 0;
-  }
 
   .photo-frame-1 {
     transform: none;
@@ -827,15 +821,7 @@ body {
     gap: clamp(12px, 2vw, 38px);
   }
 
- .photo-frame {
-    flex: 0 1 auto;
-    width: auto;
-    max-width: 420px;
-    height: clamp(280px, 45vh, 480px);
-    min-height: 0;
-    aspect-ratio: 3 / 4;
-}
-   
+  
   .photo-frame-1 {
       transform: none;
   }
@@ -860,9 +846,6 @@ body {
     gap: 12px;
   }
 
-  .photo-frame {
-    height: min(50vh, 380px);
-  }
 
   .timer-container {
     width: 56px;
