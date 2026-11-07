@@ -13,7 +13,7 @@
 
 
 :root {
-  --header-color: rgba(240, 232, 228, 0.48));
+  --header-color: rgba(240, 232, 228, 0.48);
   --background-color: #ffffff;
   --panel-color: #eae3dc;
   --accent-color: #608089;
@@ -836,7 +836,7 @@ animation: none;
     aspect-ratio: 3 / 4;
 }
    
-  .photo-frame-1,{
+  .photo-frame-1 {
       transform: none;
   }
 
@@ -2564,4 +2564,15 @@ body.tech-3-active {
     margin: 2px 0;
     accent-color: #2B4C6F;
     cursor: pointer;
+}
+
+/* Размер единственной фотографии на компьютерах */
+@media (min-width: 901px) {
+    .photo-frame-1 {
+        width: clamp(190px, 22vw, 280px);
+        max-width: 280px;
+        height: auto;
+        aspect-ratio: 3 / 4;
+        flex: 0 0 auto;
+    }
 }
