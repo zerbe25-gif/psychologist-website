@@ -1,7 +1,8 @@
 
-/* =========================================
-   ОКНА САЙТА
-========================================= */
+
+// =========================================
+// ОКНА САЙТА
+// =========================================
 
 const overlay = document.getElementById("modal-overlay");
 
@@ -11,16 +12,42 @@ const openButtons = document.querySelectorAll("[data-modal]");
 
 const closeButtons = document.querySelectorAll(".modal-close");
 
+let drawerOverlayTimer = null;
+
+
+// Открытие окна
 
 function openModal(modalId) {
 
   const selectedModal = document.getElementById(modalId);
 
-  if (!selectedModal) return;
+  if (!selectedModal || !overlay) return;
+
+  // Отменяем предыдущее закрытие, если оно ещё выполняется
+
+  if (drawerOverlayTimer !== null) {
+
+    clearTimeout(drawerOverlayTimer);
+
+    drawerOverlayTimer = null;
+
+  }
+
+  // Закрываем остальные окна
 
   modals.forEach(modal => {
+
     modal.classList.remove("active");
+
   });
+
+  // Определяем тип открываемого окна
+
+  const isDrawer = selectedModal.classList.contains("content-modal");
+
+  overlay.classList.toggle("drawer-mode", isDrawer);
+
+  // Показываем фон и выбранное окно
 
   overlay.classList.add("active");
 
@@ -31,27 +58,57 @@ function openModal(modalId) {
 }
 
 
+// Закрытие окна
+
 function closeModal() {
+
+  const isDrawer = overlay.classList.contains("drawer-mode");
+
+  // Запускаем обратную анимацию
 
   overlay.classList.remove("active");
 
   modals.forEach(modal => {
+
     modal.classList.remove("active");
+
   });
 
   document.body.style.overflow = "";
 
+
+  // Не удаляем режим бокового окна,
+  // пока не завершится выезд и размытие
+
+  if (isDrawer) {
+
+    if (drawerOverlayTimer !== null) {
+
+      clearTimeout(drawerOverlayTimer);
+
+    }
+
+    drawerOverlayTimer = setTimeout(() => {
+
+      overlay.classList.remove("drawer-mode");
+
+      drawerOverlayTimer = null;
+
+    }, 2000);
+
+  } else {
+
+    overlay.classList.remove("drawer-mode");
+
+  }
+
 }
 
 
-// Открытие окон по нажатию кнопок
-
+// Открытие по кнопкам
 openButtons.forEach(button => {
-
   button.addEventListener("click", () => {
-
     const modalId = button.dataset.modal;
-
     openModal(modalId);
 
   });
@@ -69,25 +126,21 @@ closeButtons.forEach(button => {
 
 
 // Закрытие при нажатии за пределами окна
-
 overlay.addEventListener("click", event => {
-
   if (event.target === overlay) {
     closeModal();
-  }
 
+  }
 });
 
 
 // Закрытие клавишей Escape
-
 document.addEventListener("keydown", event => {
-
   if (event.key === "Escape") {
     closeModal();
   }
-
 });
+
 
 
 /* =========================================
