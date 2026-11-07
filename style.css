@@ -54,7 +54,7 @@ body {
 
 .header {
   width: 90%;
-  min-height: 90px;
+  min-height: 80px;
   padding: 22px 4.5%;
   background-color: var(--header-color);
   display: grid;
@@ -250,8 +250,8 @@ body {
 
 /* Общие настройки рамок */
 .photo-frame {
-    flex: 0 0 44%;
-    width: 44%;
+    flex: 0 0 54%;
+    width: 54%;
     max-width: 240px;
     height: auto;
     aspect-ratio: 2252 / 3600;
@@ -1215,7 +1215,7 @@ animation: none;
 .menu-item-4 {
     font-family: 'Unbounded', sans-serif;
     font-weight: 400;
-font-size: 60px;
+font-size: 50px;
 }
 
 
