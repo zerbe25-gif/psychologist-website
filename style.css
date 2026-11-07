@@ -12,7 +12,7 @@
 
 
 :root {
- --header-color: rgba(255, 255, 255, 0.90);
+ --header-color: rgba(255, 255, 255, 0.80);
   --background-color: #ffffff;
   --panel-color: #eae3dc;
   --accent-color: #608089;
@@ -52,8 +52,8 @@ body {
 ========================================= */
 
 .header {
-  width: 94%;
-  margin: 0 auto;
+  width: 100%;
+  margin: 0;
   min-height: 80px;
   padding: 12px 3%;
   background-color: var(--header-color);
@@ -684,8 +684,8 @@ body {
   height: auto;
   min-height: 82px;
   padding: 12px 3%;
-  width: 94%;
-  margin: 0 auto;
+  width: 100%;
+  margin: 0;
 }
 
 .header-nav,
