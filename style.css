@@ -68,7 +68,7 @@ body {
 .site-name {
   color: var(--text-color);
   text-decoration: none;
-  font-size: 19px;
+  font-size: 23px;
   line-height: 1.4;
   font-weight: 500;
 }
@@ -84,7 +84,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 35px;
+  gap: 30px;
 }
 
 .nav-button {
@@ -275,7 +275,7 @@ body {
 /* Главная рамка — оптическая линза */
 .photo-frame-1 {
     position: relative;
-    left: 20px;
+    left: 40px;
     top: -25px;
 
     --lens-radius: 34px;
@@ -709,8 +709,8 @@ animation: none;
   }
 
   .header {
-    height: 112px;
-    min-height: 112px;
+    height: 53px;
+    min-height: 50px;
   }
 
   .main-content {
@@ -1221,20 +1221,20 @@ font-size: 50px;
 
 /* Вторая рамка — капсула, размер как у первой */
 .photo-frame-2 {
-    flex: 0 0 34%;
-    width: 34%;
+    flex: 0 0 25%;
+    width: 25%;
     max-width: 240px;
     height: auto;
     aspect-ratio: 2252 / 3600;
 
     border-radius: 9999px;
     overflow: hidden;
-    padding: 4px;
+    padding: 2px;
     background: white;
 
     position: relative;
-    left: 0px;
-    top: -100px;
+    left: -340px;
+    top: -125px;
 }
 
 /* Фотография внутри капсулы */
@@ -2352,7 +2352,7 @@ body.tech-3-active {
     z-index: 10000;
     width: 100%;
     box-sizing: border-box;
-    padding: 8px 16px;
+    padding: 1px 20px;
     background: rgba(250, 248, 243, 0.97);
     border-bottom: 1px solid rgba(43, 76, 111, 0.16);
     box-shadow: 0 4px 16px rgba(65, 55, 45, 0.07);
