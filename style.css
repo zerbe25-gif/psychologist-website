@@ -271,28 +271,28 @@ body {
             0 5px 14px rgba(35, 45, 55, 0.08);
     }
 }
+/* Главная фоторамка — размер и эффект линзы */
 .photo-frame-1 {
+    /* Размер и пропорции */
     width: 44%;
     max-width: 240px;
     height: auto;
     aspect-ratio: 3 / 4;
     flex: 0 0 44%;
-}
 
-/* Главная рамка — оптическая линза */
-.photo-frame-1 {
+    /* Положение */
     position: relative;
     left: 40px;
     top: -25px;
-   aspect-ratio: 3 / 4;
 
+    /* Настройки эффекта линзы */
     --lens-radius: 34px;
---lens-shadow-y: 20px;
---lens-shadow-blur: 42px;
---lens-shadow-opacity: 0.18;
---lens-glare-opacity: 0.48;
+    --lens-shadow-y: 20px;
+    --lens-shadow-blur: 42px;
+    --lens-shadow-opacity: 0.18;
+    --lens-glare-opacity: 0.48;
 
-border-radius: var(--lens-radius);
+    border-radius: var(--lens-radius);
     overflow: hidden;
     isolation: isolate;
 
@@ -306,12 +306,12 @@ border-radius: var(--lens-radius);
     );
 
     box-shadow:
-    0 var(--lens-shadow-y) var(--lens-shadow-blur)
-    rgba(35, 45, 55, var(--lens-shadow-opacity)),
-    0 5px 15px rgba(35, 45, 55, 0.08),
-    inset 0 1px 3px rgba(255, 255, 255, 0.95);
+        0 var(--lens-shadow-y) var(--lens-shadow-blur)
+        rgba(35, 45, 55, var(--lens-shadow-opacity)),
+        0 5px 15px rgba(35, 45, 55, 0.08),
+        inset 0 1px 3px rgba(255, 255, 255, 0.95);
 
-animation: none;
+    animation: none;
 }
 
 /*Фотграфии внутри линзы*/
