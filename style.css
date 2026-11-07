@@ -250,7 +250,7 @@ body {
 
 /* Общие настройки рамок */
 .photo-frame {
-    flex: 0 0 54%;
+    flex: 0 1 54%;
     width: 54%;
     max-width: 240px;
     height: auto;
