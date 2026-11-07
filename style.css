@@ -2567,15 +2567,15 @@ body.tech-3-active {
 /* Ноутбуки: увеличение на 10% */
 @media (min-width: 901px) and (max-width: 1399px) {
     .photo-frame-1 {
-        width: 48.4%;
-        flex: 0 0 48.4%;
+        width: 58.4%;
+        flex: 0 0 58.4%;
         max-width: 264px;
         height: auto;
         aspect-ratio: 3 / 4;
 
         /* Ручная настройка положения */
-        --photo-shift-x: -30%;
-        --photo-shift-y: 0px;
+        --photo-shift-x: -40%;
+        --photo-shift-y: 10px;
 
         translate: var(--photo-shift-x) var(--photo-shift-y);
     }
@@ -2591,8 +2591,8 @@ body.tech-3-active {
         aspect-ratio: 3 / 4;
 
         /* Ручная настройка положения */
-        --photo-shift-x: -30%;
-        --photo-shift-y: 0px;
+        --photo-shift-x: -40%;
+        --photo-shift-y: 10px;
 
         translate: var(--photo-shift-x) var(--photo-shift-y);
     }
