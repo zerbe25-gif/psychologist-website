@@ -591,231 +591,400 @@ function updateShadowAngle(val) {
     if (label) label.textContent = val + 'px';
 }
 
+
 // =======================================================
-// АКВАРЕЛЬ: НАСТРОЙКИ И СОХРАНЕНИЕ
+// ЕДИНОЕ СОХРАНЕНИЕ НАСТРОЕК ФОНА
 // =======================================================
 
+const backgroundStorageKey = 'psychologistBackgroundSettings';
 const watercolorStorageKey = 'psychologistWatercolorSettings';
 
 const watercolorPalettes = {
-    blue: {
-        first: '#829BAA',
-        second: '#C6D2D2',
-        third: '#D8C9B5'
-    },
-    olive: {
-        first: '#A1A889',
-        second: '#D2CFB5',
-        third: '#D5BDA3'
-    },
-    rose: {
-        first: '#C99E98',
-        second: '#E4C9BE',
-        third: '#B7B9B0'
-    },
-    sand: {
-        first: '#C9B99C',
-        second: '#E6DCCB',
-        third: '#A9B6B4'
-    }
+
+  blue: {
+    first: '#829BAA',
+    second: '#C6D2D2',
+    third: '#D8C9B5'
+  },
+
+  olive: {
+    first: '#A1A889',
+    second: '#D2CFB5',
+    third: '#D5BDA3'
+  },
+
+  rose: {
+    first: '#C99E98',
+    second: '#E4C9BE',
+    third: '#B7B9B0'
+  },
+
+  sand: {
+    first: '#C9B99C',
+    second: '#E6DCCB',
+    third: '#A9B6B4'
+  }
+
 };
 
 let currentWatercolorPalette = 'blue';
 
-function saveWatercolorSettings() {
-    const settings = {
-        opacity: document.getElementById('watercolor-opacity-input')?.value || '0.45',
-        size: document.getElementById('watercolor-size-input')?.value || '100',
-        blur: document.getElementById('watercolor-blur-input')?.value || '35',
-        origin: document.getElementById('watercolor-origin-input')?.value || '25',
-        palette: currentWatercolorPalette
-    };
 
-    try {
-        localStorage.setItem(watercolorStorageKey, JSON.stringify(settings));
-    } catch (error) {
-        console.warn('Не удалось сохранить настройки акварели.', error);
-    }
+// Сохранение всех настроек фона
+
+function saveBackgroundSettings() {
+
+  const getValue = (id, fallback) =>
+    document.getElementById(id)?.value ?? fallback;
+
+  const activeTab = document.querySelector(
+    '#background-control-panel .tech-tab.active'
+  );
+
+  const tabs = Array.from(
+    document.querySelectorAll('#background-control-panel .tech-tab')
+  );
+
+  const settings = {
+
+    technique: activeTab ? tabs.indexOf(activeTab) + 1 : 3,
+
+    hatchAngle: getValue('hatch-angle-input', '45'),
+    hatchOpacity: getValue('hatch-opacity-input', '0.12'),
+    hatchSpacing: getValue('hatch-spacing-input', '12'),
+    hatchColor: getComputedStyle(document.documentElement)
+      .getPropertyValue('--hatch-color').trim() || '#2B4C6F',
+
+    shadowElevation: getValue('shadow-elevation-input', '18'),
+    shadowBlur: getValue('shadow-blur-input', '36'),
+    shadowOpacity: getValue('shadow-opacity-input', '0.08'),
+    shadowAngle: getValue('shadow-angle-input', '0'),
+
+    watercolorOpacity: getValue('watercolor-opacity-input', '0.45'),
+    watercolorSize: getValue('watercolor-size-input', '100'),
+    watercolorBlur: getValue('watercolor-blur-input', '35'),
+    watercolorOrigin: getValue('watercolor-origin-input', '25'),
+    watercolorPalette: currentWatercolorPalette,
+
+    ambientOpacity: getValue('ambient-opacity-input', '0.35'),
+    ambientSize: getValue('ambient-size-input', '100'),
+    ambientSpeed: getValue('ambient-speed-input', '20')
+
+  };
+
+  try {
+
+    localStorage.setItem(
+      backgroundStorageKey,
+      JSON.stringify(settings)
+    );
+
+  } catch (error) {
+
+    console.warn('Не удалось сохранить настройки фона.', error);
+
+  }
+
 }
 
+
+// Управление акварелью
+
 function updateWatercolorOpacity(val) {
-    document.documentElement.style.setProperty('--watercolor-opacity', val);
 
-    const label = document.getElementById('val-watercolor-opacity');
-    if (label) label.textContent = Math.round(val * 100) + '%';
+  document.documentElement.style.setProperty(
+    '--watercolor-opacity', val
+  );
 
-    saveWatercolorSettings();
+  const label = document.getElementById('val-watercolor-opacity');
+
+  if (label) label.textContent = Math.round(val * 100) + '%';
+
 }
 
 function updateWatercolorSize(val) {
-    document.documentElement.style.setProperty('--watercolor-size', val + '%');
 
-    const label = document.getElementById('val-watercolor-size');
-    if (label) label.textContent = val + '%';
+  document.documentElement.style.setProperty(
+    '--watercolor-size', val + '%'
+  );
 
-    saveWatercolorSettings();
+  const label = document.getElementById('val-watercolor-size');
+
+  if (label) label.textContent = val + '%';
+
 }
 
 function updateWatercolorBlur(val) {
-    document.documentElement.style.setProperty('--watercolor-blur', val + 'px');
 
-    const label = document.getElementById('val-watercolor-blur');
-    if (label) label.textContent = val + 'px';
+  document.documentElement.style.setProperty(
+    '--watercolor-blur', val + 'px'
+  );
 
-    saveWatercolorSettings();
+  const label = document.getElementById('val-watercolor-blur');
+
+  if (label) label.textContent = val + 'px';
+
 }
 
 function updateWatercolorOrigin(val) {
-    document.documentElement.style.setProperty('--watercolor-origin', val + '%');
 
-    const label = document.getElementById('val-watercolor-origin');
-    if (label) label.textContent = val + '%';
+  document.documentElement.style.setProperty(
+    '--watercolor-origin', val + '%'
+  );
 
-    saveWatercolorSettings();
+  const label = document.getElementById('val-watercolor-origin');
+
+  if (label) label.textContent = val + '%';
+
 }
+
+
+// Выбор палитры акварели
 
 function setWatercolorPalette(name, btnEl) {
-    const palette = watercolorPalettes[name];
-    if (!palette) return;
 
-    currentWatercolorPalette = name;
+  const palette = watercolorPalettes[name];
 
-    document.documentElement.style.setProperty(
-        '--watercolor-color-1', palette.first
-    );
-    document.documentElement.style.setProperty(
-        '--watercolor-color-2', palette.second
-    );
-    document.documentElement.style.setProperty(
-        '--watercolor-color-3', palette.third
-    );
+  if (!palette) return;
 
-    document.querySelectorAll('.watercolor-palettes button')
-        .forEach(button => button.classList.remove('selected'));
+  currentWatercolorPalette = name;
 
-    if (btnEl) btnEl.classList.add('selected');
+  document.documentElement.style.setProperty(
+    '--watercolor-color-1', palette.first
+  );
 
-    saveWatercolorSettings();
+  document.documentElement.style.setProperty(
+    '--watercolor-color-2', palette.second
+  );
+
+  document.documentElement.style.setProperty(
+    '--watercolor-color-3', palette.third
+  );
+
+  document.querySelectorAll('.watercolor-palettes button')
+    .forEach(button => button.classList.remove('selected'));
+
+  if (btnEl) btnEl.classList.add('selected');
+
 }
 
 
-// Восстановление сохранённых настроек при открытии сайта
-function initializeWatercolorSettings() {
-    let settings = {};
+// Восстановление настроек при открытии сайта
 
-    try {
-        const saved = localStorage.getItem(watercolorStorageKey);
-        if (saved) settings = JSON.parse(saved);
-    } catch (error) {
-        console.warn('Не удалось прочитать настройки акварели.', error);
+function initializeBackgroundSettings() {
+
+  let settings = {};
+
+  try {
+
+    const saved = localStorage.getItem(backgroundStorageKey);
+
+    if (saved) {
+
+      settings = JSON.parse(saved);
+
+    } else {
+
+      // Перенос ранее сохранённых настроек акварели
+
+      const oldSaved = localStorage.getItem(watercolorStorageKey);
+
+      if (oldSaved) {
+
+        const old = JSON.parse(oldSaved);
+
+        settings = {
+
+          watercolorOpacity: old.opacity,
+          watercolorSize: old.size,
+          watercolorBlur: old.blur,
+          watercolorOrigin: old.origin,
+          watercolorPalette: old.palette
+
+        };
+
+      }
+
     }
 
-    const defaults = {
-        opacity: '0.45',
-        size: '100',
-        blur: '35',
-        origin: '25',
-        palette: 'blue'
-    };
+  } catch (error) {
 
-    settings = { ...defaults, ...settings };
+    console.warn('Не удалось прочитать настройки фона.', error);
 
-    const opacityInput = document.getElementById('watercolor-opacity-input');
-    const sizeInput = document.getElementById('watercolor-size-input');
-    const blurInput = document.getElementById('watercolor-blur-input');
-    const originInput = document.getElementById('watercolor-origin-input');
+  }
 
-    if (opacityInput) opacityInput.value = settings.opacity;
-    if (sizeInput) sizeInput.value = settings.size;
-    if (blurInput) blurInput.value = settings.blur;
-    if (originInput) originInput.value = settings.origin;
 
-    updateWatercolorOpacity(settings.opacity);
-    updateWatercolorSize(settings.size);
-    updateWatercolorBlur(settings.blur);
-    updateWatercolorOrigin(settings.origin);
+  const defaults = {
 
-    const paletteButton = document.querySelector(
-        `.watercolor-palettes button[onclick*="${settings.palette}"]`
-    );
+    technique: 3,
 
-    setWatercolorPalette(
-        settings.palette,
-        paletteButton
-    );
+    hatchAngle: '45',
+    hatchOpacity: '0.12',
+    hatchSpacing: '12',
+    hatchColor: '#2B4C6F',
 
-    // Акварель всегда включается как основной фон
-    const watercolorTab = document.querySelector(
-        '#background-control-panel .tech-tab:nth-child(3)'
-    );
+    shadowElevation: '18',
+    shadowBlur: '36',
+    shadowOpacity: '0.08',
+    shadowAngle: '0',
 
-    switchTechnique(3, watercolorTab);
+    watercolorOpacity: '0.45',
+    watercolorSize: '100',
+    watercolorBlur: '35',
+    watercolorOrigin: '25',
+    watercolorPalette: 'blue',
+
+    ambientOpacity: '0.35',
+    ambientSize: '100',
+    ambientSpeed: '20'
+
+  };
+
+  settings = { ...defaults, ...settings };
+
+
+  // Восстанавливаем положения ползунков
+
+  const inputSettings = {
+
+    'hatch-angle-input': settings.hatchAngle,
+    'hatch-opacity-input': settings.hatchOpacity,
+    'hatch-spacing-input': settings.hatchSpacing,
+
+    'shadow-elevation-input': settings.shadowElevation,
+    'shadow-blur-input': settings.shadowBlur,
+    'shadow-opacity-input': settings.shadowOpacity,
+    'shadow-angle-input': settings.shadowAngle,
+
+    'watercolor-opacity-input': settings.watercolorOpacity,
+    'watercolor-size-input': settings.watercolorSize,
+    'watercolor-blur-input': settings.watercolorBlur,
+    'watercolor-origin-input': settings.watercolorOrigin,
+
+    'ambient-opacity-input': settings.ambientOpacity,
+    'ambient-size-input': settings.ambientSize,
+    'ambient-speed-input': settings.ambientSpeed
+
+  };
+
+  Object.entries(inputSettings).forEach(([id, value]) => {
+
+    const input = document.getElementById(id);
+
+    if (input && value !== undefined && value !== null) {
+      input.value = value;
+    }
+
+  });
+
+
+  // Применяем настройки штриховки
+
+  updateHatchAngle(settings.hatchAngle);
+  updateHatchOpacity(settings.hatchOpacity);
+  updateHatchSpacing(settings.hatchSpacing);
+
+  const hatchButton = Array.from(
+    document.querySelectorAll('#background-control-panel .hatch-color-buttons button')
+  ).find(button =>
+    button.getAttribute('onclick')?.includes(settings.hatchColor)
+  );
+
+  setHatchColor(settings.hatchColor, hatchButton);
+
+
+  // Применяем настройки тени листа
+
+  updateShadowElevation(settings.shadowElevation);
+  updateShadowBlur(settings.shadowBlur);
+  updateShadowOpacity(settings.shadowOpacity);
+  updateShadowAngle(settings.shadowAngle);
+
+
+  // Применяем настройки акварели
+
+  currentWatercolorPalette =
+    watercolorPalettes[settings.watercolorPalette]
+      ? settings.watercolorPalette
+      : 'blue';
+
+  updateWatercolorOpacity(settings.watercolorOpacity);
+  updateWatercolorSize(settings.watercolorSize);
+  updateWatercolorBlur(settings.watercolorBlur);
+  updateWatercolorOrigin(settings.watercolorOrigin);
+
+  const paletteButton = document.querySelector(
+    `.watercolor-palettes button[onclick*="${currentWatercolorPalette}"]`
+  );
+
+  setWatercolorPalette(currentWatercolorPalette, paletteButton);
+
+
+  // Применяем настройки световой вуали
+
+  updateAmbientOpacity(settings.ambientOpacity);
+  updateAmbientSize(settings.ambientSize);
+  updateAmbientSpeed(settings.ambientSpeed);
+
+
+  // Восстанавливаем выбранную технику
+
+  const technique = Math.min(
+    4,
+    Math.max(1, Number(settings.technique) || 3)
+  );
+
+  const tabs = document.querySelectorAll(
+    '#background-control-panel .tech-tab'
+  );
+
+  switchTechnique(technique, tabs[technique - 1]);
+
 }
 
 
-// Запуск после загрузки HTML
-document.addEventListener('DOMContentLoaded', function () {
-    initializeWatercolorSettings();
+// Сохраняем изменения ползунков
+
+document.addEventListener('input', function(event) {
+
+  if (
+    event.target.matches(
+      '#background-control-panel input[type="range"]'
+    )
+  ) {
+
+    saveBackgroundSettings();
+
+  }
+
 });
 
-// =======================================================
-// ТЕХНИКА 3: УПРАВЛЕНИЕ АКВАРЕЛЬЮ
-// =======================================================
 
-function updateWatercolorOpacity(val) {
-    document.documentElement.style.setProperty(
-        '--watercolor-opacity', val
-    );
+// Сохраняем выбор техники и цветовых кнопок
 
-    const label = document.getElementById('val-watercolor-opacity');
-    if (label) label.textContent = Math.round(val * 100) + '%';
-}
+document.addEventListener('click', function(event) {
 
-function updateWatercolorSize(val) {
-    document.documentElement.style.setProperty(
-        '--watercolor-size', val + '%'
-    );
+  if (
+    event.target.closest(
+      '#background-control-panel .tech-tab, ' +
+      '#background-control-panel .hatch-color-buttons button'
+    )
+  ) {
 
-    const label = document.getElementById('val-watercolor-size');
-    if (label) label.textContent = val + '%';
-}
+    saveBackgroundSettings();
 
-function updateWatercolorBlur(val) {
-    document.documentElement.style.setProperty(
-        '--watercolor-blur', val + 'px'
-    );
+  }
 
-    const label = document.getElementById('val-watercolor-blur');
-    if (label) label.textContent = val + 'px';
-}
+});
 
 
-// Выбор цветовой палитры акварели
-function setWatercolorPalette(name, btnEl) {
-    const palettes = {
-        blue: ['#829BAA', '#C6D2D2', '#D8C9B5'],
-        olive: ['#A1A889', '#D2CFB5', '#D5BDA3'],
-        rose: ['#C99E98', '#E4C9BE', '#B7B9B0'],
-        sand: ['#C9B99C', '#E6DCCB', '#A9B6B4']
-    };
+// Запуск восстановления после загрузки страницы
 
-    const colors = palettes[name];
-    if (!colors) return;
+document.addEventListener('DOMContentLoaded', function() {
 
-    const root = document.documentElement;
+  initializeBackgroundSettings();
 
-    root.style.setProperty('--watercolor-color-1', colors[0]);
-    root.style.setProperty('--watercolor-color-2', colors[1]);
-    root.style.setProperty('--watercolor-color-3', colors[2]);
-
-    if (btnEl && btnEl.parentElement) {
-        btnEl.parentElement.querySelectorAll('button').forEach(button => {
-            button.classList.remove('selected');
-        });
-
-        btnEl.classList.add('selected');
-    }
-}
+});
 
 
 // =======================================================
