@@ -254,7 +254,7 @@ body {
     width: 54%;
     max-width: 240px;
     height: auto;
-    aspect-ratio: 2252 / 3600;
+    aspect-ratio: 3 / 4;
     min-height: 0;
     padding: 4px;
     background: #F9F8F5;
@@ -277,6 +277,7 @@ body {
     position: relative;
     left: 40px;
     top: -25px;
+   aspect-ratio: 3 / 4;
 
     --lens-radius: 34px;
 --lens-shadow-y: 20px;
@@ -713,7 +714,7 @@ animation: none;
   .photo-frame {
     max-width: 260px;
     height: auto;
-    aspect-ratio: 2252 / 3600;
+    aspect-ratio: 3 / 4;
     min-height: 0;
   }
 
@@ -825,7 +826,7 @@ animation: none;
     max-width: none;
     height: clamp(280px, 61vh, 620px);
     min-height: 0;
-    aspect-ratio: 2252 / 3600;
+    aspect-ratio: 3 / 4;
   }
 
   .photo-frame-1,{
