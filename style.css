@@ -667,15 +667,16 @@ body {
 }
 
 /* =========================================
-   КОМПОЗИЦИЯ ДЛЯ ЭКРАНА НОУТБУКА
+ЕДИНАЯ DESKTOP-АДАПТАЦИЯ
 ========================================= */
 
 @media (min-width: 901px) {
 
   body {
     height: 100vh;
+    height: 100dvh;
     min-height: 0;
-    overflow-y: hidden;
+    overflow: hidden;
   }
 
   .header {
@@ -685,83 +686,18 @@ body {
 
   .main-content {
     height: calc(100vh - 112px);
-    min-height: 0;
-    padding: 25px 6%;
-    grid-template-columns: 1fr 1fr;
-    gap: 4vw;
-  }
-
-  .menu-section {
-    min-height: 0;
-    height: 60%;
-    justify-content: space-evenly;
-  }
-
-  .section-menu {
-    gap: clamp(12px, 2vh, 24px);
-    padding-top: 0;
-  }
-
-  .gallery-section {
-    min-height: 0;
-    height: 100%;
-  }
-
-  .photo-gallery {
-    max-width: min(100%, 850px);
-    gap: clamp(12px, 1.5vw, 25px);
-  }
-
-
-  .photo-frame-1 {
-    transform: none;
-  }
-
-  .social-links {
-    margin-top: 15px;
-  }
-}
-
-/* =========================================
-   УМЕНЬШЕНИЕ АНИМАЦИЙ ПО ЗАПРОСУ
-========================================= */
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* =========================================
-   АДАПТИВНОСТЬ ДЛЯ БОЛЬШИХ ЭКРАНОВ
-========================================= */
-
-@media (min-width: 901px) {
-
-  /* Высота страницы подстраивается под окно браузера */
-
-  body {
-    height: 100vh;
-    height: 100dvh;
-    min-height: 0;
-    overflow: hidden;
-  }
-
-  .main-content {
-    height: calc(100vh - 112px);
     height: calc(100dvh - 112px);
     min-height: 0;
+
     grid-template-columns: 1fr 1fr;
     gap: clamp(25px, 4vw, 80px);
-    padding: clamp(20px, 3vh, 45px)
-             clamp(35px, 6vw, 110px);
+
+    padding:
+      clamp(20px, 3vh, 45px)
+      clamp(35px, 6vw, 110px);
   }
 
-  /* Левая часть — названия разделов */
+  /* Левая часть — меню */
 
   .menu-section {
     height: 60%;
@@ -810,43 +746,50 @@ body {
   .photo-gallery {
     width: 100%;
     max-width: none;
+
     justify-content: flex-end;
     align-items: center;
+
     gap: clamp(12px, 2vw, 38px);
   }
 
-  
-  .photo-frame-1 {
-      transform: none;
+  .photo-frame {
+    flex: 0 1 auto;
+    width: auto;
+    max-width: 420px;
+
+    height: clamp(280px, 45vh, 480px);
+    min-height: 0;
+
+    aspect-ratio: 3 / 4;
   }
 
-  /* Таймер тоже немного увеличивается */
+  .photo-frame-1 {
+    transform: none;
+  }
+
+  /* Таймер */
 
   .timer-container {
     width: clamp(58px, 4vw, 86px);
     height: clamp(58px, 4vw, 86px);
   }
+
 }
 
-/* Невысокие окна ноутбуков */
+/* =========================================
+   УМЕНЬШЕНИЕ АНИМАЦИЙ ПО ЗАПРОСУ
+========================================= */
 
-@media (min-width: 901px) and (max-height: 720px) {
-
-  .menu-item {
-    font-size: clamp(30px, 2.3vw, 44px);
-  }
-
-  .section-menu {
-    gap: 12px;
-  }
-
-
-  .timer-container {
-    width: 56px;
-    height: 56px;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }
-
 
 /* =========================================
    ПОДПИСЬ «КАТЕГОРИИ»
