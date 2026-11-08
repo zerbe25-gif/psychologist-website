@@ -452,7 +452,10 @@
 
 
 <!-- НОВАЯ ШТОРКА -->
-<div id="drawerBackdrop" aria-hidden="true"></div>
+<div id="drawerBackdrop"
+     aria-hidden="true"
+     onclick="closeTestDrawer()">
+ </div>
 
 <aside id="sideDrawer"
        role="dialog"
@@ -460,12 +463,15 @@
        aria-labelledby="drawerTitle"
        aria-hidden="true">
 
-    <button id="drawerClose"
-            class="drawer-close"
-            type="button"
-            aria-label="Закрыть">
-        ×
-    </button>
+   
+<button id="drawerClose"
+        class="drawer-close"
+        type="button"
+        aria-label="Закрыть"
+        onclick="closeTestDrawer()">
+    ×
+</button>
+
 
     <div class="drawer-inner">
         <p class="drawer-eyebrow">ПСИХОЛОГИЧЕСКАЯ ПРАКТИКА</p>
