@@ -3035,3 +3035,170 @@ window.addEventListener(
     "resize",
     updateEducationDiagonal
 );
+
+       
+/* =========================================
+   НОВАЯ ШТОРКА — ТЕСТОВАЯ ВЕРСИЯ
+========================================= */
+
+#drawerBackdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+
+    background: linear-gradient(
+        to right,
+        rgba(30, 29, 28, 0.48),
+        rgba(30, 29, 28, 0.18)
+    );
+
+    backdrop-filter: blur(0);
+    -webkit-backdrop-filter: blur(0);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+        opacity 0.65s ease,
+        visibility 0.65s ease,
+        backdrop-filter 0.7s ease;
+
+    -webkit-transition:
+        opacity 0.65s ease,
+        visibility 0.65s ease,
+        -webkit-backdrop-filter 0.7s ease;
+}
+
+#drawerBackdrop.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+#sideDrawer {
+    --drawer-width: 700px;
+
+    position: fixed;
+    inset: 0 auto 0 0;
+
+    width: var(--drawer-width);
+    max-width: 100vw;
+    height: 100dvh;
+
+    z-index: 9001;
+
+    box-sizing: border-box;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+
+    background: #FAF8F3;
+    color: #302D2A;
+
+    box-shadow: 15px 0 50px rgba(0, 0, 0, 0.08);
+
+    transform: translateX(-100%);
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+        transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+        visibility 0.85s;
+}
+
+#sideDrawer.is-open {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.drawer-inner {
+    position: relative;
+    min-height: 100%;
+    box-sizing: border-box;
+    padding: 90px 55px 60px;
+}
+
+.drawer-close {
+    position: absolute;
+    top: 25px;
+    right: 30px;
+
+    width: 44px;
+    height: 44px;
+
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+
+    color: #5B554F;
+    font-size: 34px;
+    font-weight: 300;
+    line-height: 1;
+
+    cursor: pointer;
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease;
+}
+
+.drawer-close:hover {
+    background: rgba(0, 0, 0, 0.05);
+    transform: rotate(90deg);
+}
+
+.drawer-eyebrow {
+    margin: 0 0 20px;
+
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #9B8E80;
+}
+
+#drawerTitle {
+    margin: 0 0 35px;
+
+    font-size: clamp(30px, 4vw, 48px);
+    font-weight: 400;
+    line-height: 1.15;
+}
+
+.drawer-test-content {
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+body.drawer-is-open {
+    overflow: hidden;
+}
+
+@media (max-width: 700px) {
+    #sideDrawer {
+        --drawer-width: 100vw;
+    }
+
+    .drawer-inner {
+        padding: 80px 25px 45px;
+    }
+
+    #sideDrawer.is-open {
+        width: 100vw;
+    }
+
+    .drawer-close {
+        top: 18px;
+        right: 18px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #sideDrawer,
+    #drawerBackdrop,
+    .drawer-close {
+        transition-duration: 0.01ms !important;
+    }
+}
