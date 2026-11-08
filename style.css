@@ -465,13 +465,14 @@ body {
   border-radius: 0;
   box-shadow: -25px 0 65px rgba(0,0,0,0.12);
 
-  /* Диагональная левая граница */
-  clip-path: polygon(
-    30% 0,
+ --modal-cut: 15%;
+
+clip-path: polygon(
+    var(--modal-cut) 0,
     100% 0,
     100% 100%,
     0 100%
-  );
+);
 
   transform: translateX(105%);
 
@@ -2842,4 +2843,10 @@ body.tech-3-active {
     font-size: 14px;
   }
 
+}
+
+/* Текст окна "Запросы" следует за диагональным срезом */
+#requests-modal {
+    padding-left: calc(var(--modal-cut) + 35px);
+    text-align: left;
 }
