@@ -576,12 +576,15 @@ clip-path: polygon(
   .content-modal {
     width: min(94vw, 680px);
     padding: 65px 38px 45px 90px;
-    clip-path: polygon(
-      22% 0,
-      100% 0,
-      100% 100%,
-      0 100%
-    );
+   --modal-cut: 22%;
+
+clip-path: polygon(
+    var(--modal-cut) 0,
+    100% 0,
+    100% 100%,
+    0 100%
+);
+     
   }
 }
 
@@ -589,12 +592,15 @@ clip-path: polygon(
   .content-modal {
     width: 100vw;
     padding: 65px 25px 40px 60px;
-    clip-path: polygon(
-      12% 0,
-      100% 0,
-      100% 100%,
-      0 100%
-    );
+  --modal-cut: 12%;
+
+clip-path: polygon(
+    var(--modal-cut) 0,
+    100% 0,
+    100% 100%,
+    0 100%
+);
+     
   }
 }
 
@@ -2824,10 +2830,103 @@ body.tech-3-active {
 
 }
 
+/* =========================================
+   ТЕКСТ ПОВТОРЯЕТ ДИАГОНАЛЬ ОКНА
+   ========================================= */
 
-
-/* Текст окна "Запросы" следует за диагональным срезом */
 #requests-modal {
     padding-left: calc(var(--modal-cut) + 35px);
     text-align: left;
 }
+
+/* Начало списка */
+#requests-modal .requests-list {
+    margin-left: 0;
+}
+
+/* Постепенное смещение пунктов влево */
+#requests-modal .requests-list li:nth-child(1) {
+    margin-left: 90px;
+}
+
+#requests-modal .requests-list li:nth-child(2) {
+    margin-left: 80px;
+}
+
+#requests-modal .requests-list li:nth-child(3) {
+    margin-left: 70px;
+}
+
+#requests-modal .requests-list li:nth-child(4) {
+    margin-left: 60px;
+}
+
+#requests-modal .requests-list li:nth-child(5) {
+    margin-left: 50px;
+}
+
+#requests-modal .requests-list li:nth-child(6) {
+    margin-left: 40px;
+}
+
+#requests-modal .requests-list li:nth-child(7) {
+    margin-left: 30px;
+}
+
+#requests-modal .requests-list li:nth-child(8) {
+    margin-left: 20px;
+}
+
+#requests-modal .requests-list li:nth-child(9) {
+    margin-left: 10px;
+}
+
+#requests-modal .requests-list li:nth-child(10) {
+    margin-left: 0;
+}
+
+/* Планшеты */
+@media (max-width: 900px) {
+    #requests-modal {
+        padding-left: calc(var(--modal-cut) + 22px);
+    }
+
+    #requests-modal .requests-list li {
+        margin-left: 0;
+    }
+
+    #requests-modal .requests-list li:nth-child(1) { margin-left: 54px; }
+    #requests-modal .requests-list li:nth-child(2) { margin-left: 48px; }
+    #requests-modal .requests-list li:nth-child(3) { margin-left: 42px; }
+    #requests-modal .requests-list li:nth-child(4) { margin-left: 36px; }
+    #requests-modal .requests-list li:nth-child(5) { margin-left: 30px; }
+    #requests-modal .requests-list li:nth-child(6) { margin-left: 24px; }
+    #requests-modal .requests-list li:nth-child(7) { margin-left: 18px; }
+    #requests-modal .requests-list li:nth-child(8) { margin-left: 12px; }
+    #requests-modal .requests-list li:nth-child(9) { margin-left: 6px; }
+    #requests-modal .requests-list li:nth-child(10) { margin-left: 0; }
+}
+
+/* Телефоны */
+@media (max-width: 600px) {
+    #requests-modal {
+        padding-left: calc(var(--modal-cut) + 18px);
+    }
+
+    #requests-modal .requests-list li {
+        margin-left: 0;
+    }
+
+    #requests-modal .requests-list li:nth-child(1) { margin-left: 36px; }
+    #requests-modal .requests-list li:nth-child(2) { margin-left: 32px; }
+    #requests-modal .requests-list li:nth-child(3) { margin-left: 28px; }
+    #requests-modal .requests-list li:nth-child(4) { margin-left: 24px; }
+    #requests-modal .requests-list li:nth-child(5) { margin-left: 20px; }
+    #requests-modal .requests-list li:nth-child(6) { margin-left: 16px; }
+    #requests-modal .requests-list li:nth-child(7) { margin-left: 12px; }
+    #requests-modal .requests-list li:nth-child(8) { margin-left: 8px; }
+    #requests-modal .requests-list li:nth-child(9) { margin-left: 4px; }
+    #requests-modal .requests-list li:nth-child(10) { margin-left: 0; }
+}
+
+
