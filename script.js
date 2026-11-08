@@ -1163,3 +1163,166 @@ function updateLensGlare(value) {
     document.getElementById('val-lens-glare').textContent =
         value + '%';
 }
+
+
+/* =========================================
+   ЗАПРОСЫ — ОФОРМЛЕНИЕ И STAGGER REVEAL
+========================================= */
+
+/* Расположение содержимого внутри диагональной панели */
+
+#requests-modal {
+
+  text-align: left;
+
+}
+
+#requests-modal .requests-content {
+
+  width: 100%;
+  max-width: 720px;
+
+  margin: 0;
+
+  text-align: left;
+
+}
+
+
+/* Список запросов */
+
+#requests-modal .requests-list {
+
+  list-style: disc;
+
+  padding-left: 22px;
+
+  margin: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 15px;
+
+  font-family: "Cormorant Garamond", Georgia, serif;
+
+  font-size: clamp(17px, 1.35vw, 21px);
+
+  line-height: 1.45;
+
+  color: #45433F;
+
+}
+
+
+/* Тёмные цветовые акценты */
+
+#requests-modal .requests-list li::marker {
+
+  color: #52665D;
+
+  font-size: 0.85em;
+
+}
+
+#requests-modal .requests-note strong {
+
+  color: #52665D;
+
+  font-weight: 600;
+
+}
+
+
+/* Важное примечание */
+
+#requests-modal .requests-note {
+
+  margin-top: 28px;
+
+  padding-top: 18px;
+
+  border-top: 1px solid rgba(82, 102, 93, 0.25);
+
+  font-size: 15px;
+
+  line-height: 1.65;
+
+  color: #68645F;
+
+}
+
+
+/* =========================================
+   КАСКАДНОЕ ПОЯВЛЕНИЕ ПУНКТОВ
+========================================= */
+
+#requests-modal .requests-list li {
+
+  opacity: 0;
+
+  transform: translateY(20px);
+
+}
+
+
+/* Запускаем анимацию только при открытом окне */
+
+#requests-modal.active .requests-list li {
+
+  animation: requestItemReveal 0.55s
+    cubic-bezier(0.22, 0.75, 0.25, 1) both;
+
+  animation-delay:
+    calc(0.65s + var(--item-order) * 0.12s);
+
+}
+
+
+/* Каждый пункт плавно выплывает снизу */
+
+@keyframes requestItemReveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+
+/* =========================================
+   АДАПТАЦИЯ ЗАПРОСОВ ДЛЯ ПЛАНШЕТОВ
+========================================= */
+
+@media (max-width: 900px) {
+  #requests-modal {
+    padding-left: calc(22% + 22px);
+  }
+
+}
+
+
+/* =========================================
+   АДАПТАЦИЯ ЗАПРОСОВ ДЛЯ ТЕЛЕФОНОВ
+========================================= */
+
+@media (max-width: 600px) {
+  #requests-modal {
+    padding-left: calc(12% + 18px);
+  }
+
+  #requests-modal .requests-list {
+    font-size: 17px;
+    gap: 12px;
+  }
+
+  #requests-modal .requests-note {
+    font-size: 14px;
+  }
+
+}
