@@ -1164,4 +1164,54 @@ function updateLensGlare(value) {
         value + '%';
 }
 
+/* =========================================
+   АВТОМАТИЧЕСКАЯ ДИАГОНАЛЬ РАЗДЕЛА «ЗАПРОСЫ»
+========================================= */
 
+function updateRequestsDiagonal() {
+
+    const modal = document.getElementById("requests-modal");
+
+    if (!modal) return;
+
+    const items = modal.querySelectorAll(
+        ".requests-list > li"
+    );
+
+    const cut = parseFloat(
+        getComputedStyle(modal)
+            .getPropertyValue("--modal-cut")
+    ) || 15;
+
+    // Максимальное смещение последних пунктов
+    const maxShift = cut * 0.65;
+
+    const lastIndex = Math.max(items.length - 1, 1);
+
+    items.forEach((item, index) => {
+
+        const progress = index / lastIndex;
+
+        // Автоматический номер для анимации
+        item.style.setProperty(
+            "--item-order",
+            index
+        );
+
+        // Автоматическое смещение по диагонали
+        item.style.setProperty(
+            "--item-shift",
+            (maxShift * progress).toFixed(2) + "%"
+        );
+
+    });
+}
+
+// Первоначальный расчёт
+updateRequestsDiagonal();
+
+// Пересчёт при изменении размера окна
+window.addEventListener(
+    "resize",
+    updateRequestsDiagonal
+);
