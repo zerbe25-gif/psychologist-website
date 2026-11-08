@@ -1215,3 +1215,65 @@ window.addEventListener(
     "resize",
     updateRequestsDiagonal
 );
+
+
+/* =========================================
+   НОВАЯ ШТОРКА — УПРАВЛЕНИЕ
+========================================= */
+
+(function () {
+    const drawer = document.getElementById("sideDrawer");
+    const backdrop = document.getElementById("drawerBackdrop");
+    const closeButton = document.getElementById("drawerClose");
+
+    if (!drawer || !backdrop || !closeButton) return;
+
+    let drawerOpen = false;
+    let previousFocus = null;
+
+    function openDrawer() {
+        if (drawerOpen) return;
+
+        drawerOpen = true;
+        previousFocus = document.activeElement;
+
+        backdrop.classList.add("is-open");
+        drawer.classList.add("is-open");
+        document.body.classList.add("drawer-is-open");
+
+        drawer.setAttribute("aria-hidden", "false");
+        backdrop.setAttribute("aria-hidden", "false");
+
+        closeButton.focus();
+    }
+
+    function closeDrawer() {
+        if (!drawerOpen) return;
+
+        drawerOpen = false;
+
+        drawer.classList.remove("is-open");
+        backdrop.classList.remove("is-open");
+        document.body.classList.remove("drawer-is-open");
+
+        drawer.setAttribute("aria-hidden", "true");
+        backdrop.setAttribute("aria-hidden", "true");
+
+        if (previousFocus && typeof previousFocus.focus === "function") {
+            previousFocus.focus();
+        }
+    }
+
+    closeButton.addEventListener("click", closeDrawer);
+    backdrop.addEventListener("click", closeDrawer);
+
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && drawerOpen) {
+            closeDrawer();
+        }
+    });
+
+    // Временный способ проверить шторку из консоли браузера
+    window.openTestDrawer = openDrawer;
+    window.closeTestDrawer = closeDrawer;
+})();
