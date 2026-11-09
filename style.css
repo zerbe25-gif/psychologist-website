@@ -2759,37 +2759,37 @@ body.tech-3-active {
 }
 
    
+
 /* =========================================
-   НОВАЯ ШТОРКА — ТЕСТОВАЯ ВЕРСИЯ
+   ЕДИНАЯ ИНФОРМАЦИОННАЯ ШТОРКА
+   ЭТАП 2 — АНИМАЦИЯ И ВНЕШНИЙ ВИД
 ========================================= */
+
+/* Затемнение и размытие фона */
 
 #drawerBackdrop {
     position: fixed;
     inset: 0;
-  z-index: 99998;
+    z-index: 99998;
 
     background: linear-gradient(
         to right,
-        rgba(30, 29, 28, 0.48),
-        rgba(30, 29, 28, 0.18)
+        rgba(36, 34, 31, 0.44) 0%,
+        rgba(36, 34, 31, 0.18) 100%
     );
-
-    backdrop-filter: blur(0);
-    -webkit-backdrop-filter: blur(0);
 
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
 
-    transition:
-        opacity 0.65s ease,
-        visibility 0.65s ease,
-        backdrop-filter 0.7s ease;
+    backdrop-filter: blur(0);
+    -webkit-backdrop-filter: blur(0);
 
-    -webkit-transition:
-        opacity 0.65s ease,
-        visibility 0.65s ease,
-        -webkit-backdrop-filter 0.7s ease;
+    transition:
+        opacity 0.7s ease,
+        backdrop-filter 0.7s ease,
+        -webkit-backdrop-filter 0.7s ease,
+        visibility 0s linear 0.7s;
 }
 
 #drawerBackdrop.is-open {
@@ -2797,9 +2797,18 @@ body.tech-3-active {
     visibility: visible;
     pointer-events: auto;
 
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(9px);
+    -webkit-backdrop-filter: blur(9px);
+
+    transition:
+        opacity 0.7s ease 0.15s,
+        backdrop-filter 0.7s ease 0.15s,
+        -webkit-backdrop-filter 0.7s ease 0.15s,
+        visibility 0s;
 }
+
+
+/* Сама шторка */
 
 #sideDrawer {
     --drawer-width: 700px;
@@ -2811,16 +2820,20 @@ body.tech-3-active {
     max-width: 100vw;
     height: 100dvh;
 
-  z-index: 99999;
+    z-index: 99999;
 
     box-sizing: border-box;
     overflow-y: auto;
     overscroll-behavior: contain;
 
-    background: #FAF8F3;
+    background: #F6F3EE;
     color: #302D2A;
 
-    box-shadow: 15px 0 50px rgba(0, 0, 0, 0.08);
+    border-right: 1px solid rgba(70, 60, 50, 0.10);
+
+    box-shadow:
+        18px 0 55px rgba(35, 30, 25, 0.12),
+        3px 0 12px rgba(35, 30, 25, 0.04);
 
     transform: translateX(-100%);
     visibility: hidden;
@@ -2828,6 +2841,7 @@ body.tech-3-active {
 
     transition:
         transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+        width 0.65s cubic-bezier(0.16, 1, 0.3, 1),
         visibility 0.85s;
 }
 
@@ -2837,6 +2851,9 @@ body.tech-3-active {
     pointer-events: auto;
 }
 
+
+/* Внутренние отступы */
+
 .drawer-inner {
     position: relative;
     min-height: 100%;
@@ -2844,9 +2861,12 @@ body.tech-3-active {
     padding: 90px 55px 60px;
 }
 
+
+/* Кнопка закрытия */
+
 .drawer-close {
     position: absolute;
-   z-index: 10;
+    z-index: 10;
     top: 25px;
     right: 30px;
 
@@ -2863,6 +2883,7 @@ body.tech-3-active {
     line-height: 1;
 
     cursor: pointer;
+
     transition:
         background 0.25s ease,
         transform 0.25s ease;
@@ -2873,43 +2894,146 @@ body.tech-3-active {
     transform: rotate(90deg);
 }
 
-.drawer-eyebrow {
-    margin: 0 0 20px;
 
-    font-size: 11px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: #9B8E80;
+/* Последовательное появление элементов */
+
+.drawer-panel {
+    animation: none;
 }
 
-#drawerTitle {
-    margin: 0 0 35px;
-
-    font-size: clamp(30px, 4vw, 48px);
-    font-weight: 400;
-    line-height: 1.15;
+.drawer-inner.is-revealing > .drawer-eyebrow,
+.drawer-inner.is-revealing > .drawer-tabs,
+.drawer-inner.is-revealing > #drawerTitle,
+.drawer-inner.is-revealing .drawer-panel:not([hidden]) > p,
+.drawer-inner.is-revealing .drawer-panel:not([hidden]) .requests-list li,
+.drawer-inner.is-revealing .drawer-panel:not([hidden]) .requests-note,
+.drawer-inner.is-revealing .drawer-panel:not([hidden]) .education-entry,
+.drawer-inner.is-revealing .drawer-panel:not([hidden]) .drawer-articles-link {
+    animation: drawerStaggerReveal 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.drawer-test-content {
-    font-size: 16px;
-    line-height: 1.8;
+.drawer-inner.is-revealing > .drawer-eyebrow {
+    animation-delay: 0.18s;
 }
+
+.drawer-inner.is-revealing > .drawer-tabs {
+    animation-delay: 0.28s;
+}
+
+.drawer-inner.is-revealing > #drawerTitle {
+    animation-delay: 0.36s;
+}
+
+.drawer-inner.is-revealing .drawer-panel:not([hidden]) > p,
+.drawer-inner.is-revealing .drawer-panel:not([hidden]) .requests-list li,
+.drawer-inner.is-revealing .drawer-panel:not([hidden]) .requests-note,
+.drawer-inner.is-revealing .drawer-panel:not([hidden]) .education-entry,
+.drawer-inner.is-revealing .drawer-panel:not([hidden]) .drawer-articles-link {
+    animation-delay: 0.48s;
+}
+
+/* Последовательность пунктов списка запросов */
+
+.drawer-inner.is-revealing .requests-list li:nth-child(2),
+.drawer-inner.is-revealing .education-entry:nth-child(2) {
+    animation-delay: 0.58s;
+}
+
+.drawer-inner.is-revealing .requests-list li:nth-child(3),
+.drawer-inner.is-revealing .education-entry:nth-child(3) {
+    animation-delay: 0.68s;
+}
+
+.drawer-inner.is-revealing .requests-list li:nth-child(4),
+.drawer-inner.is-revealing .education-entry:nth-child(4) {
+    animation-delay: 0.78s;
+}
+
+.drawer-inner.is-revealing .requests-list li:nth-child(5),
+.drawer-inner.is-revealing .education-entry:nth-child(5) {
+    animation-delay: 0.88s;
+}
+
+.drawer-inner.is-revealing .requests-list li:nth-child(6) {
+    animation-delay: 0.98s;
+}
+
+.drawer-inner.is-revealing .requests-list li:nth-child(7) {
+    animation-delay: 1.08s;
+}
+
+.drawer-inner.is-revealing .requests-list li:nth-child(8) {
+    animation-delay: 1.18s;
+}
+
+.drawer-inner.is-revealing .requests-list li:nth-child(9) {
+    animation-delay: 1.28s;
+}
+
+.drawer-inner.is-revealing .requests-list li:nth-child(10) {
+    animation-delay: 1.38s;
+}
+
+@keyframes drawerStaggerReveal {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Блокировка прокрутки основной страницы */
 
 body.drawer-is-open {
     overflow: hidden;
 }
 
+
+/* Мобильная версия */
+
 @media (max-width: 700px) {
     #sideDrawer {
-        --drawer-width: 100vw;
+        width: 100vw !important;
     }
 
     .drawer-inner {
         padding: 80px 25px 45px;
     }
 
-    #sideDrawer.is-open {
-        width: 100vw;
+    .drawer-tabs {
+        gap: 7px;
+        margin-bottom: 28px;
+    }
+
+    .drawer-tabs button {
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+
+    .drawer-panel {
+        font-size: 17px;
+    }
+
+    .drawer-panel .requests-list {
+        font-size: 17px;
+        gap: 12px;
+    }
+
+    .drawer-panel .requests-note {
+        font-size: 14px;
+    }
+
+    .drawer-panel .education-entry h3 {
+        font-size: 20px;
+    }
+
+    .drawer-panel .education-entry p {
+        font-size: 17px;
     }
 
     .drawer-close {
@@ -2918,10 +3042,19 @@ body.drawer-is-open {
     }
 }
 
+
+/* Уважение системной настройки уменьшения анимации */
+
 @media (prefers-reduced-motion: reduce) {
     #sideDrawer,
     #drawerBackdrop,
     .drawer-close {
         transition-duration: 0.01ms !important;
     }
+
+    .drawer-inner.is-revealing > *,
+    .drawer-inner.is-revealing .drawer-panel * {
+        animation-duration: 0.01ms !important;
+    }
 }
+
