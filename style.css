@@ -3058,3 +3058,22 @@ body.drawer-is-open {
     }
 }
 
+
+/* =========================================
+   ЭТАП 3 — ПЛАВНОЕ ПЕРЕКЛЮЧЕНИЕ РАЗДЕЛОВ
+========================================= */
+
+/* Плавное исчезновение заголовка и содержимого */
+#drawerTitle,
+.drawer-panels {
+    transition:
+        opacity 0.24s ease,
+        transform 0.24s ease;
+}
+
+/* Состояние перед заменой текста */
+.drawer-inner.is-switching > #drawerTitle,
+.drawer-inner.is-switching > .drawer-panels {
+    opacity: 0;
+    transform: translateY(10px);
+}
