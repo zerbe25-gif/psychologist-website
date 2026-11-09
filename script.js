@@ -1309,6 +1309,17 @@ function showDrawerSection(sectionName) {
         if (!drawerOpen) return;
 
         drawerOpen = false;
+      if (wheelLockTimer !== null) {
+    clearTimeout(wheelLockTimer);
+    wheelLockTimer = null;
+}
+
+wheelLocked = false;
+
+drawer.classList.remove(
+    "is-wheel-next",
+    "is-wheel-prev"
+);
 
       if (sectionSwitchTimer !== null) {
     clearTimeout(sectionSwitchTimer);
@@ -1357,7 +1368,116 @@ if (inner) {
     document.addEventListener("keydown", event => {
         if (event.key === "Escape" && drawerOpen) {
             closeDrawer();
+      }
+
+      
+    // =========================================
+    // ПЕРЕКЛЮЧЕНИЕ РАЗДЕЛОВ КОЛЁСИКОМ
+    // =========================================
+
+    let wheelLocked = false;
+    let wheelLockTimer = null;
+
+    const wheelSections = [
+        "requests",
+        "format",
+        "education",
+        "articles",
+        "price",
+        "contacts"
+    ];
+
+    drawer.addEventListener("wheel", event => {
+
+        if (!drawerOpen || wheelLocked) return;
+
+        // Проверяем направление движения
+        const direction = event.deltaY > 0 ? 1 : -1;
+
+        // Слишком маленькие движения игнорируем
+        if (Math.abs(event.deltaY) < 35) return;
+
+        // Не реагируем на горизонтальное колесо
+        if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) {
+            return;
         }
+
+        // Определяем положение прокрутки шторки
+        const atTop = drawer.scrollTop <= 1;
+
+        const atBottom =
+            drawer.scrollTop + drawer.clientHeight >=
+            drawer.scrollHeight - 2;
+
+        // В середине длинного содержимого
+        // сохраняем обычную прокрутку
+        if (direction > 0 && !atBottom) return;
+        if (direction < 0 && !atTop) return;
+
+        // На границе переключаем раздел
+        const currentIndex = wheelSections.indexOf(activeSection);
+
+        if (currentIndex === -1) return;
+
+        const nextIndex = currentIndex + direction;
+
+        // Не переключаемся за пределы списка
+        if (
+            nextIndex < 0 ||
+            nextIndex >= wheelSections.length
+        ) {
+            event.preventDefault();
+            return;
+        }
+
+        event.preventDefault();
+
+        wheelLocked = true;
+
+        const inner = drawer.querySelector(".drawer-inner");
+
+        // Направление анимации
+        if (inner) {
+            inner.classList.remove(
+                "is-wheel-next",
+                "is-wheel-prev"
+            );
+
+            void inner.offsetWidth;
+
+            inner.classList.add(
+                direction > 0
+                    ? "is-wheel-next"
+                    : "is-wheel-prev"
+            );
+        }
+
+        // Переключаем вкладку существующей функцией
+        showDrawerSection(wheelSections[nextIndex]);
+
+        // Возвращаем шторку к началу нового раздела
+        drawer.scrollTop = 0;
+
+        // Блокируем повторное переключение
+        // на время завершения анимации
+        if (wheelLockTimer !== null) {
+            clearTimeout(wheelLockTimer);
+        }
+
+        wheelLockTimer = setTimeout(() => {
+            wheelLocked = false;
+            wheelLockTimer = null;
+
+            if (inner) {
+                inner.classList.remove(
+                    "is-wheel-next",
+                    "is-wheel-prev"
+                );
+            }
+
+        }, 750);
+
+    }, { passive: false });
+
     });
 
-})();
