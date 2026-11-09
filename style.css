@@ -3077,3 +3077,48 @@ body.drawer-is-open {
     opacity: 0;
     transform: translateY(10px);
 }
+
+
+/* =========================================
+   ПЕРЕЛИСТЫВАНИЕ ШТОРКИ КОЛЁСИКОМ
+========================================= */
+
+#sideDrawer .drawer-inner {
+    will-change: opacity, transform;
+}
+
+#sideDrawer .drawer-inner.is-wheel-next {
+    animation: drawerWheelNext 0.48s cubic-bezier(0.22, 0.7, 0.25, 1);
+}
+
+#sideDrawer .drawer-inner.is-wheel-prev {
+    animation: drawerWheelPrev 0.48s cubic-bezier(0.22, 0.7, 0.25, 1);
+}
+
+@keyframes drawerWheelNext {
+    0% {
+        opacity: 0;
+        transform: translateY(24px);
+        filter: blur(3px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+@keyframes drawerWheelPrev {
+    0% {
+        opacity: 0;
+        transform: translateY(-24px);
+        filter: blur(3px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
