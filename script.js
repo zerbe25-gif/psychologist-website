@@ -1198,39 +1198,93 @@ function updateLensGlare(value) {
     let drawerOpen = false;
     let previousFocus = null;
 
-    function showDrawerSection(sectionName) {
-        const panel = drawer.querySelector(
-            `[data-drawer-panel="${sectionName}"]`
-        );
+   
+let activeSection = null;
+let sectionSwitchTimer = null;
 
-        if (!panel) return;
+function showDrawerSection(sectionName) {
+    const panel = drawer.querySelector(
+        `[data-drawer-panel="${sectionName}"]`
+    );
 
+    if (!panel) return;
+
+    // Не перезапускаем анимацию, если выбрана та же вкладка
+    if (activeSection === sectionName) return;
+
+    const inner = drawer.querySelector(".drawer-inner");
+
+    if (!inner) return;
+
+    // Останавливаем предыдущую смену, если пользователь
+    // быстро нажал другую вкладку
+    if (sectionSwitchTimer !== null) {
+        clearTimeout(sectionSwitchTimer);
+        sectionSwitchTimer = null;
+    }
+
+    function applySection() {
+        // Меняем заголовок
         title.textContent = titles[sectionName] || "Информация";
 
+        // Показываем только выбранную панель
         drawer.querySelectorAll("[data-drawer-panel]").forEach(item => {
             item.hidden = item !== panel;
         });
 
+        // Обновляем активную вкладку
         drawer.querySelectorAll("[data-drawer-tab]").forEach(button => {
             const isActive = button.dataset.drawerTab === sectionName;
 
             button.classList.toggle("active", isActive);
-            button.setAttribute("aria-current", isActive ? "page" : "false");
+            button.setAttribute(
+                "aria-current",
+                isActive ? "page" : "false"
+            );
         });
 
+        // Меняем ширину шторки
         drawer.style.setProperty(
             "--drawer-width",
             widths[sectionName] || "700px"
         );
 
-        const inner = drawer.querySelector(".drawer-inner");
-
-        if (inner) {
-            inner.classList.remove("is-revealing");
-            void inner.offsetWidth;
-            inner.classList.add("is-revealing");
-        }
+        activeSection = sectionName;
     }
+
+    // При первом открытии показываем раздел сразу
+    if (activeSection === null) {
+        applySection();
+
+        inner.classList.remove("is-switching");
+        inner.classList.remove("is-revealing");
+
+        void inner.offsetWidth;
+
+        inner.classList.add("is-revealing");
+        return;
+    }
+
+    // Убираем анимацию появления старого содержимого
+    inner.classList.remove("is-revealing");
+
+    // Начинаем плавное исчезновение
+    inner.classList.add("is-switching");
+
+    sectionSwitchTimer = setTimeout(() => {
+        applySection();
+
+        // Перезапускаем последовательное появление
+        inner.classList.remove("is-switching");
+
+        void inner.offsetWidth;
+
+        inner.classList.add("is-revealing");
+
+        sectionSwitchTimer = null;
+    }, 240);
+}
+
 
     function openDrawer(sectionName) {
         if (!titles[sectionName]) return;
