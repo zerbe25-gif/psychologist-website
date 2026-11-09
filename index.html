@@ -347,11 +347,11 @@
     </a>
 
     <nav class="header-nav">
-      <button class="nav-button" data-modal="price-modal">
+      <button class="nav-button" data-drawer-open="price">
         Стоимость
       </button>
 
-      <button class="nav-button" data-modal="contacts-modal">
+   <button class="nav-button" data-drawer-open="contacts">
         Контактные данные
       </button>
     </nav>
@@ -382,7 +382,7 @@
             </span>
         </button>
 
-        <button class="menu-item menu-item-2" data-modal="format-modal">
+       <button class="menu-item menu-item-2" data-drawer-open="format">
             <span class="word-mask">
                 <span class="word-from-top">ФОРМАТ</span>
             </span>
@@ -391,13 +391,19 @@
             </span>
         </button>
 
-        <button class="menu-item menu-item-3" data-modal="education-modal">
+        <butto<button class="menu-item menu-item-3" data-drawer-open="education">
             <span class="word-mask">
                 <span class="word-from-bottom">ОБРАЗОВАНИЕ</span>
             </span>
         </button>
 
-        <a href="articles.html" class="menu-item menu-item-4">
+       <button type="button"
+        class="menu-item menu-item-4"
+        data-drawer-open="articles">
+    <span class="word-mask">
+        <span class="word-from-bottom">СТАТЬИ</span>
+    </span>
+</button>
             <span class="word-mask">
                 <span class="word-from-bottom">СТАТЬИ</span>
             </span>
@@ -451,11 +457,9 @@
   </main>
 
 
-<!-- НОВАЯ ШТОРКА -->
-<div id="drawerBackdrop"
-     aria-hidden="true"
-     onclick="closeTestDrawer()">
- </div>
+
+<!-- ЕДИНАЯ ИНФОРМАЦИОННАЯ ШТОРКА -->
+<div id="drawerBackdrop" aria-hidden="true"></div>
 
 <aside id="sideDrawer"
        role="dialog"
@@ -463,28 +467,110 @@
        aria-labelledby="drawerTitle"
        aria-hidden="true">
 
-   
-<button id="drawerClose"
-        class="drawer-close"
-        type="button"
-        aria-label="Закрыть"
-        onclick="closeTestDrawer()">
-    ×
-</button>
-
+    <button id="drawerClose"
+            class="drawer-close"
+            type="button"
+            aria-label="Закрыть">
+        ×
+    </button>
 
     <div class="drawer-inner">
+
         <p class="drawer-eyebrow">ПСИХОЛОГИЧЕСКАЯ ПРАКТИКА</p>
 
-        <h2 id="drawerTitle">Тестовая шторка</h2>
+        <nav class="drawer-tabs" aria-label="Информационные разделы">
+            <button type="button" data-drawer-tab="requests">Запросы</button>
+            <button type="button" data-drawer-tab="format">Формат</button>
+            <button type="button" data-drawer-tab="education">Образование</button>
+            <button type="button" data-drawer-tab="articles">Статьи</button>
+            <button type="button" data-drawer-tab="price">Стоимость</button>
+            <button type="button" data-drawer-tab="contacts">Контакты</button>
+        </nav>
 
-        <div class="drawer-test-content">
-            <p>Новая шторка работает.</p>
-            <p>Содержимое будет добавлено на следующем этапе.</p>
+        <h2 id="drawerTitle">С какими запросами я работаю</h2>
+
+        <div class="drawer-panels">
+
+            <!-- ЗАПРОСЫ -->
+            <section class="drawer-panel" data-drawer-panel="requests">
+                <ul class="requests-list">
+                    <li>Тревога, стресс, выгорание, переутомление;</li>
+                    <li>Проблемы в отношениях: созависимость, семейные конфликты, конфликты поколений, развод, измены;</li>
+                    <li>Поиск себя, вопросы самоидентификации;</li>
+                    <li>Трудности на работе и вопросы самореализации;</li>
+                    <li>Последствия жестокого обращения, буллинг;</li>
+                    <li>Исследование мужской самоидентичности и особенностей социализации;</li>
+                    <li>Вопросы сексуальной идентичности, поддержка ЛГБТК+ сообщества;</li>
+                    <li>Эмиграция и адаптация в новой среде;</li>
+                    <li>Переживание утраты, горя;</li>
+                    <li>Сопровождение при наличии клинических состояний и помощь в восстановлении после госпитализаций (тревожные расстройства, ОКР, депрессия и др.).</li>
+                </ul>
+
+                <p class="requests-note">
+                    <strong>Важно:</strong> психодинамическое консультирование дополняет, но не заменяет медикаментозное лечение и наблюдение у профильного психиатра.
+                </p>
+            </section>
+
+            <!-- ФОРМАТ РАБОТЫ -->
+            <section class="drawer-panel" data-drawer-panel="format" hidden>
+                <p>Информация о формате работы будет добавлена позже.</p>
+            </section>
+
+            <!-- ОБРАЗОВАНИЕ -->
+            <section class="drawer-panel" data-drawer-panel="education" hidden>
+
+                <div class="education-entry">
+                    <h3>Врач-психотерапевт</h3>
+                    <p>Профессиональная переподготовка по специальности «Психотерапия» (Санкт-Петербург)</p>
+                </div>
+
+                <div class="education-entry">
+                    <h3>Врач-психиатр</h3>
+                    <p>Интернатура по специальности «Психиатрия» (Санкт-Петербург)</p>
+                </div>
+
+                <div class="education-entry">
+                    <h3>Высшее медицинское образование</h3>
+                    <p>Самарский государственный медицинский университет, врач</p>
+                </div>
+
+                <div class="education-entry">
+                    <h3>Санкт-Петербургская Школа Психоанализа</h3>
+                    <p class="education-subheading">Повышение квалификации «Изучение трудов З. Фрейда»</p>
+                    <p class="education-author">Ведущий: Александр Непомнящий (Франция)</p>
+                </div>
+
+                <div class="education-entry">
+                    <h3>Групповая терапия</h3>
+                    <p>Повышение квалификации по групповой психотерапии</p>
+                    <p class="education-author">Руководитель проекта: Роби Фридман (Израиль)</p>
+                </div>
+
+            </section>
+
+            <!-- СТАТЬИ -->
+            <section class="drawer-panel" data-drawer-panel="articles" hidden>
+                <p>Публикации о психологическом консультировании.</p>
+                <a href="articles.html" class="drawer-articles-link">
+                    Перейти к статьям →
+                </a>
+            </section>
+
+            <!-- СТОИМОСТЬ -->
+            <section class="drawer-panel" data-drawer-panel="price" hidden>
+                <p>Информация о стоимости будет добавлена позже.</p>
+            </section>
+
+            <!-- КОНТАКТЫ -->
+            <section class="drawer-panel" data-drawer-panel="contacts" hidden>
+                <p>Контактная информация будет добавлена позже.</p>
+            </section>
+
         </div>
     </div>
 </aside>
-<!-- /НОВАЯ ШТОРКА -->
+<!-- /ЕДИНАЯ ИНФОРМАЦИОННАЯ ШТОРКА -->
+
 
   <!-- ЗАТЕМНЕНИЕ И ОКНА -->
 
