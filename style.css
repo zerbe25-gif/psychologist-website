@@ -442,172 +442,6 @@ body {
 }
 
 
-/* =========================================
-   ПЯТЬ ИНФОРМАЦИОННЫХ ОКОН
-========================================= */
-.content-modal {
-  display: block;
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 21;
-  width: min(56vw, 1050px);
-  height: 100vh;
-  height: 100dvh;
-  max-height: none;
-  overflow-y: auto;
-  overflow-x: hidden;
-  margin: 0;
-  padding: 75px 65px 55px 115px;
-  background: #ffffff;
-  color: var(--text-color);
-  border: none;
-  border-radius: 0;
-  box-shadow: -25px 0 65px rgba(0,0,0,0.12);
-
- --modal-cut: 15%;
-
-clip-path: polygon(
-    var(--modal-cut) 0,
-    100% 0,
-    100% 100%,
-    0 100%
-);
-
-  transform: translateX(105%);
-
-  visibility: hidden;
-  pointer-events: none;
-  transition:
-    transform 0.95s cubic-bezier(0.22, 0.75, 0.25, 1),
-    visibility 0s linear 0.95s;
-}
-
-
-/* Открытое окно */
-.content-modal.active {
-  display: block;
-  visibility: visible;
-  pointer-events: auto;
-  transform: translateX(0);
-  animation: none;
-  transition:
-    transform 0.95s cubic-bezier(0.22, 0.75, 0.25, 1),
-    visibility 0s;
-}
-
-
-/* Плавное появление заголовка и текста */
-.content-modal h2,
-.content-modal .modal-content-text {
-  opacity: 0;
-  transform: translateY(22px);
-  transition:
-    opacity 0.65s ease,
-    transform 0.65s cubic-bezier(0.22, 0.75, 0.25, 1);
-}
-
-.content-modal.active h2 {
-  opacity: 1;
-  transform: translateY(0);
-  transition-delay: 0.32s;
-}
-
-.content-modal.active .modal-content-text {
-  opacity: 1;
-  transform: translateY(0);
-  transition-delay: 0.48s;
-}
-
-
-/* =========================================
-   РАЗМЫТИЕ ФОНА ДЛЯ БОКОВЫХ ОКОН
-========================================= */
-
-.modal-overlay.drawer-mode {
-  background: transparent;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  opacity: 1;
-  visibility: hidden;
-  pointer-events: none;
-
-  /* Оставляем слой до окончания анимации */
-  transition: visibility 0s linear 1.95s;
-}
-
-
-/* Слой размытия */
-.modal-overlay.drawer-mode::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  background: rgba(255,255,255,0.06);
-  opacity: 0;
-  backdrop-filter: blur(0px);
-  -webkit-backdrop-filter: blur(0px);
-  pointer-events: none;
-  transition:
-    opacity 1.45s cubic-bezier(0.16, 1, 0.3, 1) 0.45s,
-    backdrop-filter 1.45s cubic-bezier(0.16, 1, 0.3, 1) 0.45s;
-
-}
-
-
-/* Размытие включается не сразу, а в середине выезда */
-.modal-overlay.drawer-mode.active {
-  visibility: visible;
-  pointer-events: auto;
-  transition: visibility 0s;
-}
-
-.modal-overlay.drawer-mode.active::before {
-  opacity: 1;
-  backdrop-filter: blur(9px);
-  -webkit-backdrop-filter: blur(9px);
-}
-
-
-/* =========================================
-   АДАПТАЦИЯ БОКОВЫХ ОКОН
-========================================= */
-/* =========================================
-   АДАПТАЦИЯ БОКОВЫХ ОКОН
-========================================= */
-
-@media (max-width: 900px) {
-  .content-modal {
-    width: min(94vw, 680px);
-    padding: 65px 38px 45px 90px;
-
-    --modal-cut: 22%;
-
-    clip-path: polygon(
-      var(--modal-cut) 0,
-      100% 0,
-      100% 100%,
-      0 100%
-    );
-  }
-}
-
-@media (max-width: 600px) {
-  .content-modal {
-    width: 100vw;
-    padding: 65px 25px 40px 60px;
-
-    --modal-cut: 12%;
-
-    clip-path: polygon(
-      var(--modal-cut) 0,
-      100% 0,
-      100% 100%,
-      0 100%
-    );
-  }
-}
-
 /* Старая анимация сохраняется для окна записи */
 @keyframes modalEnter {
   from {
@@ -2732,262 +2566,199 @@ body.tech-3-active {
     }
 }
 
+
 /* =========================================
-   ЗАПРОСЫ — ДИАГОНАЛЬНАЯ КОМПОЗИЦИЯ
+   СОДЕРЖИМОЕ НОВОЙ ИНФОРМАЦИОННОЙ ШТОРКИ
 ========================================= */
 
-/* Основное расположение содержимого */
-#requests-modal {
-    --requests-safe-gap: 35px;
-
-    padding-left: calc(
-        var(--modal-cut) + var(--requests-safe-gap)
-    );
-
-    text-align: left;
+#sideDrawer {
+    transition:
+        transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+        width 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+        visibility 0.85s;
 }
 
-/* Контейнер содержимого */
-#requests-modal .requests-content {
+.drawer-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin: 0 0 38px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid rgba(82, 102, 93, 0.2);
+}
+
+.drawer-tabs button {
+    border: 1px solid rgba(82, 102, 93, 0.2);
+    border-radius: 30px;
+    padding: 9px 15px;
+    background: transparent;
+    color: #52665D;
+    font-family: "Lora", Georgia, serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.drawer-tabs button:hover,
+.drawer-tabs button.active {
+    background: #52665D;
+    color: #fff;
+    border-color: #52665D;
+}
+
+.drawer-panels {
     width: 100%;
-    max-width: 720px;
-    margin: 0;
-    text-align: left;
+    max-width: 850px;
+}
+
+.drawer-panel[hidden] {
+    display: none !important;
+}
+
+.drawer-panel {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 19px;
+    line-height: 1.6;
+    color: #45433F;
+    animation: drawerContentReveal 0.45s ease both;
+}
+
+@keyframes drawerContentReveal {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Список запросов */
-#requests-modal .requests-list {
-    list-style: disc;
-    padding-left: 22px;
-    margin: 0;
 
+.drawer-panel .requests-list {
+    list-style: disc;
+    padding-left: 24px;
     display: flex;
     flex-direction: column;
     gap: 15px;
-
-    font-family: "Cormorant Garamond", Georgia, serif;
     font-size: clamp(17px, 1.35vw, 21px);
     line-height: 1.45;
-    color: #45433F;
 }
 
-/* Плавное смещение каждого пункта */
-#requests-modal .requests-list li {
-    opacity: 0;
-    transform: translateY(20px);
-
-    margin-left: calc(
-        0% - var(--item-shift, 0%)
-    );
-}
-
-/* Цвет маркеров */
-#requests-modal .requests-list li::marker {
+.drawer-panel .requests-list li::marker {
     color: #52665D;
     font-size: 0.85em;
 }
 
-/* Каскадное появление */
-#requests-modal.active .requests-list li {
-    animation: requestItemReveal 0.55s
-        cubic-bezier(0.22, 0.75, 0.25, 1) both;
-
-    animation-delay:
-        calc(0.65s + var(--item-order) * 0.12s);
-}
-
-/* Анимация снизу вверх */
-@keyframes requestItemReveal {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Обычный дополнительный текст */
-#requests-modal .regular-text {
-    margin-top: 22px;
-    font-size: 15px;
+.drawer-panel .requests-note {
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(82, 102, 93, 0.25);
+    font-family: "Lora", Georgia, serif;
+    font-size: 14px;
     line-height: 1.7;
     color: #68645F;
 }
 
-/* Важное примечание */
-#requests-modal .requests-note {
-    margin-top: 28px;
-    padding-top: 18px;
-
-    border-top: 1px solid rgba(82, 102, 93, 0.25);
-
-    font-size: 15px;
-    line-height: 1.65;
-    color: #68645F;
-}
-
-#requests-modal .requests-note strong {
+.drawer-panel .requests-note strong {
     color: #52665D;
-    font-weight: 600;
 }
 
-/* Планшеты */
-@media (max-width: 900px) {
-    #requests-modal {
-        --requests-safe-gap: 22px;
-    }
-}
+/* Образование */
 
-/* Телефоны */
-@media (max-width: 600px) {
-    #requests-modal {
-        --requests-safe-gap: 18px;
-    }
-
-    #requests-modal .requests-list {
-        font-size: 17px;
-        gap: 12px;
-    }
-
-    #requests-modal .requests-note,
-    #requests-modal .regular-text {
-        font-size: 14px;
-    }
-}
-
-/* =========================================
-   ОБРАЗОВАНИЕ — ДИАГОНАЛЬНАЯ КОМПОЗИЦИЯ
-========================================= */
-
-/* Основное расположение */
-#education-modal {
-    --education-safe-gap: 35px;
-
-    padding-left: calc(
-        var(--modal-cut) + var(--education-safe-gap)
-    );
-
-    text-align: left;
-}
-
-/* Контейнер */
-#education-modal .education-content {
-    width: 100%;
-    max-width: 720px;
-    margin: 0;
-    text-align: left;
-}
-
-/* Отдельные блоки образования */
-#education-modal .education-entry {
-    margin-left: calc(
-        0% - var(--education-shift, 0%)
-    );
-
+.drawer-panel .education-entry {
     margin-bottom: 22px;
     padding-bottom: 14px;
-
     border-bottom: 1px solid rgba(82, 102, 93, 0.16);
-
-    opacity: 0;
-    transform: translateY(20px);
 }
 
-/* Названия квалификаций */
-#education-modal .education-entry h3 {
+.drawer-panel .education-entry h3 {
     margin: 0 0 7px;
-
     font-family: "Cormorant Garamond", Georgia, serif;
-    font-size: clamp(19px, 1.5vw, 23px);
+    font-size: 23px;
     font-weight: 600;
     line-height: 1.3;
-
     color: #52665D;
 }
 
-/* Основное описание */
-#education-modal .education-entry p {
+.drawer-panel .education-entry p {
     margin: 0;
-
-    font-family: "Cormorant Garamond", Georgia, serif;
-    font-size: clamp(17px, 1.35vw, 20px);
+    font-size: 19px;
     line-height: 1.45;
-
-    color: #45433F;
 }
 
-/* Дополнительное название программы */
-#education-modal .education-entry .education-subheading {
+.drawer-panel .education-entry .education-subheading {
     margin-top: 8px;
     font-weight: 600;
 }
 
-/* Ведущие и руководители */
-#education-modal .education-entry .education-author {
+.drawer-panel .education-entry .education-author {
     margin-top: 5px;
-
     font-size: 15px;
     font-style: italic;
-
     color: #68645F;
 }
 
-/* Последовательное появление блоков */
-#education-modal.active .education-entry {
-    animation: educationItemReveal 0.55s
-        cubic-bezier(0.22, 0.75, 0.25, 1) both;
+/* Ссылка на публикации */
 
-    animation-delay:
-        calc(0.65s + var(--education-order) * 0.16s);
+.drawer-articles-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #52665D;
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 4px;
 }
 
-/* Анимация снизу вверх */
-@keyframes educationItemReveal {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.drawer-articles-link:hover {
+    color: #A64B2A;
 }
 
-/* Планшеты */
-@media (max-width: 900px) {
-    #education-modal {
-        --education-safe-gap: 22px;
+/* Адаптация */
+
+@media (max-width: 700px) {
+    #sideDrawer {
+        width: 100vw !important;
     }
 
-    #education-modal .education-entry {
-        margin-bottom: 18px;
-    }
-}
-
-/* Телефоны */
-@media (max-width: 600px) {
-    #education-modal {
-        --education-safe-gap: 18px;
+    .drawer-inner {
+        padding: 80px 25px 45px;
     }
 
-    #education-modal .education-entry h3 {
-        font-size: 19px;
+    .drawer-tabs {
+        gap: 7px;
+        margin-bottom: 28px;
     }
 
-    #education-modal .education-entry p {
+    .drawer-tabs button {
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+
+    .drawer-panel {
         font-size: 17px;
     }
 
-    #education-modal .education-entry .education-author {
+    .drawer-panel .requests-list {
+        font-size: 17px;
+        gap: 12px;
+    }
+
+    .drawer-panel .requests-note {
         font-size: 14px;
+    }
+
+    .drawer-panel .education-entry h3 {
+        font-size: 20px;
+    }
+
+    .drawer-panel .education-entry p {
+        font-size: 17px;
     }
 }
 
-     
+   
 /* =========================================
    НОВАЯ ШТОРКА — ТЕСТОВАЯ ВЕРСИЯ
 ========================================= */
