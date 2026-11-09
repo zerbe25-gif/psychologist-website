@@ -1185,15 +1185,15 @@ function updateLensGlare(value) {
         contacts: "Контактные данные"
     };
 
-    const widths = {
-        requests: "700px",
-        format: "950px",
-        education: "700px",
-        articles: "1100px",
-        price: "600px",
-        contacts: "700px"
-    };
-
+  const widths = {
+    requests: "700px",
+    format: "950px",
+    education: "600px",
+    articles: "1100px",
+    price: "600px",
+    contacts: "700px"
+};
+  
     let drawerOpen = false;
     let previousFocus = null;
 
@@ -1220,6 +1220,18 @@ function updateLensGlare(value) {
             "--drawer-width",
             widths[sectionName] || "700px"
         );
+      
+const inner = drawer.querySelector(".drawer-inner");
+
+if (inner) {
+    inner.classList.remove("is-revealing");
+
+    // Перезапускаем CSS-анимацию
+    void inner.offsetWidth;
+
+    inner.classList.add("is-revealing");
+}
+
     }
 
     function openDrawer(sectionName) {
