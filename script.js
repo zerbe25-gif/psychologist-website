@@ -1164,6 +1164,7 @@ function updateLensGlare(value) {
         value + '%';
 }
 
+
 /* =========================================
    ЕДИНАЯ ИНФОРМАЦИОННАЯ ШТОРКА
 ========================================= */
@@ -1185,15 +1186,15 @@ function updateLensGlare(value) {
         contacts: "Контактные данные"
     };
 
-  const widths = {
-    requests: "700px",
-    format: "950px",
-    education: "600px",
-    articles: "1100px",
-    price: "600px",
-    contacts: "700px"
-};
-  
+    const widths = {
+        requests: "700px",
+        format: "950px",
+        education: "600px",
+        articles: "1100px",
+        price: "600px",
+        contacts: "700px"
+    };
+
     let drawerOpen = false;
     let previousFocus = null;
 
@@ -1212,6 +1213,7 @@ function updateLensGlare(value) {
 
         drawer.querySelectorAll("[data-drawer-tab]").forEach(button => {
             const isActive = button.dataset.drawerTab === sectionName;
+
             button.classList.toggle("active", isActive);
             button.setAttribute("aria-current", isActive ? "page" : "false");
         });
@@ -1220,18 +1222,14 @@ function updateLensGlare(value) {
             "--drawer-width",
             widths[sectionName] || "700px"
         );
-      
-const inner = drawer.querySelector(".drawer-inner");
 
-if (inner) {
-    inner.classList.remove("is-revealing");
+        const inner = drawer.querySelector(".drawer-inner");
 
-    // Перезапускаем CSS-анимацию
-    void inner.offsetWidth;
-
-    inner.classList.add("is-revealing");
-}
-
+        if (inner) {
+            inner.classList.remove("is-revealing");
+            void inner.offsetWidth;
+            inner.classList.add("is-revealing");
+        }
     }
 
     function openDrawer(sectionName) {
@@ -1270,23 +1268,29 @@ if (inner) {
         }
     }
 
+    // Открытие разделов кнопками главного меню
     document.querySelectorAll("[data-drawer-open]").forEach(button => {
         button.addEventListener("click", () => {
             openDrawer(button.dataset.drawerOpen);
         });
     });
 
+    // Переключение вкладок внутри шторки
     drawer.querySelectorAll("[data-drawer-tab]").forEach(button => {
         button.addEventListener("click", () => {
             showDrawerSection(button.dataset.drawerTab);
         });
     });
 
+    // Закрытие кнопкой и кликом по фону
     closeButton.addEventListener("click", closeDrawer);
     backdrop.addEventListener("click", closeDrawer);
 
+    // Закрытие клавишей Escape
     document.addEventListener("keydown", event => {
         if (event.key === "Escape" && drawerOpen) {
             closeDrawer();
         }
     });
+
+})();
