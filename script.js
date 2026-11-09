@@ -1217,33 +1217,81 @@ window.addEventListener(
 );
 
 
+
 /* =========================================
-   НОВАЯ ШТОРКА — УПРАВЛЕНИЕ
+   ЕДИНАЯ ИНФОРМАЦИОННАЯ ШТОРКА
 ========================================= */
 
 (function () {
     const drawer = document.getElementById("sideDrawer");
     const backdrop = document.getElementById("drawerBackdrop");
     const closeButton = document.getElementById("drawerClose");
+    const title = document.getElementById("drawerTitle");
 
-    if (!drawer || !backdrop || !closeButton) return;
+    if (!drawer || !backdrop || !closeButton || !title) return;
+
+    const titles = {
+        requests: "С какими запросами я работаю",
+        format: "Формат работы",
+        education: "Образование и профессиональная подготовка",
+        articles: "Статьи",
+        price: "Стоимость",
+        contacts: "Контактные данные"
+    };
+
+    const widths = {
+        requests: "700px",
+        format: "950px",
+        education: "700px",
+        articles: "1100px",
+        price: "600px",
+        contacts: "700px"
+    };
 
     let drawerOpen = false;
     let previousFocus = null;
 
-    function openDrawer() {
-        if (drawerOpen) return;
+    function showDrawerSection(sectionName) {
+        const panel = drawer.querySelector(
+            `[data-drawer-panel="${sectionName}"]`
+        );
 
-        drawerOpen = true;
-        previousFocus = document.activeElement;
+        if (!panel) return;
 
-        backdrop.classList.add("is-open");
-        drawer.classList.add("is-open");
-        document.body.classList.add("drawer-is-open");
+        title.textContent = titles[sectionName] || "Информация";
 
-        drawer.setAttribute("aria-hidden", "false");
-        backdrop.setAttribute("aria-hidden", "false");
+        drawer.querySelectorAll("[data-drawer-panel]").forEach(item => {
+            item.hidden = item !== panel;
+        });
 
+        drawer.querySelectorAll("[data-drawer-tab]").forEach(button => {
+            const isActive = button.dataset.drawerTab === sectionName;
+            button.classList.toggle("active", isActive);
+            button.setAttribute("aria-current", isActive ? "page" : "false");
+        });
+
+        drawer.style.setProperty(
+            "--drawer-width",
+            widths[sectionName] || "700px"
+        );
+    }
+
+    function openDrawer(sectionName) {
+        if (!titles[sectionName]) return;
+
+        if (!drawerOpen) {
+            previousFocus = document.activeElement;
+            drawerOpen = true;
+
+            backdrop.classList.add("is-open");
+            drawer.classList.add("is-open");
+            document.body.classList.add("drawer-is-open");
+
+            drawer.setAttribute("aria-hidden", "false");
+            backdrop.setAttribute("aria-hidden", "false");
+        }
+
+        showDrawerSection(sectionName);
         closeButton.focus();
     }
 
@@ -1264,19 +1312,32 @@ window.addEventListener(
         }
     }
 
+    document.querySelectorAll("[data-drawer-open]").forEach(button => {
+        button.addEventListener("click", () => {
+            openDrawer(button.dataset.drawerOpen);
+        });
+    });
+
+    drawer.querySelectorAll("[data-drawer-tab]").forEach(button => {
+        button.addEventListener("click", () => {
+            showDrawerSection(button.dataset.drawerTab);
+        });
+    });
+
     closeButton.addEventListener("click", closeDrawer);
     backdrop.addEventListener("click", closeDrawer);
 
-    document.addEventListener("keydown", function (event) {
+    document.addEventListener("keydown", event => {
         if (event.key === "Escape" && drawerOpen) {
             closeDrawer();
         }
     });
 
-    // Временный способ проверить шторку из консоли браузера
-    window.openTestDrawer = openDrawer;
+    window.openTestDrawer = () => openDrawer("requests");
+    window.openDrawer = openDrawer;
     window.closeTestDrawer = closeDrawer;
 })();
+
 
 
 
