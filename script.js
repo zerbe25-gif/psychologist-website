@@ -1165,6 +1165,7 @@ function updateLensGlare(value) {
 }
 
 
+
 /* =========================================
    ЕДИНАЯ ИНФОРМАЦИОННАЯ ШТОРКА
 ========================================= */
@@ -1195,96 +1196,85 @@ function updateLensGlare(value) {
         contacts: "700px"
     };
 
+    const wheelSections = [
+        "requests",
+        "format",
+        "education",
+        "articles",
+        "price",
+        "contacts"
+    ];
+
     let drawerOpen = false;
     let previousFocus = null;
+    let activeSection = null;
+    let sectionSwitchTimer = null;
+    let wheelLocked = false;
+    let wheelLockTimer = null;
 
-   
-let activeSection = null;
-let sectionSwitchTimer = null;
-
-function showDrawerSection(sectionName) {
-    const panel = drawer.querySelector(
-        `[data-drawer-panel="${sectionName}"]`
-    );
-
-    if (!panel) return;
-
-    // Не перезапускаем анимацию, если выбрана та же вкладка
-    if (activeSection === sectionName) return;
-
-    const inner = drawer.querySelector(".drawer-inner");
-
-    if (!inner) return;
-
-    // Останавливаем предыдущую смену, если пользователь
-    // быстро нажал другую вкладку
-    if (sectionSwitchTimer !== null) {
-        clearTimeout(sectionSwitchTimer);
-        sectionSwitchTimer = null;
-    }
-
-    function applySection() {
-        // Меняем заголовок
-        title.textContent = titles[sectionName] || "Информация";
-
-        // Показываем только выбранную панель
-        drawer.querySelectorAll("[data-drawer-panel]").forEach(item => {
-            item.hidden = item !== panel;
-        });
-
-        // Обновляем активную вкладку
-        drawer.querySelectorAll("[data-drawer-tab]").forEach(button => {
-            const isActive = button.dataset.drawerTab === sectionName;
-
-            button.classList.toggle("active", isActive);
-            button.setAttribute(
-                "aria-current",
-                isActive ? "page" : "false"
-            );
-        });
-
-        // Меняем ширину шторки
-        drawer.style.setProperty(
-            "--drawer-width",
-            widths[sectionName] || "700px"
+    function showDrawerSection(sectionName) {
+        const panel = drawer.querySelector(
+            `[data-drawer-panel="${sectionName}"]`
         );
 
-        activeSection = sectionName;
-    }
+        if (!panel || activeSection === sectionName) return;
 
-    // При первом открытии показываем раздел сразу
-    if (activeSection === null) {
-        applySection();
+        const inner = drawer.querySelector(".drawer-inner");
+        if (!inner) return;
 
-        inner.classList.remove("is-switching");
+        if (sectionSwitchTimer !== null) {
+            clearTimeout(sectionSwitchTimer);
+            sectionSwitchTimer = null;
+        }
+
+        function applySection() {
+            title.textContent = titles[sectionName] || "Информация";
+
+            drawer.querySelectorAll("[data-drawer-panel]").forEach(item => {
+                item.hidden = item !== panel;
+            });
+
+            drawer.querySelectorAll("[data-drawer-tab]").forEach(button => {
+                const isActive = button.dataset.drawerTab === sectionName;
+
+                button.classList.toggle("active", isActive);
+                button.setAttribute(
+                    "aria-current",
+                    isActive ? "page" : "false"
+                );
+            });
+
+            drawer.style.setProperty(
+                "--drawer-width",
+                widths[sectionName] || "700px"
+            );
+
+            activeSection = sectionName;
+        }
+
+        if (activeSection === null) {
+            applySection();
+
+            inner.classList.remove("is-switching", "is-revealing");
+            void inner.offsetWidth;
+            inner.classList.add("is-revealing");
+
+            return;
+        }
+
         inner.classList.remove("is-revealing");
+        inner.classList.add("is-switching");
 
-        void inner.offsetWidth;
+        sectionSwitchTimer = setTimeout(() => {
+            applySection();
 
-        inner.classList.add("is-revealing");
-        return;
+            inner.classList.remove("is-switching");
+            void inner.offsetWidth;
+            inner.classList.add("is-revealing");
+
+            sectionSwitchTimer = null;
+        }, 240);
     }
-
-    // Убираем анимацию появления старого содержимого
-    inner.classList.remove("is-revealing");
-
-    // Начинаем плавное исчезновение
-    inner.classList.add("is-switching");
-
-    sectionSwitchTimer = setTimeout(() => {
-        applySection();
-
-        // Перезапускаем последовательное появление
-        inner.classList.remove("is-switching");
-
-        void inner.offsetWidth;
-
-        inner.classList.add("is-revealing");
-
-        sectionSwitchTimer = null;
-    }, 240);
-}
-
 
     function openDrawer(sectionName) {
         if (!titles[sectionName]) return;
@@ -1309,31 +1299,32 @@ function showDrawerSection(sectionName) {
         if (!drawerOpen) return;
 
         drawerOpen = false;
-      if (wheelLockTimer !== null) {
-    clearTimeout(wheelLockTimer);
-    wheelLockTimer = null;
-}
 
-wheelLocked = false;
+        if (wheelLockTimer !== null) {
+            clearTimeout(wheelLockTimer);
+            wheelLockTimer = null;
+        }
 
-drawer.classList.remove(
-    "is-wheel-next",
-    "is-wheel-prev"
-);
+        wheelLocked = false;
 
-      if (sectionSwitchTimer !== null) {
-    clearTimeout(sectionSwitchTimer);
-    sectionSwitchTimer = null;
-}
+        if (sectionSwitchTimer !== null) {
+            clearTimeout(sectionSwitchTimer);
+            sectionSwitchTimer = null;
+        }
 
-activeSection = null;
+        activeSection = null;
 
-const inner = drawer.querySelector(".drawer-inner");
+        const inner = drawer.querySelector(".drawer-inner");
 
-if (inner) {
-    inner.classList.remove("is-switching", "is-revealing");
-}
-      
+        if (inner) {
+            inner.classList.remove(
+                "is-switching",
+                "is-revealing",
+                "is-wheel-next",
+                "is-wheel-prev"
+            );
+        }
+
         drawer.classList.remove("is-open");
         backdrop.classList.remove("is-open");
         document.body.classList.remove("drawer-is-open");
@@ -1368,98 +1359,67 @@ if (inner) {
     document.addEventListener("keydown", event => {
         if (event.key === "Escape" && drawerOpen) {
             closeDrawer();
-      }
+        }
+    });
 
-      
-    // =========================================
-    // ПЕРЕКЛЮЧЕНИЕ РАЗДЕЛОВ КОЛЁСИКОМ
-    // =========================================
-
-    let wheelLocked = false;
-    let wheelLockTimer = null;
-
-    const wheelSections = [
-        "requests",
-        "format",
-        "education",
-        "articles",
-        "price",
-        "contacts"
-    ];
-
+    // Переключение разделов колёсиком
     drawer.addEventListener("wheel", event => {
-
         if (!drawerOpen || wheelLocked) return;
 
-        // Проверяем направление движения
-        const direction = event.deltaY > 0 ? 1 : -1;
-
-        // Слишком маленькие движения игнорируем
+        if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
         if (Math.abs(event.deltaY) < 35) return;
 
-        // Не реагируем на горизонтальное колесо
-        if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) {
-            return;
+        const direction = event.deltaY > 0 ? 1 : -1;
+
+        // Если прокручивается вложенная область,
+        // сначала даём ей прокрутиться до края
+        const scrollable = event.target.closest(
+            ".drawer-panel-scroll"
+        );
+
+        if (scrollable) {
+            const atTop = scrollable.scrollTop <= 1;
+            const atBottom =
+                scrollable.scrollTop + scrollable.clientHeight >=
+                scrollable.scrollHeight - 2;
+
+            if (direction > 0 && !atBottom) return;
+            if (direction < 0 && !atTop) return;
+        } else {
+            const atTop = drawer.scrollTop <= 1;
+            const atBottom =
+                drawer.scrollTop + drawer.clientHeight >=
+                drawer.scrollHeight - 2;
+
+            if (direction > 0 && !atBottom) return;
+            if (direction < 0 && !atTop) return;
         }
 
-        // Определяем положение прокрутки шторки
-        const atTop = drawer.scrollTop <= 1;
-
-        const atBottom =
-            drawer.scrollTop + drawer.clientHeight >=
-            drawer.scrollHeight - 2;
-
-        // В середине длинного содержимого
-        // сохраняем обычную прокрутку
-        if (direction > 0 && !atBottom) return;
-        if (direction < 0 && !atTop) return;
-
-        // На границе переключаем раздел
         const currentIndex = wheelSections.indexOf(activeSection);
-
         if (currentIndex === -1) return;
 
         const nextIndex = currentIndex + direction;
 
-        // Не переключаемся за пределы списка
-        if (
-            nextIndex < 0 ||
-            nextIndex >= wheelSections.length
-        ) {
-            event.preventDefault();
-            return;
-        }
+        if (nextIndex < 0 || nextIndex >= wheelSections.length) return;
 
         event.preventDefault();
-
         wheelLocked = true;
 
         const inner = drawer.querySelector(".drawer-inner");
 
-        // Направление анимации
         if (inner) {
-            inner.classList.remove(
-                "is-wheel-next",
-                "is-wheel-prev"
-            );
-
+            inner.classList.remove("is-wheel-next", "is-wheel-prev");
             void inner.offsetWidth;
 
             inner.classList.add(
-                direction > 0
-                    ? "is-wheel-next"
-                    : "is-wheel-prev"
+                direction > 0 ? "is-wheel-next" : "is-wheel-prev"
             );
         }
 
-        // Переключаем вкладку существующей функцией
         showDrawerSection(wheelSections[nextIndex]);
 
-        // Возвращаем шторку к началу нового раздела
         drawer.scrollTop = 0;
 
-        // Блокируем повторное переключение
-        // на время завершения анимации
         if (wheelLockTimer !== null) {
             clearTimeout(wheelLockTimer);
         }
@@ -1469,15 +1429,11 @@ if (inner) {
             wheelLockTimer = null;
 
             if (inner) {
-                inner.classList.remove(
-                    "is-wheel-next",
-                    "is-wheel-prev"
-                );
+                inner.classList.remove("is-wheel-next", "is-wheel-prev");
             }
-
         }, 750);
-
     }, { passive: false });
 
-    });
+})();
+
 
