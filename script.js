@@ -1310,6 +1310,19 @@ function showDrawerSection(sectionName) {
 
         drawerOpen = false;
 
+      if (sectionSwitchTimer !== null) {
+    clearTimeout(sectionSwitchTimer);
+    sectionSwitchTimer = null;
+}
+
+activeSection = null;
+
+const inner = drawer.querySelector(".drawer-inner");
+
+if (inner) {
+    inner.classList.remove("is-switching", "is-revealing");
+}
+      
         drawer.classList.remove("is-open");
         backdrop.classList.remove("is-open");
         document.body.classList.remove("drawer-is-open");
