@@ -1277,3 +1277,45 @@ window.addEventListener(
     window.openTestDrawer = openDrawer;
     window.closeTestDrawer = closeDrawer;
 })();
+
+
+
+/* =========================================
+   АВТОМАТИЧЕСКАЯ ДИАГОНАЛЬ «ОБРАЗОВАНИЕ»
+========================================= */
+
+function updateEducationDiagonal() {
+
+    const modal = document.getElementById("education-modal");
+
+    if (!modal) return;
+
+    const items = modal.querySelectorAll(".education-entry");
+
+    const cut = parseFloat(
+        getComputedStyle(modal)
+            .getPropertyValue("--modal-cut")
+    ) || 15;
+
+    const maxShift = cut * 0.65;
+    const lastIndex = Math.max(items.length - 1, 1);
+
+    items.forEach((item, index) => {
+
+        const progress = index / lastIndex;
+
+        item.style.setProperty("--education-order", index);
+
+        item.style.setProperty(
+            "--education-shift",
+            (maxShift * progress).toFixed(2) + "%"
+        );
+
+    });
+}
+
+// Первоначальный расчёт
+updateEducationDiagonal();
+
+// Пересчёт при изменении размера окна
+window.addEventListener("resize", updateEducationDiagonal);
