@@ -3044,7 +3044,7 @@ window.addEventListener(
 #drawerBackdrop {
     position: fixed;
     inset: 0;
-   z-index: 100000;
+  z-index: 99998;
 
     background: linear-gradient(
         to right,
@@ -3089,7 +3089,7 @@ window.addEventListener(
     max-width: 100vw;
     height: 100dvh;
 
-   z-index: 100001;
+  z-index: 99999;
 
     box-sizing: border-box;
     overflow-y: auto;
