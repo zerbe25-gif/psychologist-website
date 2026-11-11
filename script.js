@@ -1635,3 +1635,88 @@ window.closeDeveloperPanel = function() {
     window.closeCapsuleModal = closeCapsule;
 })();
 
+
+
+/* =========================================
+   ТЕМА V3 — КАМЕРНЫЙ НОЧНОЙ ТИЛ
+========================================= */
+
+const NIGHT_TEAL_THEME_KEY = "psychologistSiteTheme";
+
+function applySiteTheme(v) {
+    const root = document.documentElement;
+    const body = document.body;
+    const button = document.getElementById("theme-v3-toggle");
+
+    if (v === "v3") {
+        body.classList.add("theme-v3");
+
+        root.style.setProperty("--bg-base", "#1E292B");
+        root.style.setProperty("--text-main", "#F2F7F6");
+        root.style.setProperty("--accent-primary", "#34797E");
+        root.style.setProperty("--accent-gold", "#DCB573");
+        root.style.setProperty("--glow-1", "rgba(52, 121, 126, 0.45)");
+        root.style.setProperty("--glow-2", "rgba(220, 181, 115, 0.25)");
+        root.style.setProperty("--drawer-bg", "rgba(35, 50, 53, 0.92)");
+
+        // Связываем новую палитру с переменными действующего сайта
+        root.style.setProperty("--background-color", "#1E292B");
+        root.style.setProperty("--paper-bg-color", "#1E292B");
+        root.style.setProperty("--text-color", "#F2F7F6");
+        root.style.setProperty("--accent-color", "#34797E");
+        root.style.setProperty("--white", "#34797E");
+        root.style.setProperty("--header-color", "rgba(30, 41, 43, 0.92)");
+        root.style.setProperty("--panel-color", "#233235");
+
+    } else {
+        body.classList.remove("theme-v3");
+
+        [
+            "--bg-base",
+            "--text-main",
+            "--accent-primary",
+            "--accent-gold",
+            "--glow-1",
+            "--glow-2",
+            "--drawer-bg",
+            "--background-color",
+            "--paper-bg-color",
+            "--text-color",
+            "--accent-color",
+            "--white",
+            "--header-color",
+            "--panel-color"
+        ].forEach(property => root.style.removeProperty(property));
+    }
+
+    if (button) {
+        button.classList.toggle("active", v === "v3");
+        button.setAttribute("aria-pressed", String(v === "v3"));
+    }
+}
+
+function toggleNightTealTheme() {
+    const currentTheme = localStorage.getItem(NIGHT_TEAL_THEME_KEY);
+    const nextTheme = currentTheme === "v3" ? "default" : "v3";
+
+    applySiteTheme(nextTheme);
+
+    try {
+        localStorage.setItem(NIGHT_TEAL_THEME_KEY, nextTheme);
+    } catch (error) {
+        console.warn("Не удалось сохранить цветовую тему.", error);
+    }
+}
+
+// Восстанавливаем выбранную тему после загрузки страницы
+document.addEventListener("DOMContentLoaded", () => {
+    let savedTheme = "default";
+
+    try {
+        savedTheme = localStorage.getItem(NIGHT_TEAL_THEME_KEY) || "default";
+    } catch (error) {
+        console.warn("Не удалось прочитать сохранённую тему.", error);
+    }
+
+    applySiteTheme(savedTheme);
+});
