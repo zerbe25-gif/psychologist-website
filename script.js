@@ -1681,3 +1681,178 @@ document.addEventListener("DOMContentLoaded", function () {
     applyCostSettings(getCostSettings());
 });
 
+
+/* ===== COST MODAL: исправление JavaScript ===== */
+
+(function () {
+  const backdrop = document.getElementById("costBackdrop");
+  const modal = document.getElementById("costModal");
+
+  if (!backdrop || !modal) return;
+
+  const storageKey = "psychologistCostSettings";
+
+  const defaults = {
+    overlay: 55,
+    blur: 4,
+    card: 300,
+    content: 300,
+    close: 300
+  };
+
+  function readSettings() {
+    try {
+      return {
+        ...defaults,
+        ...JSON.parse(localStorage.getItem(storageKey) || "{}")
+      };
+    } catch {
+      return { ...defaults };
+    }
+  }
+
+  let settings = readSettings();
+
+  function saveSettings() {
+    localStorage.setItem(storageKey, JSON.stringify(settings));
+  }
+
+  function applySettings() {
+    backdrop.style.setProperty(
+      "--cost-overlay-opacity",
+      settings.overlay / 100
+    );
+
+    backdrop.style.setProperty(
+      "--cost-overlay-blur",
+      settings.blur + "px"
+    );
+
+    modal.style.setProperty(
+      "--cost-card-duration",
+      settings.card + "ms"
+    );
+
+    modal.style.setProperty(
+      "--cost-content-duration",
+      settings.content + "ms"
+    );
+
+    backdrop.style.setProperty(
+      "--cost-close-duration",
+      settings.close + "ms"
+    );
+  }
+
+  window.openCostModal = function () {
+    applySettings();
+    backdrop.classList.add("is-open");
+    document.body.style.overflow = "hidden";
+  };
+
+  window.closeCostModal = function () {
+    backdrop.classList.remove("is-open");
+    document.body.style.overflow = "";
+  };
+
+  document.addEventListener("click", function (event) {
+    if (event.target.closest("[data-cost-open]")) {
+      event.preventDefault();
+      window.openCostModal();
+    }
+
+    if (
+      event.target === backdrop ||
+      event.target.closest("[data-cost-close]") ||
+      event.target.closest("#costClose")
+    ) {
+      window.closeCostModal();
+    }
+  });
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && backdrop.classList.contains("is-open")) {
+      window.closeCostModal();
+    }
+  });
+
+  window.updateCostOverlay = function (value) {
+    settings.overlay = Number(value);
+    applySettings();
+    saveSettings();
+  };
+
+  window.updateCostBlur = function (value) {
+    settings.blur = Number(value);
+    applySettings();
+    saveSettings();
+  };
+
+  window.updateCostCardDuration = function (value) {
+    settings.card = Number(value);
+    applySettings();
+    saveSettings();
+  };
+
+  window.updateCostContentDuration = function (value) {
+    settings.content = Number(value);
+    applySettings();
+    saveSettings();
+  };
+
+  window.updateCostCloseDuration = function (value) {
+    settings.close = Number(value);
+    applySettings();
+    saveSettings();
+  };
+
+  window.resetCostSettings = function () {
+    settings = { ...defaults };
+    saveSettings();
+    applySettings();
+
+    document.querySelectorAll("#cost-control-panel input[type='range']")
+      .forEach(function (input) {
+        const name = input.getAttribute("oninput") || "";
+
+        if (name.includes("updateCostOverlay")) input.value = defaults.overlay;
+        if (name.includes("updateCostBlur")) input.value = defaults.blur;
+        if (name.includes("updateCostCardDuration")) input.value = defaults.card;
+        if (name.includes("updateCostContentDuration")) input.value = defaults.content;
+        if (name.includes("updateCostCloseDuration")) input.value = defaults.close;
+      });
+  };
+
+  applySettings();
+})();
+
+/* ===== DEV PANEL: переключение разделов ===== */
+
+window.toggleDevPanelSection = function (section) {
+  const sections = document.querySelectorAll("[data-panel-section]");
+
+  sections.forEach(function (item) {
+    const name = item.getAttribute("data-panel-section");
+    const active = name === section;
+
+    item.classList.toggle("active", active);
+    item.setAttribute("aria-selected", active ? "true" : "false");
+  });
+
+  const panels = {
+    animation: document.getElementById("animation-control-panel"),
+    background: document.getElementById("background-control-panel"),
+    photos: document.getElementById("photos-control-panel"),
+    cost: document.getElementById("cost-control-panel")
+  };
+
+  Object.keys(panels).forEach(function (name) {
+    const panel = panels[name];
+    if (!panel) return;
+
+    panel.hidden = name !== section;
+    panel.style.display = name === section ? "" : "none";
+  });
+};
+
+
