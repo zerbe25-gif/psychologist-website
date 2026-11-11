@@ -1078,11 +1078,13 @@ function updateAmbientSpeed(val) {
 function toggleDevPanelSection(section) {
     const content = document.getElementById('developer-panel-content');
 
-    const sections = {
-        animation: document.getElementById('animation-control-panel'),
-        background: document.getElementById('background-control-panel'),
-        photos: document.getElementById('photos-panel-content')
-    };
+   
+const sections = {
+    animation: document.getElementById('animation-control-panel'),
+    background: document.getElementById('background-control-panel'),
+    photos: document.getElementById('photos-panel-content'),
+    cost: document.getElementById('cost-control-panel')
+};
 
     if (!content || !sections[section]) return;
 
@@ -1436,4 +1438,246 @@ function updateLensGlare(value) {
 
 })();
 
+
+/* =========================================
+   ОКНО СТОИМОСТИ — УПРАВЛЕНИЕ
+========================================= */
+
+(function () {
+    const backdrop = document.getElementById("costBackdrop");
+    const modal = document.getElementById("costModal");
+
+    if (!backdrop || !modal) return;
+
+    const closeButtons = modal.querySelectorAll("[data-cost-close]");
+    const openButtons = document.querySelectorAll("[data-cost-open]");
+    const serviceButtons = modal.querySelectorAll("[data-cost-method]");
+
+    let costOpen = false;
+    let previousFocus = null;
+
+    function openCost() {
+        if (costOpen) return;
+
+        previousFocus = document.activeElement;
+        costOpen = true;
+
+        backdrop.classList.add("is-open");
+        modal.classList.add("is-open");
+
+        backdrop.setAttribute("aria-hidden", "false");
+        modal.setAttribute("aria-hidden", "false");
+
+        document.body.classList.add("cost-modal-open");
+
+        modal.scrollTop = 0;
+    }
+
+    function closeCost() {
+        if (!costOpen) return;
+
+        costOpen = false;
+
+        modal.classList.remove("is-open");
+        backdrop.classList.remove("is-open");
+
+        modal.setAttribute("aria-hidden", "true");
+        backdrop.setAttribute("aria-hidden", "true");
+
+        document.body.classList.remove("cost-modal-open");
+
+        if (previousFocus && typeof previousFocus.focus === "function") {
+            previousFocus.focus();
+        }
+    }
+
+    openButtons.forEach(button => {
+        button.addEventListener("click", openCost);
+    });
+
+    closeButtons.forEach(button => {
+        button.addEventListener("click", closeCost);
+    });
+
+    backdrop.addEventListener("click", closeCost);
+
+    document.addEventListener("keydown", event => {
+        if (event.key === "Escape" && costOpen) {
+            closeCost();
+        }
+    });
+
+    // Переход от услуги к записи
+    serviceButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            const method = button.dataset.costMethod;
+
+            closeCost();
+
+            if (typeof openModal === "function") {
+                openModal("appointment-modal");
+            }
+
+            const form = document.getElementById("appointment-form");
+
+            if (form) {
+                let methodInput = form.querySelector(
+                    '[name="selected_method"]'
+                );
+
+                if (!methodInput) {
+                    methodInput = document.createElement("input");
+                    methodInput.type = "hidden";
+                    methodInput.name = "selected_method";
+                    form.appendChild(methodInput);
+                }
+
+                methodInput.value = method;
+            }
+
+            const methodNames = {
+                individual: "Индивидуальная работа",
+                couples: "Работа с парами",
+                teenagers: "Работа с подростками",
+                coaching: "Коучинг",
+                "text-therapy": "Текстовая терапия"
+            };
+
+            const methodNote = document.getElementById(
+                "selected-method-note"
+            );
+
+            if (methodNote) {
+                methodNote.textContent =
+                    "Выбранный формат: " + (methodNames[method] || method);
+            }
+        });
+    });
+
+    // Для проверки окна через консоль
+    window.openCostModal = openCost;
+    window.closeCostModal = closeCost;
+})();
+
+
+/* =========================================
+   НАСТРОЙКИ ОКНА СТОИМОСТИ
+========================================= */
+
+const COST_SETTINGS_KEY = "costModalSettings";
+
+const defaultCostSettings = {
+    overlay: 48,
+    blur: 8,
+    card: 0.55,
+    content: 0.4,
+    close: 0.35
+};
+
+function applyCostSettings(settings) {
+    const root = document.documentElement;
+
+    root.style.setProperty(
+        "--cost-overlay-opacity",
+        Number(settings.overlay) / 100
+    );
+
+    root.style.setProperty(
+        "--cost-blur",
+        settings.blur + "px"
+    );
+
+    root.style.setProperty(
+        "--cost-card-duration",
+        settings.card + "s"
+    );
+
+    root.style.setProperty(
+        "--cost-content-duration",
+        settings.content + "s"
+    );
+
+    root.style.setProperty(
+        "--cost-close-duration",
+        settings.close + "s"
+    );
+
+    document.getElementById("cost-overlay-input").value =
+        settings.overlay;
+    document.getElementById("cost-blur-input").value =
+        settings.blur;
+    document.getElementById("cost-card-input").value =
+        settings.card;
+    document.getElementById("cost-content-input").value =
+        settings.content;
+    document.getElementById("cost-close-input").value =
+        settings.close;
+
+    document.getElementById("val-cost-overlay").textContent =
+        settings.overlay + "%";
+    document.getElementById("val-cost-blur").textContent =
+        settings.blur + " px";
+    document.getElementById("val-cost-card").textContent =
+        Number(settings.card).toFixed(2) + " сек.";
+    document.getElementById("val-cost-content").textContent =
+        Number(settings.content).toFixed(2) + " сек.";
+    document.getElementById("val-cost-close").textContent =
+        Number(settings.close).toFixed(2) + " сек.";
+}
+
+function getCostSettings() {
+    try {
+        const saved = localStorage.getItem(COST_SETTINGS_KEY);
+
+        return saved
+            ? { ...defaultCostSettings, ...JSON.parse(saved) }
+            : { ...defaultCostSettings };
+    } catch (error) {
+        return { ...defaultCostSettings };
+    }
+}
+
+function saveCostSettings(settings) {
+    localStorage.setItem(
+        COST_SETTINGS_KEY,
+        JSON.stringify(settings)
+    );
+}
+
+function changeCostSetting(key, value) {
+    const settings = getCostSettings();
+    settings[key] = Number(value);
+
+    applyCostSettings(settings);
+    saveCostSettings(settings);
+}
+
+function updateCostOverlay(value) {
+    changeCostSetting("overlay", value);
+}
+
+function updateCostBlur(value) {
+    changeCostSetting("blur", value);
+}
+
+function updateCostCardDuration(value) {
+    changeCostSetting("card", value);
+}
+
+function updateCostContentDuration(value) {
+    changeCostSetting("content", value);
+}
+
+function updateCostCloseDuration(value) {
+    changeCostSetting("close", value);
+}
+
+function resetCostSettings() {
+    applyCostSettings(defaultCostSettings);
+    saveCostSettings(defaultCostSettings);
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    applyCostSettings(getCostSettings());
+});
 
