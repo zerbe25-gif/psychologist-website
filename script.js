@@ -1718,3 +1718,21 @@ window.toggleDevPanelSection = function(section) {
     });
 };
 
+
+/* Закрытие всей панели разработчика */
+
+window.closeDeveloperPanel = function() {
+  const content = document.getElementById("developer-panel-content");
+
+  if (content) {
+    content.hidden = true;
+    content.style.display = "none";
+  }
+
+  document.querySelectorAll(
+    "#developer-panel .developer-panel-tab"
+  ).forEach(button => {
+    button.classList.remove("active");
+    button.setAttribute("aria-selected", "false");
+  });
+};
