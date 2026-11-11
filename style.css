@@ -3940,13 +3940,16 @@ body.cost-modal-open {
 /* ===== ПАНЕЛЬ РАЗРАБОТКИ: НЕЗАВИСИМЫЙ ВЕРХНИЙ СЛОЙ ===== */
 
 #developer-panel {
-  position: fixed !important;
-  top: 15px !important;
-  right: 15px !important;
+  position: relative !important;
+  top: auto !important;
+  right: auto !important;
+  left: auto !important;
   z-index: 2147483647 !important;
   isolation: isolate !important;
   pointer-events: auto !important;
-  max-width: calc(100vw - 30px);
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 #developer-panel,
