@@ -4011,3 +4011,52 @@ body.cost-modal-open {
     font-size: 13px;
   }
 }
+
+
+/* Панель стоимости: пять коротких ползунков в один ряд */
+
+#cost-control-panel {
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  gap: 8px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+#cost-control-panel .background-control {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  min-width: 0 !important;
+  width: 100% !important;
+  gap: 5px !important;
+  box-sizing: border-box !important;
+}
+
+#cost-control-panel .background-control input[type="range"] {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
+#cost-control-panel .background-control label {
+  font-size: 11px !important;
+  line-height: 1.2 !important;
+  overflow-wrap: anywhere !important;
+}
+
+/* На узких экранах сохраняем один ряд */
+@media (max-width: 600px) {
+  #cost-control-panel {
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 5px !important;
+  }
+
+  #cost-control-panel .background-control label {
+    font-size: 9px !important;
+  }
+}
