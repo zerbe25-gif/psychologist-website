@@ -1736,3 +1736,206 @@ window.closeDeveloperPanel = function() {
     button.setAttribute("aria-selected", "false");
   });
 };
+
+
+/* =========================================
+   ORGANIC CAPSULE — ОБЩЕЕ УПРАВЛЕНИЕ
+========================================= */
+
+(function () {
+    const backdrop = document.getElementById("costBackdrop");
+    const costModal = document.getElementById("costModal");
+    const contactsModal = document.getElementById("contactsModal");
+
+    if (!backdrop || !costModal || !contactsModal) return;
+
+    let activeCapsule = null;
+    let previousFocus = null;
+
+    function openCapsule(modal) {
+        if (!modal) return;
+
+        if (activeCapsule) {
+            activeCapsule.classList.remove("is-open");
+            activeCapsule.setAttribute("aria-hidden", "true");
+        }
+
+        previousFocus = document.activeElement;
+        activeCapsule = modal;
+
+        backdrop.classList.add("is-open");
+        modal.classList.add("is-open");
+
+        backdrop.setAttribute("aria-hidden", "false");
+        modal.setAttribute("aria-hidden", "false");
+
+        document.body.classList.add("cost-modal-open");
+
+        modal.scrollTop = 0;
+    }
+
+    function closeCapsule() {
+        if (!activeCapsule) return;
+
+        activeCapsule.classList.remove("is-open");
+        activeCapsule.setAttribute("aria-hidden", "true");
+
+        backdrop.classList.remove("is-open");
+        backdrop.setAttribute("aria-hidden", "true");
+
+        document.body.classList.remove("cost-modal-open");
+
+        activeCapsule = null;
+
+        if (previousFocus && typeof previousFocus.focus === "function") {
+            previousFocus.focus();
+        }
+    }
+
+    document.querySelectorAll("[data-cost-open]").forEach(button => {
+        button.addEventListener("click", () => openCapsule(costModal));
+    });
+
+    document.querySelectorAll("[data-contacts-open]").forEach(button => {
+        button.addEventListener("click", () => openCapsule(contactsModal));
+    });
+
+    document.querySelectorAll("[data-capsule-close]").forEach(button => {
+        button.addEventListener("click", closeCapsule);
+    });
+
+    // Сохраняем старый атрибут закрытия окна стоимости
+    document.querySelectorAll("[data-cost-close]").forEach(button => {
+        button.addEventListener("click", closeCapsule);
+    });
+
+    backdrop.addEventListener("click", closeCapsule);
+
+    document.addEventListener("keydown", event => {
+        if (event.key === "Escape" && activeCapsule) {
+            closeCapsule();
+        }
+    });
+
+    // Для тестирования
+    window.openCostModal = () => openCapsule(costModal);
+    window.openContactsModal = () => openCapsule(contactsModal);
+    window.closeCapsuleModal = closeCapsule;
+})();
+
+
+/* =========================================
+   НАСТРОЙКИ АНИМАЦИИ ОКНА СТОИМОСТИ
+========================================= */
+
+const COST_SETTINGS_KEY = "costModalSettings";
+
+const defaultCostSettings = {
+    overlay: 35,
+    blur: 8,
+    card: 0.4,
+    content: 0.4,
+    close: 0.4
+};
+
+function getCostSettings() {
+    try {
+        const saved = localStorage.getItem(COST_SETTINGS_KEY);
+
+        return saved
+            ? { ...defaultCostSettings, ...JSON.parse(saved) }
+            : { ...defaultCostSettings };
+    } catch (error) {
+        return { ...defaultCostSettings };
+    }
+}
+
+function applyCostSettings(settings) {
+    const root = document.documentElement;
+
+    root.style.setProperty(
+        "--cost-overlay-opacity",
+        Number(settings.overlay) / 100
+    );
+
+    root.style.setProperty("--cost-blur", settings.blur + "px");
+    root.style.setProperty("--cost-card-duration", settings.card + "s");
+    root.style.setProperty("--cost-content-duration", settings.content + "s");
+    root.style.setProperty("--cost-close-duration", settings.close + "s");
+
+    const controls = {
+        "cost-overlay-input": settings.overlay,
+        "cost-blur-input": settings.blur,
+        "cost-card-input": settings.card,
+        "cost-content-input": settings.content,
+        "cost-close-input": settings.close
+    };
+
+    Object.entries(controls).forEach(([id, value]) => {
+        const input = document.getElementById(id);
+        if (input) input.value = value;
+    });
+
+    const labels = {
+        "val-cost-overlay": settings.overlay + "%",
+        "val-cost-blur": settings.blur + " px",
+        "val-cost-card": Number(settings.card).toFixed(2) + " сек.",
+        "val-cost-content": Number(settings.content).toFixed(2) + " сек.",
+        "val-cost-close": Number(settings.close).toFixed(2) + " сек."
+    };
+
+    Object.entries(labels).forEach(([id, value]) => {
+        const label = document.getElementById(id);
+        if (label) label.textContent = value;
+    });
+}
+
+function changeCostSetting(key, value) {
+    const settings = getCostSettings();
+
+    settings[key] = Number(value);
+
+    applyCostSettings(settings);
+
+    try {
+        localStorage.setItem(
+            COST_SETTINGS_KEY,
+            JSON.stringify(settings)
+        );
+    } catch (error) {
+        console.warn("Не удалось сохранить настройки окна стоимости.", error);
+    }
+}
+
+function updateCostOverlay(value) {
+    changeCostSetting("overlay", value);
+}
+
+function updateCostBlur(value) {
+    changeCostSetting("blur", value);
+}
+
+function updateCostCardDuration(value) {
+    changeCostSetting("card", value);
+}
+
+function updateCostContentDuration(value) {
+    changeCostSetting("content", value);
+}
+
+function updateCostCloseDuration(value) {
+    changeCostSetting("close", value);
+}
+
+function resetCostSettings() {
+    applyCostSettings(defaultCostSettings);
+
+    localStorage.setItem(
+        COST_SETTINGS_KEY,
+        JSON.stringify(defaultCostSettings)
+    );
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    applyCostSettings(getCostSettings());
+});
