@@ -3935,3 +3935,66 @@ body.cost-modal-open {
     font-size: 9px !important;
   }
 }
+
+
+/* ===== ПАНЕЛЬ РАЗРАБОТКИ: НЕЗАВИСИМЫЙ ВЕРХНИЙ СЛОЙ ===== */
+
+#developer-panel {
+  position: fixed !important;
+  top: 15px !important;
+  right: 15px !important;
+  z-index: 2147483647 !important;
+  isolation: isolate !important;
+  pointer-events: auto !important;
+  max-width: calc(100vw - 30px);
+}
+
+#developer-panel,
+#developer-panel * {
+  pointer-events: auto;
+}
+
+#developer-panel-content {
+  position: relative;
+  z-index: 1;
+  max-height: 75vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: #fff;
+  color: #2D3748;
+  box-shadow: 0 8px 35px rgba(0, 0, 0, .3);
+}
+
+/* Кнопка закрытия */
+
+.developer-panel-close {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  margin-left: auto;
+  border: none;
+  border-radius: 50%;
+  background: #E2E8F0;
+  color: #2D3748;
+  font-size: 23px;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.developer-panel-close:hover {
+  background: #CBD5E0;
+}
+
+/* Полоса управления */
+
+#developer-panel .developer-panel-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+
