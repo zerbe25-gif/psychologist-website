@@ -4334,3 +4334,153 @@ body.cost-modal-open {
         right: 17px;
     }
 }
+
+
+/* =========================================
+   ORGANIC CAPSULE — ФИНАЛЬНОЕ ПЕРЕОПРЕДЕЛЕНИЕ
+========================================= */
+
+/* Фон: затемнение и мягкое размытие */
+#costBackdrop {
+    display: block !important;
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 12000 !important;
+
+    background: rgba(28, 38, 51, var(--cost-overlay-opacity, 0.35));
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    backdrop-filter: blur(0);
+    -webkit-backdrop-filter: blur(0);
+
+    transition:
+        opacity var(--cost-close-duration, 0.4s) ease,
+        visibility var(--cost-close-duration, 0.4s) ease,
+        backdrop-filter var(--cost-card-duration, 0.4s) ease;
+}
+
+#costBackdrop.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+
+    backdrop-filter: blur(var(--cost-blur, 8px));
+    -webkit-backdrop-filter: blur(var(--cost-blur, 8px));
+}
+
+/* Исходное положение капсулы */
+#costModal,
+#contactsModal {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+
+    width: 90% !important;
+    max-width: 620px !important;
+    max-height: 85vh !important;
+    max-height: 85dvh !important;
+
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+
+    background: rgba(255, 255, 255, 0.88) !important;
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    border-radius: 48px !important;
+    box-shadow: 0 30px 60px rgba(28, 38, 51, 0.18);
+
+    z-index: 12001 !important;
+
+    transform: translate(-50%, -45%) scale(0.94) !important;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+        transform var(--cost-close-duration, 0.4s)
+            cubic-bezier(0.16, 1, 0.3, 1),
+        opacity var(--cost-close-duration, 0.4s) ease,
+        visibility var(--cost-close-duration, 0.4s) ease;
+}
+
+/* Появление: подъём + увеличение */
+#costBackdrop.is-open + #costModal,
+#costModal.is-open,
+#contactsModal.is-open {
+    transform: translate(-50%, -50%) scale(1) !important;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+
+    transition:
+        transform var(--cost-card-duration, 0.4s)
+            cubic-bezier(0.16, 1, 0.3, 1),
+        opacity var(--cost-card-duration, 0.4s) ease,
+        visibility var(--cost-card-duration, 0.4s) ease;
+}
+
+/* Крестик: расположение и поведение как у боковой шторки */
+#costModal .cost-close,
+#contactsModal .cost-close {
+    position: absolute !important;
+    z-index: 10;
+
+    top: 25px !important;
+    right: 30px !important;
+
+    width: 44px !important;
+    height: 44px !important;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 !important;
+    padding: 0;
+
+    border: 0;
+    border-radius: 50%;
+    background: transparent !important;
+
+    color: #5B554F !important;
+    font-size: 34px !important;
+    font-weight: 300;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease;
+}
+
+#costModal .cost-close:hover,
+#contactsModal .cost-close:hover {
+    background: rgba(0, 0, 0, 0.05) !important;
+    transform: rotate(90deg);
+}
+
+/* Мобильное расположение крестика — как у шторки */
+@media (max-width: 700px) {
+    #costModal .cost-close,
+    #contactsModal .cost-close {
+        top: 18px !important;
+        right: 18px !important;
+    }
+}
+
+/* Мобильная форма капсулы */
+@media (max-width: 600px) {
+    #costModal,
+    #contactsModal {
+        width: calc(100% - 24px) !important;
+        max-height: 88vh !important;
+        max-height: 88dvh !important;
+        border-radius: 32px !important;
+    }
+}
