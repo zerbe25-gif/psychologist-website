@@ -1648,16 +1648,16 @@ function applySiteTheme(v) {
     const body = document.body;
     const button = document.getElementById("theme-v3-toggle");
 
-    if (v === "v3") {
-        body.classList.add("theme-v3");
+ if (v === "v3") {
+    body.classList.add("theme-v3");
 
-        root.style.setProperty("--bg-base", "#1E292B");
-        root.style.setProperty("--text-main", "#F2F7F6");
-        root.style.setProperty("--accent-primary", "#34797E");
-        root.style.setProperty("--accent-gold", "#DCB573");
-        root.style.setProperty("--glow-1", "rgba(52, 121, 126, 0.45)");
-        root.style.setProperty("--glow-2", "rgba(220, 181, 115, 0.25)");
-        root.style.setProperty("--drawer-bg", "rgba(35, 50, 53, 0.92)");
+    root.style.setProperty("--bg-base", "#1E292B");
+    root.style.setProperty("--text-main", "#F2F7F6");
+    root.style.setProperty("--accent-primary", "#34797E");
+    root.style.setProperty("--accent-gold", "#DCB573");
+    root.style.setProperty("--glow-1", "rgba(52, 121, 126, 0.45)");
+    root.style.setProperty("--glow-2", "rgba(220, 181, 115, 0.25)");
+    root.style.setProperty("--drawer-bg", "rgba(35, 50, 53, 0.92)");
 
         // Связываем новую палитру с переменными действующего сайта
         root.style.setProperty("--background-color", "#1E292B");
