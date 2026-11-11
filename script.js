@@ -1661,7 +1661,6 @@ function applySiteTheme(v) {
 
         // Связываем новую палитру с переменными действующего сайта
         root.style.setProperty("--background-color", "#1E292B");
-        root.style.setProperty("--paper-bg-color", "#1E292B");
         root.style.setProperty("--text-color", "#F2F7F6");
         root.style.setProperty("--accent-color", "#34797E");
         root.style.setProperty("--white", "#34797E");
@@ -1680,8 +1679,7 @@ function applySiteTheme(v) {
             "--glow-2",
             "--drawer-bg",
             "--background-color",
-            "--paper-bg-color",
-            "--text-color",
+                      "--text-color",
             "--accent-color",
             "--white",
             "--header-color",
