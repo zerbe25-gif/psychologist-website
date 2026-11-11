@@ -3503,3 +3503,29 @@ body.drawer-is-open {
         margin: -18px -15px 0 0;
     }
 }
+
+
+/* Блок выбранного метода в записи */
+.selected-method-note {
+    margin: 0 0 15px;
+    color: #607089;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* Блокировка прокрутки */
+body.cost-modal-open {
+    overflow: hidden;
+}
+
+/* Настройки стоимости — компактное оформление */
+#cost-control-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 18px 0;
+}
+
+#cost-control-panel .background-control {
+    margin-bottom: 0;
+}
