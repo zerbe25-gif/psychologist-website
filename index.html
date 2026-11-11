@@ -56,6 +56,14 @@
                 onclick="toggleDevPanelSection('photos')">
             ФОТОГРАФИИ
         </button>
+
+      <button type="button"
+        class="developer-panel-tab"
+        data-panel-section="cost"
+        onclick="toggleDevPanelSection('cost')">
+    СТОИМОСТЬ
+</button>
+
     </div>
 
     <div id="developer-panel-content" hidden>
@@ -330,7 +338,99 @@
         </div>
 
     </div>
+           
+         </div>
+
+<!-- НАСТРОЙКИ ОКНА СТОИМОСТИ -->
+<div id="cost-control-panel" hidden>
+
+    <div class="animation-panel-title">
+        ПАНЕЛЬ РАЗРАБОТКИ · ОКНО СТОИМОСТИ
+    </div>
+
+    <div class="background-control">
+        <label for="cost-overlay-input">
+            Затемнение страницы:
+        </label>
+        <span id="val-cost-overlay">48%</span>
+
+        <input id="cost-overlay-input"
+               type="range"
+               min="0"
+               max="85"
+               step="1"
+               value="48"
+               oninput="updateCostOverlay(this.value)">
+    </div>
+
+    <div class="background-control">
+        <label for="cost-blur-input">
+            Размытие фона:
+        </label>
+        <span id="val-cost-blur">8 px</span>
+
+        <input id="cost-blur-input"
+               type="range"
+               min="0"
+               max="20"
+               step="1"
+               value="8"
+               oninput="updateCostBlur(this.value)">
+    </div>
+
+    <div class="background-control">
+        <label for="cost-card-input">
+            Появление карточки:
+        </label>
+        <span id="val-cost-card">0.55 сек.</span>
+
+        <input id="cost-card-input"
+               type="range"
+               min="0.15"
+               max="1.5"
+               step="0.05"
+               value="0.55"
+               oninput="updateCostCardDuration(this.value)">
+    </div>
+
+    <div class="background-control">
+        <label for="cost-content-input">
+            Анимация контента внутри:
+        </label>
+        <span id="val-cost-content">0.40 сек.</span>
+
+        <input id="cost-content-input"
+               type="range"
+               min="0.1"
+               max="1.2"
+               step="0.05"
+               value="0.4"
+               oninput="updateCostContentDuration(this.value)">
+    </div>
+
+    <div class="background-control">
+        <label for="cost-close-input">
+            Закрытие:
+        </label>
+        <span id="val-cost-close">0.35 сек.</span>
+
+        <input id="cost-close-input"
+               type="range"
+               min="0.1"
+               max="1.2"
+               step="0.05"
+               value="0.35"
+               oninput="updateCostCloseDuration(this.value)">
+    </div>
+
+    <button type="button"
+            class="developer-panel-tab"
+            onclick="resetCostSettings()">
+        СБРОСИТЬ НАСТРОЙКИ СТОИМОСТИ
+    </button>
+
 </div>
+<!-- /НАСТРОЙКИ ОКНА СТОИМОСТИ -->
 
     </div>
 </div>
