@@ -3588,93 +3588,6 @@ body.cost-modal-open {
 
 
 /* =========================================
-   СТОИМОСТЬ — НАЗВАНИЕ И ЦЕНА В ОДНОЙ СТРОКЕ
-========================================= */
-
-.cost-service {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: center;
-    column-gap: 15px;
-    row-gap: 5px;
-}
-
-.cost-service-title {
-    grid-column: 1;
-    grid-row: 1;
-    min-width: 0;
-}
-
-.cost-price {
-    grid-column: 2;
-    grid-row: 1;
-
-    margin-top: 0;
-    white-space: nowrap;
-
-    text-align: right;
-    font-size: 16px;
-}
-
-.cost-service-time {
-    grid-column: 1 / -1;
-    grid-row: 2;
-    margin-top: 0;
-}
-
-.cost-method-details {
-    grid-column: 1 / -1;
-    grid-row: 3;
-    margin-top: 3px;
-}
-
-@media (max-width: 600px) {
-    .cost-service {
-        column-gap: 8px;
-    }
-
-    .cost-service-title {
-        font-size: 15px;
-    }
-
-    .cost-price {
-        font-size: 13px;
-    }
-}
-
-@media (max-width: 420px) {
-    .cost-service {
-        grid-template-columns: 1fr;
-    }
-
-    .cost-service-title,
-    .cost-price,
-    .cost-service-time,
-    .cost-method-details {
-        grid-column: 1;
-    }
-
-    .cost-service-title {
-        grid-row: 1;
-    }
-
-    .cost-price {
-        grid-row: 2;
-        text-align: left;
-        margin-top: 3px;
-    }
-
-    .cost-service-time {
-        grid-row: 3;
-    }
-
-    .cost-method-details {
-        grid-row: 4;
-    }
-}
-
-
-/* =========================================
    ИСПРАВЛЕНИЕ СЕТКИ НАСТРОЕК СТОИМОСТИ
 ========================================= */
 
@@ -3753,27 +3666,6 @@ body.cost-modal-open {
 }
 
 
-/* =========================================
-   СТОИМОСТЬ — НАЗВАНИЕ И ЦЕНА
-========================================= */
-
-@media (min-width: 421px) {
-    #costModal .cost-service {
-        grid-template-columns: minmax(0, 1fr) auto;
-    }
-
-    #costModal .cost-service-title {
-        grid-column: 1;
-        grid-row: 1;
-    }
-
-    #costModal .cost-price {
-        grid-column: 2;
-        grid-row: 1;
-        white-space: nowrap;
-    }
-}
-
 
 /* ===== COST MODAL: исправление оформления ===== */
 
@@ -3817,14 +3709,9 @@ body.cost-modal-open {
   transform: translateY(0);
 }
 
-/* Список услуг */
+/* Список услуг — оформление без повторного управления сеткой */
 
 #costModal .cost-service {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: start;
-  column-gap: 18px;
-  row-gap: 8px;
   padding: 18px 0;
   border-bottom: 1px solid #E2E8F0;
 }
@@ -3835,35 +3722,23 @@ body.cost-modal-open {
 
 #costModal .cost-service h3,
 #costModal .cost-service-title {
-  grid-column: 1;
   margin: 0;
   font-size: 17px;
   font-weight: 600;
 }
 
-#costModal .cost-price {
-  grid-column: 2;
-  grid-row: 1;
-  white-space: nowrap;
-  text-align: right;
-  font-size: 16px;
-  font-weight: 600;
-  color: #2D3748;
-}
-
 #costModal .cost-service-time {
-  grid-column: 1 / -1;
   color: #718096;
   font-size: 14px;
 }
 
 #costModal .cost-service-details,
 #costModal .cost-service-description {
-  grid-column: 1 / -1;
   color: #4A5568;
   font-size: 14px;
   line-height: 1.6;
 }
+
 
 #costModal button {
   cursor: pointer;
