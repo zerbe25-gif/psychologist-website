@@ -3673,3 +3673,103 @@ body.cost-modal-open {
     }
 }
 
+
+/* =========================================
+   ИСПРАВЛЕНИЕ СЕТКИ НАСТРОЕК СТОИМОСТИ
+========================================= */
+
+/* Скрытие панели должно работать независимо от Grid */
+#cost-control-panel[hidden] {
+    display: none !important;
+}
+
+/* Заголовок и сброс занимают отдельные строки */
+#cost-control-panel:not([hidden]) {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+    align-items: start;
+}
+
+#cost-control-panel > .animation-panel-title {
+    grid-column: 1 / -1;
+    grid-row: 1;
+}
+
+/* Пять ползунков — строго одна строка */
+#cost-control-panel > .background-control:nth-child(2) {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+#cost-control-panel > .background-control:nth-child(3) {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+#cost-control-panel > .background-control:nth-child(4) {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+#cost-control-panel > .background-control:nth-child(5) {
+    grid-column: 4;
+    grid-row: 2;
+}
+
+#cost-control-panel > .background-control:nth-child(6) {
+    grid-column: 5;
+    grid-row: 2;
+}
+
+/* Кнопка сброса — под ползунками */
+#cost-control-panel > button {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    justify-self: start;
+}
+
+/* Компактные ползунки */
+#cost-control-panel input[type="range"] {
+    width: 100%;
+    max-width: 100%;
+}
+
+/* На мобильном — две колонки */
+@media (max-width: 650px) {
+    #cost-control-panel:not([hidden]) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #cost-control-panel > .background-control {
+        grid-column: auto !important;
+        grid-row: auto !important;
+    }
+
+    #cost-control-panel > .animation-panel-title,
+    #cost-control-panel > button {
+        grid-column: 1 / -1;
+    }
+}
+
+
+/* =========================================
+   СТОИМОСТЬ — НАЗВАНИЕ И ЦЕНА
+========================================= */
+
+@media (min-width: 421px) {
+    #costModal .cost-service {
+        grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    #costModal .cost-service-title {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    #costModal .cost-price {
+        grid-column: 2;
+        grid-row: 1;
+        white-space: nowrap;
+    }
+}
