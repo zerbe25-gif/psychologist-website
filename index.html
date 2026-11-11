@@ -346,10 +346,10 @@
       <span>психологическое консультирование онлайн</span>
     </a>
 
-    <nav class="header-nav">
-      <button class="nav-button" data-drawer-open="price">
-        Стоимость
-      </button>
+  
+<button class="nav-button" data-cost-open>
+    Стоимость
+</button>
 
    <button class="nav-button" data-drawer-open="contacts">
         Контактные данные
@@ -483,7 +483,6 @@
             <button type="button" data-drawer-tab="format">Формат</button>
             <button type="button" data-drawer-tab="education">Образование</button>
             <button type="button" data-drawer-tab="articles">Статьи</button>
-            <button type="button" data-drawer-tab="price">Стоимость</button>
             <button type="button" data-drawer-tab="contacts">Контакты</button>
         </nav>
 
@@ -556,12 +555,7 @@
                 </a>
             </section>
 
-            <!-- СТОИМОСТЬ -->
-            <section class="drawer-panel" data-drawer-panel="price" hidden>
-                <p>Информация о стоимости будет добавлена позже.</p>
-            </section>
-
-            <!-- КОНТАКТЫ -->
+           <!-- КОНТАКТЫ -->
             <section class="drawer-panel" data-drawer-panel="contacts" hidden>
                 <p>Контактная информация будет добавлена позже.</p>
             </section>
@@ -570,6 +564,165 @@
     </div>
 </aside>
 <!-- /ЕДИНАЯ ИНФОРМАЦИОННАЯ ШТОРКА -->
+
+  
+<!-- =========================================
+     ЦЕНТРАЛЬНОЕ ОКНО СТОИМОСТИ
+========================================= -->
+
+<div id="costBackdrop" aria-hidden="true"></div>
+
+<section id="costModal"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="costTitle"
+         aria-hidden="true">
+
+    <button type="button"
+            class="cost-close"
+            data-cost-close
+            aria-label="Закрыть окно">
+        ×
+    </button>
+
+    <div class="cost-card-content">
+
+        <div class="cost-heading reveal-cost">
+            <span class="cost-eyebrow">ФОРМАТЫ РАБОТЫ</span>
+            <h2 id="costTitle">Стоимость</h2>
+            <p class="cost-subtitle">
+                Стоимость психологической помощи
+            </p>
+        </div>
+
+        <div class="cost-services">
+
+            <!-- ИНДИВИДУАЛЬНАЯ РАБОТА -->
+            <article class="cost-service reveal-cost">
+                <button type="button"
+                        class="cost-service-title"
+                        data-cost-method="individual">
+                    <span>Индивидуальная работа</span>
+                    <span class="cost-book-arrow">↗</span>
+                </button>
+
+                <div class="cost-service-time">50 минут</div>
+
+                <details class="cost-method-details">
+                    <summary>О методе работы</summary>
+                    <div class="cost-method-description">
+                        <p>Описание метода будет добавлено позже.</p>
+                    </div>
+                </details>
+
+                <div class="cost-price">
+                    40–50 € / 4000–5000 ₽
+                </div>
+            </article>
+
+            <!-- РАБОТА С ПАРАМИ -->
+            <article class="cost-service reveal-cost">
+                <button type="button"
+                        class="cost-service-title"
+                        data-cost-method="couples">
+                    <span>Работа с парами</span>
+                    <span class="cost-book-arrow">↗</span>
+                </button>
+
+                <div class="cost-service-time">60–90 минут</div>
+
+                <details class="cost-method-details">
+                    <summary>О методе работы</summary>
+                    <div class="cost-method-description">
+                        <p>Описание метода будет добавлено позже.</p>
+                    </div>
+                </details>
+
+                <div class="cost-price">
+                    60–80 € / 6000–8000 ₽
+                </div>
+            </article>
+
+            <!-- РАБОТА С ПОДРОСТКАМИ -->
+            <article class="cost-service reveal-cost">
+                <button type="button"
+                        class="cost-service-title"
+                        data-cost-method="teenagers">
+                    <span>Работа с подростками</span>
+                    <span class="cost-book-arrow">↗</span>
+                </button>
+
+                <div class="cost-service-time">50 минут</div>
+
+                <details class="cost-method-details">
+                    <summary>О методе работы</summary>
+                    <div class="cost-method-description">
+                        <p>Описание метода будет добавлено позже.</p>
+                    </div>
+                </details>
+
+                <div class="cost-price">
+                    40–50 € / 4000–5000 ₽
+                </div>
+            </article>
+
+            <!-- КОУЧИНГ -->
+            <article class="cost-service reveal-cost">
+                <button type="button"
+                        class="cost-service-title"
+                        data-cost-method="coaching">
+                    <span>Коучинг</span>
+                    <span class="cost-book-arrow">↗</span>
+                </button>
+
+                <div class="cost-service-time">50 минут</div>
+
+                <details class="cost-method-details">
+                    <summary>О методе работы</summary>
+                    <div class="cost-method-description">
+                        <p>Описание метода будет добавлено позже.</p>
+                    </div>
+                </details>
+
+                <div class="cost-price">
+                    40–50 € / 4000–5000 ₽
+                </div>
+            </article>
+
+            <!-- ТЕКСТОВАЯ ТЕРАПИЯ -->
+            <article class="cost-service reveal-cost">
+                <button type="button"
+                        class="cost-service-title"
+                        data-cost-method="text-therapy">
+                    <span>Текстовая терапия</span>
+                    <span class="cost-book-arrow">↗</span>
+                </button>
+
+                <div class="cost-service-time">Формат текстового взаимодействия</div>
+
+                <details class="cost-method-details">
+                    <summary>О методе работы</summary>
+                    <div class="cost-method-description">
+                        <p>Описание метода будет добавлено позже.</p>
+                    </div>
+                </details>
+
+                <div class="cost-price">
+                    30 € / 3000 ₽
+                </div>
+            </article>
+
+        </div>
+
+        <div class="cost-note reveal-cost">
+            Стоимость обсуждается индивидуально
+            на первой встрече.
+        </div>
+
+    </div>
+</section>
+
+<!-- /ЦЕНТРАЛЬНОЕ ОКНО СТОИМОСТИ -->
 
 
   <!-- ЗАТЕМНЕНИЕ И ОКНА -->
