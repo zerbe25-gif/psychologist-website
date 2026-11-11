@@ -3529,3 +3529,147 @@ body.cost-modal-open {
 #cost-control-panel .background-control {
     margin-bottom: 0;
 }
+
+
+/* =========================================
+   НАСТРОЙКИ СТОИМОСТИ — ОДНА СТРОКА
+========================================= */
+
+#cost-control-panel {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 14px;
+    align-items: start;
+    width: 100%;
+}
+
+#cost-control-panel .background-control {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 7px;
+    min-width: 0;
+}
+
+#cost-control-panel .background-control label {
+    font-size: 11px;
+    line-height: 1.35;
+    min-height: 30px;
+}
+
+#cost-control-panel .background-control span {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+#cost-control-panel input[type="range"] {
+    width: 100%;
+    max-width: 115px;
+    margin: 3px 0;
+}
+
+/* На узких экранах — две колонки */
+@media (max-width: 900px) {
+    #cost-control-panel {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* На очень узких — одна колонка */
+@media (max-width: 480px) {
+    #cost-control-panel {
+        grid-template-columns: 1fr;
+    }
+
+    #cost-control-panel .background-control label {
+        min-height: auto;
+    }
+}
+
+
+/* =========================================
+   СТОИМОСТЬ — НАЗВАНИЕ И ЦЕНА В ОДНОЙ СТРОКЕ
+========================================= */
+
+.cost-service {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 15px;
+    row-gap: 5px;
+}
+
+.cost-service-title {
+    grid-column: 1;
+    grid-row: 1;
+    min-width: 0;
+}
+
+.cost-price {
+    grid-column: 2;
+    grid-row: 1;
+
+    margin-top: 0;
+    white-space: nowrap;
+
+    text-align: right;
+    font-size: 16px;
+}
+
+.cost-service-time {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin-top: 0;
+}
+
+.cost-method-details {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    margin-top: 3px;
+}
+
+@media (max-width: 600px) {
+    .cost-service {
+        column-gap: 8px;
+    }
+
+    .cost-service-title {
+        font-size: 15px;
+    }
+
+    .cost-price {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 420px) {
+    .cost-service {
+        grid-template-columns: 1fr;
+    }
+
+    .cost-service-title,
+    .cost-price,
+    .cost-service-time,
+    .cost-method-details {
+        grid-column: 1;
+    }
+
+    .cost-service-title {
+        grid-row: 1;
+    }
+
+    .cost-price {
+        grid-row: 2;
+        text-align: left;
+        margin-top: 3px;
+    }
+
+    .cost-service-time {
+        grid-row: 3;
+    }
+
+    .cost-method-details {
+        grid-row: 4;
+    }
+}
+
