@@ -1856,3 +1856,90 @@ window.toggleDevPanelSection = function (section) {
 };
 
 
+
+/* ===== FINAL FIX: ОКНА И ПАНЕЛЬ ===== */
+
+window.toggleDevPanelSection = function(section) {
+  const content = document.getElementById("developer-panel-content");
+
+  if (!content) return;
+
+  // Открываем саму панель
+  content.hidden = false;
+  content.style.display = "block";
+
+  const panels = {
+    animation: document.getElementById("animation-control-panel"),
+    background: document.getElementById("background-control-panel"),
+    photos: document.getElementById("photos-panel-content"),
+    cost: document.getElementById("cost-control-panel")
+  };
+
+  // Показываем только выбранный раздел
+  Object.entries(panels).forEach(([name, panel]) => {
+    if (!panel) return;
+
+    panel.hidden = name !== section;
+    panel.style.display = name === section ? "block" : "none";
+  });
+
+  // Подсвечиваем выбранную вкладку
+  document.querySelectorAll(".developer-panel-tab[data-panel-section]")
+    .forEach(button => {
+      const active = button.dataset.panelSection === section;
+
+      button.classList.toggle("active", active);
+      button.setAttribute("aria-selected", String(active));
+    });
+};
+
+/* Открытие окна стоимости */
+window.openCostModal = function() {
+  const backdrop = document.getElementById("costBackdrop");
+  const modal = document.getElementById("costModal");
+
+  if (!backdrop || !modal) return;
+
+  backdrop.classList.add("is-open");
+  backdrop.setAttribute("aria-hidden", "false");
+  modal.setAttribute("aria-hidden", "false");
+
+  document.body.style.overflow = "hidden";
+};
+
+/* Закрытие окна стоимости */
+window.closeCostModal = function() {
+  const backdrop = document.getElementById("costBackdrop");
+  const modal = document.getElementById("costModal");
+
+  if (!backdrop || !modal) return;
+
+  backdrop.classList.remove("is-open");
+  backdrop.setAttribute("aria-hidden", "true");
+  modal.setAttribute("aria-hidden", "true");
+
+  document.body.style.overflow = "";
+};
+
+/* Переход из стоимости к записи */
+document.querySelectorAll("[data-cost-method]").forEach(button => {
+  button.addEventListener("click", function() {
+    const method = this.dataset.costMethod;
+
+    const form = document.getElementById("appointment-form");
+    const selected = form?.querySelector('[name="selected_method"]');
+    const note = document.getElementById("selected-method-note");
+
+    if (selected) selected.value = method;
+    if (note) note.textContent = "Выбранный формат: " +
+      this.querySelector("span")?.textContent;
+
+    window.closeCostModal();
+
+    const appointment = document.getElementById("appointment-modal");
+    if (appointment) {
+      appointment.classList.add("active");
+      document.getElementById("modal-overlay")?.classList.add("active");
+    }
+  });
+});
