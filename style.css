@@ -4001,3 +4001,336 @@ body.cost-modal-open {
 }
 
 
+
+
+/* =========================================
+   ORGANIC CAPSULE — СТОИМОСТЬ И КОНТАКТЫ
+========================================= */
+
+:root {
+    --cost-overlay-opacity: 0.35;
+    --cost-blur: 8px;
+    --cost-card-duration: 0.4s;
+    --cost-content-duration: 0.4s;
+    --cost-close-duration: 0.4s;
+}
+
+/* Общий фон двух центральных окон */
+#costBackdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9500;
+
+    background: rgba(28, 38, 51, var(--cost-overlay-opacity));
+
+    backdrop-filter: blur(0);
+    -webkit-backdrop-filter: blur(0);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+        opacity var(--cost-close-duration) ease,
+        visibility var(--cost-close-duration) ease,
+        backdrop-filter var(--cost-card-duration) ease;
+
+    -webkit-transition:
+        opacity var(--cost-close-duration) ease,
+        visibility var(--cost-close-duration) ease,
+        -webkit-backdrop-filter var(--cost-card-duration) ease;
+}
+
+#costBackdrop.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+
+    backdrop-filter: blur(var(--cost-blur));
+    -webkit-backdrop-filter: blur(var(--cost-blur));
+}
+
+/* Общая форма органической капсулы */
+#costModal,
+#contactsModal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -45%) scale(0.94);
+
+    width: 90%;
+    max-width: 620px;
+    max-height: 85vh;
+    max-height: 85dvh;
+
+    overflow-y: auto;
+    overscroll-behavior: contain;
+
+    box-sizing: border-box;
+
+    background: rgba(255, 255, 255, 0.88);
+
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    border-radius: 48px;
+
+    box-shadow: 0 30px 60px rgba(28, 38, 51, 0.18);
+
+    z-index: 9501;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+        transform var(--cost-close-duration)
+            cubic-bezier(0.16, 1, 0.3, 1),
+        opacity var(--cost-close-duration) ease,
+        visibility var(--cost-close-duration) ease;
+}
+
+#costModal.is-open,
+#contactsModal.is-open {
+    transform: translate(-50%, -50%) scale(1);
+
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+
+    transition:
+        transform var(--cost-card-duration)
+            cubic-bezier(0.16, 1, 0.3, 1),
+        opacity var(--cost-card-duration) ease,
+        visibility var(--cost-card-duration) ease;
+}
+
+/* Внутренние отступы стоимости */
+.cost-card-content {
+    padding: 42px 48px 35px;
+}
+
+/* Внутренние отступы контактов */
+.contacts-card-content {
+    padding: 42px 48px 35px;
+}
+
+/* Кнопка закрытия */
+#costModal .cost-close,
+#contactsModal .cost-close {
+    position: absolute;
+    top: 22px;
+    right: 25px;
+
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 0;
+    border-radius: 50%;
+    background: rgba(45, 55, 72, 0.045);
+
+    color: #596575;
+    font-size: 27px;
+    font-weight: 300;
+
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease;
+}
+
+#costModal .cost-close:hover,
+#contactsModal .cost-close:hover {
+    background: rgba(45, 55, 72, 0.1);
+    transform: rotate(90deg);
+}
+
+/* Заголовки */
+.cost-heading,
+.contacts-heading {
+    text-align: center;
+    margin-bottom: 26px;
+}
+
+#costTitle,
+#contactsTitle {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 42px;
+    font-weight: 500;
+    line-height: 1.1;
+    color: #2D3748;
+}
+
+.cost-subtitle,
+.contacts-heading p {
+    color: #7B8088;
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+/* Анимация внутреннего контента */
+.reveal-cost {
+    opacity: 0;
+    transform: translateY(12px);
+
+    transition:
+        opacity var(--cost-content-duration) ease,
+        transform var(--cost-content-duration)
+            cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#costModal.is-open .reveal-cost,
+#contactsModal.is-open .reveal-cost {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Последовательность появления стоимости */
+#costModal.is-open .cost-heading,
+#contactsModal.is-open .contacts-heading {
+    transition-delay: 0.08s;
+}
+
+#costModal.is-open .cost-service:nth-child(1) {
+    transition-delay: 0.14s;
+}
+
+#costModal.is-open .cost-service:nth-child(2) {
+    transition-delay: 0.20s;
+}
+
+#costModal.is-open .cost-service:nth-child(3) {
+    transition-delay: 0.26s;
+}
+
+#costModal.is-open .cost-service:nth-child(4) {
+    transition-delay: 0.32s;
+}
+
+#costModal.is-open .cost-service:nth-child(5) {
+    transition-delay: 0.38s;
+}
+
+#costModal.is-open .cost-note {
+    transition-delay: 0.44s;
+}
+
+/* Контакты */
+.contact-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    padding: 19px 0;
+
+    border-bottom: 1px solid rgba(45, 55, 72, 0.18);
+
+    color: #2D3748;
+    text-decoration: none;
+
+    transition: color 0.25s ease;
+}
+
+.contact-item:hover {
+    color: #2B4C6F;
+}
+
+.contact-icon {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    background: rgba(43, 76, 111, 0.07);
+
+    color: #2B4C6F;
+    font-size: 18px;
+}
+
+.contact-info {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.contact-label {
+    color: #8B8177;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+}
+
+.contact-value {
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+.contact-empty {
+    color: #969BA2;
+}
+
+.contact-arrow {
+    color: #8B95A2;
+    font-size: 17px;
+}
+
+.contacts-footer {
+    margin-top: 25px;
+    padding-top: 18px;
+
+    border-top: 1px solid rgba(45, 55, 72, 0.12);
+
+    color: #8B8177;
+    font-size: 11px;
+    text-align: center;
+    letter-spacing: 0.08em;
+}
+
+/* Блокировка прокрутки страницы */
+body.cost-modal-open {
+    overflow: hidden;
+}
+
+/* Адаптация для телефона */
+@media (max-width: 600px) {
+    #costModal,
+    #contactsModal {
+        width: calc(100% - 24px);
+        max-height: 88vh;
+        max-height: 88dvh;
+        border-radius: 32px;
+    }
+
+    .cost-card-content,
+    .contacts-card-content {
+        padding: 38px 24px 28px;
+    }
+
+    #costTitle,
+    #contactsTitle {
+        font-size: 36px;
+    }
+
+    #costModal .cost-close,
+    #contactsModal .cost-close {
+        top: 15px;
+        right: 17px;
+    }
+}
