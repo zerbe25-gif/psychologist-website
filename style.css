@@ -4484,3 +4484,145 @@ body.cost-modal-open {
         border-radius: 32px !important;
     }
 }
+
+
+/* =========================================
+   V3 — КАМЕРНЫЙ НОЧНОЙ ТИЛ
+========================================= */
+
+body.theme-v3 {
+    background: #1E292B !important;
+    background-color: #1E292B !important;
+    color: #F2F7F6;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Шапка */
+body.theme-v3 .header {
+    background: rgba(30, 41, 43, 0.92);
+    border-bottom-color: rgba(220, 181, 115, 0.22);
+}
+
+body.theme-v3 .site-name,
+body.theme-v3 .nav-button,
+body.theme-v3 .appointment-button {
+    color: #F2F7F6;
+}
+
+body.theme-v3 .nav-button:hover,
+body.theme-v3 .appointment-button:hover {
+    background: rgba(52, 121, 126, 0.25);
+}
+
+/* Основная область */
+body.theme-v3 .main-content {
+    background:
+        radial-gradient(
+            ellipse at 75% 35%,
+            rgba(52, 121, 126, 0.22),
+            transparent 48%
+        ),
+        radial-gradient(
+            ellipse at 15% 85%,
+            rgba(220, 181, 115, 0.10),
+            transparent 42%
+        ),
+        #1E292B;
+}
+
+/* Пункты меню */
+body.theme-v3 .menu-item {
+    color: #DCE8E5;
+    transition: color 0.35s ease, text-shadow 0.35s ease;
+}
+
+body.theme-v3 .menu-item:hover {
+    color: #DCB573;
+    text-shadow: 0 0 22px rgba(220, 181, 115, 0.25);
+}
+
+/* Социальные кнопки */
+body.theme-v3 .social-links a {
+    color: #F2F7F6;
+    border-color: rgba(220, 181, 115, 0.45);
+}
+
+body.theme-v3 .social-links a:hover {
+    color: #1E292B;
+    background: #DCB573;
+    border-color: #DCB573;
+}
+
+/* Боковая шторка */
+body.theme-v3 #sideDrawer {
+    background: var(--drawer-bg, rgba(35, 50, 53, 0.92));
+    color: #F2F7F6;
+    border-color: rgba(220, 181, 115, 0.2);
+}
+
+body.theme-v3 #sideDrawer .drawer-inner,
+body.theme-v3 #sideDrawer .drawer-panel,
+body.theme-v3 #sideDrawer #drawerTitle {
+    color: #F2F7F6;
+}
+
+body.theme-v3 #sideDrawer .drawer-tabs button {
+    color: #F2F7F6;
+    border-color: rgba(220, 181, 115, 0.3);
+}
+
+body.theme-v3 #sideDrawer .drawer-tabs button.active {
+    background: #34797E;
+    border-color: #34797E;
+    color: #FFFFFF;
+}
+
+body.theme-v3 #sideDrawer .drawer-close {
+    color: #DCB573;
+}
+
+body.theme-v3 #sideDrawer a {
+    color: #DCB573;
+}
+
+/* Мягкие световые акценты */
+body.theme-v3 .photo-gallery {
+    filter: drop-shadow(0 15px 35px rgba(52, 121, 126, 0.18));
+}
+
+/* Кнопка выбора темы в панели разработки */
+.theme-v3-button {
+    padding: 10px 16px;
+    border: 1px solid rgba(52, 121, 126, 0.55);
+    border-radius: 10px;
+    background: #E8EFED;
+    color: #233235;
+    font: inherit;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.theme-v3-button:hover {
+    background: #DCE9E6;
+}
+
+.theme-v3-button.active {
+    background: #34797E;
+    border-color: #34797E;
+    color: #FFFFFF;
+    box-shadow: 0 0 18px rgba(52, 121, 126, 0.25);
+}
+
+/* Плавность смены оформления */
+body.theme-v3 .header,
+body.theme-v3 .main-content,
+body.theme-v3 .menu-item,
+body.theme-v3 .nav-button,
+body.theme-v3 .appointment-button,
+body.theme-v3 .social-links a {
+    transition:
+        background-color 0.4s ease,
+        color 0.4s ease,
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
+}
