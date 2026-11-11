@@ -3773,3 +3773,165 @@ body.cost-modal-open {
         white-space: nowrap;
     }
 }
+
+
+/* ===== COST MODAL: исправление оформления ===== */
+
+#costBackdrop {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 12000 !important;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(20, 25, 35, var(--cost-overlay-opacity, 0.55));
+  backdrop-filter: blur(var(--cost-overlay-blur, 4px));
+  -webkit-backdrop-filter: blur(var(--cost-overlay-blur, 4px));
+}
+
+#costBackdrop.is-open {
+  display: flex !important;
+}
+
+#costModal {
+  position: relative;
+  z-index: 12001;
+  width: min(620px, 100%);
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 30px;
+  border-radius: 18px;
+  background: #fff;
+  color: #2D3748;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .25);
+  opacity: 0;
+  transform: translateY(15px);
+  transition:
+    opacity var(--cost-card-duration, 300ms) ease,
+    transform var(--cost-card-duration, 300ms) ease;
+}
+
+#costBackdrop.is-open #costModal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Список услуг */
+
+#costModal .cost-service {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  column-gap: 18px;
+  row-gap: 8px;
+  padding: 18px 0;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+#costModal .cost-service:last-child {
+  border-bottom: 0;
+}
+
+#costModal .cost-service h3,
+#costModal .cost-service-title {
+  grid-column: 1;
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+#costModal .cost-price {
+  grid-column: 2;
+  grid-row: 1;
+  white-space: nowrap;
+  text-align: right;
+  font-size: 16px;
+  font-weight: 600;
+  color: #2D3748;
+}
+
+#costModal .cost-service-time {
+  grid-column: 1 / -1;
+  color: #718096;
+  font-size: 14px;
+}
+
+#costModal .cost-service-details,
+#costModal .cost-service-description {
+  grid-column: 1 / -1;
+  color: #4A5568;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+#costModal button {
+  cursor: pointer;
+}
+
+#costModal .cost-service button {
+  text-align: left;
+}
+
+#costModal .cost-footer {
+  margin-top: 20px;
+  color: #718096;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Панель управления стоимостью */
+
+#cost-control-panel {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  align-items: start;
+}
+
+#cost-control-panel > h2,
+#cost-control-panel > h3,
+#cost-control-panel > button {
+  grid-column: 1 / -1;
+}
+
+#cost-control-panel .background-control {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 12px;
+}
+
+#cost-control-panel .background-control label {
+  line-height: 1.35;
+}
+
+#cost-control-panel .background-control input[type="range"] {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  #costModal {
+    padding: 22px 18px;
+  }
+
+  #costModal .cost-service {
+    column-gap: 10px;
+  }
+
+  #costModal .cost-service h3,
+  #costModal .cost-service-title {
+    font-size: 15px;
+  }
+
+  #costModal .cost-price {
+    font-size: 14px;
+  }
+
+  #cost-control-panel {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
