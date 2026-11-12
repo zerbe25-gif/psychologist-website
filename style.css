@@ -5127,3 +5127,52 @@ body.cost-modal-open #developer-panel {
     -webkit-overflow-scrolling: touch;
   }
 }
+
+
+/* SHARED CUSTOM SCROLLBAR — appointment uses the same behavior as Cost */
+#appointmentModal {
+  overflow: hidden !important;
+}
+#appointmentModal .appointment-card-content {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none;
+  overscroll-behavior: contain;
+}
+#appointmentModal .appointment-card-content::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+}
+#appointmentModal .appointment-scroll-track {
+  position: absolute;
+  z-index: 20;
+  top: 72px;
+  bottom: 72px;
+  right: 13px;
+  width: 8px;
+  border-radius: 99px;
+  background: rgba(57,71,94,.07);
+  cursor: pointer;
+  touch-action: none;
+}
+#appointmentModal .appointment-scroll-track.is-hidden { display: none; }
+#appointmentModal .appointment-scroll-track .cost-scroll-thumb {
+  position: absolute;
+  top: 0;
+  left: 1px;
+  width: 6px;
+  min-height: 26px;
+  border-radius: 99px;
+  background: rgba(57,71,94,.42);
+  box-shadow: 0 1px 4px rgba(28,38,51,.12);
+  will-change: transform,height;
+  cursor: grab;
+}
+#appointmentModal .appointment-scroll-track:active .cost-scroll-thumb { cursor: grabbing; }
+#costModal .cost-scroll-viewport > .cost-card-content { padding-top: 37.8px; }
+@media (max-width: 700px) {
+  #appointmentModal .appointment-scroll-track { right: 8px; top: 58px; bottom: 58px; width: 7px; }
+  #appointmentModal .appointment-scroll-track .cost-scroll-thumb { width: 5px; }
+  #costModal .cost-scroll-viewport > .cost-card-content { padding-top: 34.2px; }
+}
