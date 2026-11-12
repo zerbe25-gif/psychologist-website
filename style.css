@@ -4923,3 +4923,36 @@ body.cost-modal-open #developer-panel {
   color:inherit;text-decoration:none;
 }
 #contactsModal .contact-value[href^="tel:"]:hover { text-decoration:underline; }
+
+
+/* Окно записи: прокрутка внутри карточки, без выхода полосы за скругления */
+#appointmentModal {
+  overflow: hidden !important;
+  scrollbar-width: none;
+}
+#appointmentModal .appointment-card-content {
+  max-height: 79dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(57,71,94,.35) transparent;
+  padding-right: 42px;
+}
+#appointmentModal .appointment-card-content::-webkit-scrollbar {
+  width: 5px;
+}
+#appointmentModal .appointment-card-content::-webkit-scrollbar-track {
+  background: transparent;
+  margin-block: 5%;
+}
+#appointmentModal .appointment-card-content::-webkit-scrollbar-thumb {
+  background: rgba(57,71,94,.32);
+  border-radius: 10px;
+}
+@media(max-width:600px) {
+  #appointmentModal .appointment-card-content {
+    max-height: 78dvh;
+    padding-right: 22px;
+  }
+}
