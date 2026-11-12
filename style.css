@@ -4874,3 +4874,26 @@ body.cost-modal-open #developer-panel {
 body.cost-modal-open #developer-panel {
   z-index: 1 !important;
 }
+
+
+/* Исправление видимости панели разработчика и настроек окна записи */
+#developer-panel {
+  position: relative;
+  z-index: 2147483647 !important;
+  isolation: isolate;
+}
+#appointment-control-panel {
+  display: block;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  box-sizing: border-box;
+  position: relative;
+}
+#appointment-control-panel[hidden] {
+  display: none !important;
+}
+#appointment-control-panel .appointment-design-controls {
+  width: 100%;
+  box-sizing: border-box;
+}
