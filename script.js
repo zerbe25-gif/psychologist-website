@@ -1,148 +1,5 @@
 
 
-// =========================================
-// ОКНА САЙТА
-// =========================================
-
-const overlay = document.getElementById("modal-overlay");
-
-const modals = document.querySelectorAll(".modal");
-
-const openButtons = document.querySelectorAll("[data-modal]");
-
-const closeButtons = document.querySelectorAll(".modal-close");
-
-let drawerOverlayTimer = null;
-
-
-// Открытие окна
-
-function openModal(modalId) {
-
-  const selectedModal = document.getElementById(modalId);
-
-  if (!selectedModal || !overlay) return;
-
-  // Отменяем предыдущее закрытие, если оно ещё выполняется
-
-  if (drawerOverlayTimer !== null) {
-
-    clearTimeout(drawerOverlayTimer);
-
-    drawerOverlayTimer = null;
-
-  }
-
-  // Закрываем остальные окна
-
-  modals.forEach(modal => {
-
-    modal.classList.remove("active");
-
-  });
-
-  // Определяем тип открываемого окна
-
-  const isDrawer = selectedModal.classList.contains("content-modal");
-
-  overlay.classList.toggle("drawer-mode", isDrawer);
-
-  // Показываем фон и выбранное окно
-
-  overlay.classList.add("active");
-
-  selectedModal.classList.add("active");
-
-  document.body.style.overflow = "hidden";
-
-}
-
-
-// Закрытие окна
-
-function closeModal() {
-
-  const isDrawer = overlay.classList.contains("drawer-mode");
-
-  // Запускаем обратную анимацию
-
-  overlay.classList.remove("active");
-
-  modals.forEach(modal => {
-
-    modal.classList.remove("active");
-
-  });
-
-  document.body.style.overflow = "";
-
-
-  // Не удаляем режим бокового окна,
-  // пока не завершится выезд и размытие
-
-  if (isDrawer) {
-
-    if (drawerOverlayTimer !== null) {
-
-      clearTimeout(drawerOverlayTimer);
-
-    }
-
-    drawerOverlayTimer = setTimeout(() => {
-
-      overlay.classList.remove("drawer-mode");
-
-      drawerOverlayTimer = null;
-
-    }, 2000);
-
-  } else {
-
-    overlay.classList.remove("drawer-mode");
-
-  }
-
-}
-
-
-// Открытие по кнопкам
-openButtons.forEach(button => {
-  button.addEventListener("click", () => {
-    const modalId = button.dataset.modal;
-    openModal(modalId);
-
-  });
-
-});
-
-
-// Закрытие по крестику
-
-closeButtons.forEach(button => {
-
-  button.addEventListener("click", closeModal);
-
-});
-
-
-// Закрытие при нажатии за пределами окна
-overlay.addEventListener("click", event => {
-  if (event.target === overlay) {
-    closeModal();
-
-  }
-});
-
-
-// Закрытие клавишей Escape
-document.addEventListener("keydown", event => {
-  if (event.key === "Escape") {
-    closeModal();
-  }
-});
-
-
-
 /* =========================================
    ФОТОГРАФИИ
 ========================================= */
@@ -237,19 +94,13 @@ setInterval(() => {
 ========================================= */
 
 const appointmentForm = document.getElementById("appointment-form");
-
-
-appointmentForm.addEventListener("submit", event => {
-
-  event.preventDefault();
-
-  alert(
-    "Форма пока находится в демонстрационном режиме. " +
-    "Подключение отправки заявок мы сделаем отдельно."
-  );
-
-});
-
+if (appointmentForm) {
+  appointmentForm.addEventListener("submit", event => {
+    event.preventDefault();
+    const note = document.getElementById("appointment-form-note");
+    if (note) note.textContent = "Форма пока не подключена к сервису отправки. Пожалуйста, воспользуйтесь WhatsApp.";
+  });
+}
 
 /* ==========================================
    ПЕРЕКЛЮЧЕНИЕ СТИЛЕЙ АНИМАЦИИ МЕНЮ
@@ -1558,8 +1409,9 @@ window.closeDeveloperPanel = function() {
     const backdrop = document.getElementById("costBackdrop");
     const costModal = document.getElementById("costModal");
     const contactsModal = document.getElementById("contactsModal");
+    const appointmentModal = document.getElementById("appointmentModal");
 
-    if (!backdrop || !costModal || !contactsModal) return;
+    if (!backdrop || !costModal || !contactsModal || !appointmentModal) return;
 
     let activeCapsule = null;
     let previousFocus = null;
@@ -1612,6 +1464,10 @@ window.closeDeveloperPanel = function() {
         button.addEventListener("click", () => openCapsule(contactsModal));
     });
 
+    document.querySelectorAll("[data-appointment-open]").forEach(button => {
+        button.addEventListener("click", () => openCapsule(appointmentModal));
+    });
+
     document.querySelectorAll("[data-capsule-close]").forEach(button => {
         button.addEventListener("click", closeCapsule);
     });
@@ -1632,6 +1488,7 @@ window.closeDeveloperPanel = function() {
     // Для тестирования
     window.openCostModal = () => openCapsule(costModal);
     window.openContactsModal = () => openCapsule(contactsModal);
+    window.openAppointmentModal = () => openCapsule(appointmentModal);
     window.closeCapsuleModal = closeCapsule;
 })();
 
@@ -1718,3 +1575,51 @@ document.addEventListener("DOMContentLoaded", () => {
 
     applySiteTheme(savedTheme);
 });
+
+/* Настройки внешнего вида Organic Capsule формы записи */
+(function () {
+  const key = "psychologistAppointmentCapsuleSettings";
+  const root = document.documentElement;
+  const defaults = { opacity: 88, blur: 28, glow: 12, button: "#39475E" };
+  let s = { ...defaults };
+  try { s = { ...defaults, ...JSON.parse(localStorage.getItem(key) || "{}") }; } catch (error) {}
+  function apply() {
+    root.style.setProperty("--appointment-card-opacity", Number(s.opacity) / 100);
+    root.style.setProperty("--appointment-card-blur", Number(s.blur) + "px");
+    root.style.setProperty("--appointment-glow", Number(s.glow) / 100);
+    root.style.setProperty("--appointment-button", s.button);
+    const fields = [["opacity","appointment-opacity","val-appointment-opacity",v=>v+"%"],["blur","appointment-blur","val-appointment-blur",v=>v+" px"],["glow","appointment-glow","val-appointment-glow",v=>v+"%"],["button","appointment-button-color","val-appointment-button-color",v=>String(v).toUpperCase()]];
+    fields.forEach(([name,id,out,fmt])=>{const el=document.getElementById(id), label=document.getElementById(out);if(el)el.value=s[name];if(label)label.textContent=fmt(s[name]);});
+  }
+  window.updateAppointmentSetting = (type,value) => {
+    if (!(type in defaults)) return;
+    s[type] = type === "button" ? value : Number(value);
+    apply();
+    try { localStorage.setItem(key,JSON.stringify(s)); } catch(error) {}
+  };
+  apply();
+})();
+
+/* Настройки общей анимации капсульных окон */
+(function () {
+  const root=document.documentElement, key="psychologistCostCapsuleSettings";
+  const defaults={overlay:48,blur:8,card:.55,content:.4,close:.35};
+  let s={...defaults};
+  try{s={...defaults,...JSON.parse(localStorage.getItem(key)||"{}")};}catch(error){}
+  function apply(){
+    root.style.setProperty("--cost-overlay-opacity",s.overlay/100);
+    root.style.setProperty("--cost-blur",s.blur+"px");
+    root.style.setProperty("--cost-card-duration",s.card+"s");
+    root.style.setProperty("--cost-content-duration",s.content+"s");
+    root.style.setProperty("--cost-close-duration",s.close+"s");
+    [["cost-overlay-input","val-cost-overlay",s.overlay,v=>v+"%"],["cost-blur-input","val-cost-blur",s.blur,v=>v+" px"],["cost-card-input","val-cost-card",s.card,v=>Number(v).toFixed(2)+" сек."],["cost-content-input","val-cost-content",s.content,v=>Number(v).toFixed(2)+" сек."],["cost-close-input","val-cost-close",s.close,v=>Number(v).toFixed(2)+" сек."]].forEach(([id,out,v,fmt])=>{const el=document.getElementById(id),label=document.getElementById(out);if(el)el.value=v;if(label)label.textContent=fmt(v);});
+  }
+  function set(k,v){s[k]=Number(v);apply();try{localStorage.setItem(key,JSON.stringify(s));}catch(error){}}
+  window.updateCostOverlay=v=>set("overlay",v);
+  window.updateCostBlur=v=>set("blur",v);
+  window.updateCostCardDuration=v=>set("card",v);
+  window.updateCostContentDuration=v=>set("content",v);
+  window.updateCostCloseDuration=v=>set("close",v);
+  window.resetCostSettings=()=>{s={...defaults};apply();try{localStorage.setItem(key,JSON.stringify(s));}catch(error){}};
+  apply();
+})();
