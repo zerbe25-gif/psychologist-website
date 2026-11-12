@@ -5272,3 +5272,54 @@ body.cost-modal-open #developer-panel {
     max-width: none !important;
   }
 }
+
+
+/* PHOTO SIZE FIX — responsive desktop scaling.
+   Earlier fixed max-width/basis values capped the portrait at 264px. */
+@media (min-width: 901px) {
+  .gallery-section {
+    min-width: 0;
+    overflow: visible;
+  }
+  .photo-gallery {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    justify-content: center;
+    overflow: visible;
+  }
+  .photo-frame-1 {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    height: clamp(340px, 62vh, 760px) !important;
+    max-width: none !important;
+    max-height: 72dvh;
+    aspect-ratio: 3 / 4 !important;
+    translate: none !important;
+    transform: none !important;
+  }
+}
+
+/* На планшетах портрет занимает чуть больше половины доступной ширины */
+@media (min-width: 601px) and (max-width: 900px) {
+  .photo-frame-1 {
+    flex: 0 1 58% !important;
+    width: 58% !important;
+    max-width: 380px !important;
+    height: auto !important;
+    aspect-ratio: 3 / 4 !important;
+    translate: none !important;
+  }
+}
+
+/* На телефонах сохраняем компактную ширину и пропорции */
+@media (max-width: 600px) {
+  .photo-frame-1 {
+    flex: 0 1 48.4% !important;
+    width: 48.4% !important;
+    height: auto !important;
+    max-width: none !important;
+    aspect-ratio: 3 / 4 !important;
+    translate: none !important;
+  }
+}
