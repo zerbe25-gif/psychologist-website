@@ -107,7 +107,7 @@ if (appointmentForm) {
 
     const originalLabel = appointmentSubmit.textContent;
     appointmentSubmit.disabled = true;
-    appointmentSubmit.textContent = "Отправляем…";
+    appointmentSubmit.textContent = "Отправить";
     appointmentForm.setAttribute("aria-busy", "true");
 
     try {
