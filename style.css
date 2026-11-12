@@ -5290,7 +5290,6 @@ body.cost-modal-open #developer-panel {
   }
   .photo-frame-1 {
     flex: 0 0 auto !important;
-    width: auto !important;
     height: clamp(340px, 62vh, 760px) !important;
     width: clamp(255px, 46.5vh, 570px) !important;
     max-width: none !important;
