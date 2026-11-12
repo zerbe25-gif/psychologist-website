@@ -5341,3 +5341,44 @@ body.cost-modal-open #developer-panel {
 }
 .photo-frame-1.portrait-stage .photo-layer-reveal.is-revealing { clip-path: inset(0 0 0 0); transform: scale(1); }
 @media (prefers-reduced-motion: reduce) { .photo-frame-1.portrait-stage .photo-layer-reveal { transition-duration: 0.01ms; } }
+
+/* ARTICLE: independent Minimalism + Line animation */
+.section-menu.effect-mode-1 .menu-item-4,
+.section-menu.effect-mode-2 .menu-item-4,
+.section-menu.effect-mode-3 .menu-item-4,
+.section-menu.effect-mode-4 .menu-item-4 {
+  color: #2B4C6F !important; background: none !important; background-image: none !important;
+  -webkit-text-fill-color: currentColor !important; text-shadow: none !important;
+  filter: none !important; opacity: 1 !important; transform: none !important;
+  transition: color .4s ease, letter-spacing .4s ease !important;
+}
+.section-menu.effect-mode-1 .menu-item-4::before,
+.section-menu.effect-mode-2 .menu-item-4::before { content: none !important; display: none !important; }
+.section-menu.effect-mode-1 .menu-item-4::after,
+.section-menu.effect-mode-2 .menu-item-4::after,
+.section-menu.effect-mode-3 .menu-item-4::after,
+.section-menu.effect-mode-4 .menu-item-4::after {
+  content: ''; display: block; position: absolute; bottom: -4px; left: 0;
+  width: 100%; height: 2px; margin: 0; padding: 0; border: 0; border-radius: 0;
+  background: linear-gradient(90deg, #A64B2A, #C5A059); box-shadow: none;
+  opacity: 1; transform: scaleX(0); transform-origin: left;
+  transition: transform .4s cubic-bezier(.25, 1, .5, 1);
+}
+.section-menu.effect-mode-1 .menu-item-4:hover,
+.section-menu.effect-mode-2 .menu-item-4:hover,
+.section-menu.effect-mode-3 .menu-item-4:hover,
+.section-menu.effect-mode-4 .menu-item-4:hover {
+  color: #A64B2A !important; letter-spacing: .08em !important;
+  transform: none !important; opacity: 1 !important; filter: none !important;
+}
+.section-menu.effect-mode-1 .menu-item-4:hover::after,
+.section-menu.effect-mode-2 .menu-item-4:hover::after,
+.section-menu.effect-mode-3 .menu-item-4:hover::after,
+.section-menu.effect-mode-4 .menu-item-4:hover::after { transform: scaleX(1); }
+.section-menu:hover .menu-item-4 { opacity: 1 !important; filter: none !important; }
+
+/* Large screens only: section labels +10%; portrait dimensions untouched. */
+@media (min-width: 1400px) {
+  .menu-item { font-size: clamp(60.5px, 4.675vw, 74.8px) !important; }
+  .menu-item-4 { font-size: 46.75px !important; }
+}
