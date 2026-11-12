@@ -4956,3 +4956,54 @@ body.cost-modal-open #developer-panel {
     padding-right: 22px;
   }
 }
+
+
+/* UX polish: scrollbar inset in Cost capsule + natural tactile scrolling */
+#costModal {
+  scrollbar-gutter: stable;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+}
+#costModal::-webkit-scrollbar { width: 8px; }
+#costModal::-webkit-scrollbar-track {
+  background: transparent;
+  margin-block: 10%;
+}
+#costModal::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  /* 10% transparent at each end = visually 20% shorter, while keeping native drag area */
+  background: linear-gradient(
+    to bottom,
+    transparent 0 10%,
+    rgba(57,71,94,.34) 10% 90%,
+    transparent 90% 100%
+  );
+}
+#costModal::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    to bottom,
+    transparent 0 10%,
+    rgba(57,71,94,.52) 10% 90%,
+    transparent 90% 100%
+  );
+}
+
+/* Appointment: native momentum, contained scroll, soft visual feedback */
+#appointmentModal .appointment-card-content {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  scroll-behavior: smooth;
+  scroll-padding-block: 22px;
+  scrollbar-gutter: stable;
+}
+#appointmentModal .appointment-card-content::-webkit-scrollbar-track {
+  margin-block: 10%;
+}
+#appointmentModal .appointment-card-content::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: background-color .22s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  #appointmentModal .appointment-card-content { scroll-behavior: auto; }
+}
