@@ -1479,11 +1479,17 @@ window.closeDeveloperPanel = function() {
         document.body.classList.add("cost-modal-open");
 
         modal.scrollTop = 0;
+        if (modal.id === "appointmentModal" && window.startAppointmentSmoothScroll) {
+            window.startAppointmentSmoothScroll();
+        }
     }
 
     function closeCapsule() {
         if (!activeCapsule) return;
 
+        if (activeCapsule.id === "appointmentModal" && window.stopAppointmentSmoothScroll) {
+            window.stopAppointmentSmoothScroll();
+        }
         activeCapsule.classList.remove("is-open");
         activeCapsule.setAttribute("aria-hidden", "true");
 
@@ -1693,4 +1699,60 @@ document.addEventListener("DOMContentLoaded", () => {
   window.updateCostCloseDuration=v=>set("close",v);
   window.resetCostSettings=()=>{s={...defaults};apply();try{localStorage.setItem(key,JSON.stringify(s));}catch(error){}};
   apply();
+})();
+
+
+/* DESKTOP ONLY — tactile wheel scrolling for the appointment capsule (Lenis) */
+(function () {
+  const desktopPointer = window.matchMedia("(min-width: 701px) and (hover: hover) and (pointer: fine)");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const wrapper = document.querySelector("#appointmentModal .appointment-card-content");
+  const content = wrapper && wrapper.querySelector(".appointment-scroll-content");
+  let lenis = null;
+
+  function initialize() {
+    if (!desktopPointer.matches || reducedMotion.matches || !wrapper || !content || !window.Lenis || lenis) return;
+
+    lenis = new window.Lenis({
+      wrapper,
+      content,
+      eventsTarget: wrapper,
+      autoRaf: true,
+      smoothWheel: true,
+      syncTouch: false,
+      lerp: 0.075,
+      wheelMultiplier: 0.82,
+      overscroll: true,
+      allowNestedScroll: true,
+      respectReducedMotion: true
+    });
+
+    lenis.stop();
+    wrapper.classList.add("appointment-lenis-ready");
+  }
+
+  window.startAppointmentSmoothScroll = function () {
+    if (!desktopPointer.matches || reducedMotion.matches) return;
+    initialize();
+    if (!lenis) return;
+    lenis.resize();
+    lenis.start();
+    lenis.scrollTo(0, { immediate: true });
+  };
+
+  window.stopAppointmentSmoothScroll = function () {
+    if (lenis) lenis.stop();
+  };
+
+  desktopPointer.addEventListener?.("change", () => {
+    if (!desktopPointer.matches && lenis) {
+      lenis.destroy();
+      lenis = null;
+      wrapper?.classList.remove("appointment-lenis-ready");
+    }
+  });
+
+  reducedMotion.addEventListener?.("change", () => {
+    if (reducedMotion.matches && lenis) lenis.stop();
+  });
 })();
