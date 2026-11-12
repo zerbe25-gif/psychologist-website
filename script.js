@@ -934,7 +934,8 @@ const sections = {
     animation: document.getElementById('animation-control-panel'),
     background: document.getElementById('background-control-panel'),
     photos: document.getElementById('photos-panel-content'),
-    cost: document.getElementById('cost-control-panel')
+    cost: document.getElementById('cost-control-panel'),
+    appointment: document.getElementById('appointment-control-panel')
 };
 
     if (!content || !sections[section]) return;
@@ -1411,7 +1412,7 @@ window.closeDeveloperPanel = function() {
     const contactsModal = document.getElementById("contactsModal");
     const appointmentModal = document.getElementById("appointmentModal");
 
-    if (!backdrop || !costModal || !contactsModal || !appointmentModal) return;
+    if (!backdrop) return;
 
     let activeCapsule = null;
     let previousFocus = null;
@@ -1457,15 +1458,15 @@ window.closeDeveloperPanel = function() {
     }
 
     document.querySelectorAll("[data-cost-open]").forEach(button => {
-        button.addEventListener("click", () => openCapsule(costModal));
+        if (costModal) button.addEventListener("click", () => openCapsule(costModal));
     });
 
     document.querySelectorAll("[data-contacts-open]").forEach(button => {
-        button.addEventListener("click", () => openCapsule(contactsModal));
+        if (contactsModal) button.addEventListener("click", () => openCapsule(contactsModal));
     });
 
     document.querySelectorAll("[data-appointment-open]").forEach(button => {
-        button.addEventListener("click", () => openCapsule(appointmentModal));
+        if (appointmentModal) button.addEventListener("click", () => openCapsule(appointmentModal));
     });
 
     document.querySelectorAll("[data-capsule-close]").forEach(button => {
