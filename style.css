@@ -5382,3 +5382,42 @@ body.cost-modal-open #developer-panel {
   .menu-item { font-size: clamp(60.5px, 4.675vw, 74.8px) !important; }
   .menu-item-4 { font-size: 46.75px !important; }
 }
+
+
+/* Навигация разделов: ступенчатое выравнивание */
+#sideDrawer .drawer-tabs {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 9px;
+}
+
+#sideDrawer .drawer-tabs button {
+    width: fit-content;
+    max-width: 100%;
+}
+
+#sideDrawer .drawer-tabs button:not(:first-child) {
+    margin-left: 1.2em;
+}
+
+/* Раздел «О Методе» использует те же анимации и типографику,
+   что и остальные информационные разделы шторки. */
+#sideDrawer [data-drawer-panel="method"] .education-entry {
+    margin-bottom: 30px;
+}
+
+#sideDrawer [data-drawer-panel="method"] .education-entry:last-child {
+    margin-bottom: 0;
+}
+
+#sideDrawer [data-drawer-panel="method"] .education-entry h3 {
+    margin-bottom: 10px;
+}
+
+#sideDrawer [data-drawer-panel="method"] .education-entry p {
+    margin: 0 0 12px;
+}
+
+#sideDrawer [data-drawer-panel="method"] .education-entry .requests-list {
+    margin: 8px 0 16px;
+}
