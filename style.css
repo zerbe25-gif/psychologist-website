@@ -5378,7 +5378,7 @@ body.cost-modal-open #developer-panel {
 .section-menu:hover .menu-item-4 { opacity: 1 !important; filter: none !important; }
 
 /* Large screens only: section labels +10%; portrait dimensions untouched. */
-@media (min-width: 1400px) {
+@media (min-width: 901px) {
   .menu-item { font-size: clamp(60.5px, 4.675vw, 74.8px) !important; }
   .menu-item-4 { font-size: 46.75px !important; }
 }
