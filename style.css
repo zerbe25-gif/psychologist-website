@@ -5292,6 +5292,7 @@ body.cost-modal-open #developer-panel {
     flex: 0 0 auto !important;
     width: auto !important;
     height: clamp(340px, 62vh, 760px) !important;
+    width: clamp(255px, 46.5vh, 570px) !important;
     max-width: none !important;
     max-height: 72dvh;
     aspect-ratio: 3 / 4 !important;
