@@ -5323,3 +5323,21 @@ body.cost-modal-open #developer-panel {
     translate: none !important;
   }
 }
+
+/* EDITORIAL CLIP-PATH — ЖУРНАЛЬНАЯ МАСКА */
+.photo-frame-1.portrait-stage { position: relative; overflow: hidden; isolation: isolate; }
+.photo-frame-1.portrait-stage .photo-layer {
+  position: absolute; inset: 4px; display: block;
+  width: calc(100% - 8px); height: calc(100% - 8px);
+  object-fit: cover; object-position: center 50%;
+  border-radius: calc(var(--lens-radius) - 5px);
+  transform: scale(1); transition: none;
+  will-change: clip-path, transform;
+}
+.photo-frame-1.portrait-stage .photo-layer-base { z-index: 0; }
+.photo-frame-1.portrait-stage .photo-layer-reveal {
+  z-index: 1; clip-path: inset(0 100% 0 0); transform: scale(1.05);
+  transition: clip-path 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.photo-frame-1.portrait-stage .photo-layer-reveal.is-revealing { clip-path: inset(0 0 0 0); transform: scale(1); }
+@media (prefers-reduced-motion: reduce) { .photo-frame-1.portrait-stage .photo-layer-reveal { transition-duration: 0.01ms; } }
