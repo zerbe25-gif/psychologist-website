@@ -5052,3 +5052,78 @@ body.cost-modal-open #developer-panel {
     -webkit-overflow-scrolling: touch;
   }
 }
+
+
+/* FINAL FIX 2026-11-12 — actual inner viewport + clipped custom Cost scrollbar */
+#costModal {
+  height: min(85dvh, 850px) !important;
+  max-height: min(85dvh, 850px) !important;
+  overflow: hidden !important;
+  scrollbar-width: none !important;
+}
+#costModal::-webkit-scrollbar { display: none !important; width: 0 !important; }
+#costModal .cost-scroll-viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none;
+}
+#costModal .cost-scroll-viewport::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+}
+#costModal .cost-scroll-track {
+  position: absolute;
+  z-index: 20;
+  top: 72px;
+  bottom: 72px;
+  right: 13px;
+  width: 8px;
+  border-radius: 99px;
+  background: rgba(57,71,94,.07);
+  opacity: 1;
+  cursor: pointer;
+  touch-action: none;
+  transition: opacity .2s ease;
+}
+#costModal .cost-scroll-track.is-hidden { display: none; }
+#costModal .cost-scroll-thumb {
+  position: absolute;
+  top: 0;
+  left: 1px;
+  width: 6px;
+  min-height: 26px;
+  border-radius: 99px;
+  background: rgba(57,71,94,.42);
+  box-shadow: 0 1px 4px rgba(28,38,51,.12);
+  will-change: transform,height;
+  cursor: grab;
+}
+#costModal .cost-scroll-track:active .cost-scroll-thumb { cursor: grabbing; }
+#costModal .cost-card-content { padding-right: 48px; }
+
+@media (max-width: 700px) {
+  #costModal { height: min(85dvh, 850px) !important; }
+  #costModal .cost-scroll-track { right: 8px; top: 58px; bottom: 58px; width: 7px; }
+  #costModal .cost-scroll-thumb { width: 5px; }
+}
+
+/* Appointment wheel motion is handled by a desktop-only RAF interpolator */
+@media (min-width: 701px) and (hover: hover) and (pointer: fine) {
+  #appointmentModal .appointment-card-content {
+    scroll-behavior: auto !important;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+}
+@media (max-width: 700px), (hover: none), (pointer: coarse) {
+  #appointmentModal .appointment-card-content {
+    scroll-behavior: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
