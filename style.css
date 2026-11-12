@@ -4862,3 +4862,15 @@ body.cost-modal-open .header {
 body.cost-modal-open #developer-panel {
   z-index: 1 !important;
 }
+/* Панель разработки должна оставаться над шапкой в обычном состоянии */
+#developer-panel {
+  position: relative !important;
+  z-index: 2147483000 !important;
+}
+#developer-panel-content {
+  position: relative !important;
+  z-index: 2147483001 !important;
+}
+body.cost-modal-open #developer-panel {
+  z-index: 1 !important;
+}
