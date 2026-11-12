@@ -5136,6 +5136,7 @@ body.cost-modal-open #developer-panel {
 #appointmentModal .appointment-card-content {
   overflow-x: hidden !important;
   overflow-y: auto !important;
+  scroll-behavior: auto !important;
   scrollbar-width: none !important;
   -ms-overflow-style: none;
   overscroll-behavior: contain;
