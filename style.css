@@ -5177,3 +5177,98 @@ body.cost-modal-open #developer-panel {
   #appointmentModal .appointment-scroll-track .cost-scroll-thumb { width: 5px; }
   #costModal .cost-scroll-viewport > .cost-card-content { padding-top: 34.2px; }
 }
+
+
+/* HEADER REFINEMENT — компактная светлая шапка */
+.header {
+  box-sizing: border-box;
+  min-height: 52px !important;
+  height: auto !important;
+  padding: 5px 3% !important;
+  display: flex !important;
+  flex-flow: row nowrap !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: clamp(8px, 1.4vw, 22px) !important;
+  background: rgba(247, 244, 237, .80) !important;
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(57,71,94,.10) !important;
+}
+.header .site-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  color: #39475E !important;
+  font-family: "Lora", Georgia, serif;
+  font-size: 18px !important;
+  font-weight: 500;
+  line-height: 1.12 !important;
+  letter-spacing: .01em;
+  white-space: nowrap;
+}
+.header .site-name span {
+  margin-top: 2px;
+  color: #687487 !important;
+  font-family: "Inter", Arial, sans-serif;
+  font-size: 10px !important;
+  line-height: 1.2;
+  letter-spacing: .045em;
+}
+.header .nav-button,
+.header .appointment-button {
+  flex: 0 0 auto;
+  justify-self: auto;
+  position: static !important;
+  top: auto !important;
+  margin: 0;
+  padding: 7px 10px !important;
+  color: #39475E !important;
+  font-size: 13px !important;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+.header .appointment-button { letter-spacing: 1px; }
+.header .nav-button:hover,
+.header .appointment-button:hover { background: rgba(220,181,115,.16) !important; }
+
+/* Разделы на 15% компактнее */
+.menu-item { font-size: clamp(55px, 4.25vw, 68px) !important; }
+.menu-item-4 { font-size: 42.5px !important; }
+
+/* Портрет увеличен на 10% без изменения пропорций */
+.photo-frame-1 {
+  flex-basis: 48.4% !important;
+  width: 48.4% !important;
+  max-width: 264px !important;
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+  .header { gap: 7px !important; padding-inline: 2% !important; }
+  .header .site-name { font-size: 15px !important; }
+  .header .site-name span { font-size: 9px !important; }
+  .header .nav-button, .header .appointment-button { padding-inline: 6px !important; font-size: 11px !important; }
+  .menu-item { font-size: clamp(35px, 5.1vw, 51px) !important; }
+  .menu-item-4 { font-size: 36px !important; }
+}
+@media (max-width: 600px) {
+  .header {
+    min-height: 0 !important;
+    padding: 7px 3% !important;
+    gap: 4px !important;
+    overflow-x: auto;
+  }
+  .header .site-name { flex: 1 0 112px; font-size: 13px !important; }
+  .header .site-name span { font-size: 8px !important; white-space: normal; }
+  .header .nav-button, .header .appointment-button {
+    padding: 6px 5px !important;
+    font-size: 9px !important;
+    letter-spacing: 0 !important;
+  }
+  .menu-item { font-size: clamp(15.3px, 3.825vw, 20.4px) !important; }
+  .menu-item-4 { font-size: 18.7px !important; }
+  .photo-frame-1 {
+    flex-basis: 48.4% !important;
+    width: 48.4% !important;
+    max-width: none !important;
+  }
+}
