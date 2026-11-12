@@ -95,10 +95,51 @@ setInterval(() => {
 
 const appointmentForm = document.getElementById("appointment-form");
 if (appointmentForm) {
-  appointmentForm.addEventListener("submit", event => {
+  const appointmentSubmit = appointmentForm.querySelector('button[type="submit"]');
+  const appointmentSuccess = document.getElementById("appointment-success");
+
+  appointmentForm.action = "https://formspree.io/f/xppdwdjy";
+  appointmentForm.method = "POST";
+
+  appointmentForm.addEventListener("submit", async event => {
     event.preventDefault();
-    const note = document.getElementById("appointment-form-note");
-    if (note) note.textContent = "Форма пока не подключена к сервису отправки. Пожалуйста, воспользуйтесь WhatsApp.";
+    if (!appointmentForm.reportValidity()) return;
+
+    const originalLabel = appointmentSubmit.textContent;
+    appointmentSubmit.disabled = true;
+    appointmentSubmit.textContent = "Отправляем…";
+    appointmentForm.setAttribute("aria-busy", "true");
+
+    try {
+      const response = await fetch(appointmentForm.action, {
+        method: "POST",
+        body: new FormData(appointmentForm),
+        headers: { Accept: "application/json" }
+      });
+
+      if (!response.ok) {
+        let details = {};
+        try { details = await response.json(); } catch (_) {}
+        throw new Error(details.errors?.map(error => error.message).join(" ") || "Не удалось отправить заявку.");
+      }
+
+      appointmentForm.hidden = true;
+      if (appointmentSuccess) appointmentSuccess.hidden = false;
+    } catch (error) {
+      let errorNote = document.getElementById("appointment-submit-error");
+      if (!errorNote) {
+        errorNote = document.createElement("p");
+        errorNote.id = "appointment-submit-error";
+        errorNote.className = "appointment-form-error";
+        errorNote.setAttribute("role", "alert");
+        appointmentSubmit.insertAdjacentElement("afterend", errorNote);
+      }
+      errorNote.textContent = "Не удалось отправить заявку. Проверьте соединение и попробуйте ещё раз.";
+      appointmentSubmit.disabled = false;
+      appointmentSubmit.textContent = originalLabel;
+    } finally {
+      appointmentForm.removeAttribute("aria-busy");
+    }
   });
 }
 
