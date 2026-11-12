@@ -17,7 +17,7 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=scroll-fix-20261112">
+  <link rel="stylesheet" href="style.css?v=shared-scroll-20261112">
 </head>
 
 <body id="top">
@@ -733,9 +733,6 @@
         <div class="cost-heading reveal-cost">
             <span class="cost-eyebrow">ФОРМАТЫ РАБОТЫ</span>
             <h2 id="costTitle">Стоимость</h2>
-            <p class="cost-subtitle">
-                Стоимость психологической помощи
-            </p>
         </div>
 
         <div class="cost-services">
@@ -911,7 +908,7 @@
 <!-- ЦЕНТРАЛЬНОЕ ОКНО ЗАПИСИ — ORGANIC CAPSULE -->
 <section id="appointmentModal" class="capsule-modal appointment-capsule" role="dialog" aria-modal="true" aria-labelledby="appointmentTitle" aria-hidden="true">
   <button type="button" class="cost-close" data-capsule-close aria-label="Закрыть окно">×</button>
-  <div class="appointment-card-content">
+  <div class="appointment-card-content" id="appointmentModalScroller">
     <div class="appointment-scroll-content">
     <div class="appointment-heading">
       <div class="appointment-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#DCB573" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square-check"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.7.7 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/><path d="m9 11 2 2 4-4"/></svg></div>
@@ -945,11 +942,12 @@
     <div class="appointment-whatsapp"><span>Написать в WhatsApp</span><a href="https://wa.me/491773469616" target="_blank" rel="noopener noreferrer">WhatsApp <span aria-hidden="true">↗</span></a></div>
     </div>
   </div>
+  <div class="cost-scroll-track appointment-scroll-track" id="appointmentScrollTrack" aria-hidden="true"><div class="cost-scroll-thumb" id="appointmentScrollThumb"></div></div>
 </section>
 <!-- /ЦЕНТРАЛЬНОЕ ОКНО ЗАПИСИ -->
   <!-- ФАЙЛ С ФУНКЦИЯМИ САЙТА -->
 
-  <script src="script.js?v=scroll-fix-20261112"></script>
+  <script src="script.js?v=shared-scroll-20261112"></script>
 
 </body>
 </html>
