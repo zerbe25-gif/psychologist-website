@@ -22,7 +22,7 @@ const photoSets = {
 
 const photoOne = document.getElementById("photo-one");
 const photoOneNext = document.getElementById("photo-one-next");
-const photoChangeTime = 10000;
+const photoChangeTime = 15000;
 const photoRevealDuration = 1000;
 let firstPhotoIndex = -1;
 let photoIsChanging = false;
