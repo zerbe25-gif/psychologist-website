@@ -1485,6 +1485,8 @@ window.closeDeveloperPanel = function() {
     function closeCapsule() {
         if (!activeCapsule) return;
 
+        if (activeCapsule.id === "appointmentModal" && window.stopAppointmentSmoothScroll) window.stopAppointmentSmoothScroll();
+
         activeCapsule.classList.remove("is-open");
         activeCapsule.setAttribute("aria-hidden", "true");
 
