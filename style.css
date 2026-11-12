@@ -5007,3 +5007,48 @@ body.cost-modal-open #developer-panel {
 @media (prefers-reduced-motion: reduce) {
   #appointmentModal .appointment-card-content { scroll-behavior: auto; }
 }
+
+
+/* FINAL SCROLL POLISH — visible 20% shorter Cost scrollbar thumb */
+#costModal::-webkit-scrollbar { width: 9px; }
+#costModal::-webkit-scrollbar-track { background: transparent; }
+#costModal::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 10%,
+    rgba(57,71,94,.38) 10%,
+    rgba(57,71,94,.38) 90%,
+    transparent 90%,
+    transparent 100%
+  );
+}
+#costModal::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 10%,
+    rgba(57,71,94,.58) 10%,
+    rgba(57,71,94,.58) 90%,
+    transparent 90%,
+    transparent 100%
+  );
+}
+
+/* Lenis owns wheel interpolation on desktop; mobile keeps native touch scroll */
+@media (min-width: 701px) and (hover: hover) and (pointer: fine) {
+  #appointmentModal .appointment-card-content {
+    scroll-behavior: auto !important;
+    overscroll-behavior-y: contain;
+  }
+  #appointmentModal .appointment-card-content.appointment-lenis-ready {
+    scrollbar-gutter: stable;
+  }
+}
+@media (max-width: 700px), (hover: none), (pointer: coarse) {
+  #appointmentModal .appointment-card-content {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+}
