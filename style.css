@@ -4515,20 +4515,11 @@ body.theme-v3 .appointment-button:hover {
 }
 
 /* Основная область */
+
 body.theme-v3 .main-content {
-    background:
-        radial-gradient(
-            ellipse at 75% 35%,
-            rgba(52, 121, 126, 0.22),
-            transparent 48%
-        ),
-        radial-gradient(
-            ellipse at 15% 85%,
-            rgba(220, 181, 115, 0.10),
-            transparent 42%
-        ),
-        #1E292B;
+    background: transparent !important;
 }
+
 
 /* Пункты меню */
 body.theme-v3 .menu-item {
@@ -4667,4 +4658,71 @@ body.theme-v3 .social-links a {
 body.theme-v3 .bg-mesh-glow {
     opacity: 1;
     visibility: visible;
+}
+
+
+body.theme-v3 {
+    font-family: 'Inter', sans-serif;
+}
+
+
+/* V3 — СВЕЧЕНИЕ ПОД ПОРТРЕТОМ */
+
+body.theme-v3 .gallery-section::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    right: -30px;
+    width: 200px;
+    height: 200px;
+
+    background: radial-gradient(
+        circle,
+        var(--accent-gold) 0%,
+        transparent 70%
+    );
+
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 0;
+}
+
+body.theme-v3 .photo-gallery {
+    z-index: 1;
+}
+
+
+/* V3 — ВНУТРЕННЕЕ СВЕЧЕНИЕ ШТОРКИ */
+
+body.theme-v3 #sideDrawer {
+    position: fixed;
+    overflow-y: auto;
+
+    background: var(--drawer-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+body.theme-v3 #sideDrawer::before {
+    content: '';
+    position: absolute;
+
+    top: -50px;
+    left: -50px;
+    width: 320px;
+    height: 320px;
+
+    background: radial-gradient(
+        circle,
+        var(--glow-1) 0%,
+        transparent 70%
+    );
+
+    pointer-events: none;
+    z-index: 0;
+}
+
+body.theme-v3 #sideDrawer .drawer-inner {
+    position: relative;
+    z-index: 1;
 }
