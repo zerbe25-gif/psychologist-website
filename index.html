@@ -454,6 +454,13 @@
                oninput="updateCostCloseDuration(this.value)">
     </div>
 
+    <div class="appointment-design-controls">
+      <div class="animation-panel-title">ВИД ОКНА ЗАПИСИ</div>
+      <div class="appointment-setting"><label for="appointment-opacity">Прозрачность карточки <output id="val-appointment-opacity">88%</output></label><input id="appointment-opacity" type="range" min="65" max="100" value="88" oninput="updateAppointmentSetting('opacity', this.value)"></div>
+      <div class="appointment-setting"><label for="appointment-blur">Размытие карточки <output id="val-appointment-blur">28 px</output></label><input id="appointment-blur" type="range" min="0" max="40" value="28" oninput="updateAppointmentSetting('blur', this.value)"></div>
+      <div class="appointment-setting"><label for="appointment-glow">Внутреннее свечение <output id="val-appointment-glow">12%</output></label><input id="appointment-glow" type="range" min="0" max="40" value="12" oninput="updateAppointmentSetting('glow', this.value)"></div>
+      <div class="appointment-setting"><label for="appointment-button-color">Цвет кнопки <output id="val-appointment-button-color">#39475E</output></label><input id="appointment-button-color" type="color" value="#39475E" oninput="updateAppointmentSetting('button', this.value)"></div>
+    </div>
     <button type="button"
             class="developer-panel-tab"
             onclick="resetCostSettings()">
@@ -486,7 +493,7 @@
     Контактные данные
 </button>
 
-    <button class="appointment-button" data-modal="appointment-modal">
+    <button class="appointment-button" data-appointment-open>
       ЗАПИСАТЬСЯ
     </button>
 
@@ -926,64 +933,34 @@
 <!-- /ЦЕНТРАЛЬНОЕ ОКНО КОНТАКТОВ -->
 
   
-  <!-- ЗАТЕМНЕНИЕ И ОКНА -->
-
-  <div class="modal-overlay" id="modal-overlay">
-
-    <!-- ОКНО ЗАПИСИ -->
-
-    <div class="modal appointment-modal" id="appointment-modal">
-
-      <button class="modal-close" aria-label="Закрыть">&times;</button>
-
-      <h2>Запись на консультацию</h2>
-
-      <p class="modal-subtitle">
-        Оставьте свои контактные данные
-      </p>
-
-      <form id="appointment-form">
-
-        
-<input type="hidden" name="selected_method" value="">
-
-<p id="selected-method-note" class="selected-method-note"></p>
-
-        <input
-          type="text"
-          name="name"
-          placeholder="Ваше имя"
-          required
-        >
-
-        <input
-          type="text"
-          name="contact"
-          placeholder="Телефон или электронная почта"
-          required
-        >
-
-        <textarea
-          name="message"
-          placeholder="Комментарий (необязательно)"
-          rows="3"
-        ></textarea>
-
-        <button type="submit" class="form-submit">
-          Отправить
-        </button>
-
-      </form>
-
-      <div class="modal-contacts">
-        Контактные данные
-      </div>
-
+<!-- ЦЕНТРАЛЬНОЕ ОКНО ЗАПИСИ — ORGANIC CAPSULE -->
+<section id="appointmentModal" class="capsule-modal appointment-capsule" role="dialog" aria-modal="true" aria-labelledby="appointmentTitle" aria-hidden="true">
+  <button type="button" class="cost-close" data-capsule-close aria-label="Закрыть окно">×</button>
+  <div class="appointment-card-content">
+    <div class="appointment-heading">
+      <div class="appointment-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#DCB573" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square-check"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.7.7 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/><path d="m9 11 2 2 4-4"/></svg></div>
+      <h2 id="appointmentTitle">Записаться на консультацию</h2>
+      <p>Расскажите немного о себе и о том, с чем хотели бы обратиться.</p>
     </div>
-     
-</div>
-
-      
+    <form id="appointment-form">
+      <label class="appointment-field-label" for="appointment-name">Ваше имя</label>
+      <input id="appointment-name" type="text" name="name" placeholder="Как к вам обращаться?" autocomplete="name" required>
+      <label class="appointment-field-label" for="appointment-email">Электронная почта</label>
+      <input id="appointment-email" type="email" name="email" placeholder="name@example.com" autocomplete="email" required>
+      <label class="appointment-field-label" for="appointment-format">Интересующий формат</label>
+      <select id="appointment-format" name="format" required>
+        <option value="" selected disabled>Выберите формат</option>
+        <option>Индивидуальная работа</option><option>Работа с парой</option><option>Другое / пока не определился(ась)</option>
+      </select>
+      <label class="appointment-field-label" for="appointment-message">Опишите ваш запрос</label>
+      <textarea id="appointment-message" name="message" rows="6" placeholder="Что вас беспокоит и с чем хотелось бы разобраться?"></textarea>
+      <button type="submit" class="appointment-submit" disabled title="Отправка будет доступна после подключения Formspree">Отправить заявку</button>
+      <p class="appointment-form-note" id="appointment-form-note" role="status">Отправка заявок скоро появится. Пока можно написать напрямую в WhatsApp.</p>
+    </form>
+    <div class="appointment-whatsapp"><span>Написать в WhatsApp</span><a href="https://wa.me/491773469616" target="_blank" rel="noopener noreferrer">WhatsApp <span aria-hidden="true">↗</span></a></div>
+  </div>
+</section>
+<!-- /ЦЕНТРАЛЬНОЕ ОКНО ЗАПИСИ -->
   <!-- ФАЙЛ С ФУНКЦИЯМИ САЙТА -->
 
   <script src="script.js"></script>
