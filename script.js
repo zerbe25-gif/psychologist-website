@@ -1478,18 +1478,13 @@ window.closeDeveloperPanel = function() {
 
         document.body.classList.add("cost-modal-open");
 
-        modal.scrollTop = 0;
-        if (modal.id === "appointmentModal" && window.startAppointmentSmoothScroll) {
-            window.startAppointmentSmoothScroll();
-        }
+        const modalScroller = modal.querySelector(".cost-scroll-viewport, .appointment-card-content");
+        if (modalScroller) modalScroller.scrollTop = 0;
     }
 
     function closeCapsule() {
         if (!activeCapsule) return;
 
-        if (activeCapsule.id === "appointmentModal" && window.stopAppointmentSmoothScroll) {
-            window.stopAppointmentSmoothScroll();
-        }
         activeCapsule.classList.remove("is-open");
         activeCapsule.setAttribute("aria-hidden", "true");
 
@@ -1702,57 +1697,119 @@ document.addEventListener("DOMContentLoaded", () => {
 })();
 
 
-/* DESKTOP ONLY — tactile wheel scrolling for the appointment capsule (Lenis) */
+
+/* DESKTOP — soft, inertial wheel scrolling in the appointment capsule */
 (function () {
-  const desktopPointer = window.matchMedia("(min-width: 701px) and (hover: hover) and (pointer: fine)");
+  const desktop = window.matchMedia("(min-width: 701px) and (hover: hover) and (pointer: fine)");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  const wrapper = document.querySelector("#appointmentModal .appointment-card-content");
-  const content = wrapper && wrapper.querySelector(".appointment-scroll-content");
-  let lenis = null;
+  const scroller = document.querySelector("#appointmentModal .appointment-card-content");
+  if (!scroller) return;
 
-  function initialize() {
-    if (!desktopPointer.matches || reducedMotion.matches || !wrapper || !content || !window.Lenis || lenis) return;
+  let target = 0;
+  let frame = 0;
+  let lastTime = 0;
 
-    lenis = new window.Lenis({
-      wrapper,
-      content,
-      eventsTarget: wrapper,
-      autoRaf: true,
-      smoothWheel: true,
-      syncTouch: false,
-      lerp: 0.075,
-      wheelMultiplier: 0.82,
-      overscroll: true,
-      allowNestedScroll: true,
-      respectReducedMotion: true
-    });
-
-    lenis.stop();
-    wrapper.classList.add("appointment-lenis-ready");
+  function stop() {
+    if (frame) cancelAnimationFrame(frame);
+    frame = 0;
+    lastTime = 0;
+    target = scroller.scrollTop;
   }
 
-  window.startAppointmentSmoothScroll = function () {
-    if (!desktopPointer.matches || reducedMotion.matches) return;
-    initialize();
-    if (!lenis) return;
-    lenis.resize();
-    lenis.start();
-    lenis.scrollTo(0, { immediate: true });
-  };
-
-  window.stopAppointmentSmoothScroll = function () {
-    if (lenis) lenis.stop();
-  };
-
-  desktopPointer.addEventListener?.("change", () => {
-    if (!desktopPointer.matches && lenis) {
-      lenis.destroy();
-      lenis = null;
-      wrapper?.classList.remove("appointment-lenis-ready");
+  function animate(time) {
+    if (!lastTime) lastTime = time;
+    const dt = Math.min(40, time - lastTime);
+    lastTime = time;
+    const amount = 1 - Math.exp(-dt / 220);
+    const difference = target - scroller.scrollTop;
+    scroller.scrollTop += difference * amount;
+    if (Math.abs(difference) > 0.35) {
+      frame = requestAnimationFrame(animate);
+    } else {
+      scroller.scrollTop = target;
+      frame = 0;
+      lastTime = 0;
     }
-  });
+  }
 
-  reducedMotion.addEventListener?.("change", () => {
-    if (reducedMotion.matches && lenis) lenis.stop();
+  scroller.addEventListener("wheel", event => {
+    if (!desktop.matches || reducedMotion.matches) return;
+    if (event.target.closest("input, select, textarea, [contenteditable='true']")) return;
+    const max = Math.max(0, scroller.scrollHeight - scroller.clientHeight);
+    if (max <= 1) return;
+    event.preventDefault();
+    const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? scroller.clientHeight : 1;
+    const delta = event.deltaY * unit;
+    target = Math.max(0, Math.min(max, (frame ? target : scroller.scrollTop) + delta * 0.34));
+    if (!frame) frame = requestAnimationFrame(animate);
+  }, { passive: false });
+
+  window.startAppointmentSmoothScroll = function () { stop(); target = 0; };
+  window.stopAppointmentSmoothScroll = stop;
+  desktop.addEventListener?.("change", stop);
+  reducedMotion.addEventListener?.("change", stop);
+})();
+
+/* COST MODAL — custom scrollbar constrained to the capsule */
+(function () {
+  const scroller = document.getElementById("costScrollViewport");
+  const track = document.getElementById("costScrollTrack");
+  const thumb = document.getElementById("costScrollThumb");
+  if (!scroller || !track || !thumb) return;
+
+  let dragging = false;
+  let dragStartY = 0;
+  let dragStartTop = 0;
+
+  function dimensions() {
+    const trackHeight = track.clientHeight;
+    const maxScroll = Math.max(0, scroller.scrollHeight - scroller.clientHeight);
+    const naturalHeight = trackHeight * scroller.clientHeight / Math.max(1, scroller.scrollHeight);
+    const thumbHeight = Math.min(trackHeight, Math.max(26, naturalHeight * 0.8));
+    return { trackHeight, maxScroll, thumbHeight, travel: Math.max(1, trackHeight - thumbHeight) };
+  }
+
+  function update() {
+    const d = dimensions();
+    if (d.maxScroll <= 1 || d.trackHeight <= 0) {
+      track.classList.add("is-hidden");
+      return;
+    }
+    track.classList.remove("is-hidden");
+    const progress = scroller.scrollTop / d.maxScroll;
+    thumb.style.height = d.thumbHeight + "px";
+    thumb.style.transform = "translateY(" + (d.travel * progress) + "px)";
+    thumb.setAttribute("aria-valuenow", String(Math.round(progress * 100)));
+  }
+
+  function scrollFromPointer(clientY) {
+    const rect = track.getBoundingClientRect();
+    const d = dimensions();
+    const y = Math.max(0, Math.min(d.travel, clientY - rect.top - d.thumbHeight / 2));
+    scroller.scrollTop = (y / d.travel) * d.maxScroll;
+  }
+
+  track.addEventListener("pointerdown", event => {
+    if (event.target !== thumb) {
+      scrollFromPointer(event.clientY);
+      update();
+      return;
+    }
+    dragging = true;
+    dragStartY = event.clientY;
+    dragStartTop = scroller.scrollTop;
+    track.setPointerCapture(event.pointerId);
+    event.preventDefault();
   });
+  track.addEventListener("pointermove", event => {
+    if (!dragging) return;
+    const d = dimensions();
+    scroller.scrollTop = dragStartTop + (event.clientY - dragStartY) / d.travel * d.maxScroll;
+  });
+  track.addEventListener("pointerup", () => { dragging = false; });
+  track.addEventListener("pointercancel", () => { dragging = false; });
+  scroller.addEventListener("scroll", update, { passive: true });
+  window.addEventListener("resize", update);
+  if ("ResizeObserver" in window) new ResizeObserver(update).observe(scroller);
+  update();
 })();
