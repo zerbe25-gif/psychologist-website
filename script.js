@@ -1507,6 +1507,34 @@ window.closeDeveloperPanel = function() {
         if (contactsModal) button.addEventListener("click", () => openCapsule(contactsModal));
     });
 
+    // Переход из окна стоимости в запись с выбранным форматом
+    const costFormatMap = {
+        individual: "Индивидуальная работа",
+        couples: "Работа с парой",
+        teenagers: "Работа с подростками",
+        coaching: "Коучинг",
+        "text-therapy": "Текстовая терапия"
+    };
+
+    if (costModal && appointmentModal) {
+        costModal.querySelectorAll("[data-cost-method]").forEach(button => {
+            button.addEventListener("click", () => {
+                const method = button.dataset.costMethod;
+                const formatSelect = appointmentModal.querySelector("#appointment-format");
+                const desiredFormat = costFormatMap[method];
+
+                if (formatSelect && desiredFormat) {
+                    const matchingOption = Array.from(formatSelect.options).find(
+                        option => option.textContent.trim() === desiredFormat
+                    );
+                    if (matchingOption) formatSelect.value = matchingOption.value;
+                }
+
+                openCapsule(appointmentModal);
+            });
+        });
+    }
+
     document.querySelectorAll("[data-appointment-open]").forEach(button => {
         if (appointmentModal) button.addEventListener("click", () => openCapsule(appointmentModal));
     });
