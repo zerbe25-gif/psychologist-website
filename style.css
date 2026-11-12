@@ -4897,3 +4897,29 @@ body.cost-modal-open #developer-panel {
   width: 100%;
   box-sizing: border-box;
 }
+
+
+/* Подтверждение успешной отправки формы */
+#appointmentModal .appointment-success[hidden] { display:none !important; }
+#appointmentModal .appointment-success { padding:30px 8px 18px; text-align:center; }
+#appointmentModal .appointment-success-icon {
+  width:54px;height:54px;margin:0 auto 18px;display:grid;place-items:center;
+  border:1px solid rgba(220,181,115,.45);border-radius:50%;
+  background:rgba(220,181,115,.08);
+}
+#appointmentModal .appointment-success h3 {
+  margin:0 0 12px;color:#39475E;font:400 25px/1.3 "Lora",Georgia,serif;
+}
+#appointmentModal .appointment-success p {
+  max-width:360px;margin:0 auto;color:#737B86;font-size:14px;line-height:1.7;
+}
+#appointmentModal .appointment-form-error {
+  margin:8px 0 0;color:#A33B36;font-size:12px;line-height:1.5;
+}
+#appointmentModal .appointment-submit:disabled {
+  opacity:.65;cursor:wait;
+}
+#contactsModal .contact-value[href^="tel:"] {
+  color:inherit;text-decoration:none;
+}
+#contactsModal .contact-value[href^="tel:"]:hover { text-decoration:underline; }
