@@ -4409,7 +4409,6 @@ body.cost-modal-open {
 }
 
 /* Появление: подъём + увеличение */
-#costBackdrop.is-open + #costModal,
 #costModal.is-open,
 #contactsModal.is-open {
     transform: translate(-50%, -50%) scale(1) !important;
@@ -4806,12 +4805,8 @@ body.theme-v3 #sideDrawer .drawer-inner {
               visibility var(--cost-card-duration,.55s) ease;
 }
 #appointmentModal .appointment-card-content { position:relative; }
-#costModal {
-  max-height: min(25vh, 240px) !important;
-}
 @media(max-width:600px) {
   #appointmentModal { width:calc(100vw - 24px) !important; max-height:88dvh !important; border-radius:32px !important; }
-  #costModal { max-height:25dvh !important; }
 }
 
 #appointment-control-panel { padding: 12px 0; }
@@ -4819,3 +4814,36 @@ body.theme-v3 #sideDrawer .drawer-inner {
   display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px;
 }
 @media(max-width:700px){#appointment-control-panel .appointment-design-controls{grid-template-columns:repeat(2,minmax(0,1fr));}}
+
+
+/* Панель разработки: раскрытые настройки поверх шапки сайта */
+#developer-panel {
+  position: relative !important;
+  z-index: 10050 !important;
+  overflow: visible !important;
+}
+#developer-panel-content {
+  position: relative;
+  z-index: 10051;
+  overflow: visible;
+}
+#developer-panel-content[hidden],
+#appointment-control-panel[hidden] {
+  display: none !important;
+}
+.header {
+  z-index: 2;
+}
+
+/* Карточки центральных окон: отдельные слои, без автопоказа стоимости */
+#costModal {
+  max-height: min(85vh, 850px) !important;
+  max-height: min(85dvh, 850px) !important;
+  z-index: 9501 !important;
+}
+#contactsModal { z-index: 9501 !important; }
+#appointmentModal {
+  z-index: 9502 !important;
+  max-height: min(88vh, 900px) !important;
+  max-height: min(88dvh, 900px) !important;
+}
