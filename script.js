@@ -21,74 +21,41 @@ const photoSets = {
 };
 
 const photoOne = document.getElementById("photo-one");
-
-const photoTwo = document.getElementById("photo-two");
-
-// Интервал смены фотографии — 10 секунд
+const photoOneNext = document.getElementById("photo-one-next");
 const photoChangeTime = 10000;
+const photoRevealDuration = 1000;
+let firstPhotoIndex = -1;
+let photoIsChanging = false;
 
-let firstPhotoIndex = 0;
-let secondPhotoIndex = 0;
-let changeCounter = 0;
-
-
-function changePhoto(imageElement, images, currentIndex) {
-
-  const nextIndex = (currentIndex + 1) % images.length;
-
-  imageElement.classList.add("changing");
-
-  const newImage = new Image();
-
-  newImage.onload = () => {
-
-    imageElement.src = images[nextIndex];
-
-    imageElement.classList.remove("changing");
-
+function changePhoto(baseLayer, revealLayer, images) {
+  if (!baseLayer || !revealLayer || !images.length || photoIsChanging) return;
+  const nextIndex = (firstPhotoIndex + 1) % images.length;
+  const nextSrc = images[nextIndex];
+  photoIsChanging = true;
+  const preload = new Image();
+  preload.onload = () => {
+    revealLayer.src = nextSrc;
+    revealLayer.classList.remove("is-revealing");
+    void revealLayer.offsetWidth;
+    revealLayer.classList.add("is-revealing");
+    window.setTimeout(() => {
+      baseLayer.src = nextSrc;
+      revealLayer.classList.remove("is-revealing");
+      firstPhotoIndex = nextIndex;
+      photoIsChanging = false;
+    }, photoRevealDuration + 60);
   };
-
-  newImage.onerror = () => {
-
-    imageElement.classList.remove("changing");
-
+  preload.onerror = () => {
+    photoIsChanging = false;
+    console.warn("Не удалось загрузить фотографию:", nextSrc);
   };
-
-  newImage.src = images[nextIndex];
-
-  return nextIndex;
-
+  preload.src = nextSrc;
 }
 
-/* =========================================
-   СМЕНА ФОТОГРАФИЙ И СВЕТОВОЙ ИМПУЛЬС
-========================================= */
-
-
-setInterval(() => {
-
-  changeCounter++;
-
-  if (changeCounter % 2 === 1) {
-
-    firstPhotoIndex = changePhoto(
-      photoOne,
-      photoSets.first,
-      firstPhotoIndex
-    );
-
-  } else {
-
-    secondPhotoIndex = changePhoto(
-      photoTwo,
-      photoSets.second,
-      secondPhotoIndex
-    );
-
-  }
-
-}, photoChangeTime);
-
+/* EDITORIAL CLIP-PATH — ЖУРНАЛЬНАЯ МАСКА */
+if (photoOne && photoOneNext && photoSets.first.length) {
+  window.setInterval(() => changePhoto(photoOne, photoOneNext, photoSets.first), photoChangeTime);
+}
 /* =========================================
    ФОРМА ЗАПИСИ
 ========================================= */
