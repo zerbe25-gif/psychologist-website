@@ -1041,6 +1041,7 @@ function updateLensGlare(value) {
     if (!drawer || !backdrop || !closeButton || !title) return;
 
     const titles = {
+        method: "О Методе",
         requests: "С какими запросами я работаю",
         format: "Формат работы",
         education: "Образование и профессиональная подготовка",
@@ -1050,6 +1051,7 @@ function updateLensGlare(value) {
     };
 
     const widths = {
+        method: "850px",
         requests: "700px",
         format: "950px",
         education: "600px",
@@ -1059,6 +1061,7 @@ function updateLensGlare(value) {
     };
 
     const wheelSections = [
+        "method",
         "requests",
         "format",
         "education",
