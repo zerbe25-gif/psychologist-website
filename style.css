@@ -4843,3 +4843,22 @@ body.theme-v3 #sideDrawer .drawer-inner {
   max-height: min(88vh, 900px) !important;
   max-height: min(88dvh, 900px) !important;
 }
+
+/* FIX: модальные капсулы должны быть выше размытого backdrop и шапки */
+#costBackdrop {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 12000 !important;
+}
+#costModal,
+#contactsModal,
+#appointmentModal {
+  position: fixed !important;
+  z-index: 12010 !important;
+}
+body.cost-modal-open .header {
+  z-index: 1 !important;
+}
+body.cost-modal-open #developer-panel {
+  z-index: 1 !important;
+}
