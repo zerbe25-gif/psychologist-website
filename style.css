@@ -3846,12 +3846,8 @@ body.cost-modal-open {
     visibility 300ms ease;
 }
 
-#costBackdrop.is-open + #costModal {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  transform: translate(-50%, -50%) !important;
-}
+/* Удалено: фон открытия не должен автоматически показывать окно стоимости.
+   Активное окно теперь определяется только классом .is-open на самой карточке. */
 
 #costModal .cost-service {
   display: grid;
