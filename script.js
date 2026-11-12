@@ -1361,7 +1361,8 @@ window.toggleDevPanelSection = function(section) {
     animation: document.getElementById("animation-control-panel"),
     background: document.getElementById("background-control-panel"),
     photos: document.getElementById("photos-panel-content"),
-    cost: document.getElementById("cost-control-panel")
+    cost: document.getElementById("cost-control-panel"),
+    appointment: document.getElementById("appointment-control-panel")
   };
 
   // Показываем только выбранный раздел
