@@ -1792,15 +1792,18 @@ window.applyBackgroundMood = function(mood){
   const defaults={
     base:"#1E292B",vignette:35,grain:35,
     glow1:{color:"#34797E",opacity:45,x:82,y:18,size:60},
-    glow2:{color:"#DCB573",opacity:22,x:15,y:85,size:55}
+    glow2:{color:"#DCB573",opacity:22,x:15,y:85,size:55},
+    effectsLinked:true,optics:{color:"#233235",opacity:92,blur:12,saturation:120}
   };
   let state={...defaults,glow1:{...defaults.glow1},glow2:{...defaults.glow2}};
   try{
     const saved=JSON.parse(localStorage.getItem(key)||localStorage.getItem("psychologistBackgroundBaseSettings")||"{}");
-    state={...state,...saved,glow1:{...defaults.glow1,...saved.glow1},glow2:{...defaults.glow2,...saved.glow2}};
+    state={...state,...saved,glow1:{...defaults.glow1,...saved.glow1},glow2:{...defaults.glow2,...saved.glow2},optics:{...defaults.optics,...saved.optics}};
   }catch(e){}
   function setVar(name,value){root.style.setProperty(name,String(value));}
   function render(){
+    document.body.classList.toggle("lab-effects-isolated",!state.effectsLinked);
+    const link=document.getElementById("lab-effects-link");if(link)link.checked=state.effectsLinked;
     setVar("--lab-bg-base",state.base);
     setVar("--lab-vignette",Number(state.vignette)/100);
     setVar("--lab-grain",Number(state.grain)+"%");
@@ -1818,6 +1821,9 @@ window.applyBackgroundMood = function(mood){
     const base=document.getElementById("lab-base-color"),baseOut=document.getElementById("lab-base-color-value");
     const vignette=document.getElementById("lab-vignette"),vOut=document.getElementById("lab-vignette-value");
     const grain=document.getElementById("lab-grain"),gOut=document.getElementById("lab-grain-value");
+    const optics=state.optics;
+    setVar("--lab-drawer-color",optics.color);setVar("--lab-drawer-opacity",Number(optics.opacity)+"%");setVar("--lab-drawer-blur",Number(optics.blur)+"px");setVar("--lab-drawer-saturation",Number(optics.saturation)+"%");
+    [["color","lab-optics-color","lab-optics-color-value",v=>String(v).toUpperCase()],["opacity","lab-optics-opacity","lab-optics-opacity-value",v=>v+"%"],["blur","lab-optics-blur","lab-optics-blur-value",v=>v+" px"],["saturation","lab-optics-saturation","lab-optics-saturation-value",v=>v+"%"]].forEach(([key,id,out,fmt])=>{const input=document.getElementById(id),label=document.getElementById(out);if(input)input.value=optics[key];if(label)label.textContent=fmt(optics[key]);});
     if(base)base.value=state.base;if(baseOut)baseOut.textContent=state.base.toUpperCase();
     if(vignette)vignette.value=state.vignette;if(vOut)vOut.textContent=state.vignette+"%";
     if(grain)grain.value=state.grain;
@@ -1825,6 +1831,8 @@ window.applyBackgroundMood = function(mood){
   }
   function save(){render();try{localStorage.setItem(key,JSON.stringify(state));}catch(e){}}
   window.updateBackgroundBase=value=>{state.base=value;save();};
+  window.updateBackgroundEffectsLink=value=>{state.effectsLinked=Boolean(value);save();};
+  window.updateBackgroundOptics=(property,value)=>{if(!(property in defaults.optics))return;state.optics[property]=property==="color"?value:Number(value);save();};
   window.updateBackgroundVignette=value=>{state.vignette=Number(value);save();};
   window.updateBackgroundGrain=value=>{state.grain=Number(value);save();};
   window.updateBackgroundGlow=(number,property,value)=>{
@@ -1840,12 +1848,12 @@ window.applyBackgroundMood = function(mood){
     window.applyBackgroundMood=function(mood){
       originalApplyMood(mood);
       const presets={
-        balanced:{base:"#1E292B",vignette:35,grain:35,glow1:{color:"#34797E",opacity:45,x:82,y:18,size:60},glow2:{color:"#DCB573",opacity:22,x:15,y:85,size:55}},
-        deep:{base:"#10191B",vignette:65,grain:55,glow1:{color:"#26595D",opacity:35,x:75,y:22,size:55},glow2:{color:"#B38E52",opacity:12,x:20,y:80,size:45}},
-        amber:{base:"#202827",vignette:30,grain:25,glow1:{color:"#34797E",opacity:30,x:78,y:25,size:50},glow2:{color:"#DCB573",opacity:42,x:20,y:78,size:78}}
+        balanced:{base:"#1E292B",vignette:35,grain:35,optics:{color:"#233235",opacity:92,blur:12,saturation:120},glow1:{color:"#34797E",opacity:45,x:82,y:18,size:60},glow2:{color:"#DCB573",opacity:22,x:15,y:85,size:55}},
+        deep:{base:"#10191B",vignette:65,grain:55,optics:{color:"#141E20",opacity:95,blur:16,saturation:110},glow1:{color:"#26595D",opacity:35,x:75,y:22,size:55},glow2:{color:"#B38E52",opacity:12,x:20,y:80,size:45}},
+        amber:{base:"#202827",vignette:30,grain:25,optics:{color:"#242B27",opacity:91,blur:14,saturation:135},glow1:{color:"#34797E",opacity:30,x:78,y:25,size:50},glow2:{color:"#DCB573",opacity:42,x:20,y:78,size:78}}
       };
       if(presets[mood]){
-        state={...state,...presets[mood],glow1:{...presets[mood].glow1},glow2:{...presets[mood].glow2}};
+        state={...state,...presets[mood],glow1:{...presets[mood].glow1},glow2:{...presets[mood].glow2},optics:{...presets[mood].optics}};
         save();
       }
     };
