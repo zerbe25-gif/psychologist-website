@@ -1785,38 +1785,69 @@ window.applyBackgroundMood = function(mood){
 };
 
 
-/* ЛАБОРАТОРИЯ ФОНА · база, виньетка, текстура */
+/* НОВАЯ ЛАБОРАТОРИЯ ФОНА — независимая палитра и два источника света */
 (function(){
   const root=document.documentElement;
-  const key="psychologistBackgroundBaseSettings";
-  const defaults={base:"#1E292B",vignette:35,grain:35};
-  let settings={...defaults};
-  try{settings={...defaults,...JSON.parse(localStorage.getItem(key)||"{}")};}catch(e){}
-  function apply(){
-    root.style.setProperty("--bg-base",settings.base);
-    root.style.setProperty("--background-color",settings.base);
-    root.style.setProperty("--paper-vignette",Number(settings.vignette)/100);
-    const grainScale=(0.01+Number(settings.grain)*0.0007).toFixed(3);
-    root.style.setProperty("--paper-grain-scale",grainScale);
-    const color=document.getElementById("lab-base-color"),colorOut=document.getElementById("lab-base-color-value");
+  const key="psychologistBackgroundLabSettings";
+  const defaults={
+    base:"#1E292B",vignette:35,grain:35,
+    glow1:{color:"#34797E",opacity:45,x:82,y:18,size:60},
+    glow2:{color:"#DCB573",opacity:22,x:15,y:85,size:55}
+  };
+  let state={...defaults,glow1:{...defaults.glow1},glow2:{...defaults.glow2}};
+  try{
+    const saved=JSON.parse(localStorage.getItem(key)||"{}");
+    state={...state,...saved,glow1:{...defaults.glow1,...saved.glow1},glow2:{...defaults.glow2,...saved.glow2}};
+  }catch(e){}
+  function setVar(name,value){root.style.setProperty(name,String(value));}
+  function render(){
+    setVar("--lab-bg-base",state.base);
+    setVar("--lab-vignette",Number(state.vignette)/100);
+    setVar("--lab-grain",Number(state.grain)/100);
+    [1,2].forEach(n=>{
+      const light=state["glow"+n];
+      Object.entries(light).forEach(([prop,value])=>{
+        const cssProp=prop==="opacity"?"opacity":prop;
+        setVar("--lab-glow"+n+"-"+cssProp,prop==="opacity"?Number(value)+"%":prop==="size"?Number(value)+"%":prop==="x"||prop==="y"?Number(value)+"%":value);
+        const input=document.getElementById("lab-glow"+n+"-"+prop);
+        const output=document.getElementById("lab-glow"+n+"-"+prop+"-value");
+        if(input)input.value=value;
+        if(output)output.textContent=prop==="color"?String(value).toUpperCase():value+"%";
+      });
+    });
+    const base=document.getElementById("lab-base-color"),baseOut=document.getElementById("lab-base-color-value");
     const vignette=document.getElementById("lab-vignette"),vOut=document.getElementById("lab-vignette-value");
     const grain=document.getElementById("lab-grain"),gOut=document.getElementById("lab-grain-value");
-    if(color)color.value=settings.base;if(colorOut)colorOut.textContent=settings.base.toUpperCase();
-    if(vignette)vignette.value=settings.vignette;if(vOut)vOut.textContent=settings.vignette+"%";
-    if(grain)grain.value=settings.grain;
-    if(gOut)gOut.textContent=settings.grain<30?"Тонкая":settings.grain>70?"Выраженная":"Средняя";
+    if(base)base.value=state.base;if(baseOut)baseOut.textContent=state.base.toUpperCase();
+    if(vignette)vignette.value=state.vignette;if(vOut)vOut.textContent=state.vignette+"%";
+    if(grain)grain.value=state.grain;
+    if(gOut)gOut.textContent=state.grain<30?"Тонкая":state.grain>70?"Выраженная":"Средняя";
   }
-  function save(){apply();try{localStorage.setItem(key,JSON.stringify(settings));}catch(e){}}
-  window.updateBackgroundBase=v=>{settings.base=v;save();};
-  window.updateBackgroundVignette=v=>{settings.vignette=Number(v);save();};
-  window.updateBackgroundGrain=v=>{settings.grain=Number(v);save();};
-  apply();
-  const previousPreset=window.applyBackgroundMood;
-  if(typeof previousPreset==="function"){
+  function save(){render();try{localStorage.setItem(key,JSON.stringify(state));}catch(e){}}
+  window.updateBackgroundBase=value=>{state.base=value;save();};
+  window.updateBackgroundVignette=value=>{state.vignette=Number(value);save();};
+  window.updateBackgroundGrain=value=>{state.grain=Number(value);save();};
+  window.updateBackgroundGlow=(number,property,value)=>{
+    if(![1,2].includes(Number(number))||!(property in defaults.glow1))return;
+    state["glow"+number][property]=property==="color"?value:Number(value);
+    save();
+  };
+  render();
+
+  /* Пресеты задают общую цветовую основу обоим новым источникам света. */
+  const originalApplyMood=window.applyBackgroundMood;
+  if(typeof originalApplyMood==="function"){
     window.applyBackgroundMood=function(mood){
-      previousPreset(mood);
-      const presets={balanced:{base:"#1E292B",vignette:35,grain:35},deep:{base:"#10191B",vignette:65,grain:55},amber:{base:"#202827",vignette:30,grain:25}};
-      if(presets[mood]){settings={...settings,...presets[mood]};save();}
+      originalApplyMood(mood);
+      const presets={
+        balanced:{base:"#1E292B",vignette:35,grain:35,glow1:{color:"#34797E",opacity:45,x:82,y:18,size:60},glow2:{color:"#DCB573",opacity:22,x:15,y:85,size:55}},
+        deep:{base:"#10191B",vignette:65,grain:55,glow1:{color:"#26595D",opacity:35,x:75,y:22,size:55},glow2:{color:"#B38E52",opacity:12,x:20,y:80,size:45}},
+        amber:{base:"#202827",vignette:30,grain:25,glow1:{color:"#34797E",opacity:30,x:78,y:25,size:50},glow2:{color:"#DCB573",opacity:42,x:20,y:78,size:78}}
+      };
+      if(presets[mood]){
+        state={...state,...presets[mood],glow1:{...presets[mood].glow1},glow2:{...presets[mood].glow2}};
+        save();
+      }
     };
   }
 })();
