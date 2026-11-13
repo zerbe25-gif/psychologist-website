@@ -38,6 +38,9 @@
   <!-- ФОНОВОЕ ДИНАМИЧЕСКОЕ СВЕЧЕНИЕ — V3 -->
 <div id="meshGlow" class="bg-mesh-glow"></div>
 
+<!-- НЕЗАВИСИМЫЙ СЛОЙ НОВОЙ ЛАБОРАТОРИИ ФОНА -->
+<div id="background-lab-atmosphere" aria-hidden="true"></div>
+
   <!-- ЕДИНАЯ ПАНЕЛЬ РАЗРАБОТКИ -->
 <div id="developer-panel">
 
@@ -498,7 +501,16 @@
     <output id="lab-grain-value">Средняя</output>
   </div>
 </section>
-<section class="background-lab-card" id="lab-glow1" hidden></section>
+<section class="background-lab-card background-lab-glow" id="lab-glow1" hidden>
+  <div class="lab-glow-heading"><span class="lab-glow-dot"></span><strong>Источник света · Тил</strong><span class="lab-glow-caption">холодный основной акцент</span></div>
+  <div class="lab-glow-controls">
+    <div class="lab-glow-control lab-glow-color"><label for="lab-glow1-color">Цвет</label><input id="lab-glow1-color" type="color" value="#34797E" oninput="updateBackgroundGlow(1,'color',this.value)"><output id="lab-glow1-color-value">#34797E</output></div>
+    <div class="lab-glow-control"><label for="lab-glow1-opacity">Интенсивность</label><input id="lab-glow1-opacity" type="range" min="0" max="100" value="45" oninput="updateBackgroundGlow(1,'opacity',this.value)"><output id="lab-glow1-opacity-value">45%</output></div>
+    <div class="lab-glow-control"><label for="lab-glow1-x">Положение X</label><input id="lab-glow1-x" type="range" min="0" max="100" value="82" oninput="updateBackgroundGlow(1,'x',this.value)"><output id="lab-glow1-x-value">82%</output></div>
+    <div class="lab-glow-control"><label for="lab-glow1-y">Положение Y</label><input id="lab-glow1-y" type="range" min="0" max="100" value="18" oninput="updateBackgroundGlow(1,'y',this.value)"><output id="lab-glow1-y-value">18%</output></div>
+    <div class="lab-glow-control"><label for="lab-glow1-size">Размер</label><input id="lab-glow1-size" type="range" min="20" max="100" value="60" oninput="updateBackgroundGlow(1,'size',this.value)"><output id="lab-glow1-size-value">60%</output></div>
+  </div>
+</section>
 <section class="background-lab-card" id="lab-glow2" hidden></section>
 <section class="background-lab-card" id="lab-optics" hidden></section>
 </div>
