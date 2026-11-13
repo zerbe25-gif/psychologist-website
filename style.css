@@ -5627,3 +5627,38 @@ body.cost-modal-open #developer-panel {
 #developer-panel .lab-base-row output{flex:0 0 38px;text-align:right;color:#718096;font-size:10px;white-space:nowrap}
 #developer-panel .lab-base-color{flex:0 1 145px}
 @media(max-width:600px){#developer-panel .background-lab-base{gap:7px;padding:6px}#developer-panel .lab-base-row{flex-basis:145px}}
+
+
+/* НОВАЯ ЛАБОРАТОРИЯ: отдельный визуальный слой, не вмешивается в старые техники */
+body{background-color:var(--lab-bg-base,var(--background-color))!important}
+#background-lab-atmosphere{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;isolation:isolate}
+#background-lab-atmosphere::before,#background-lab-atmosphere::after{content:"";position:absolute;inset:0;pointer-events:none}
+#background-lab-atmosphere::before{
+  background:
+    radial-gradient(ellipse var(--lab-glow1-size,60%) var(--lab-glow1-size,60%) at var(--lab-glow1-x,82%) var(--lab-glow1-y,18%),color-mix(in srgb,var(--lab-glow1-color,#34797E) calc(var(--lab-glow1-opacity,45)*1%),transparent) 0%,transparent 72%),
+    radial-gradient(ellipse var(--lab-glow2-size,55%) var(--lab-glow2-size,55%) at var(--lab-glow2-x,15%) var(--lab-glow2-y,85%),color-mix(in srgb,var(--lab-glow2-color,#DCB573) calc(var(--lab-glow2-opacity,22)*1%),transparent) 0%,transparent 72%);
+  mix-blend-mode:screen;transition:background .25s ease;
+}
+#background-lab-atmosphere::after{
+  background:
+    radial-gradient(ellipse at center,transparent 28%,rgba(0,0,0,var(--lab-vignette,.35)) 100%),
+    repeating-linear-gradient(0deg,rgba(255,255,255,.10) 0 1px,transparent 1px 3px),
+    repeating-linear-gradient(90deg,rgba(0,0,0,.10) 0 1px,transparent 1px 4px);
+  opacity:1;mix-blend-mode:soft-light;
+  filter:contrast(calc(1 + var(--lab-grain,.35)*2));
+}
+#developer-panel{z-index:1000}
+#developer-panel .background-lab-glow{padding:8px 10px;background:#f7f9fb;border:1px solid #e2e8f0;border-radius:9px}
+#developer-panel .background-lab-glow[hidden]{display:none!important}
+#developer-panel .lab-glow-heading{display:flex;align-items:center;gap:7px;margin-bottom:8px;color:#526078;font:11px/1.3 Inter,sans-serif}
+#developer-panel .lab-glow-heading strong{font-weight:600;color:#2B4C6F}
+#developer-panel .lab-glow-caption{color:#8792a2;font-size:10px}
+#developer-panel .lab-glow-dot{width:8px;height:8px;flex:0 0 8px;border-radius:50%;background:#34797E;box-shadow:0 0 0 3px rgba(52,121,126,.12)}
+#developer-panel .lab-glow-controls{display:grid;grid-template-columns:repeat(5,minmax(105px,1fr));gap:8px}
+#developer-panel .lab-glow-control{display:grid;grid-template-columns:1fr auto;align-items:center;gap:4px 6px;min-width:0;color:#526078;font:10px/1.2 Inter,sans-serif}
+#developer-panel .lab-glow-control label{white-space:nowrap}
+#developer-panel .lab-glow-control input[type=range]{grid-column:1/-1;width:100%;height:13px;margin:0;accent-color:#34797E}
+#developer-panel .lab-glow-control output{color:#718096;font-size:9px;text-align:right}
+#developer-panel .lab-glow-color{grid-template-columns:auto 25px 1fr}
+#developer-panel .lab-glow-color input[type=color]{width:24px;height:21px;padding:2px;border:1px solid #d7dee8;border-radius:5px;background:#fff}
+@media(max-width:700px){#developer-panel .lab-glow-controls{grid-template-columns:repeat(2,minmax(110px,1fr))}}
