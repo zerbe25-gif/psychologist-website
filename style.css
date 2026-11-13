@@ -5466,3 +5466,69 @@ body.cost-modal-open #developer-panel {
     margin-left: 90px !important; left: auto !important; transform: translateX(0) !important;
   }
 }
+
+
+/* SIDE DRAWER REFINEMENT — горизонтальная навигация и светлая палитра */
+#sideDrawer {
+  background: rgba(247, 244, 237, .97) !important;
+  color: #39475E !important;
+  border-right-color: rgba(57, 71, 94, .12) !important;
+  box-shadow: 18px 0 55px rgba(35, 45, 55, .10), 3px 0 12px rgba(35, 45, 55, .035) !important;
+}
+#sideDrawer .drawer-inner,
+#sideDrawer .drawer-panel,
+#sideDrawer #drawerTitle,
+#sideDrawer .drawer-eyebrow {
+  color: #39475E !important;
+}
+#sideDrawer .drawer-tabs {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 8px !important;
+  margin: 0 0 30px !important;
+  padding: 0 0 16px !important;
+  border-bottom: 1px solid rgba(57, 71, 94, .14) !important;
+}
+#sideDrawer .drawer-tabs button,
+#sideDrawer .drawer-tabs button:not(:first-child) {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 8px 12px !important;
+  border: 1px solid rgba(57, 71, 94, .17) !important;
+  border-radius: 24px !important;
+  background: rgba(255, 255, 255, .58) !important;
+  color: #526078 !important;
+  font-size: 12px !important;
+  white-space: nowrap !important;
+}
+#sideDrawer .drawer-tabs button:hover,
+#sideDrawer .drawer-tabs button.active {
+  background: #39475E !important;
+  border-color: #39475E !important;
+  color: #FFFFFF !important;
+}
+#sideDrawer .drawer-close {
+  color: #39475E !important;
+}
+#sideDrawer a {
+  color: #687B91 !important;
+}
+#sideDrawer .drawer-panel .requests-list li::marker {
+  color: #B58B50 !important;
+}
+@media (max-width: 600px) {
+  #sideDrawer .drawer-tabs {
+    gap: 7px !important;
+    margin-bottom: 24px !important;
+  }
+  #sideDrawer .drawer-tabs button,
+  #sideDrawer .drawer-tabs button:not(:first-child) {
+    padding: 7px 10px !important;
+    font-size: 11px !important;
+  }
+}
