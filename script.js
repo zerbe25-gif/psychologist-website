@@ -1807,6 +1807,7 @@ window.applyBackgroundMood = function(mood){
     setVar("--lab-bg-base",state.base);
     setVar("--lab-vignette",Number(state.vignette)/100);
     setVar("--lab-grain",Number(state.grain)+"%");
+    setVar("--lab-grain-opacity",Number(state.grain)/100);
     [1,2].forEach(n=>{
       const light=state["glow"+n];
       Object.entries(light).forEach(([prop,value])=>{
