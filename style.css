@@ -5708,3 +5708,18 @@ body.lab-effects-isolated #background-lab-atmosphere::after{mix-blend-mode:norma
 #sideDrawer{transition:background-color .25s ease,backdrop-filter .25s ease,-webkit-backdrop-filter .25s ease}
 
 body.theme-v3 #sideDrawer{background:color-mix(in srgb,var(--lab-drawer-color,#233235) var(--lab-drawer-opacity,92%),transparent);-webkit-backdrop-filter:blur(var(--lab-drawer-blur,12px)) saturate(var(--lab-drawer-saturation,120%));backdrop-filter:blur(var(--lab-drawer-blur,12px)) saturate(var(--lab-drawer-saturation,120%));border-right-color:color-mix(in srgb,var(--lab-drawer-color,#233235) 35%,transparent)}
+
+
+/* COLOR PICKER новой лаборатории: выбор оттенка, ползунок и HEX/RGB */
+#developer-panel .lab-color-picker{display:grid;gap:4px;min-width:0;color:#526078;font:10px/1.2 Inter,sans-serif}
+#developer-panel .lab-color-picker>label{font-weight:600}
+#developer-panel .lab-color-picker-main{display:grid;grid-template-columns:32px minmax(55px,1fr);align-items:center;gap:5px}
+#developer-panel .lab-color-swatch{width:30px;height:25px;padding:2px;border:1px solid #d7dee8;border-radius:6px;background:#fff;cursor:pointer}
+#developer-panel .lab-color-hue{width:100%;height:12px;margin:0;accent-color:#34797E;cursor:pointer}
+#developer-panel .lab-color-format{grid-column:1/-1;display:flex;gap:3px}
+#developer-panel .lab-color-format button{padding:3px 9px;border:1px solid #d5dde4;border-radius:5px;background:#fff;color:#64717a;font:600 9px Inter,sans-serif;cursor:pointer}
+#developer-panel .lab-color-format button.active{background:#e1eeee;border-color:#8eabad;color:#245b60}
+#developer-panel .lab-color-value{width:100%;min-width:0;height:22px;box-sizing:border-box;padding:3px 6px;border:1px solid #d7dee8;border-radius:5px;background:#fff;color:#40515a;font:10px/1.2 ui-monospace,monospace}
+#developer-panel .lab-glow-color,#developer-panel .lab-optics-control:has(.lab-color-picker){display:block}
+#developer-panel .lab-glow-controls{grid-template-columns:repeat(5,minmax(105px,1fr))}
+@media(max-width:700px){#developer-panel .lab-glow-controls{grid-template-columns:repeat(2,minmax(110px,1fr))}}
