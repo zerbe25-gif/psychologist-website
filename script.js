@@ -1801,6 +1801,19 @@ window.applyBackgroundMood = function(mood){
     state={...state,...saved,glow1:{...defaults.glow1,...saved.glow1},glow2:{...defaults.glow2,...saved.glow2},optics:{...defaults.optics,...saved.optics}};
   }catch(e){}
   function setVar(name,value){root.style.setProperty(name,String(value));}
+  const colorKeys=["lab-base-color","lab-glow1-color","lab-glow2-color","lab-optics-color"];
+  const colorFormat={};
+  function hexToRgb(hex){const m=/^#?([0-9a-f]{6})$/i.exec(hex);if(!m)return null;const n=parseInt(m[1],16);return {r:n>>16,g:(n>>8)&255,b:n&255};}
+  function rgbToHex(r,g,b){return "#"+[r,g,b].map(v=>Math.max(0,Math.min(255,Math.round(Number(v)))).toString(16).padStart(2,"0")).join("").toUpperCase();}
+  function rgbToHsl(r,g,b){r/=255;g/=255;b/=255;const max=Math.max(r,g,b),min=Math.min(r,g,b),d=max-min;let h=0,s=0,l=(max+min)/2;if(d){s=d/(1-Math.abs(2*l-1));switch(max){case r:h=((g-b)/d)%6;break;case g:h=(b-r)/d+2;break;default:h=(r-g)/d+4;}h*=60;if(h<0)h+=360;}return {h,s,l};}
+  function hslToHex(h,s,l){const c=(1-Math.abs(2*l-1))*s,x=c*(1-Math.abs((h/60)%2-1)),m=l-c/2;let a,b,d;if(h<60){a=c;b=x;d=0}else if(h<120){a=x;b=c;d=0}else if(h<180){a=0;b=c;d=x}else if(h<240){a=0;b=x;d=c}else if(h<300){a=x;b=0;d=c}else{a=c;b=0;d=x}return rgbToHex((a+m)*255,(b+m)*255,(d+m)*255);}
+  function syncColorPicker(id,color){const rgb=hexToRgb(color);if(!rgb)return;const swatch=document.getElementById(id+"-picker"),hue=document.getElementById(id+"-hue"),field=document.getElementById(id+"-value"),hexTab=document.getElementById(id+"-hex-tab"),rgbTab=document.getElementById(id+"-rgb-tab");if(swatch)swatch.value=color;if(hue)hue.value=Math.round(rgbToHsl(rgb.r,rgb.g,rgb.b).h);const format=colorFormat[id]||"hex";if(field)field.value=format==="hex"?color.toUpperCase():rgb.r+", "+rgb.g+", "+rgb.b;if(hexTab)hexTab.classList.toggle("active",format==="hex");if(rgbTab)rgbTab.classList.toggle("active",format==="rgb");}
+  function setLabColor(id,color){if(!/^#[0-9a-f]{6}$/i.test(color))return;const upper=color.toUpperCase();if(id==="lab-base-color")window.updateBackgroundBase(upper);else if(id==="lab-glow1-color")window.updateBackgroundGlow(1,"color",upper);else if(id==="lab-glow2-color")window.updateBackgroundGlow(2,"color",upper);else if(id==="lab-optics-color")window.updateBackgroundOptics("color",upper);}
+  window.updateLabColor=(id,color)=>setLabColor(id,color);
+  window.setLabColorFormat=(id,format)=>{colorFormat[id]=format;const swatch=document.getElementById(id+"-picker");if(swatch)syncColorPicker(id,swatch.value);};
+  window.updateLabColorText=(id,value)=>{let hex=value.trim();if((colorFormat[id]||"hex")==="rgb"){const nums=value.split(/[ ,;]+/).filter(Boolean).map(Number);if(nums.length!==3||nums.some(n=>!Number.isFinite(n)||n<0||n>255))return;hex=rgbToHex(...nums);}else{if(!/^#?[0-9a-f]{6}$/i.test(hex))return;if(!hex.startsWith("#"))hex="#"+hex;}setLabColor(id,hex);};
+  window.updateLabHue=(id,hue)=>{const swatch=document.getElementById(id+"-picker");const rgb=hexToRgb(swatch?swatch.value:"#1E292B");if(!rgb)return;const hsl=rgbToHsl(rgb.r,rgb.g,rgb.b);setLabColor(id,hslToHex(Number(hue),Math.max(.55,hsl.s),Math.max(.32,Math.min(.72,hsl.l))));};
+
   function render(){
     document.body.classList.toggle("lab-effects-isolated",!state.effectsLinked);
     const link=document.getElementById("lab-effects-link");if(link)link.checked=state.effectsLinked;
@@ -1824,6 +1837,18 @@ window.applyBackgroundMood = function(mood){
     const grain=document.getElementById("lab-grain"),gOut=document.getElementById("lab-grain-value");
     const optics=state.optics;
     setVar("--lab-drawer-color",optics.color);setVar("--lab-drawer-opacity",Number(optics.opacity)+"%");setVar("--lab-drawer-blur",Number(optics.blur)+"px");setVar("--lab-drawer-saturation",Number(optics.saturation)+"%");
+    /* Применяем оптику напрямую к реальной информационной шторке, независимо от темы. */
+    const drawer=document.getElementById("sideDrawer");
+    if(drawer){
+      drawer.style.setProperty("background","color-mix(in srgb,"+optics.color+" "+Number(optics.opacity)+"%,transparent)","important");
+      drawer.style.setProperty("backdrop-filter","blur("+Number(optics.blur)+"px) saturate("+Number(optics.saturation)+"%)","important");
+      drawer.style.setProperty("-webkit-backdrop-filter","blur("+Number(optics.blur)+"px) saturate("+Number(optics.saturation)+"%)","important");
+      drawer.style.setProperty("border-right-color","color-mix(in srgb,"+optics.color+" 35%,transparent)","important");
+    }
+    syncColorPicker("lab-base-color",state.base);
+    syncColorPicker("lab-glow1-color",state.glow1.color);
+    syncColorPicker("lab-glow2-color",state.glow2.color);
+    syncColorPicker("lab-optics-color",optics.color);
     [["color","lab-optics-color","lab-optics-color-value",v=>String(v).toUpperCase()],["opacity","lab-optics-opacity","lab-optics-opacity-value",v=>v+"%"],["blur","lab-optics-blur","lab-optics-blur-value",v=>v+" px"],["saturation","lab-optics-saturation","lab-optics-saturation-value",v=>v+"%"]].forEach(([key,id,out,fmt])=>{const input=document.getElementById(id),label=document.getElementById(out);if(input)input.value=optics[key];if(label)label.textContent=fmt(optics[key]);});
     if(base)base.value=state.base;if(baseOut)baseOut.textContent=state.base.toUpperCase();
     if(vignette)vignette.value=state.vignette;if(vOut)vOut.textContent=state.vignette+"%";
