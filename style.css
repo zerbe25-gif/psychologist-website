@@ -5597,3 +5597,15 @@ body.cost-modal-open #developer-panel {
 #developer-panel .lab-preset-actions button:hover{background:#2B4C6F;color:#fff;border-color:#2B4C6F}
 #developer-panel .lab-preset-note{font-size:10px;color:#718096}
 @media(max-width:600px){#developer-panel .background-lab-tab{padding:7px 9px;font-size:10px}}
+
+
+/* Компактная лаборатория: минимум высоты и одна горизонтальная линия */
+#developer-panel .developer-panel-bar{flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;scrollbar-width:thin;gap:5px;padding-bottom:3px}
+#developer-panel .developer-panel-bar>.developer-panel-tab,#developer-panel .developer-panel-bar>button{flex:0 0 auto;white-space:nowrap}
+#developer-panel .background-lab-carousel{flex:0 0 auto;width:auto;max-width:min(470px,48vw);min-width:0;margin:0;gap:3px}
+#developer-panel .background-lab-tab-track{flex:0 1 auto;width:clamp(110px,34vw,390px);max-width:100%;min-width:0;overflow-x:auto;flex-wrap:nowrap}
+#developer-panel .background-lab-card{min-height:0;height:auto;padding:5px 7px;margin:3px 0;border:0;border-radius:6px;background:transparent;box-shadow:none}
+#developer-panel .lab-preset-actions{margin:0;gap:5px}
+#developer-panel .lab-preset-actions button{padding:5px 9px;font-size:10px;line-height:1.15}
+#developer-panel .background-lab-card:empty{display:none}
+@media(max-width:600px){#developer-panel .background-lab-carousel{max-width:58vw}#developer-panel .background-lab-tab-track{width:34vw}#developer-panel .developer-panel-bar{gap:4px}}
