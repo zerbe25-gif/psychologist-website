@@ -336,24 +336,6 @@ function togglePaperPanel() {
     if (!content || !button) return;
 
     const isOpen = !content.hidden;
-    content.hidden = isOpen;
-
-    button.setAttribute('aria-expanded', String(!isOpen));
-
-    if (arrow) {
-        arrow.textContent = isOpen ? '＋' : '－';
-    }
-}
-
-
-function togglePaperPanel() {
-    const content = document.getElementById('paper-panel-content');
-    const button = document.querySelector('.paper-panel-heading');
-    const arrow = document.getElementById('paper-panel-arrow');
-
-    if (!content || !button) return;
-
-    const isOpen = !content.hidden;
 
     content.hidden = isOpen;
     button.setAttribute('aria-expanded', String(!isOpen));
