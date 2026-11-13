@@ -1722,10 +1722,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ЛАБОРАТОРИЯ ФОНА: независимое раскрытие модулей (этапная интеграция)
 function toggleBackgroundLabBlock(panelId, button) {
-  const panel = document.getElementById(panelId);
-  if (!panel || !button) return;
-  const willOpen = panel.hidden;
-  panel.hidden = !willOpen;
-  button.setAttribute('aria-expanded', String(willOpen));
-  button.classList.toggle('is-open', willOpen);
+  const content = document.getElementById('developer-panel-content');
+  const panels = ['lab-presets','lab-base','lab-glow1','lab-glow2','lab-optics']
+    .map(id => document.getElementById(id)).filter(Boolean);
+  const target = document.getElementById(panelId);
+  if (!content || !target || !button) return;
+
+  const willOpen = content.hidden || target.hidden;
+  panels.forEach(panel => { panel.hidden = true; });
+  document.querySelectorAll('.background-lab-tab').forEach(tab => {
+    tab.classList.remove('active');
+    tab.setAttribute('aria-expanded','false');
+  });
+  if (!willOpen) {
+    content.hidden = true;
+    return;
+  }
+  ['animation-control-panel','background-control-panel','photos-panel-content',
+   'cost-control-panel','appointment-control-panel'].forEach(id => {
+    const panel = document.getElementById(id);
+    if (panel) panel.hidden = true;
+  });
+  document.querySelectorAll('.developer-panel-tab:not(.background-lab-tab)').forEach(tab => {
+    tab.classList.remove('active');
+    tab.setAttribute('aria-expanded','false');
+  });
+  content.hidden = false;
+  target.hidden = false;
+  button.classList.add('active');
+  button.setAttribute('aria-expanded','true');
 }
