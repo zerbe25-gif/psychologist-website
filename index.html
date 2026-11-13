@@ -481,7 +481,23 @@
 <!-- ЛАБОРАТОРИЯ ФОНА: отдельные разделы панели управления -->
 <div class="background-lab-panels" id="background-lab-panels">
 <section class="background-lab-card" id="lab-presets" hidden><div class="lab-preset-actions"><button type="button" onclick="applyBackgroundMood('balanced')">Баланс</button><button type="button" onclick="applyBackgroundMood('deep')">Глубокий кокон</button><button type="button" onclick="applyBackgroundMood('amber')">Вечерний свет</button></div></section>
-<section class="background-lab-card" id="lab-base" hidden></section>
+<section class="background-lab-card background-lab-base" id="lab-base" hidden>
+  <div class="lab-base-row lab-base-color">
+    <label for="lab-base-color">База</label>
+    <input id="lab-base-color" type="color" value="#1E292B" oninput="updateBackgroundBase(this.value)" aria-label="Цвет базового фона">
+    <output id="lab-base-color-value">#1E292B</output>
+  </div>
+  <div class="lab-base-row">
+    <label for="lab-vignette">Виньетка</label>
+    <input id="lab-vignette" type="range" min="0" max="100" step="1" value="35" oninput="updateBackgroundVignette(this.value)">
+    <output id="lab-vignette-value">35%</output>
+  </div>
+  <div class="lab-base-row">
+    <label for="lab-grain">Текстура</label>
+    <input id="lab-grain" type="range" min="0" max="100" step="1" value="35" oninput="updateBackgroundGrain(this.value)">
+    <output id="lab-grain-value">Средняя</output>
+  </div>
+</section>
 <section class="background-lab-card" id="lab-glow1" hidden></section>
 <section class="background-lab-card" id="lab-glow2" hidden></section>
 <section class="background-lab-card" id="lab-optics" hidden></section>
