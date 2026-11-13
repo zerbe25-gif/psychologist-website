@@ -188,10 +188,11 @@ body {
 }
 
 
-.menu-item-1 { margin-left: 0; }
-.menu-item-2 { margin-left: 45px; }
-.menu-item-3 { margin-left: 90px; }
-.menu-item-4 { margin-left: 135px; }
+.menu-item-method { margin-left: 0; }
+.menu-item-1 { margin-left: 45px; }
+.menu-item-2 { margin-left: 90px; }
+.menu-item-3 { margin-left: 135px; }
+.menu-item-4 { margin-left: 180px; }
 
 .social-links {
   display: flex;
@@ -2580,7 +2581,9 @@ body.tech-3-active {
 
 .drawer-tabs {
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
+    align-items: center;
     gap: 9px;
     margin: 0 0 38px;
     padding-bottom: 18px;
@@ -2826,7 +2829,7 @@ body.tech-3-active {
     overflow-y: auto;
     overscroll-behavior: contain;
 
-    background: #F6F3EE;
+    background: #FBFAF7;
     color: #302D2A;
 
     border-right: 1px solid rgba(70, 60, 50, 0.10);
