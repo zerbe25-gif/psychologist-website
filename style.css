@@ -5688,3 +5688,21 @@ body.lab-effects-isolated #background-lab-atmosphere::after{mix-blend-mode:norma
 #developer-panel .lab-optics-control input[type=color]{width:27px;height:22px;padding:2px;border:1px solid #d7dee8;border-radius:5px;background:#fff}
 #sideDrawer{background:color-mix(in srgb,var(--lab-drawer-color,#233235) var(--lab-drawer-opacity,92%),transparent);-webkit-backdrop-filter:blur(var(--lab-drawer-blur,12px)) saturate(var(--lab-drawer-saturation,120%));backdrop-filter:blur(var(--lab-drawer-blur,12px)) saturate(var(--lab-drawer-saturation,120%));border-right-color:color-mix(in srgb,var(--lab-drawer-color,#233235) 35%,transparent)}
 @media(max-width:700px){#developer-panel .lab-optics-controls{grid-template-columns:repeat(2,minmax(120px,1fr))}.lab-effects-link-row label{white-space:normal}}
+
+
+/* НОВАЯ ЛАБОРАТОРИЯ: ЗЕРНО ВМЕСТО КЛЕТОЧНОЙ СЕТКИ */
+/* Старый клетчатый рисунок сохранён выше в .hatching-canvas, но не накладывается на слой лаборатории. */
+#background-lab-atmosphere::after{
+  background:radial-gradient(ellipse at center,transparent 28%,rgba(0,0,0,var(--lab-vignette,.35)) 100%);
+  opacity:1;mix-blend-mode:soft-light;
+}
+#background-lab-grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:var(--lab-grain-opacity,.35);filter:url(#lab-film-grain);mix-blend-mode:soft-light}
+.lab-filter-defs{position:fixed;width:0;height:0;overflow:hidden;pointer-events:none}
+#developer-panel .background-lab-glow,#developer-panel .background-lab-optics{padding:4px 7px}
+#developer-panel .lab-glow-controls{gap:4px}
+#developer-panel .lab-glow-control{gap:2px 5px;font-size:9px}
+#developer-panel .lab-glow-control input[type=range],#developer-panel .lab-optics-control input[type=range]{height:9px}
+#developer-panel .lab-optics-controls{gap:5px}
+#developer-panel .lab-optics-control{gap:2px 5px;font-size:9px}
+#developer-panel .lab-glow-control input[type=color],#developer-panel .lab-optics-control input[type=color]{height:18px}
+#sideDrawer{transition:background-color .25s ease,backdrop-filter .25s ease,-webkit-backdrop-filter .25s ease}
