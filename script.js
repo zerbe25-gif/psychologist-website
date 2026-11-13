@@ -1718,3 +1718,14 @@ document.addEventListener("DOMContentLoaded", () => {
   initCustomScrollbar("costScrollViewport", "costScrollTrack", "costScrollThumb");
   initCustomScrollbar("appointmentModalScroller", "appointmentScrollTrack", "appointmentScrollThumb");
 })();
+
+
+// ЛАБОРАТОРИЯ ФОНА: независимое раскрытие модулей (этапная интеграция)
+function toggleBackgroundLabBlock(panelId, button) {
+  const panel = document.getElementById(panelId);
+  if (!panel || !button) return;
+  const willOpen = panel.hidden;
+  panel.hidden = !willOpen;
+  button.setAttribute('aria-expanded', String(willOpen));
+  button.classList.toggle('is-open', willOpen);
+}
