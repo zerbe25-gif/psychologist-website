@@ -5706,3 +5706,5 @@ body.lab-effects-isolated #background-lab-atmosphere::after{mix-blend-mode:norma
 #developer-panel .lab-optics-control{gap:2px 5px;font-size:9px}
 #developer-panel .lab-glow-control input[type=color],#developer-panel .lab-optics-control input[type=color]{height:18px}
 #sideDrawer{transition:background-color .25s ease,backdrop-filter .25s ease,-webkit-backdrop-filter .25s ease}
+
+body.theme-v3 #sideDrawer{background:color-mix(in srgb,var(--lab-drawer-color,#233235) var(--lab-drawer-opacity,92%),transparent);-webkit-backdrop-filter:blur(var(--lab-drawer-blur,12px)) saturate(var(--lab-drawer-saturation,120%));backdrop-filter:blur(var(--lab-drawer-blur,12px)) saturate(var(--lab-drawer-saturation,120%));border-right-color:color-mix(in srgb,var(--lab-drawer-color,#233235) 35%,transparent)}
