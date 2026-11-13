@@ -1832,7 +1832,7 @@ window.applyBackgroundMood = function(mood){
         if(output)output.textContent=prop==="color"?String(value).toUpperCase():value+"%";
       });
     });
-    const base=document.getElementById("lab-base-color"),baseOut=document.getElementById("lab-base-color-value");
+    const base=document.getElementById("lab-base-color"),baseOut=document.getElementById("lab-base-color-display");
     const vignette=document.getElementById("lab-vignette"),vOut=document.getElementById("lab-vignette-value");
     const grain=document.getElementById("lab-grain"),gOut=document.getElementById("lab-grain-value");
     const optics=state.optics;
