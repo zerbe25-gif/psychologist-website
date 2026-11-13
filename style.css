@@ -4942,17 +4942,6 @@ body.cost-modal-open #developer-panel {
   scrollbar-color: rgba(57,71,94,.35) transparent;
   padding-right: 42px;
 }
-#appointmentModal .appointment-card-content::-webkit-scrollbar {
-  width: 5px;
-}
-#appointmentModal .appointment-card-content::-webkit-scrollbar-track {
-  background: transparent;
-  margin-block: 5%;
-}
-#appointmentModal .appointment-card-content::-webkit-scrollbar-thumb {
-  background: rgba(57,71,94,.32);
-  border-radius: 10px;
-}
 @media(max-width:600px) {
   #appointmentModal .appointment-card-content {
     max-height: 78dvh;
@@ -4991,25 +4980,6 @@ body.cost-modal-open #developer-panel {
   );
 }
 
-/* Appointment: native momentum, contained scroll, soft visual feedback */
-#appointmentModal .appointment-card-content {
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-y: contain;
-  scroll-behavior: smooth;
-  scroll-padding-block: 22px;
-  scrollbar-gutter: stable;
-}
-#appointmentModal .appointment-card-content::-webkit-scrollbar-track {
-  margin-block: 10%;
-}
-#appointmentModal .appointment-card-content::-webkit-scrollbar-thumb {
-  border: 2px solid transparent;
-  background-clip: padding-box;
-  transition: background-color .22s ease;
-}
-@media (prefers-reduced-motion: reduce) {
-  #appointmentModal .appointment-card-content { scroll-behavior: auto; }
-}
 
 
 /* FINAL SCROLL POLISH — visible 20% shorter Cost scrollbar thumb */
@@ -5039,22 +5009,6 @@ body.cost-modal-open #developer-panel {
   );
 }
 
-/* Lenis owns wheel interpolation on desktop; mobile keeps native touch scroll */
-@media (min-width: 701px) and (hover: hover) and (pointer: fine) {
-  #appointmentModal .appointment-card-content {
-    scroll-behavior: auto !important;
-    overscroll-behavior-y: contain;
-  }
-  #appointmentModal .appointment-card-content.appointment-lenis-ready {
-    scrollbar-gutter: stable;
-  }
-}
-@media (max-width: 700px), (hover: none), (pointer: coarse) {
-  #appointmentModal .appointment-card-content {
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-  }
-}
 
 
 /* FINAL FIX 2026-11-12 — actual inner viewport + clipped custom Cost scrollbar */
@@ -5116,20 +5070,6 @@ body.cost-modal-open #developer-panel {
   #costModal .cost-scroll-thumb { width: 5px; }
 }
 
-/* Appointment wheel motion is handled by a desktop-only RAF interpolator */
-@media (min-width: 701px) and (hover: hover) and (pointer: fine) {
-  #appointmentModal .appointment-card-content {
-    scroll-behavior: auto !important;
-    overscroll-behavior: contain;
-    scrollbar-width: thin;
-  }
-}
-@media (max-width: 700px), (hover: none), (pointer: coarse) {
-  #appointmentModal .appointment-card-content {
-    scroll-behavior: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-}
 
 
 /* SHARED CUSTOM SCROLLBAR — appointment uses the same behavior as Cost */
