@@ -1783,3 +1783,40 @@ window.applyBackgroundMood = function(mood){
   const themeButton=document.getElementById('theme-v3-toggle');
   if(themeButton){themeButton.classList.add('active');themeButton.setAttribute('aria-pressed','true');}
 };
+
+
+/* ЛАБОРАТОРИЯ ФОНА · база, виньетка, текстура */
+(function(){
+  const root=document.documentElement;
+  const key="psychologistBackgroundBaseSettings";
+  const defaults={base:"#1E292B",vignette:35,grain:35};
+  let settings={...defaults};
+  try{settings={...defaults,...JSON.parse(localStorage.getItem(key)||"{}")};}catch(e){}
+  function apply(){
+    root.style.setProperty("--bg-base",settings.base);
+    root.style.setProperty("--background-color",settings.base);
+    root.style.setProperty("--paper-vignette",Number(settings.vignette)/100);
+    const grainScale=(0.01+Number(settings.grain)*0.0007).toFixed(3);
+    root.style.setProperty("--paper-grain-scale",grainScale);
+    const color=document.getElementById("lab-base-color"),colorOut=document.getElementById("lab-base-color-value");
+    const vignette=document.getElementById("lab-vignette"),vOut=document.getElementById("lab-vignette-value");
+    const grain=document.getElementById("lab-grain"),gOut=document.getElementById("lab-grain-value");
+    if(color)color.value=settings.base;if(colorOut)colorOut.textContent=settings.base.toUpperCase();
+    if(vignette)vignette.value=settings.vignette;if(vOut)vOut.textContent=settings.vignette+"%";
+    if(grain)grain.value=settings.grain;
+    if(gOut)gOut.textContent=settings.grain<30?"Тонкая":settings.grain>70?"Выраженная":"Средняя";
+  }
+  function save(){apply();try{localStorage.setItem(key,JSON.stringify(settings));}catch(e){}}
+  window.updateBackgroundBase=v=>{settings.base=v;save();};
+  window.updateBackgroundVignette=v=>{settings.vignette=Number(v);save();};
+  window.updateBackgroundGrain=v=>{settings.grain=Number(v);save();};
+  apply();
+  const previousPreset=window.applyBackgroundMood;
+  if(typeof previousPreset==="function"){
+    window.applyBackgroundMood=function(mood){
+      previousPreset(mood);
+      const presets={balanced:{base:"#1E292B",vignette:35,grain:35},deep:{base:"#10191B",vignette:65,grain:55},amber:{base:"#202827",vignette:30,grain:25}};
+      if(presets[mood]){settings={...settings,...presets[mood]};save();}
+    };
+  }
+})();
