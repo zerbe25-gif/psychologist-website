@@ -1752,3 +1752,34 @@ function toggleBackgroundLabBlock(panelId, button) {
   button.classList.add('active');
   button.setAttribute('aria-expanded','true');
 }
+
+
+/* Карусель вкладок лаборатории фона + пресеты настроения */
+window.scrollBackgroundLabTabs = function(direction){
+  const track=document.getElementById('background-lab-tab-track');
+  if(track) track.scrollBy({left:direction*Math.max(150,track.clientWidth*.65),behavior:'smooth'});
+};
+window.applyBackgroundMood = function(mood){
+  const root=document.documentElement;
+  const body=document.body;
+  const presets={
+    balanced:{base:'#1E292B',teal:'rgba(52,121,126,.45)',gold:'rgba(220,181,115,.25)',drawer:'rgba(35,50,53,.92)'},
+    deep:{base:'#10191B',teal:'rgba(38,89,93,.35)',gold:'rgba(179,142,82,.12)',drawer:'rgba(20,30,32,.94)'},
+    amber:{base:'#202827',teal:'rgba(52,121,126,.30)',gold:'rgba(220,181,115,.42)',drawer:'rgba(36,43,39,.92)'}
+  };
+  const p=presets[mood]; if(!p)return;
+  body.classList.add('theme-v3');
+  root.style.setProperty('--bg-base',p.base);
+  root.style.setProperty('--background-color',p.base);
+  root.style.setProperty('--panel-color',p.drawer);
+  root.style.setProperty('--glow-1',p.teal);
+  root.style.setProperty('--glow-2',p.gold);
+  root.style.setProperty('--drawer-bg',p.drawer);
+  root.style.setProperty('--text-main','#F2F7F6');
+  root.style.setProperty('--text-color','#F2F7F6');
+  root.style.setProperty('--accent-primary','#34797E');
+  root.style.setProperty('--accent-gold','#DCB573');
+  try{localStorage.setItem('psychologistBackgroundMood',mood);localStorage.setItem('psychologistNightTealTheme','v3');}catch(e){}
+  const themeButton=document.getElementById('theme-v3-toggle');
+  if(themeButton){themeButton.classList.add('active');themeButton.setAttribute('aria-pressed','true');}
+};
