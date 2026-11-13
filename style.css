@@ -5447,11 +5447,22 @@ body.cost-modal-open #developer-panel {
 }
 
 
-/* HARD OVERRIDE 2026-11-13 — deterministic desktop menu staircase */
-@media (min-width: 901px) {
-  .main-content .menu-section .section-menu > button.menu-item-method { margin-left: 0 !important; transform: translateX(0) !important; }
-  .main-content .menu-section .section-menu > button.menu-item-1 { margin-left: 0 !important; left: auto !important; transform: translateX(0) !important; }
-  .main-content .menu-section .section-menu > button.menu-item-2 { margin-left: 38px !important; left: auto !important; transform: translateX(0) !important; }
-  .main-content .menu-section .section-menu > button.menu-item-3 { margin-left: 83px !important; left: auto !important; transform: translateX(0) !important; }
-  .main-content .menu-section .section-menu > button.menu-item-4 { margin-left: 128px !important; left: auto !important; transform: translateX(0) !important; }
+/* FINAL MENU POSITION FIX — desktop + tablet windows.
+   Keep the staircase active from 601px; phones retain their two-column grid. */
+@media (min-width: 601px) {
+  .main-content .menu-section .section-menu > button.menu-item-method {
+    margin-left: 0 !important; left: auto !important; transform: translateX(0) !important;
+  }
+  .main-content .menu-section .section-menu > button.menu-item-1 {
+    margin-left: 0 !important; left: auto !important; transform: translateX(0) !important;
+  }
+  .main-content .menu-section .section-menu > button.menu-item-2 {
+    margin-left: 38px !important; left: auto !important; transform: translateX(0) !important;
+  }
+  .main-content .menu-section .section-menu > button.menu-item-3 {
+    margin-left: 83px !important; left: auto !important; transform: translateX(0) !important;
+  }
+  .main-content .menu-section .section-menu > button.menu-item-4 {
+    margin-left: 128px !important; left: auto !important; transform: translateX(0) !important;
+  }
 }
