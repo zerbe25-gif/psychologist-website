@@ -5435,3 +5435,13 @@ body.cost-modal-open #developer-panel {
   .section-menu > .menu-item-3 { margin-left: 83px !important; left: 0 !important; }
   .section-menu > .menu-item-4 { margin-left: 128px !important; left: 0 !important; }
 }
+
+
+/* FORCE FINAL MENU OFFSETS — 2026-11-13 v2 */
+@media (min-width: 901px) {
+  .section-menu > button.menu-item-method { margin-left: 0 !important; }
+  .section-menu > button.menu-item-1 { margin-left: 0 !important; left: 0 !important; }
+  .section-menu > button.menu-item-2 { margin-left: 38px !important; left: 0 !important; }
+  .section-menu > button.menu-item-3 { margin-left: 83px !important; left: 0 !important; }
+  .section-menu > button.menu-item-4 { margin-left: 128px !important; left: 0 !important; }
+}
