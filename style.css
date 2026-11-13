@@ -5558,3 +5558,53 @@ body.cost-modal-open #developer-panel {
 @media (max-width: 600px) {
   #sideDrawer .format-entry p { font-size: 17px !important; }
 }
+
+
+/* ЛАБОРАТОРИЯ ФОНА — компактная горизонтальная архитектура */
+#background-control-panel .background-lab {
+  margin: 22px 0 18px;
+  padding: 14px;
+  border: 1px solid rgba(220,181,115,.24);
+  border-radius: 18px;
+  background: rgba(10,18,20,.28);
+}
+#background-control-panel .background-lab-heading {
+  display:flex; align-items:baseline; justify-content:space-between; gap:12px;
+  margin-bottom:12px; flex-wrap:wrap;
+}
+#background-control-panel .background-lab-heading strong {
+  color:#DCB573; font-size:11px; letter-spacing:.12em;
+}
+#background-control-panel .background-lab-heading span {
+  color:rgba(255,255,255,.42); font-size:10px;
+}
+#background-control-panel .background-lab-toolbar {
+  display:grid; grid-template-columns:repeat(5,minmax(125px,1fr)); gap:7px;
+  overflow-x:auto; padding-bottom:5px;
+}
+#background-control-panel .background-lab-toggle {
+  min-height:42px; padding:8px 9px; border-radius:10px;
+  border:1px solid rgba(255,255,255,.10); background:rgba(255,255,255,.045);
+  color:rgba(255,255,255,.68); font-size:10px; line-height:1.35;
+  text-align:center; cursor:pointer; transition:background .2s,border-color .2s,color .2s;
+}
+#background-control-panel .background-lab-toggle:hover,
+#background-control-panel .background-lab-toggle[aria-expanded="true"] {
+  color:#DCB573; border-color:rgba(220,181,115,.42); background:rgba(220,181,115,.10);
+}
+#background-control-panel .background-lab-panels {
+  display:flex; align-items:stretch; gap:9px; overflow-x:auto; margin-top:10px;
+}
+#background-control-panel .background-lab-card {
+  flex:0 0 220px; min-width:220px; min-height:110px; padding:12px;
+  border-radius:13px; border:1px solid rgba(220,181,115,.18);
+  background:rgba(255,255,255,.045); color:rgba(255,255,255,.62);
+}
+#background-control-panel .background-lab-card[hidden] { display:none !important; }
+#background-control-panel .background-lab-card h4 {
+  margin:0 0 8px; color:#DCB573; font-size:11px; line-height:1.4; font-weight:600;
+}
+#background-control-panel .background-lab-card p { margin:0; font-size:10px; line-height:1.6; }
+@media(max-width:700px) {
+  #background-control-panel .background-lab-toolbar { grid-template-columns:repeat(5,145px); }
+}
