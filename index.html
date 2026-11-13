@@ -65,11 +65,17 @@
                 onclick="toggleDevPanelSection('background')">
             ФОН
         </button>
-        <button type="button" class="developer-panel-tab background-lab-tab" data-panel-section="lab-presets" onclick="toggleBackgroundLabBlock('lab-presets',this)">Быстрые пресеты настроения</button>
-        <button type="button" class="developer-panel-tab background-lab-tab" data-panel-section="lab-base" onclick="toggleBackgroundLabBlock('lab-base',this)">База, виньетка и текстура</button>
-        <button type="button" class="developer-panel-tab background-lab-tab" data-panel-section="lab-glow1" onclick="toggleBackgroundLabBlock('lab-glow1',this)">Источник света 1 (Тил)</button>
-        <button type="button" class="developer-panel-tab background-lab-tab" data-panel-section="lab-glow2" onclick="toggleBackgroundLabBlock('lab-glow2',this)">Источник света 2 (Акцент)</button>
-        <button type="button" class="developer-panel-tab background-lab-tab" data-panel-section="lab-optics" onclick="toggleBackgroundLabBlock('lab-optics',this)">Оптика всплывающей шторки</button>
+        <div class="background-lab-carousel" aria-label="Разделы лаборатории фона">
+          <button type="button" class="lab-carousel-arrow" aria-label="Предыдущие разделы" onclick="scrollBackgroundLabTabs(-1)">‹</button>
+          <div class="background-lab-tab-track" id="background-lab-tab-track">
+            <button type="button" class="developer-panel-tab background-lab-tab" data-panel-section="lab-presets" onclick="toggleBackgroundLabBlock('lab-presets',this)">Пресеты</button>
+            <button type="button" class="developer-panel-tab background-lab-tab" data-panel-section="lab-base" onclick="toggleBackgroundLabBlock('lab-base',this)">База · виньетка · текстура</button>
+            <button type="button" class="developer-panel-tab background-lab-tab" data-panel-section="lab-glow1" onclick="toggleBackgroundLabBlock('lab-glow1',this)">Свет 1 · Тил</button>
+            <button type="button" class="developer-panel-tab background-lab-tab" data-panel-section="lab-glow2" onclick="toggleBackgroundLabBlock('lab-glow2',this)">Свет 2 · Акцент</button>
+            <button type="button" class="developer-panel-tab background-lab-tab" data-panel-section="lab-optics" onclick="toggleBackgroundLabBlock('lab-optics',this)">Оптика шторки</button>
+          </div>
+          <button type="button" class="lab-carousel-arrow" aria-label="Следующие разделы" onclick="scrollBackgroundLabTabs(1)">›</button>
+        </div>
 
 
         <button type="button" class="developer-panel-tab"
@@ -474,7 +480,7 @@
 
 <!-- ЛАБОРАТОРИЯ ФОНА: отдельные разделы панели управления -->
 <div class="background-lab-panels" id="background-lab-panels">
-<section class="background-lab-card" id="lab-presets" hidden><h4>Быстрые пресеты настроения</h4><p>Сюда перенесём кнопки «Баланс», «Глубокий кокон» и «Вечерний свет».</p></section>
+<section class="background-lab-card" id="lab-presets" hidden><h4>Быстрые пресеты настроения</h4><div class="lab-preset-actions"><button type="button" onclick="applyBackgroundMood('balanced')">Баланс</button><button type="button" onclick="applyBackgroundMood('deep')">Глубокий кокон</button><button type="button" onclick="applyBackgroundMood('amber')">Вечерний свет</button></div><p class="lab-preset-note">Выберите настроение фона. Настройка сохраняется в браузере.</p></section>
 <section class="background-lab-card" id="lab-base" hidden><h4>База, виньетка и текстура</h4><p>Подготовлены места для базового цвета, виньетки и Film Grain.</p></section>
 <section class="background-lab-card" id="lab-glow1" hidden><h4>Источник света 1 · Тил</h4><p>Подготовлены места для цвета, яркости, радиуса и координат X / Y.</p></section>
 <section class="background-lab-card" id="lab-glow2" hidden><h4>Источник света 2 · Акцент</h4><p>Подготовлены места для цвета, яркости, радиуса и координат X / Y.</p></section>
