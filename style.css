@@ -5662,3 +5662,28 @@ body{background-color:var(--lab-bg-base,var(--background-color))!important}
 #developer-panel .lab-glow-color{grid-template-columns:auto 25px 1fr}
 #developer-panel .lab-glow-color input[type=color]{width:24px;height:21px;padding:2px;border:1px solid #d7dee8;border-radius:5px;background:#fff}
 @media(max-width:700px){#developer-panel .lab-glow-controls{grid-template-columns:repeat(2,minmax(110px,1fr))}}
+
+
+/* СВЯЗЬ СТАРЫХ ЭФФЕКТОВ С НОВОЙ ЛАБОРАТОРИЕЙ */
+.lab-effects-link-row{display:flex;align-items:flex-start;gap:8px;flex-wrap:wrap;padding:7px 10px;margin:0 0 8px;background:#eef3f4;border:1px solid #d9e4e5;border-radius:8px;color:#42545a;font:10px/1.35 Inter,sans-serif}
+.lab-effects-link-row label{display:flex;align-items:center;gap:7px;font-weight:600;white-space:nowrap}
+.lab-effects-link-row input{accent-color:#34797E}
+.lab-effects-link-row span{color:#718087;flex:1 1 230px}
+body.lab-effects-isolated #background-lab-atmosphere{background:var(--lab-bg-base,#1E292B);isolation:isolate}
+body.lab-effects-isolated #background-lab-atmosphere::before,
+body.lab-effects-isolated #background-lab-atmosphere::after{mix-blend-mode:normal}
+
+/* ВТОРОЙ ИСТОЧНИК СВЕТА */
+#developer-panel .lab-glow-dot-gold{background:#DCB573;box-shadow:0 0 0 3px rgba(220,181,115,.16)}
+#developer-panel .lab-glow-dot-gold+strong{color:#98743c}
+
+/* ОПТИКА ВСПЛЫВАЮЩЕЙ ШТОРКИ */
+#developer-panel .background-lab-optics{padding:8px 10px;background:#f7f9fb;border:1px solid #e2e8f0;border-radius:9px}
+#developer-panel .lab-optics-controls{display:grid;grid-template-columns:repeat(4,minmax(120px,1fr));gap:9px}
+#developer-panel .lab-optics-control{display:grid;grid-template-columns:1fr auto;align-items:center;gap:5px 7px;min-width:0;color:#526078;font:10px/1.2 Inter,sans-serif}
+#developer-panel .lab-optics-control label{grid-column:1/-1;display:flex;justify-content:space-between;gap:5px}
+#developer-panel .lab-optics-control input[type=range]{grid-column:1/-1;width:100%;height:13px;margin:0;accent-color:#34797E}
+#developer-panel .lab-optics-control output{color:#718096;font-size:9px}
+#developer-panel .lab-optics-control input[type=color]{width:27px;height:22px;padding:2px;border:1px solid #d7dee8;border-radius:5px;background:#fff}
+#sideDrawer{background:color-mix(in srgb,var(--lab-drawer-color,#233235) var(--lab-drawer-opacity,92%),transparent);-webkit-backdrop-filter:blur(var(--lab-drawer-blur,12px)) saturate(var(--lab-drawer-saturation,120%));backdrop-filter:blur(var(--lab-drawer-blur,12px)) saturate(var(--lab-drawer-saturation,120%));border-right-color:color-mix(in srgb,var(--lab-drawer-color,#233235) 35%,transparent)}
+@media(max-width:700px){#developer-panel .lab-optics-controls{grid-template-columns:repeat(2,minmax(120px,1fr))}.lab-effects-link-row label{white-space:normal}}
