@@ -5585,3 +5585,15 @@ body.cost-modal-open #developer-panel {
 @media(max-width:600px) {
  #developer-panel .background-lab-tab { padding:7px 9px; font-size:10px; }
 }
+
+/* Лаборатория фона: горизонтальная карусель вкладок */
+#developer-panel .background-lab-carousel{display:flex;align-items:center;gap:5px;width:100%;min-width:0;margin:5px 0 10px}
+#developer-panel .background-lab-tab-track{display:flex;align-items:center;gap:6px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none;scroll-behavior:smooth;padding:2px 0}
+#developer-panel .background-lab-tab-track::-webkit-scrollbar{display:none}
+#developer-panel .background-lab-tab{flex:0 0 auto;width:auto;min-height:0;padding:7px 10px;white-space:nowrap;font-size:10px;line-height:1.25}
+#developer-panel .lab-carousel-arrow{flex:0 0 26px;width:26px;height:26px;padding:0;border:1px solid #d7dee8;border-radius:7px;background:#f4f7fa;color:#2B4C6F;font-size:19px;line-height:1;cursor:pointer}
+#developer-panel .lab-preset-actions{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0}
+#developer-panel .lab-preset-actions button{padding:7px 12px;border:1px solid #d4dce6;border-radius:8px;background:#fff;color:#2B4C6F;font-size:11px;cursor:pointer}
+#developer-panel .lab-preset-actions button:hover{background:#2B4C6F;color:#fff;border-color:#2B4C6F}
+#developer-panel .lab-preset-note{font-size:10px;color:#718096}
+@media(max-width:600px){#developer-panel .background-lab-tab{padding:7px 9px;font-size:10px}}
