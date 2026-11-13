@@ -5424,3 +5424,14 @@ body.cost-modal-open #developer-panel {
 #sideDrawer [data-drawer-panel="method"] .education-entry .requests-list {
     margin: 8px 0 16px;
 }
+
+
+/* FINAL MENU POSITION FIX 2026-11-13
+   Override legacy desktop offsets (including .menu-item-3 {left:100px})
+   so the requested 52px shift is applied to the actual rendered menu. */
+@media (min-width: 901px) {
+  .section-menu > .menu-item-1 { margin-left: 0 !important; left: 0 !important; }
+  .section-menu > .menu-item-2 { margin-left: 38px !important; left: 0 !important; }
+  .section-menu > .menu-item-3 { margin-left: 83px !important; left: 0 !important; }
+  .section-menu > .menu-item-4 { margin-left: 128px !important; left: 0 !important; }
+}
