@@ -5618,3 +5618,47 @@ body.cost-modal-open #developer-panel {
   #sideDrawer .format-entry { padding-left: 11px; }
   #sideDrawer .format-entry p { font-size: 12.5px; }
 }
+
+
+/* FORMAT WORK — typography and palette refinement */
+#sideDrawer .format-duration {
+  --format-accent: #34797E;
+  --format-soft: rgba(52, 121, 126, .09);
+  border-color: rgba(52, 121, 126, .25);
+}
+#sideDrawer .format-types {
+  --format-accent: #DCB573;
+  --format-soft: rgba(220, 181, 115, .13);
+  border-color: rgba(220, 181, 115, .32);
+}
+#sideDrawer .format-group-heading {
+  margin-bottom: 13px;
+  padding-bottom: 12px;
+}
+#sideDrawer .format-group-heading h3 {
+  margin: 0;
+  font-size: 15px !important;
+  line-height: 1.25 !important;
+  font-family: Inter, sans-serif !important;
+  font-weight: 600 !important;
+}
+#sideDrawer .format-entry h4 {
+  font-size: 18px !important;
+  line-height: 1.25 !important;
+}
+#sideDrawer .format-entry p {
+  color: #373d46 !important;
+  font-size: 17px !important;
+  line-height: 1.25 !important;
+}
+#sideDrawer .format-entry h4 span {
+  line-height: 1.25 !important;
+}
+/* Убираем декоративное световое пятно из верхнего левого угла шторки */
+#sideDrawer::before {
+  content: none !important;
+  display: none !important;
+}
+@media (max-width: 600px) {
+  #sideDrawer .format-entry p { font-size: 17px !important; }
+}
