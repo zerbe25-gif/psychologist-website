@@ -5723,3 +5723,7 @@ body.theme-v3 #sideDrawer{background:color-mix(in srgb,var(--lab-drawer-color,#2
 #developer-panel .lab-glow-color,#developer-panel .lab-optics-control:has(.lab-color-picker){display:block}
 #developer-panel .lab-glow-controls{grid-template-columns:repeat(5,minmax(105px,1fr))}
 @media(max-width:700px){#developer-panel .lab-glow-controls{grid-template-columns:repeat(2,minmax(110px,1fr))}}
+
+#developer-panel .lab-color-hue{appearance:none;-webkit-appearance:none;height:10px;border:1px solid rgba(65,82,90,.18);border-radius:99px;background:linear-gradient(90deg,#f00,#ff0,#0f0,#0ff,#00f,#f0f,#f00);accent-color:transparent}
+#developer-panel .lab-color-hue::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:13px;height:13px;border:2px solid #fff;border-radius:50%;background:#344b50;box-shadow:0 0 0 1px rgba(35,50,53,.45);cursor:ew-resize}
+#developer-panel .lab-color-hue::-moz-range-thumb{width:10px;height:10px;border:2px solid #fff;border-radius:50%;background:#344b50;box-shadow:0 0 0 1px rgba(35,50,53,.45);cursor:ew-resize}
