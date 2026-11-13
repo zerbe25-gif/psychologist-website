@@ -1796,7 +1796,7 @@ window.applyBackgroundMood = function(mood){
   };
   let state={...defaults,glow1:{...defaults.glow1},glow2:{...defaults.glow2}};
   try{
-    const saved=JSON.parse(localStorage.getItem(key)||"{}");
+    const saved=JSON.parse(localStorage.getItem(key)||localStorage.getItem("psychologistBackgroundBaseSettings")||"{}");
     state={...state,...saved,glow1:{...defaults.glow1,...saved.glow1},glow2:{...defaults.glow2,...saved.glow2}};
   }catch(e){}
   function setVar(name,value){root.style.setProperty(name,String(value));}
