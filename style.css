@@ -5727,3 +5727,11 @@ body.theme-v3 #sideDrawer{background:color-mix(in srgb,var(--lab-drawer-color,#2
 #developer-panel .lab-color-hue{appearance:none;-webkit-appearance:none;height:10px;border:1px solid rgba(65,82,90,.18);border-radius:99px;background:linear-gradient(90deg,#f00,#ff0,#0f0,#0ff,#00f,#f0f,#f00);accent-color:transparent}
 #developer-panel .lab-color-hue::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:13px;height:13px;border:2px solid #fff;border-radius:50%;background:#344b50;box-shadow:0 0 0 1px rgba(35,50,53,.45);cursor:ew-resize}
 #developer-panel .lab-color-hue::-moz-range-thumb{width:10px;height:10px;border:2px solid #fff;border-radius:50%;background:#344b50;box-shadow:0 0 0 1px rgba(35,50,53,.45);cursor:ew-resize}
+
+/* Компактные поля RGB; hue-slider и HEX/RGB tabs удалены */
+#developer-panel .lab-color-picker{display:grid;gap:4px;min-width:0;color:#526078;font:10px/1.2 Inter,sans-serif}
+#developer-panel .lab-color-picker>label{font-weight:600}
+#developer-panel .lab-color-swatch{width:100%;height:29px;padding:2px;border:1px solid #d7dee8;border-radius:6px;background:#fff;cursor:pointer}
+#developer-panel .lab-color-value-row{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:5px}
+#developer-panel .lab-color-value-row span{font:600 9px Inter,sans-serif;color:#718096}
+#developer-panel .lab-color-value{width:100%;min-width:0;height:22px;box-sizing:border-box;padding:3px 6px;border:1px solid #d7dee8;border-radius:5px;background:#fff;color:#40515a;font:10px/1.2 ui-monospace,monospace}
