@@ -1804,7 +1804,7 @@ window.applyBackgroundMood = function(mood){
   const colorKeys=["lab-base-color","lab-glow1-color","lab-glow2-color","lab-optics-color"];
   function hexToRgb(hex){const m=/^#?([0-9a-f]{6})$/i.exec(hex);if(!m)return null;const n=parseInt(m[1],16);return {r:n>>16,g:(n>>8)&255,b:n&255};}
   function rgbToHex(r,g,b){return "#"+[r,g,b].map(v=>Math.max(0,Math.min(255,Math.round(Number(v)))).toString(16).padStart(2,"0")).join("").toUpperCase();}
-  function syncColorPicker(id,color){const rgb=hexToRgb(color);if(!rgb)return;const swatch=document.getElementById(id+"-picker"),field=document.getElementById(id+"-text");if(swatch)swatch.value=color;if(field)field.value=rgb.r+", "+rgb.g+", "+rgb.b;}
+  function syncColorPicker(id,color){const rgb=hexToRgb(color);if(!rgb)return;const swatch=document.getElementById(id+"-picker"),field=document.getElementById(id+"-display"),open=document.getElementById(id+"-open");if(swatch)swatch.value=color;if(field)field.textContent=color.toUpperCase();if(open)open.style.setProperty("--picker-color",color);}
   function setLabColor(id,color){if(!/^#[0-9a-f]{6}$/i.test(color))return;const upper=color.toUpperCase();if(id==="lab-base-color")window.updateBackgroundBase(upper);else if(id==="lab-glow1-color")window.updateBackgroundGlow(1,"color",upper);else if(id==="lab-glow2-color")window.updateBackgroundGlow(2,"color",upper);else if(id==="lab-optics-color")window.updateBackgroundOptics("color",upper);}
   window.updateLabColor=(id,color)=>setLabColor(id,color);
   window.updateLabColorText=(id,value)=>{const nums=value.split(/[ ,;]+/).filter(Boolean).map(Number);if(nums.length!==3||nums.some(n=>!Number.isFinite(n)||n<0||n>255))return;setLabColor(id,rgbToHex(...nums));};
