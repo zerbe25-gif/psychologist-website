@@ -5858,3 +5858,67 @@ body.theme-v3 #sideDrawer{background:color-mix(in srgb,var(--lab-drawer-color,#2
  #developer-panel .lab-glow-controls,#developer-panel .lab-optics-controls,#developer-panel .appointment-design-controls{grid-template-columns:repeat(2,minmax(115px,1fr))!important}
  #developer-panel .lens-controls-row,#developer-panel #cost-control-panel:not([hidden]),#developer-panel #background-control-panel .background-control{grid-template-columns:repeat(2,minmax(120px,1fr))!important}
 }
+
+
+/* FINAL LAB LAYOUT — compact, single horizontal row; overrides all legacy grid rules */
+#developer-panel #developer-panel-content{max-width:100%;overflow-x:auto}
+#developer-panel .background-lab-base,
+#developer-panel .lab-glow-controls,
+#developer-panel .lab-optics-controls,
+#developer-panel .appointment-design-controls,
+#developer-panel .lens-controls-row,
+#developer-panel #cost-control-panel:not([hidden]),
+#developer-panel #background-control-panel .background-control,
+#developer-panel #controls-hatching,
+#developer-panel #controls-paper-shadow,
+#developer-panel #controls-watercolor,
+#developer-panel #controls-ambient-light{
+ display:flex!important;flex-flow:row nowrap!important;align-items:flex-end!important;gap:8px!important;
+ width:max-content;max-width:none;overflow:visible
+}
+#developer-panel .lab-base-row,
+#developer-panel .lab-glow-control,
+#developer-panel .lab-optics-control,
+#developer-panel .appointment-setting,
+#developer-panel .lens-control,
+#developer-panel .background-control{
+ flex:0 0 112px!important;width:112px!important;min-width:112px!important;max-width:112px!important
+}
+#developer-panel input[type=range]{width:100%!important;max-width:3cm!important;min-width:0!important}
+#developer-panel .lab-color-picker{width:112px!important;max-width:112px!important}
+#developer-panel .lab-color-open{width:max-content!important;max-width:112px!important;gap:4px!important;padding:2px 4px!important}
+#developer-panel .lab-color-open-value{flex:0 1 auto!important}
+#developer-panel .lab-glow-controls>.lab-color-picker,
+#developer-panel .lab-optics-controls>.lab-color-picker{flex:0 0 112px!important}
+#developer-panel .lab-base-row output,
+#developer-panel .lab-glow-control output,
+#developer-panel .lab-optics-control output,
+#developer-panel .background-control span{white-space:nowrap}
+#developer-panel button{width:max-content!important;min-width:0!important;padding:4px 7px!important;line-height:1.2!important}
+#developer-panel .lab-preset-actions{display:flex!important;flex-wrap:nowrap!important;gap:5px!important}
+#developer-panel .lab-preset-actions button{flex:0 0 auto!important}
+#developer-panel .background-tech-tabs{display:flex!important;flex-wrap:nowrap!important;width:max-content}
+#developer-panel .developer-panel-tab{flex:0 0 auto!important}
+#developer-panel .lab-effects-link-row{white-space:nowrap}
+#developer-panel .lab-color-value{display:none!important}
+/* picker is anchored by JS next to the Base color control; no page veil or blur */
+.lab-color-modal{inset:0!important;display:block!important;padding:0!important;background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;pointer-events:none!important}
+.lab-color-dialog{position:fixed!important;top:90px;left:12px;pointer-events:auto!important;width:min(290px,calc(100vw - 24px))!important}
+.lab-color-dialog-head{padding:7px 10px!important;border:0!important}
+.lab-color-dialog-body{gap:8px!important;padding:9px!important}
+.lab-color-sv{height:155px!important}
+.lab-color-dialog-actions button{padding:5px 8px!important;width:max-content!important}
+@media(max-width:700px){
+ #developer-panel #developer-panel-content{overflow-x:auto!important}
+ #developer-panel .background-lab-base,
+ #developer-panel .lab-glow-controls,
+ #developer-panel .lab-optics-controls,
+ #developer-panel .appointment-design-controls,
+ #developer-panel .lens-controls-row,
+ #developer-panel #cost-control-panel:not([hidden]),
+ #developer-panel #background-control-panel .background-control,
+ #developer-panel #controls-hatching,
+ #developer-panel #controls-paper-shadow,
+ #developer-panel #controls-watercolor,
+ #developer-panel #controls-ambient-light{display:flex!important;flex-flow:row nowrap!important}
+}
