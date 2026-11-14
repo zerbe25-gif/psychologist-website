@@ -5922,3 +5922,47 @@ body.theme-v3 #sideDrawer{background:color-mix(in srgb,var(--lab-drawer-color,#2
  #developer-panel #controls-watercolor,
  #developer-panel #controls-ambient-light{display:flex!important;flex-flow:row nowrap!important}
 }
+
+
+/* FIX 14 NOV: horizontal controls are actual non-wrapping tracks, not responsive grids */
+#developer-panel #developer-panel-content{overflow-x:auto!important;overflow-y:auto!important}
+#developer-panel .background-lab-card:not([hidden]){display:block!important;overflow-x:auto!important;max-width:100%!important}
+#developer-panel #lab-base.background-lab-base,
+#developer-panel #lab-glow1 .lab-glow-controls,
+#developer-panel #lab-glow2 .lab-glow-controls,
+#developer-panel #lab-optics .lab-optics-controls{
+ display:grid!important;grid-auto-flow:column!important;grid-auto-columns:112px!important;
+ grid-template-columns:none!important;grid-template-rows:auto!important;
+ width:max-content!important;min-width:0!important;max-width:none!important;
+ align-items:end!important;gap:8px!important
+}
+#developer-panel #lab-base .lab-base-row,
+#developer-panel #lab-glow1 .lab-glow-control,
+#developer-panel #lab-glow2 .lab-glow-control,
+#developer-panel #lab-optics .lab-optics-control,
+#developer-panel #lab-glow1 .lab-color-picker,
+#developer-panel #lab-glow2 .lab-color-picker,
+#developer-panel #lab-optics .lab-color-picker{
+ width:112px!important;min-width:112px!important;max-width:112px!important;
+ flex:none!important;grid-column:auto!important
+}
+#developer-panel #lab-base .lab-base-row{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:3px!important}
+#developer-panel #lab-base .lab-base-row label,
+#developer-panel #lab-glow1 .lab-glow-control label,
+#developer-panel #lab-glow2 .lab-glow-control label,
+#developer-panel #lab-optics .lab-optics-control label{grid-column:auto!important}
+#developer-panel #lab-base input[type=range],
+#developer-panel #lab-glow1 input[type=range],
+#developer-panel #lab-glow2 input[type=range],
+#developer-panel #lab-optics input[type=range]{width:3cm!important;max-width:3cm!important;min-width:0!important}
+#developer-panel #lab-base .lab-base-color{grid-column:auto!important}
+#developer-panel .background-lab-card[hidden],
+#developer-panel #lab-presets[hidden],
+#developer-panel #lab-base[hidden],
+#developer-panel #lab-glow1[hidden],
+#developer-panel #lab-glow2[hidden],
+#developer-panel #lab-optics[hidden]{display:none!important}
+/* Picker above developer panel (which previously had a higher stacking context) */
+#developer-panel{z-index:100000!important}
+#lab-color-modal{z-index:2147483647!important}
+body.cost-modal-open #developer-panel{z-index:1!important}
