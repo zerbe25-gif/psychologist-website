@@ -5878,3 +5878,14 @@ body.cost-modal-open #developer-panel{z-index:1!important}
 #lab-color-modal .lab-color-dialog-body{gap:8px!important;padding:9px!important}
 #lab-color-modal .lab-color-sv{height:155px!important}
 #lab-color-modal .lab-color-dialog-actions button{width:max-content!important;padding:5px 8px!important}
+
+#developer-panel #lab-base .lab-base-color{
+ grid-template-columns:1fr!important;grid-template-rows:auto 30px!important;
+ align-items:start!important
+}
+#developer-panel #lab-base .lab-base-color>label{grid-column:1!important}
+#developer-panel #lab-base .lab-base-color>.lab-color-picker{grid-column:1!important;grid-row:2!important;width:112px!important}
+#developer-panel #lab-base .lab-base-color>.lab-color-picker>label{display:none!important}
+#developer-panel #lab-base .lab-base-color>.lab-color-picker .lab-color-open{width:112px!important;max-width:112px!important}
+#developer-panel #lab-base .lab-base-color-text,
+#developer-panel #lab-base #lab-base-color-default-output{display:none!important}
