@@ -5761,3 +5761,100 @@ body.theme-v3 #sideDrawer{background:color-mix(in srgb,var(--lab-drawer-color,#2
 .lab-color-dialog-actions{display:flex;justify-content:flex-end;gap:7px}
 .lab-color-dialog-actions button{padding:7px 12px;border:1px solid #d4dfe4;border-radius:7px;background:#fff;color:#43565d;cursor:pointer;font:11px Inter,sans-serif}
 #lab-color-apply{border-color:#34797e;background:#34797e;color:#fff}
+
+
+/* ПАНЕЛЬ УПРАВЛЕНИЯ — единый компактный горизонтальный ритм */
+#developer-panel #developer-panel-content{padding:6px 8px!important}
+#developer-panel .animation-panel-title,
+#developer-panel .background-panel-label{margin:5px 0 7px!important;padding:0!important;border:0!important;background:none!important;box-shadow:none!important;font-size:10px!important;letter-spacing:.04em}
+#developer-panel .background-lab-card,
+#developer-panel .background-lab-base,
+#developer-panel .background-lab-glow,
+#developer-panel .background-lab-optics,
+#developer-panel .background-control,
+#developer-panel .appointment-setting,
+#developer-panel .lens-control{
+  border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important
+}
+#developer-panel .background-lab-base,
+#developer-panel .lab-glow-controls,
+#developer-panel .lab-optics-controls,
+#developer-panel .appointment-design-controls,
+#developer-panel .lens-controls-row,
+#developer-panel #cost-control-panel:not([hidden]),
+#developer-panel #background-control-panel .background-control,
+#developer-panel #controls-hatching,
+#developer-panel #controls-paper-shadow,
+#developer-panel #controls-watercolor,
+#developer-panel #controls-ambient-light{
+  display:grid!important;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));align-items:end;gap:8px 12px
+}
+#developer-panel .lab-base-row,
+#developer-panel .lab-glow-control,
+#developer-panel .lab-optics-control,
+#developer-panel .appointment-setting,
+#developer-panel .lens-control,
+#developer-panel .background-control{
+  display:grid!important;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:4px 7px;
+  min-width:0;padding:0!important;margin:0!important;font-size:10px!important;color:#53636b
+}
+#developer-panel .lab-base-row label,
+#developer-panel .lab-glow-control label,
+#developer-panel .lab-optics-control label,
+#developer-panel .appointment-setting label,
+#developer-panel .lens-control label,
+#developer-panel .background-control label{
+  grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:5px;
+  margin:0!important;padding:0!important;border:0!important;background:none!important;
+  color:#65747b!important;font-size:10px!important;font-weight:500!important;line-height:1.25!important;
+  text-decoration:none!important;box-shadow:none!important
+}
+#developer-panel .lab-base-row input[type=range],
+#developer-panel .lab-glow-control input[type=range],
+#developer-panel .lab-optics-control input[type=range],
+#developer-panel .appointment-setting input[type=range],
+#developer-panel .lens-control input[type=range],
+#developer-panel .background-control input[type=range],
+#developer-panel #cost-control-panel input[type=range]{
+  grid-column:1/-1;width:100%!important;min-width:0;height:12px!important;margin:0!important;accent-color:#668b8d
+}
+#developer-panel output,
+#developer-panel .lab-base-row output,
+#developer-panel .lab-glow-control output,
+#developer-panel .lab-optics-control output{color:#849197!important;font-size:9px!important;font-weight:400!important}
+#developer-panel .lab-base-color{display:grid!important;grid-template-columns:1fr!important;gap:4px!important;min-width:0}
+#developer-panel .lab-base-color>label{display:none!important}
+#developer-panel .lab-base-color .lab-color-picker{min-width:0}
+#developer-panel .lab-base-color-text,
+#developer-panel .lab-glow-controls>.lab-color-value,
+#developer-panel .lab-optics-controls>.lab-color-value,
+#developer-panel #lab-base-color-default-output{display:none!important}
+#developer-panel .lab-color-open{padding:3px!important;border:0!important;border-radius:5px!important;background:#f1f4f5!important}
+#developer-panel .lab-color-open-swatch{width:20px!important;height:18px!important;flex-basis:20px!important}
+#developer-panel .lab-color-open-icon{display:none!important}
+#developer-panel .lab-color-open-value{font-size:9px!important}
+#developer-panel .lab-glow-controls{grid-template-columns:repeat(5,minmax(100px,1fr))!important}
+#developer-panel .lab-optics-controls{grid-template-columns:repeat(4,minmax(110px,1fr))!important}
+#developer-panel .background-lab-base{grid-template-columns:repeat(3,minmax(120px,1fr))!important;padding:5px 0!important}
+#developer-panel .background-lab-card{padding:4px 0!important;margin:2px 0!important}
+#developer-panel .background-lab-glow,#developer-panel .background-lab-optics{padding:4px 0!important}
+#developer-panel .lab-glow-heading{margin:0 0 5px!important}
+#developer-panel .lab-effects-link-row{padding:4px 0!important;margin:3px 0!important;border:0!important;border-radius:0!important;background:transparent!important}
+#developer-panel .lab-preset-actions{padding:2px 0!important}
+#developer-panel .lab-preset-actions button{border:0!important;border-radius:5px!important;background:#eef2f3!important;color:#536b70!important}
+#developer-panel .lab-preset-actions button:hover{background:#e2ebeb!important;color:#345e63!important}
+#developer-panel .background-control span{font-size:9px!important;color:#849197!important}
+#developer-panel .background-tech-tabs{gap:5px!important;margin:5px 0!important}
+#developer-panel .tech-tab{padding:5px 8px!important;border:0!important;border-radius:5px!important;background:transparent!important}
+#developer-panel .tech-tab.active{background:#edf2f2!important;box-shadow:none!important}
+#developer-panel .appointment-design-controls{grid-template-columns:repeat(4,minmax(120px,1fr))!important}
+#developer-panel .appointment-design-controls>.animation-panel-title{grid-column:1/-1}
+#developer-panel #cost-control-panel .background-control{padding:0!important}
+#developer-panel .hatch-color-buttons{gap:5px!important}
+#developer-panel .developer-panel-tab{box-shadow:none!important;text-decoration:none!important}
+#developer-panel .developer-panel-tab.active{box-shadow:none!important}
+@media(max-width:700px){
+ #developer-panel .background-lab-base{grid-template-columns:repeat(2,minmax(120px,1fr))!important}
+ #developer-panel .lab-glow-controls,#developer-panel .lab-optics-controls,#developer-panel .appointment-design-controls{grid-template-columns:repeat(2,minmax(115px,1fr))!important}
+ #developer-panel .lens-controls-row,#developer-panel #cost-control-panel:not([hidden]),#developer-panel #background-control-panel .background-control{grid-template-columns:repeat(2,minmax(120px,1fr))!important}
+}
