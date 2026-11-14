@@ -5763,49 +5763,46 @@ body.theme-v3 #sideDrawer{background:color-mix(in srgb,var(--lab-drawer-color,#2
 #lab-color-apply{border-color:#34797e;background:#34797e;color:#fff}
 
 
-/* LAB CONTROLS — единая горизонтальная компоновка без grid-переопределений */
-#developer-panel #developer-panel-content{padding:6px 8px!important;overflow-x:auto!important;overflow-y:auto!important}
+/* DEV PANEL · единая горизонтальная лаборатория и строгая видимость */
+#developer-panel #developer-panel-content{padding:6px 8px!important;overflow:auto!important}
 #developer-panel .animation-panel-title,#developer-panel .background-panel-label{margin:5px 0 7px!important;font-size:10px!important}
-#developer-panel .background-lab-card:not([hidden]){display:block!important;overflow-x:auto!important;max-width:100%!important;padding:4px 0!important}
+#developer-panel .background-lab-card:not([hidden]){display:block!important;max-width:100%!important;overflow-x:auto!important;padding:4px 0!important}
 #developer-panel #lab-base.background-lab-base,
-#developer-panel #lab-glow1 .lab-glow-controls,
-#developer-panel #lab-glow2 .lab-glow-controls,
-#developer-panel #lab-optics .lab-optics-controls{
- display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;align-items:flex-end!important;
+#developer-panel .lab-glow-controls,
+#developer-panel .lab-optics-controls{
+ display:flex!important;flex-flow:row nowrap!important;align-items:flex-end!important;
  gap:8px!important;width:max-content!important;min-width:0!important;max-width:none!important
 }
 #developer-panel #lab-base .lab-base-row,
-#developer-panel #lab-glow1 .lab-glow-control,
-#developer-panel #lab-glow2 .lab-glow-control,
-#developer-panel #lab-optics .lab-optics-control,
-#developer-panel #lab-glow1 .lab-color-picker,
-#developer-panel #lab-glow2 .lab-color-picker,
-#developer-panel #lab-optics .lab-color-picker{
- display:flex!important;flex-direction:column!important;flex:0 0 112px!important;
- width:112px!important;min-width:112px!important;max-width:112px!important;gap:4px!important
+#developer-panel .lab-glow-control,
+#developer-panel .lab-glow-controls>.lab-color-picker,
+#developer-panel .lab-optics-control,
+#developer-panel .lab-optics-controls>.lab-color-picker{
+ display:flex!important;flex:0 0 112px!important;flex-direction:column!important;
+ gap:4px!important;width:112px!important;min-width:112px!important;max-width:112px!important
 }
-#developer-panel #lab-base .lab-base-color{display:flex!important;flex-direction:column!important}
 #developer-panel #lab-base label,
-#developer-panel #lab-glow1 label,#developer-panel #lab-glow2 label,
-#developer-panel #lab-optics label{grid-column:auto!important;white-space:nowrap!important}
+#developer-panel .lab-glow-control label,
+#developer-panel .lab-optics-control label{white-space:nowrap!important}
 #developer-panel #lab-base input[type=range],
-#developer-panel #lab-glow1 input[type=range],
-#developer-panel #lab-glow2 input[type=range],
-#developer-panel #lab-optics input[type=range]{display:block!important;width:100%!important;max-width:100%!important;min-width:0!important;margin:0!important}
-#developer-panel #lab-base output,#developer-panel #lab-glow1 output,
-#developer-panel #lab-glow2 output,#developer-panel #lab-optics output{white-space:nowrap!important;font-size:9px!important}
-#developer-panel .lab-color-open{width:max-content!important;max-width:112px!important;padding:3px 4px!important}
+#developer-panel .lab-glow-control input[type=range],
+#developer-panel .lab-optics-control input[type=range]{
+ display:block!important;width:100%!important;min-width:0!important;max-width:100%!important;margin:0!important
+}
+#developer-panel #lab-base output,
+#developer-panel .lab-glow-control output,
+#developer-panel .lab-optics-control output{white-space:nowrap!important;font-size:9px!important}
+#developer-panel .lab-color-open{width:100%!important;max-width:112px!important;padding:3px 4px!important}
 #developer-panel .lab-color-value{display:none!important}
-#developer-panel .lab-preset-actions{display:flex!important;flex-wrap:nowrap!important;gap:5px!important}
-#developer-panel .lab-preset-actions button{flex:0 0 auto!important}
-#developer-panel .background-tech-tabs{display:flex!important;flex-wrap:nowrap!important;width:max-content}
+#developer-panel .lab-preset-actions{display:flex!important;flex-flow:row nowrap!important;gap:5px!important;margin:0!important}
+#developer-panel .lab-preset-actions button{flex:0 0 auto!important;padding:5px 9px!important;font-size:10px!important}
+#developer-panel .background-tech-tabs{display:flex!important;flex-flow:row nowrap!important;width:max-content!important}
 #developer-panel .developer-panel-tab{flex:0 0 auto!important}
 #developer-panel .lab-effects-link-row{white-space:nowrap}
 #developer-panel .background-lab-card[hidden],
 #developer-panel #lab-presets[hidden],#developer-panel #lab-base[hidden],
 #developer-panel #lab-glow1[hidden],#developer-panel #lab-glow2[hidden],
 #developer-panel #lab-optics[hidden]{display:none!important}
-/* Picker above developer panel */
 #developer-panel{z-index:100000!important}
 #lab-color-modal{z-index:2147483647!important}
 body.cost-modal-open #developer-panel{z-index:1!important}
