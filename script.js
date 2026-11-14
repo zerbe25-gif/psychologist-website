@@ -917,49 +917,15 @@ function updateAmbientSpeed(val) {
 // =======================================================
 
 function toggleDevPanelSection(section) {
-    const content = document.getElementById('developer-panel-content');
-
-   
-const sections = {
-    animation: document.getElementById('animation-control-panel'),
-    background: document.getElementById('background-control-panel'),
-    photos: document.getElementById('photos-panel-content'),
-    cost: document.getElementById('cost-control-panel'),
-    appointment: document.getElementById('appointment-control-panel')
-};
-
-    if (!content || !sections[section]) return;
-
-    const clickedSectionIsOpen =
-        !content.hidden && !sections[section].hidden;
-
-    // Закрываем все разделы
-    Object.values(sections).forEach(panel => {
-        panel.hidden = true;
-    });
-
-    document.querySelectorAll('.developer-panel-tab').forEach(button => {
-        button.classList.remove('active');
-        button.setAttribute('aria-expanded', 'false');
-    });
-
-    if (clickedSectionIsOpen) {
-        content.hidden = true;
-        return;
-    }
-
-    // Открываем выбранный раздел
-    content.hidden = false;
-    sections[section].hidden = false;
-
-    const activeButton = document.querySelector(
-        `.developer-panel-tab[data-panel-section="${section}"]`
-    );
-
-    if (activeButton) {
-        activeButton.classList.add('active');
-        activeButton.setAttribute('aria-expanded', 'true');
-    }
+  const sectionIds = {
+    animation:'animation-control-panel',
+    background:'background-control-panel',
+    photos:'photos-panel-content',
+    cost:'cost-control-panel',
+    appointment:'appointment-control-panel'
+  };
+  const panelId = sectionIds[section];
+  if (panelId) setDeveloperPanel(panelId);
 }
 
 
@@ -1721,36 +1687,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 // ЛАБОРАТОРИЯ ФОНА: независимое раскрытие модулей (этапная интеграция)
-function toggleBackgroundLabBlock(panelId, button) {
-  const content = document.getElementById('developer-panel-content');
-  const panels = ['lab-presets','lab-base','lab-glow1','lab-glow2','lab-optics']
-    .map(id => document.getElementById(id)).filter(Boolean);
-  const target = document.getElementById(panelId);
-  if (!content || !target || !button) return;
+const DEVELOPER_PANEL_IDS = [
+  'animation-control-panel','background-control-panel','photos-panel-content',
+  'cost-control-panel','appointment-control-panel',
+  'lab-presets','lab-base','lab-glow1','lab-glow2','lab-optics'
+];
 
-  const willOpen = content.hidden || target.hidden;
-  panels.forEach(panel => { panel.hidden = true; });
-  document.querySelectorAll('.background-lab-tab').forEach(tab => {
-    tab.classList.remove('active');
-    tab.setAttribute('aria-expanded','false');
-  });
-  if (!willOpen) {
-    content.hidden = true;
-    return;
-  }
-  ['animation-control-panel','background-control-panel','photos-panel-content',
-   'cost-control-panel','appointment-control-panel'].forEach(id => {
+function setDeveloperPanel(sectionId, button) {
+  const content = document.getElementById('developer-panel-content');
+  const target = document.getElementById(sectionId);
+  if (!content || !target) return;
+
+  const isOpen = !content.hidden && !target.hidden;
+  DEVELOPER_PANEL_IDS.forEach(id => {
     const panel = document.getElementById(id);
     if (panel) panel.hidden = true;
   });
-  document.querySelectorAll('.developer-panel-tab:not(.background-lab-tab)').forEach(tab => {
+  document.querySelectorAll('.developer-panel-tab').forEach(tab => {
     tab.classList.remove('active');
     tab.setAttribute('aria-expanded','false');
   });
+
+  if (isOpen) {
+    content.hidden = true;
+    return;
+  }
+
   content.hidden = false;
   target.hidden = false;
-  button.classList.add('active');
-  button.setAttribute('aria-expanded','true');
+  const activeTab = button || document.querySelector(
+    `.developer-panel-tab[data-panel-section="${sectionId.replace('-control-panel','').replace('-panel-content','')}"]`
+  );
+  if (activeTab) {
+    activeTab.classList.add('active');
+    activeTab.setAttribute('aria-expanded','true');
+  }
+}
+
+function toggleBackgroundLabBlock(panelId, button) {
+  setDeveloperPanel(panelId, button);
 }
 
 
