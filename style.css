@@ -5735,3 +5735,29 @@ body.theme-v3 #sideDrawer{background:color-mix(in srgb,var(--lab-drawer-color,#2
 #developer-panel .lab-color-value-row{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:5px}
 #developer-panel .lab-color-value-row span{font:600 9px Inter,sans-serif;color:#718096}
 #developer-panel .lab-color-value{width:100%;min-width:0;height:22px;box-sizing:border-box;padding:3px 6px;border:1px solid #d7dee8;border-radius:5px;background:#fff;color:#40515a;font:10px/1.2 ui-monospace,monospace}
+
+/* MODERN WEB COLOR PICKER — saturation/value square, rainbow hue, RGB */
+#developer-panel .lab-color-open{display:flex;width:100%;align-items:center;gap:7px;padding:5px;border:1px solid #d7dee8;border-radius:7px;background:#fff;color:#40515a;cursor:pointer;text-align:left}
+#developer-panel .lab-color-open-swatch{width:25px;height:24px;flex:0 0 25px;border:1px solid rgba(0,0,0,.15);border-radius:4px;background:var(--picker-color)}
+#developer-panel .lab-color-open-value{flex:1;font:10px ui-monospace,monospace}
+#developer-panel .lab-color-open-icon{color:#7b8991}
+.lab-color-modal[hidden]{display:none!important}
+.lab-color-modal{position:fixed;inset:0;z-index:100000;display:grid;place-items:center;padding:16px;background:rgba(10,18,20,.56);backdrop-filter:blur(4px)}
+.lab-color-dialog{width:min(310px,calc(100vw - 32px));overflow:hidden;border:1px solid #d9e0e5;border-radius:14px;background:#f9fbfc;color:#26383d;box-shadow:0 20px 65px rgba(0,0,0,.3);font:12px/1.4 Inter,system-ui,sans-serif}
+.lab-color-dialog-head{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;border-bottom:1px solid #e3e9ed}
+.lab-color-dialog-head strong{font-size:13px}
+.lab-color-dialog-head button{border:0;background:transparent;font-size:22px;line-height:1;cursor:pointer;color:#697980}
+.lab-color-dialog-body{display:grid;gap:12px;padding:14px}
+.lab-color-sv{position:relative;height:190px;border-radius:8px;cursor:crosshair;touch-action:none;background-color:hsl(180,100%,50%);background-image:linear-gradient(to top,#000,transparent),linear-gradient(to right,#fff,transparent);outline:none}
+.lab-color-sv:focus-visible{box-shadow:0 0 0 2px #6b969a}
+#lab-color-sv-cursor{position:absolute;width:13px;height:13px;border:2px solid white;border-radius:50%;box-shadow:0 0 0 1px #27363a;transform:translate(-50%,-50%);pointer-events:none;left:100%;top:0}
+.lab-color-hue{appearance:none;-webkit-appearance:none;width:100%;height:13px;margin:0;border-radius:99px;background:linear-gradient(90deg,#f00,#ff0,#0f0,#0ff,#00f,#f0f,#f00);cursor:pointer}
+.lab-color-hue::-webkit-slider-thumb{appearance:none;width:15px;height:15px;border:2px solid #fff;border-radius:50%;background:#344b50;box-shadow:0 0 0 1px #344b50}
+.lab-color-hue::-moz-range-thumb{width:11px;height:11px;border:2px solid #fff;border-radius:50%;background:#344b50;box-shadow:0 0 0 1px #344b50}
+.lab-color-preview-row{display:grid;grid-template-columns:38px 1fr;align-items:center;gap:9px}
+#lab-color-preview{height:34px;border:1px solid rgba(0,0,0,.15);border-radius:6px;background:#233235}
+.lab-color-preview-row label{display:grid;grid-template-columns:30px 1fr;align-items:center;gap:7px;color:#718087;font-weight:600}
+#lab-color-rgb{width:100%;min-width:0;height:30px;padding:5px 8px;border:1px solid #d4dfe4;border-radius:6px;background:#fff;color:#30444a;font:12px ui-monospace,monospace}
+.lab-color-dialog-actions{display:flex;justify-content:flex-end;gap:7px}
+.lab-color-dialog-actions button{padding:7px 12px;border:1px solid #d4dfe4;border-radius:7px;background:#fff;color:#43565d;cursor:pointer;font:11px Inter,sans-serif}
+#lab-color-apply{border-color:#34797e;background:#34797e;color:#fff}
