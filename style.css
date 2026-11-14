@@ -5806,3 +5806,75 @@ body.theme-v3 #sideDrawer{background:color-mix(in srgb,var(--lab-drawer-color,#2
 #developer-panel{z-index:100000!important}
 #lab-color-modal{z-index:2147483647!important}
 body.cost-modal-open #developer-panel{z-index:1!important}
+
+
+/* FIX 2026-11-14: enforce horizontal rows in the New Background Lab */
+#developer-panel #lab-base.background-lab-base:not([hidden]){
+ display:grid!important;grid-template-columns:repeat(3,112px)!important;
+ grid-auto-flow:row!important;align-items:end!important;justify-content:start!important;
+ gap:8px!important;width:100%!important;max-width:100%!important;overflow-x:auto!important;
+}
+#developer-panel #lab-base .lab-effects-link-row{grid-column:1/-1!important;white-space:normal!important}
+#developer-panel #lab-base .lab-base-row{
+ display:grid!important;grid-template-columns:1fr auto!important;grid-template-rows:auto 12px!important;
+ align-items:center!important;gap:3px 5px!important;
+ width:112px!important;min-width:112px!important;max-width:112px!important;
+}
+#developer-panel #lab-base .lab-base-row>label{grid-column:1/-1!important}
+#developer-panel #lab-base .lab-base-row input[type=range]{
+ grid-column:1/-1!important;width:112px!important;max-width:112px!important;min-width:112px!important
+}
+#developer-panel .lab-glow-controls,
+#developer-panel .lab-optics-controls{
+ display:grid!important;grid-auto-flow:column!important;grid-auto-columns:112px!important;
+ grid-template-rows:auto!important;grid-template-columns:none!important;
+ align-items:end!important;justify-content:start!important;gap:8px!important;
+ width:100%!important;max-width:100%!important;overflow-x:auto!important
+}
+#developer-panel .lab-glow-controls>.lab-color-picker,
+#developer-panel .lab-glow-controls>.lab-glow-control,
+#developer-panel .lab-optics-controls>.lab-color-picker,
+#developer-panel .lab-optics-controls>.lab-optics-control{
+ display:grid!important;grid-template-columns:1fr auto!important;grid-template-rows:auto 12px!important;
+ align-content:end!important;gap:3px 5px!important;
+ width:112px!important;min-width:112px!important;max-width:112px!important
+}
+#developer-panel .lab-glow-controls>.lab-color-picker,
+#developer-panel .lab-optics-controls>.lab-color-picker{grid-template-rows:auto 30px!important}
+#developer-panel .lab-glow-control label,
+#developer-panel .lab-optics-control label{grid-column:1/-1!important;white-space:nowrap!important}
+#developer-panel .lab-glow-control input[type=range],
+#developer-panel .lab-optics-control input[type=range]{
+ grid-column:1/-1!important;width:112px!important;max-width:112px!important;min-width:112px!important
+}
+#developer-panel #lab-base[hidden],
+#developer-panel #lab-glow1[hidden],
+#developer-panel #lab-glow2[hidden],
+#developer-panel #lab-optics[hidden],
+#developer-panel #lab-presets[hidden]{display:none!important}
+/* Vignette and texture controls belong exclusively to the Base module */
+#developer-panel #lab-vignette,
+#developer-panel #lab-grain{display:block}
+#developer-panel #lab-glow1 #lab-vignette,
+#developer-panel #lab-glow1 #lab-grain,
+#developer-panel #lab-glow2 #lab-vignette,
+#developer-panel #lab-glow2 #lab-grain,
+#developer-panel #lab-optics #lab-vignette,
+#developer-panel #lab-optics #lab-grain{display:none!important}
+/* Color picker: anchored popup, no fullscreen veil and no background blur */
+#lab-color-modal[hidden]{display:none!important}
+#lab-color-modal:not([hidden]){
+ position:fixed!important;inset:0!important;display:block!important;
+ padding:0!important;margin:0!important;background:transparent!important;
+ backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+ pointer-events:none!important;z-index:2147483647!important
+}
+#lab-color-modal .lab-color-dialog{
+ position:fixed!important;top:90px;left:12px;
+ width:min(290px,calc(100vw - 24px))!important;
+ margin:0!important;pointer-events:auto!important;
+}
+#lab-color-modal .lab-color-dialog-head{border:0!important;padding:7px 10px!important}
+#lab-color-modal .lab-color-dialog-body{gap:8px!important;padding:9px!important}
+#lab-color-modal .lab-color-sv{height:155px!important}
+#lab-color-modal .lab-color-dialog-actions button{width:max-content!important;padding:5px 8px!important}
