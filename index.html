@@ -485,12 +485,12 @@
 
 <!-- ЛАБОРАТОРИЯ ФОНА: отдельные разделы панели управления -->
 <div class="background-lab-panels" id="background-lab-panels">
-<div class="lab-effects-link-row">
+<section class="background-lab-card" id="lab-presets" hidden><div class="lab-preset-actions"><button type="button" onclick="applyBackgroundMood('balanced')">Баланс</button><button type="button" onclick="applyBackgroundMood('deep')">Глубокий кокон</button><button type="button" onclick="applyBackgroundMood('amber')">Вечерний свет</button></div></section>
+<section class="background-lab-card background-lab-base" id="lab-base" hidden>
+  <div class="lab-effects-link-row">
   <label for="lab-effects-link"><input id="lab-effects-link" type="checkbox" checked onchange="updateBackgroundEffectsLink(this.checked)"> Взаимодействие со старыми эффектами «Фон»</label>
   <span>Включено — эффекты смешиваются. Выключено — новая лаборатория работает отдельным визуальным слоем; старые эффекты остаются активными.</span>
 </div>
-<section class="background-lab-card" id="lab-presets" hidden><div class="lab-preset-actions"><button type="button" onclick="applyBackgroundMood('balanced')">Баланс</button><button type="button" onclick="applyBackgroundMood('deep')">Глубокий кокон</button><button type="button" onclick="applyBackgroundMood('amber')">Вечерний свет</button></div></section>
-<section class="background-lab-card background-lab-base" id="lab-base" hidden>
   <div class="lab-base-row lab-base-color">
     <label for="lab-base-color">База</label>
     <div class="lab-color-picker" data-color-key="lab-base-color"><label>База</label><button type="button" id="lab-base-color-open" class="lab-color-open" style="--picker-color:#1E292B" onclick="openLabColorPicker('lab-base-color')" aria-label="Открыть выбор цвета База"><span class="lab-color-open-swatch"></span><span class="lab-color-open-value" id="lab-base-color-display">#1E292B</span><span class="lab-color-open-icon">✎</span></button></div><input id="lab-base-color-text" class="lab-color-value" type="text" value="#1E292B" spellcheck="false" oninput="updateLabColorText('lab-base-color',this.value)" aria-label="Значение цвета База"></div>
@@ -1084,7 +1084,7 @@
 <!-- /ЦЕНТРАЛЬНОЕ ОКНО ЗАПИСИ -->
   <!-- ФАЙЛ С ФУНКЦИЯМИ САЙТА -->
 
-  <script src="script.js?v=20261112-about-method"></script>
+  <script src="script.js?v=20261114-exclusive-panels"></script>
 
 <div id="lab-color-modal" class="lab-color-modal" hidden aria-hidden="true"><div class="lab-color-dialog" role="dialog" aria-modal="true" aria-labelledby="lab-color-title"><div class="lab-color-dialog-head"><strong id="lab-color-title">Выбор цвета</strong><button type="button" id="lab-color-close" aria-label="Закрыть">×</button></div><div class="lab-color-dialog-body"><div id="lab-color-sv" class="lab-color-sv" role="slider" aria-label="Насыщенность и яркость" tabindex="0"><span id="lab-color-sv-cursor"></span></div><input id="lab-color-hue" class="lab-color-hue" type="range" min="0" max="360" value="180" aria-label="Оттенок"><div class="lab-color-preview-row"><span id="lab-color-preview"></span><label>RGB <input id="lab-color-rgb" type="text" value="30, 41, 43" aria-label="RGB"></label></div><div class="lab-color-dialog-actions"><button type="button" id="lab-color-cancel">Отмена</button><button type="button" id="lab-color-apply">Применить</button></div></div></div></div>
 </body>
