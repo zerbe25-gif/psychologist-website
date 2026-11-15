@@ -1569,7 +1569,6 @@ document.addEventListener("DOMContentLoaded", () => {
   window.updateCostCardDuration=v=>set("card",v);
   window.updateCostContentDuration=v=>set("content",v);
   window.updateCostCloseDuration=v=>set("close",v);
-  window.resetCostSettings=()=>{s={...defaults};apply();try{localStorage.setItem(key,JSON.stringify(s));}catch(error){}};
   apply();
 })();
 
