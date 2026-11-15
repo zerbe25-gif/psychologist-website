@@ -5889,3 +5889,53 @@ body.cost-modal-open #developer-panel{z-index:1!important}
 #developer-panel #lab-base .lab-base-color>.lab-color-picker .lab-color-open{width:112px!important;max-width:112px!important}
 #developer-panel #lab-base .lab-base-color-text,
 #developer-panel #lab-base #lab-base-color-default-output{display:none!important}
+
+
+/* PANEL CONTROL · compact horizontal sliders (max 3 cm ≈ 113px) */
+#developer-panel #background-panel-content #controls-hatching:not([hidden]),
+#developer-panel #background-panel-content #controls-paper-shadow:not([hidden]),
+#developer-panel #background-panel-content #controls-watercolor:not([hidden]),
+#developer-panel #background-panel-content #controls-ambient-light:not([hidden]){
+ display:flex!important;flex-flow:row nowrap!important;align-items:flex-start!important;
+ gap:8px!important;width:100%!important;max-width:100%!important;overflow-x:auto!important;
+}
+#developer-panel #background-panel-content .background-control{
+ display:flex!important;flex:0 0 112px!important;flex-direction:column!important;
+ width:112px!important;min-width:112px!important;max-width:112px!important;
+ margin:0!important;gap:3px!important;vertical-align:top!important;
+}
+#developer-panel #background-panel-content .background-control label{
+ font-size:10px!important;line-height:1.2!important;min-height:27px!important;
+ white-space:normal!important;margin:0!important;
+}
+#developer-panel #background-panel-content .background-control span{
+ display:block!important;font-size:9px!important;line-height:1.1!important;
+ margin:0!important;white-space:nowrap!important;
+}
+#developer-panel #background-panel-content .background-control input[type=range]{
+ width:112px!important;min-width:112px!important;max-width:112px!important;margin:2px 0!important;
+}
+/* База, виньетка и текстура — один горизонтальный ряд */
+#developer-panel #lab-base.background-lab-base:not([hidden]){
+ display:flex!important;flex-flow:row nowrap!important;align-items:flex-start!important;
+ gap:8px!important;width:100%!important;max-width:100%!important;overflow-x:auto!important;
+}
+#developer-panel #lab-base .lab-base-row{
+ flex:0 0 112px!important;width:112px!important;min-width:112px!important;max-width:112px!important;
+}
+#developer-panel #lab-base .lab-base-row input[type=range]{
+ width:112px!important;min-width:112px!important;max-width:112px!important;
+}
+/* В световых модулях и оптике ширина каждого ползунка не более 3 см */
+#developer-panel .lab-glow-controls,
+#developer-panel .lab-optics-controls{
+ grid-auto-columns:112px!important;gap:8px!important;
+}
+#developer-panel .lab-glow-controls>.lab-glow-control,
+#developer-panel .lab-optics-controls>.lab-optics-control{
+ width:112px!important;min-width:112px!important;max-width:112px!important;
+}
+#developer-panel .lab-glow-control input[type=range],
+#developer-panel .lab-optics-control input[type=range]{
+ width:112px!important;min-width:112px!important;max-width:112px!important;
+}
