@@ -523,6 +523,11 @@
     <div class="lab-optics-control"><label for="lab-optics-blur">Размытие стекла <output id="lab-optics-blur-value">12 px</output></label><input id="lab-optics-blur" type="range" min="0" max="30" value="12" oninput="updateBackgroundOptics('blur',this.value)"></div>
     <div class="lab-optics-control"><label for="lab-optics-saturation">Насыщенность <output id="lab-optics-saturation-value">120%</output></label><input id="lab-optics-saturation" type="range" min="80" max="180" value="120" oninput="updateBackgroundOptics('saturation',this.value)"></div>
   </div>
+
+  <div class="drawer-speed-controls">
+    <div class="lab-optics-control"><label for="drawer-speed-down">Перелистывание вниз <output id="drawer-speed-down-value">1.8 сек.</output></label><input id="drawer-speed-down" type="range" min="1" max="3" step="0.1" value="1.8" oninput="updateDrawerSpeed('down',this.value)"></div>
+    <div class="lab-optics-control"><label for="drawer-speed-up">Перелистывание вверх <output id="drawer-speed-up-value">1.5 сек.</output></label><input id="drawer-speed-up" type="range" min="1" max="3" step="0.1" value="1.5" oninput="updateDrawerSpeed('up',this.value)"></div>
+  </div>
 </section>
 </div>
 
@@ -662,168 +667,31 @@
 
 
 
-<!-- ЕДИНАЯ ИНФОРМАЦИОННАЯ ШТОРКА -->
+<!-- ЕДИНАЯ ИНФОРМАЦИОННАЯ ШТОРКА — ВЕРТИКАЛЬНАЯ ПАРАЛЛАКС-ШТОРКА -->
 <div id="drawerBackdrop" aria-hidden="true"></div>
-
-<aside id="sideDrawer"
-       role="dialog"
-       aria-modal="true"
-       aria-labelledby="drawerTitle"
-       aria-hidden="true">
-
-    <button id="drawerClose"
-            class="drawer-close"
-            type="button"
-            aria-label="Закрыть">
-        ×
-    </button>
-
-    <div class="drawer-inner">
-
-        <p class="drawer-eyebrow">ПСИХОЛОГИЧЕСКАЯ ПРАКТИКА</p>
-
-        <nav class="drawer-tabs" aria-label="Информационные разделы">
-            <button type="button" data-drawer-tab="method">О Методе</button>
-            <button type="button" data-drawer-tab="requests">Запросы</button>
-            <button type="button" data-drawer-tab="format">Формат</button>
-            <button type="button" data-drawer-tab="education">Образование</button>
-        </nav>
-
-        <h2 id="drawerTitle">С какими запросами я работаю</h2>
-
-        <div class="drawer-panels">
-
-            <!-- О МЕТОДЕ -->
-            <section class="drawer-panel" data-drawer-panel="method" hidden>
-                <div class="education-entry">
-                    <h3>С кем я работаю</h3>
-                    <ul class="requests-list">
-                        <li>Со взрослыми;</li>
-                        <li>С подростками;</li>
-                        <li>С парами.</li>
-                    </ul>
-                    <p><strong>Работа ведётся онлайн.</strong></p>
-                </div>
-
-                <div class="education-entry">
-                    <h3>Мой подход</h3>
-                    <p>В своей практике я использую <strong>интегративный психодинамический подход</strong>, опираясь на <strong>биопсихосоциальную модель</strong>.</p>
-                    <p>Психодинамический подход даёт возможность рассматривать человека целостно, уделяя внимание взаимосвязи внутренних психических механизмов с внешними (социальными, культурными) факторами, а также биологическим контекстом (роль соматических болезней, истощения организма и т. д.).</p>
-                </div>
-
-                <div class="education-entry">
-                    <h3>Мой бэкграунд</h3>
-                    <ul class="requests-list">
-                        <li>Многолетний опыт работы врачом-психиатром и психотерапевтом (психодинамический метод): лечение широкого спектра психических расстройств и реабилитационная практика.</li>
-                        <li>Постоянное профессиональное развитие: многостороннее обучение, регулярные супервизии и личная психоаналитическая терапия.</li>
-                        <li>Работа с людьми из разных стран, представителями разных культур и мировоззрений.</li>
-                    </ul>
-                </div>
-            </section>
-
-            <!-- ЗАПРОСЫ -->
-            <section class="drawer-panel" data-drawer-panel="requests">
-                <ul class="requests-list">
-                    <li>Тревога, стресс, выгорание, переутомление;</li>
-                    <li>Проблемы в отношениях: созависимость, семейные конфликты, конфликты поколений, развод, измены;</li>
-                    <li>Поиск себя, вопросы самоидентификации;</li>
-                    <li>Трудности на работе и вопросы самореализации;</li>
-                    <li>Последствия жестокого обращения, буллинг;</li>
-                    <li>Исследование мужской самоидентичности и особенностей социализации;</li>
-                    <li>Вопросы сексуальной идентичности, поддержка ЛГБТК+ сообщества;</li>
-                    <li>Эмиграция и адаптация в новой среде;</li>
-                    <li>Переживание утраты, горя;</li>
-                    <li>Сопровождение при наличии клинических состояний и помощь в восстановлении после госпитализаций (тревожные расстройства, ОКР, депрессия и др.).</li>
-                </ul>
-
-                <p class="requests-note">
-                    <strong>Важно:</strong> психодинамическое консультирование дополняет, но не заменяет медикаментозное лечение и наблюдение у профильного психиатра.
-                </p>
-            </section>
-
-            <!-- ФОРМАТ РАБОТЫ -->
-            <section class="drawer-panel format-panel" data-drawer-panel="format" hidden>
-                <section class="format-group format-duration">
-                    <div class="format-group-heading">
-                        
-                        <h3>Длительность работы</h3>
-                        
-                    </div>
-
-                    <article class="format-entry">
-                        <h4>Краткосрочная работа</h4>
-                        <p>Этот формат позволяет сделать ситуацию более ясной и структурированной. Мы сфокусируемся на процессах, которые раньше оставались незамеченными. Исследуются ваши сильные стороны, внешние факторы, способные стать опорой и ресурсом. Уже здесь можно ожидать первых изменений или формирования чёткого плана по выходу из кризиса.</p>
-                    </article>
-
-                    <article class="format-entry">
-                        <h4>Долгосрочная работа</h4>
-                        <p>Помимо глубокого исследования, формат позволяет интегрировать новые адаптивные процессы в жизнь. Особенно важен такой подход при стойком негативном самовосприятии, хроническом выгорании, частых соматических заболеваниях и повторяющихся деструктивных моделях отношений.</p>
-                    </article>
-
-                    <article class="format-entry format-entry-accent">
-                        <h4>Ознакомительный формат <span>5–10 встреч</span></h4>
-                        <p>Хорошо подходит при отсутствии опыта работы с психологами. Также если вы хотите присмотреться к методу или понять, подходит ли вам специалист.</p>
-                    </article>
-                </section>
-
-                <section class="format-group format-types">
-                    <div class="format-group-heading">
-                        
-                        <h3>Тип работы</h3>
-                        <p>Разные форматы для индивидуальных, relational и практических задач.</p>
-                    </div>
-
-                    <article class="format-entry">
-                        <h4>Индивидуальная работа</h4>
-                        <p>Пространство для исследования личных переживаний, отношений, внутренних конфликтов и жизненных трудностей.</p>
-                    </article>
-                    <article class="format-entry">
-                        <h4>Работа с парами / семейная терапия</h4>
-                        <p>Работа с отношениями, повторяющимися конфликтами, дистанцией и трудностями взаимопонимания.</p>
-                    </article>
-                    <article class="format-entry">
-                        <h4>Работа с подростками</h4>
-                        <p>Индивидуальная работа с подростками с учётом их возраста, семейной и социальной среды.</p>
-                    </article>
-                </section>
-            </section>
-
-            <!-- ОБРАЗОВАНИЕ -->
-            <section class="drawer-panel" data-drawer-panel="education" hidden>
-
-                <div class="education-entry">
-                    <h3>Врач-психотерапевт</h3>
-                    <p>Профессиональная переподготовка по специальности «Психотерапия» (Санкт-Петербург)</p>
-                </div>
-
-                <div class="education-entry">
-                    <h3>Врач-психиатр</h3>
-                    <p>Интернатура по специальности «Психиатрия» (Санкт-Петербург)</p>
-                </div>
-
-                <div class="education-entry">
-                    <h3>Высшее медицинское образование</h3>
-                    <p>Самарский государственный медицинский университет, врач</p>
-                </div>
-
-                <div class="education-entry">
-                    <h3>Санкт-Петербургская Школа Психоанализа</h3>
-                    <p class="education-subheading">Повышение квалификации «Изучение трудов З. Фрейда»</p>
-                    <p class="education-author">Ведущий: Александр Непомнящий (Франция)</p>
-                </div>
-
-                <div class="education-entry">
-                    <h3>Групповая терапия</h3>
-                    <p>Повышение квалификации по групповой психотерапии</p>
-                    <p class="education-author">Руководитель проекта: Роби Фридман (Израиль)</p>
-                </div>
-
-            </section>
-
-
-          
-        </div>
+<aside id="sideDrawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" aria-hidden="true">
+  <button id="drawerClose" class="drawer-close" type="button" aria-label="Закрыть">×</button>
+  <div class="drawer-inner">
+    <header class="drawer-header">
+      <span class="drawer-eyebrow">ПРАКТИКА</span>
+      <nav class="drawer-tabs" aria-label="Информационные разделы">
+        <button type="button" data-drawer-tab="method" data-index="0">01. О Методе</button>
+        <button type="button" data-drawer-tab="requests" data-index="1">02. Запросы</button>
+        <button type="button" data-drawer-tab="format" data-index="2">03. Формат работы</button>
+        <button type="button" data-drawer-tab="education" data-index="3">04. Образование</button>
+      </nav>
+    </header>
+    <div class="viewport" id="drawerViewport">
+      <section class="block-section is-current" data-index="0" data-drawer-panel="method" aria-label="О Методе"></section>
+      <section class="block-section" data-index="1" data-drawer-panel="requests" aria-label="Запросы"></section>
+      <section class="block-section" data-index="2" data-drawer-panel="format" aria-label="Формат работы"></section>
+      <section class="block-section" data-index="3" data-drawer-panel="education" aria-label="Образование"></section>
     </div>
+    <footer class="drawer-footer">
+      <span>Раздел <strong id="currentStep">1</strong> из 4</span>
+      <button type="button" class="drawer-appointment-button" data-appointment-open>Записаться на прием <span>→</span></button>
+    </footer>
+  </div>
 </aside>
 <!-- /ЕДИНАЯ ИНФОРМАЦИОННАЯ ШТОРКА -->
 
