@@ -981,9 +981,7 @@ function updateLensGlare(value) {
         requests: "С какими запросами я работаю",
         format: "Формат работы",
         education: "Образование и профессиональная подготовка",
-        articles: "Статьи",
         price: "Стоимость",
-        contacts: "Контактные данные"
     };
 
     const widths = {
@@ -991,9 +989,7 @@ function updateLensGlare(value) {
         requests: "700px",
         format: "950px",
         education: "600px",
-        articles: "1100px",
         price: "600px",
-        contacts: "700px"
     };
 
     const wheelSections = [
@@ -1001,9 +997,7 @@ function updateLensGlare(value) {
         "requests",
         "format",
         "education",
-        "articles",
         "price",
-        "contacts"
     ];
 
     let drawerOpen = false;
