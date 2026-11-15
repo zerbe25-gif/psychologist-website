@@ -5970,3 +5970,41 @@ body.cost-modal-open #developer-panel{z-index:1!important}
 }
 #developer-panel #lab-glow1 .lab-glow-control output,
 #developer-panel #lab-glow2 .lab-glow-control output{white-space:nowrap!important}
+
+
+/* FINAL FIX Цвет 1 / Цвет 2: пять отдельных карточек в горизонтальном ряду */
+#developer-panel #lab-glow1 .lab-glow-controls,
+#developer-panel #lab-glow2 .lab-glow-controls{
+ display:grid!important;
+ grid-template-columns:repeat(5,112px)!important;
+ grid-template-rows:auto!important;
+ grid-auto-flow:row!important;
+ grid-auto-columns:112px!important;
+ align-items:end!important;
+ justify-content:start!important;
+ gap:8px!important;
+ width:100%!important;max-width:100%!important;
+ overflow-x:auto!important;overflow-y:hidden!important;
+}
+#developer-panel #lab-glow1 .lab-glow-controls>.lab-color-picker,
+#developer-panel #lab-glow2 .lab-glow-controls>.lab-color-picker,
+#developer-panel #lab-glow1 .lab-glow-controls>.lab-glow-control,
+#developer-panel #lab-glow2 .lab-glow-controls>.lab-glow-control{
+ box-sizing:border-box!important;
+ display:flex!important;flex-direction:column!important;
+ grid-column:auto!important;grid-row:1!important;
+ width:112px!important;min-width:112px!important;max-width:112px!important;
+ margin:0!important;padding:0!important;gap:4px!important;
+}
+#developer-panel #lab-glow1 .lab-glow-controls>.lab-color-picker .lab-color-open,
+#developer-panel #lab-glow2 .lab-glow-controls>.lab-color-picker .lab-color-open{
+ width:112px!important;max-width:112px!important;box-sizing:border-box!important;
+}
+#developer-panel #lab-glow1 .lab-glow-controls>.lab-glow-control label,
+#developer-panel #lab-glow2 .lab-glow-controls>.lab-glow-control label{
+ min-height:26px!important;white-space:normal!important;
+}
+#developer-panel #lab-glow1 .lab-glow-controls>.lab-glow-control input[type=range],
+#developer-panel #lab-glow2 .lab-glow-controls>.lab-glow-control input[type=range]{
+ width:112px!important;min-width:112px!important;max-width:112px!important;
+}
