@@ -980,9 +980,13 @@ function updateLensGlare(value) {
   const sectionKeys=["method","requests","format","education"];
   let currentBlock=0,isAnimating=false,drawerOpen=false,wheelCooldown=false,previousFocus=null;
   let transitionTimer=null,wheelTimer=null;
-  const downDuration=1.8,upDuration=1.5;
-  document.documentElement.style.setProperty("--drawer-slide-down",downDuration+"s");
-  document.documentElement.style.setProperty("--drawer-slide-up",upDuration+"s");
+  document.documentElement.style.setProperty("--drawer-slide-down","1.8s");
+  document.documentElement.style.setProperty("--drawer-slide-up","1.5s");
+  function getSlideDuration(isNext){
+    const variable=isNext?"--drawer-slide-down":"--drawer-slide-up";
+    const parsed=parseFloat(getComputedStyle(document.documentElement).getPropertyValue(variable));
+    return Number.isFinite(parsed)&&parsed>0?parsed:(isNext?1.8:1.5);
+  }
 
   function updateNavUI(){
     tabs.forEach((tab,index)=>{
@@ -997,7 +1001,7 @@ function updateLensGlare(value) {
     if(targetIndex===currentBlock||isAnimating||targetIndex<0||targetIndex>=sections.length)return;
     isAnimating=true;
     const isNext=targetIndex>currentBlock;
-    const duration=isNext?downDuration:upDuration;
+    const duration=getSlideDuration(isNext);
     const currentSec=sections[currentBlock],targetSec=sections[targetIndex];
     targetSec.classList.remove("is-current");
     currentSec.style.transitionDuration=duration+"s";
@@ -1097,7 +1101,7 @@ function updateLensGlare(value) {
     event.preventDefault();
     goToBlock(next);
     wheelCooldown=true;
-    const duration=(direction>0?downDuration:upDuration)*1000;
+    const duration=getSlideDuration(direction>0)*1000;
     wheelTimer=setTimeout(()=>{wheelCooldown=false;wheelTimer=null;},duration+100);
   },{passive:false});
 
