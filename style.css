@@ -6008,3 +6008,53 @@ body.cost-modal-open #developer-panel{z-index:1!important}
 #developer-panel #lab-glow2 .lab-glow-controls>.lab-glow-control input[type=range]{
  width:112px!important;min-width:112px!important;max-width:112px!important;
 }
+
+
+/* PHOTO + COST: compact horizontal control cards, matching Color 1/2 */
+#developer-panel #photos-panel-content,
+#developer-panel #cost-control-panel:not([hidden]){
+ box-sizing:border-box!important;
+ display:grid!important;
+ grid-template-columns:repeat(5,112px)!important;
+ grid-auto-flow:row!important;
+ grid-auto-rows:min-content!important;
+ align-items:end!important;justify-content:start!important;
+ gap:6px 8px!important;
+ width:100%!important;max-width:100%!important;
+ max-height:50vh!important;overflow:auto!important;
+ padding:5px 6px!important;
+}
+#developer-panel #photos-panel-content[hidden],
+#developer-panel #cost-control-panel[hidden]{display:none!important}
+#developer-panel #photos-panel-content .lens-controls-row{
+ display:contents!important;
+}
+#developer-panel #photos-panel-content .lens-control,
+#developer-panel #cost-control-panel>.background-control{
+ box-sizing:border-box!important;
+ display:flex!important;flex-direction:column!important;
+ align-items:stretch!important;justify-content:flex-end!important;
+ width:112px!important;min-width:112px!important;max-width:112px!important;
+ margin:0!important;padding:0!important;gap:3px!important;
+}
+#developer-panel #photos-panel-content .lens-control label,
+#developer-panel #cost-control-panel .background-control label{
+ display:block!important;min-height:26px!important;
+ margin:0!important;font-size:10px!important;line-height:1.2!important;
+ white-space:normal!important;
+}
+#developer-panel #photos-panel-content .lens-control span,
+#developer-panel #cost-control-panel .background-control span{
+ display:block!important;margin:0!important;
+ font-size:9px!important;line-height:1.1!important;white-space:nowrap!important;
+}
+#developer-panel #photos-panel-content input[type=range],
+#developer-panel #cost-control-panel input[type=range]{
+ box-sizing:border-box!important;display:block!important;
+ width:112px!important;min-width:112px!important;max-width:112px!important;
+ margin:2px 0!important;
+}
+#developer-panel #cost-control-panel>button{
+ grid-column:1/-1!important;justify-self:start!important;
+ margin:2px 0 0!important;padding:5px 9px!important;font-size:10px!important;
+}
