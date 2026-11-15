@@ -1007,7 +1007,7 @@ function updateLensGlare(value) {
       targetSec.style.zIndex="10";
       currentSec.style.zIndex="5";
       targetSec.style.transform="translateY(100%) scale(1)";
-      targetSec.style.opacity="0";
+      targetSec.style.opacity="1";
       targetSec.style.filter="brightness(1)";
       void targetSec.offsetWidth;
       targetSec.style.transform="translateY(0) scale(1)";
