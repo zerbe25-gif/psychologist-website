@@ -1653,7 +1653,10 @@ window.applyBackgroundMood = function(mood){
     const vignette=document.getElementById("lab-vignette"),vOut=document.getElementById("lab-vignette-value");
     const grain=document.getElementById("lab-grain"),gOut=document.getElementById("lab-grain-value");
     const optics=state.optics;
-    setVar("--lab-drawer-color",optics.color);setVar("--lab-drawer-opacity",Number(optics.opacity)+"%");setVar("--lab-drawer-blur",Number(optics.blur)+"px");setVar("--lab-drawer-saturation",Number(optics.saturation)+"%");\n    setVar("--drawer-slide-down",Number(optics.slideDown||1.8)+"s");setVar("--drawer-slide-up",Number(optics.slideUp||1.5)+"s");\n    const speedDown=document.getElementById("drawer-speed-down"),speedUp=document.getElementById("drawer-speed-up"),speedDownOut=document.getElementById("drawer-speed-down-value"),speedUpOut=document.getElementById("drawer-speed-up-value");\n    if(speedDown)speedDown.value=optics.slideDown||1.8;if(speedUp)speedUp.value=optics.slideUp||1.5;if(speedDownOut)speedDownOut.textContent=Number(optics.slideDown||1.8).toFixed(1)+" сек.";if(speedUpOut)speedUpOut.textContent=Number(optics.slideUp||1.5).toFixed(1)+" сек.";
+    setVar("--lab-drawer-color",optics.color);setVar("--lab-drawer-opacity",Number(optics.opacity)+"%");setVar("--lab-drawer-blur",Number(optics.blur)+"px");setVar("--lab-drawer-saturation",Number(optics.saturation)+"%");
+    setVar("--drawer-slide-down",Number(optics.slideDown||1.8)+"s");setVar("--drawer-slide-up",Number(optics.slideUp||1.5)+"s");
+    const speedDown=document.getElementById("drawer-speed-down"),speedUp=document.getElementById("drawer-speed-up"),speedDownOut=document.getElementById("drawer-speed-down-value"),speedUpOut=document.getElementById("drawer-speed-up-value");
+    if(speedDown)speedDown.value=optics.slideDown||1.8;if(speedUp)speedUp.value=optics.slideUp||1.5;if(speedDownOut)speedDownOut.textContent=Number(optics.slideDown||1.8).toFixed(1)+" сек.";if(speedUpOut)speedUpOut.textContent=Number(optics.slideUp||1.5).toFixed(1)+" сек.";
     /* Применяем оптику напрямую к реальной информационной шторке, независимо от темы. */
     const drawer=document.getElementById("sideDrawer");
     if(drawer){
@@ -1675,7 +1678,8 @@ window.applyBackgroundMood = function(mood){
   function save(){render();try{localStorage.setItem(key,JSON.stringify(state));}catch(e){}}
   window.updateBackgroundBase=value=>{state.base=value;save();};
   window.updateBackgroundEffectsLink=value=>{state.effectsLinked=Boolean(value);save();};
-  window.updateBackgroundOptics=(property,value)=>{if(!(property in defaults.optics))return;state.optics[property]=property==="color"?value:Number(value);save();};\n  window.updateDrawerSpeed=(direction,value)=>{const property=direction==="down"?"slideDown":"slideUp";state.optics[property]=Number(value);save();};
+  window.updateBackgroundOptics=(property,value)=>{if(!(property in defaults.optics))return;state.optics[property]=property==="color"?value:Number(value);save();};
+  window.updateDrawerSpeed=(direction,value)=>{const property=direction==="down"?"slideDown":"slideUp";state.optics[property]=Number(value);save();};
   window.updateBackgroundVignette=value=>{state.vignette=Number(value);save();};
   window.updateBackgroundGrain=value=>{state.grain=Number(value);save();};
   window.updateBackgroundGlow=(number,property,value)=>{
