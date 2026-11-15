@@ -969,268 +969,140 @@ function updateLensGlare(value) {
 ========================================= */
 
 (function () {
-    const drawer = document.getElementById("sideDrawer");
-    const backdrop = document.getElementById("drawerBackdrop");
-    const closeButton = document.getElementById("drawerClose");
-    const title = document.getElementById("drawerTitle");
+  const drawer=document.getElementById("sideDrawer");
+  const backdrop=document.getElementById("drawerBackdrop");
+  const closeButton=document.getElementById("drawerClose");
+  const tabs=[...document.querySelectorAll("#sideDrawer [data-drawer-tab]")];
+  const sections=[...document.querySelectorAll("#sideDrawer .block-section")];
+  const currentStep=document.getElementById("currentStep");
+  if(!drawer||!backdrop||!closeButton||sections.length!==4)return;
 
-    if (!drawer || !backdrop || !closeButton || !title) return;
+  const sectionKeys=["method","requests","format","education"];
+  let currentBlock=0,isAnimating=false,drawerOpen=false,wheelCooldown=false,previousFocus=null;
+  let transitionTimer=null,wheelTimer=null;
+  const downDuration=1.8,upDuration=1.5;
+  document.documentElement.style.setProperty("--drawer-slide-down",downDuration+"s");
+  document.documentElement.style.setProperty("--drawer-slide-up",upDuration+"s");
 
-    const titles = {
-        method: "О Методе",
-        requests: "С какими запросами я работаю",
-        format: "Формат работы",
-        education: "Образование и профессиональная подготовка",
-        price: "Стоимость",
-    };
+  function updateNavUI(){
+    tabs.forEach((tab,index)=>{
+      const active=index===currentBlock;
+      tab.classList.toggle("is-active",active);
+      tab.setAttribute("aria-current",active?"page":"false");
+    });
+    if(currentStep)currentStep.textContent=String(currentBlock+1);
+  }
 
-    const widths = {
-        method: "850px",
-        requests: "700px",
-        format: "950px",
-        education: "600px",
-        price: "600px",
-    };
+  function goToBlock(targetIndex){
+    if(targetIndex===currentBlock||isAnimating||targetIndex<0||targetIndex>=sections.length)return;
+    isAnimating=true;
+    const isNext=targetIndex>currentBlock;
+    const duration=isNext?downDuration:upDuration;
+    const currentSec=sections[currentBlock],targetSec=sections[targetIndex];
+    targetSec.classList.remove("is-current");
+    currentSec.style.transitionDuration=duration+"s";
+    targetSec.style.transitionDuration=duration+"s";
 
-    const wheelSections = [
-        "method",
-        "requests",
-        "format",
-        "education",
-        "price",
-    ];
-
-    let drawerOpen = false;
-    let previousFocus = null;
-    let activeSection = null;
-    let sectionSwitchTimer = null;
-    let wheelLocked = false;
-    let wheelLockTimer = null;
-
-    function showDrawerSection(sectionName) {
-        const panel = drawer.querySelector(
-            `[data-drawer-panel="${sectionName}"]`
-        );
-
-        if (!panel || activeSection === sectionName) return;
-
-        const inner = drawer.querySelector(".drawer-inner");
-        if (!inner) return;
-
-        if (sectionSwitchTimer !== null) {
-            clearTimeout(sectionSwitchTimer);
-            sectionSwitchTimer = null;
-        }
-
-        function applySection() {
-            title.textContent = titles[sectionName] || "Информация";
-
-            drawer.querySelectorAll("[data-drawer-panel]").forEach(item => {
-                item.hidden = item !== panel;
-            });
-
-            drawer.querySelectorAll("[data-drawer-tab]").forEach(button => {
-                const isActive = button.dataset.drawerTab === sectionName;
-
-                button.classList.toggle("active", isActive);
-                button.setAttribute(
-                    "aria-current",
-                    isActive ? "page" : "false"
-                );
-            });
-
-            drawer.style.setProperty(
-                "--drawer-width",
-                widths[sectionName] || "700px"
-            );
-
-            activeSection = sectionName;
-        }
-
-        if (activeSection === null) {
-            applySection();
-
-            inner.classList.remove("is-switching", "is-revealing");
-            void inner.offsetWidth;
-            inner.classList.add("is-revealing");
-
-            return;
-        }
-
-        inner.classList.remove("is-revealing");
-        inner.classList.add("is-switching");
-
-        sectionSwitchTimer = setTimeout(() => {
-            applySection();
-
-            inner.classList.remove("is-switching");
-            void inner.offsetWidth;
-            inner.classList.add("is-revealing");
-
-            sectionSwitchTimer = null;
-        }, 240);
+    if(isNext){
+      targetSec.style.zIndex="10";
+      currentSec.style.zIndex="5";
+      targetSec.style.transform="translateY(100%) scale(1)";
+      targetSec.style.opacity="0";
+      targetSec.style.filter="brightness(1)";
+      void targetSec.offsetWidth;
+      targetSec.style.transform="translateY(0) scale(1)";
+      targetSec.style.opacity="1";
+      targetSec.classList.add("is-current");
+      currentSec.style.transform="translateY(-35%) scale(0.96)";
+      currentSec.style.opacity="0.25";
+      currentSec.style.filter="brightness(0.92)";
+    }else{
+      targetSec.style.zIndex="10";
+      currentSec.style.zIndex="5";
+      targetSec.style.transform="translateY(-35%) scale(0.96)";
+      targetSec.style.opacity="0.25";
+      targetSec.style.filter="brightness(0.92)";
+      void targetSec.offsetWidth;
+      targetSec.style.transform="translateY(0) scale(1)";
+      targetSec.style.opacity="1";
+      targetSec.style.filter="brightness(1)";
+      targetSec.classList.add("is-current");
+      currentSec.style.transform="translateY(100%) scale(1)";
+      currentSec.style.opacity="0";
     }
 
-    function openDrawer(sectionName) {
-        if (!titles[sectionName]) return;
+    targetSec.scrollTop=0;
+    currentBlock=targetIndex;
+    updateNavUI();
+    if(transitionTimer!==null)clearTimeout(transitionTimer);
+    transitionTimer=setTimeout(()=>{
+      currentSec.classList.remove("is-current");
+      currentSec.style.opacity="0";
+      currentSec.style.filter="brightness(1)";
+      currentSec.style.zIndex="";
+      isAnimating=false;
+      transitionTimer=null;
+    },duration*1000);
+  }
 
-        if (!drawerOpen) {
-            previousFocus = document.activeElement;
-            drawerOpen = true;
-
-            backdrop.classList.add("is-open");
-            drawer.classList.add("is-open");
-            document.body.classList.add("drawer-is-open");
-
-            drawer.setAttribute("aria-hidden", "false");
-            backdrop.setAttribute("aria-hidden", "false");
-        }
-
-        showDrawerSection(sectionName);
-        closeButton.focus();
+  function openDrawer(sectionName){
+    const index=sectionKeys.indexOf(sectionName);
+    if(index<0)return;
+    if(!drawerOpen){
+      previousFocus=document.activeElement;
+      drawerOpen=true;
+      backdrop.classList.add("is-open");
+      drawer.classList.add("is-open");
+      document.body.classList.add("drawer-is-open");
+      drawer.setAttribute("aria-hidden","false");
+      backdrop.setAttribute("aria-hidden","false");
     }
+    if(index!==currentBlock)goToBlock(index);
+    updateNavUI();
+    closeButton.focus();
+  }
 
-    function closeDrawer() {
-        if (!drawerOpen) return;
+  function closeDrawer(){
+    if(!drawerOpen)return;
+    drawerOpen=false;
+    isAnimating=false;
+    wheelCooldown=false;
+    if(transitionTimer!==null)clearTimeout(transitionTimer);
+    if(wheelTimer!==null)clearTimeout(wheelTimer);
+    transitionTimer=wheelTimer=null;
+    drawer.classList.remove("is-open");
+    backdrop.classList.remove("is-open");
+    document.body.classList.remove("drawer-is-open");
+    drawer.setAttribute("aria-hidden","true");
+    backdrop.setAttribute("aria-hidden","true");
+    if(previousFocus&&typeof previousFocus.focus==="function")previousFocus.focus();
+  }
 
-        drawerOpen = false;
+  document.querySelectorAll("[data-drawer-open]").forEach(button=>{
+    button.addEventListener("click",()=>openDrawer(button.dataset.drawerOpen));
+  });
+  tabs.forEach((button,index)=>button.addEventListener("click",()=>goToBlock(index)));
+  closeButton.addEventListener("click",closeDrawer);
+  backdrop.addEventListener("click",closeDrawer);
+  document.addEventListener("keydown",event=>{
+    if(event.key==="Escape"&&drawerOpen)closeDrawer();
+  });
 
-        if (wheelLockTimer !== null) {
-            clearTimeout(wheelLockTimer);
-            wheelLockTimer = null;
-        }
+  drawer.addEventListener("wheel",event=>{
+    if(!drawerOpen||isAnimating||wheelCooldown)return;
+    if(Math.abs(event.deltaX)>Math.abs(event.deltaY)||Math.abs(event.deltaY)<35)return;
+    const direction=event.deltaY>0?1:-1;
+    const next=currentBlock+direction;
+    if(next<0||next>=sections.length)return;
+    event.preventDefault();
+    goToBlock(next);
+    wheelCooldown=true;
+    const duration=(direction>0?downDuration:upDuration)*1000;
+    wheelTimer=setTimeout(()=>{wheelCooldown=false;wheelTimer=null;},duration+100);
+  },{passive:false});
 
-        wheelLocked = false;
-
-        if (sectionSwitchTimer !== null) {
-            clearTimeout(sectionSwitchTimer);
-            sectionSwitchTimer = null;
-        }
-
-        activeSection = null;
-
-        const inner = drawer.querySelector(".drawer-inner");
-
-        if (inner) {
-            inner.classList.remove(
-                "is-switching",
-                "is-revealing",
-                "is-wheel-next",
-                "is-wheel-prev"
-            );
-        }
-
-        drawer.classList.remove("is-open");
-        backdrop.classList.remove("is-open");
-        document.body.classList.remove("drawer-is-open");
-
-        drawer.setAttribute("aria-hidden", "true");
-        backdrop.setAttribute("aria-hidden", "true");
-
-        if (previousFocus && typeof previousFocus.focus === "function") {
-            previousFocus.focus();
-        }
-    }
-
-    // Открытие разделов кнопками главного меню
-    document.querySelectorAll("[data-drawer-open]").forEach(button => {
-        button.addEventListener("click", () => {
-            openDrawer(button.dataset.drawerOpen);
-        });
-    });
-
-    // Переключение вкладок внутри шторки
-    drawer.querySelectorAll("[data-drawer-tab]").forEach(button => {
-        button.addEventListener("click", () => {
-            showDrawerSection(button.dataset.drawerTab);
-        });
-    });
-
-    // Закрытие кнопкой и кликом по фону
-    closeButton.addEventListener("click", closeDrawer);
-    backdrop.addEventListener("click", closeDrawer);
-
-    // Закрытие клавишей Escape
-    document.addEventListener("keydown", event => {
-        if (event.key === "Escape" && drawerOpen) {
-            closeDrawer();
-        }
-    });
-
-    // Переключение разделов колёсиком
-    drawer.addEventListener("wheel", event => {
-        if (!drawerOpen || wheelLocked) return;
-
-        if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
-        if (Math.abs(event.deltaY) < 35) return;
-
-        const direction = event.deltaY > 0 ? 1 : -1;
-
-        // Если прокручивается вложенная область,
-        // сначала даём ей прокрутиться до края
-        const scrollable = event.target.closest(
-            ".drawer-panel-scroll"
-        );
-
-        if (scrollable) {
-            const atTop = scrollable.scrollTop <= 1;
-            const atBottom =
-                scrollable.scrollTop + scrollable.clientHeight >=
-                scrollable.scrollHeight - 2;
-
-            if (direction > 0 && !atBottom) return;
-            if (direction < 0 && !atTop) return;
-        } else {
-            const atTop = drawer.scrollTop <= 1;
-            const atBottom =
-                drawer.scrollTop + drawer.clientHeight >=
-                drawer.scrollHeight - 2;
-
-            if (direction > 0 && !atBottom) return;
-            if (direction < 0 && !atTop) return;
-        }
-
-        const currentIndex = wheelSections.indexOf(activeSection);
-        if (currentIndex === -1) return;
-
-        const nextIndex = currentIndex + direction;
-
-        if (nextIndex < 0 || nextIndex >= wheelSections.length) return;
-
-        event.preventDefault();
-        wheelLocked = true;
-
-        const inner = drawer.querySelector(".drawer-inner");
-
-        if (inner) {
-            inner.classList.remove("is-wheel-next", "is-wheel-prev");
-            void inner.offsetWidth;
-
-            inner.classList.add(
-                direction > 0 ? "is-wheel-next" : "is-wheel-prev"
-            );
-        }
-
-        showDrawerSection(wheelSections[nextIndex]);
-
-        drawer.scrollTop = 0;
-
-        if (wheelLockTimer !== null) {
-            clearTimeout(wheelLockTimer);
-        }
-
-        wheelLockTimer = setTimeout(() => {
-            wheelLocked = false;
-            wheelLockTimer = null;
-
-            if (inner) {
-                inner.classList.remove("is-wheel-next", "is-wheel-prev");
-            }
-        }, 750);
-    }, { passive: false });
-
+  updateNavUI();
 })();
-
 
 /* =========================================
    ОКНО СТОИМОСТИ — УПРАВЛЕНИЕ
@@ -1731,7 +1603,7 @@ window.applyBackgroundMood = function(mood){
     base:"#1E292B",vignette:35,grain:35,
     glow1:{color:"#34797E",opacity:45,x:82,y:18,size:60},
     glow2:{color:"#DCB573",opacity:22,x:15,y:85,size:55},
-    effectsLinked:true,optics:{color:"#233235",opacity:92,blur:12,saturation:120}
+    effectsLinked:true,optics:{color:"#233235",opacity:92,blur:12,saturation:120,slideDown:1.8,slideUp:1.5}
   };
   let state={...defaults,glow1:{...defaults.glow1},glow2:{...defaults.glow2}};
   try{
@@ -1781,7 +1653,7 @@ window.applyBackgroundMood = function(mood){
     const vignette=document.getElementById("lab-vignette"),vOut=document.getElementById("lab-vignette-value");
     const grain=document.getElementById("lab-grain"),gOut=document.getElementById("lab-grain-value");
     const optics=state.optics;
-    setVar("--lab-drawer-color",optics.color);setVar("--lab-drawer-opacity",Number(optics.opacity)+"%");setVar("--lab-drawer-blur",Number(optics.blur)+"px");setVar("--lab-drawer-saturation",Number(optics.saturation)+"%");
+    setVar("--lab-drawer-color",optics.color);setVar("--lab-drawer-opacity",Number(optics.opacity)+"%");setVar("--lab-drawer-blur",Number(optics.blur)+"px");setVar("--lab-drawer-saturation",Number(optics.saturation)+"%");\n    setVar("--drawer-slide-down",Number(optics.slideDown||1.8)+"s");setVar("--drawer-slide-up",Number(optics.slideUp||1.5)+"s");\n    const speedDown=document.getElementById("drawer-speed-down"),speedUp=document.getElementById("drawer-speed-up"),speedDownOut=document.getElementById("drawer-speed-down-value"),speedUpOut=document.getElementById("drawer-speed-up-value");\n    if(speedDown)speedDown.value=optics.slideDown||1.8;if(speedUp)speedUp.value=optics.slideUp||1.5;if(speedDownOut)speedDownOut.textContent=Number(optics.slideDown||1.8).toFixed(1)+" сек.";if(speedUpOut)speedUpOut.textContent=Number(optics.slideUp||1.5).toFixed(1)+" сек.";
     /* Применяем оптику напрямую к реальной информационной шторке, независимо от темы. */
     const drawer=document.getElementById("sideDrawer");
     if(drawer){
@@ -1803,7 +1675,7 @@ window.applyBackgroundMood = function(mood){
   function save(){render();try{localStorage.setItem(key,JSON.stringify(state));}catch(e){}}
   window.updateBackgroundBase=value=>{state.base=value;save();};
   window.updateBackgroundEffectsLink=value=>{state.effectsLinked=Boolean(value);save();};
-  window.updateBackgroundOptics=(property,value)=>{if(!(property in defaults.optics))return;state.optics[property]=property==="color"?value:Number(value);save();};
+  window.updateBackgroundOptics=(property,value)=>{if(!(property in defaults.optics))return;state.optics[property]=property==="color"?value:Number(value);save();};\n  window.updateDrawerSpeed=(direction,value)=>{const property=direction==="down"?"slideDown":"slideUp";state.optics[property]=Number(value);save();};
   window.updateBackgroundVignette=value=>{state.vignette=Number(value);save();};
   window.updateBackgroundGrain=value=>{state.grain=Number(value);save();};
   window.updateBackgroundGlow=(number,property,value)=>{
