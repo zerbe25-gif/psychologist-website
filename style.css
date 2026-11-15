@@ -6101,3 +6101,61 @@ body.cost-modal-open #developer-panel{z-index:1!important}
   grid-template-columns:repeat(4,112px)!important;
  }
 }
+
+
+/* =========================================
+   БОКОВАЯ ШТОРКА 3.1 — ВЕРТИКАЛЬНЫЙ ПАРАЛЛАКС
+   Анимация переходов: вниз 1.8s, вверх 1.5s
+========================================= */
+#sideDrawer{
+  --drawer-width:66.666vw;
+  width:66.666vw !important;
+  max-width:100vw;
+  height:100dvh;
+  overflow:hidden;
+  background:#F2F7F6;
+  color:#2D3748;
+  border-right:1px solid rgba(45,55,72,.18);
+  box-shadow:30px 0 70px rgba(45,55,72,.1);
+  transform:translateX(-100%);
+  transition:transform .9s cubic-bezier(.16,1,.3,1),visibility .9s;
+}
+#sideDrawer.is-open{transform:translateX(0);}
+#drawerBackdrop{
+  background:linear-gradient(to right,rgba(36,34,31,.44),rgba(36,34,31,.18));
+  transition:opacity .7s ease,backdrop-filter .7s ease,-webkit-backdrop-filter .7s ease,visibility 0s linear .7s;
+}
+#drawerBackdrop.is-open{backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);}
+.drawer-inner{height:100%;min-height:0;padding:0;display:flex;flex-direction:column;overflow:hidden;}
+.drawer-header{flex:0 0 auto;background:#F2F7F6;border-bottom:1px solid rgba(45,55,72,.1);padding:1.4rem 3rem;z-index:30;}
+.drawer-eyebrow{margin:0 0 12px;font:600 11px Inter,sans-serif;letter-spacing:.2em;color:rgba(45,55,72,.5);}
+.drawer-tabs{display:flex;flex-wrap:nowrap;align-items:center;gap:8px;margin:0;padding:4px 0 12px;border:0;overflow-x:auto;scrollbar-width:thin;}
+.drawer-tabs button{
+  flex:0 0 auto;border:1px solid transparent;border-radius:9999px;padding:.45rem .9rem;
+  background:transparent;color:rgba(45,55,72,.6);font:400 12px Inter,sans-serif;
+  letter-spacing:.04em;white-space:nowrap;transition:all .4s cubic-bezier(.16,1,.3,1);
+}
+.drawer-tabs button:hover{color:#2D3748;background:rgba(52,121,126,.06);}
+.drawer-tabs button.is-active{font-size:13px;font-weight:600;color:#34797E;background:rgba(52,121,126,.09);border-color:rgba(52,121,126,.22);box-shadow:0 4px 14px rgba(52,121,126,.12);padding:.5rem 1.1rem;}
+#drawerTitle,.drawer-panels{display:none!important;}
+.viewport{position:relative;flex:1;min-height:0;overflow:hidden;background:#F2F7F6;}
+.block-section{
+  position:absolute;inset:0;width:100%;padding:2.25rem 3rem;background:#F2F7F6;
+  overflow-y:auto;overflow-x:hidden;transition:transform var(--drawer-slide-down,1.8s) cubic-bezier(.16,1,.3,1),
+  opacity var(--drawer-slide-down,1.8s) cubic-bezier(.16,1,.3,1),
+  filter var(--drawer-slide-down,1.8s) cubic-bezier(.16,1,.3,1);
+  will-change:transform,opacity;z-index:1;
+}
+.block-section[data-index="0"]{transform:translateY(0) scale(1);opacity:1;z-index:4;}
+.block-section[data-index="1"],.block-section[data-index="2"],.block-section[data-index="3"]{transform:translateY(100%) scale(1);opacity:0;}
+.drawer-footer{flex:0 0 auto;display:flex;justify-content:space-between;align-items:center;background:#F2F7F6;border-top:1px solid rgba(45,55,72,.1);padding:1.1rem 3rem;color:rgba(45,55,72,.7);font:12px Inter,sans-serif;z-index:30;}
+.drawer-footer strong{color:#2D3748;}
+.drawer-appointment-button{border:0;border-radius:12px;padding:10px 22px;background:#34797E;color:white;font:500 13px Inter,sans-serif;cursor:pointer;box-shadow:0 3px 10px rgba(45,55,72,.1);transition:background .25s ease,transform .25s ease;}
+.drawer-appointment-button:hover{background:#2b666a;transform:translateY(-1px);}
+.drawer-appointment-button span{margin-left:12px;}
+.drawer-close{top:20px;right:24px;color:#2D3748;z-index:50;}
+.drawer-close:hover{background:rgba(52,121,126,.08);transform:rotate(90deg);}
+.drawer-speed-controls{display:grid;grid-template-columns:repeat(2,minmax(180px,1fr));gap:18px;padding-top:14px;margin-top:12px;border-top:1px solid rgba(45,55,72,.12);}
+@media(max-width:1024px){#sideDrawer{width:100vw!important}.drawer-header{padding:1.2rem 1.4rem}.block-section{padding:1.8rem 1.4rem}.drawer-footer{padding:1rem 1.4rem}}
+@media(max-width:600px){.drawer-eyebrow{font-size:10px}.drawer-tabs{gap:5px}.drawer-tabs button{font-size:10px;padding:7px 9px}.drawer-tabs button.is-active{font-size:11px;padding:8px 10px}.drawer-footer{font-size:11px}.drawer-appointment-button{padding:9px 12px;font-size:11px}.drawer-speed-controls{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.block-section,#sideDrawer,#drawerBackdrop{transition-duration:.01ms!important}}
