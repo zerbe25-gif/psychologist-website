@@ -5939,3 +5939,34 @@ body.cost-modal-open #developer-panel{z-index:1!important}
 #developer-panel .lab-optics-control input[type=range]{
  width:112px!important;min-width:112px!important;max-width:112px!important;
 }
+
+
+/* FIX: Цвет 1 / Цвет 2 — повторяем рабочую горизонтальную раскладку Базы,
+   не меняя сам модуль «База · Виньетка · Текстура». */
+#developer-panel #lab-glow1 .lab-glow-controls,
+#developer-panel #lab-glow2 .lab-glow-controls{
+ display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;
+ align-items:flex-end!important;justify-content:flex-start!important;
+ gap:8px!important;width:100%!important;max-width:100%!important;
+ overflow-x:auto!important;overflow-y:hidden!important;
+}
+#developer-panel #lab-glow1 .lab-glow-controls>.lab-color-picker,
+#developer-panel #lab-glow2 .lab-glow-controls>.lab-color-picker,
+#developer-panel #lab-glow1 .lab-glow-controls>.lab-glow-control,
+#developer-panel #lab-glow2 .lab-glow-controls>.lab-glow-control{
+ display:flex!important;flex:0 0 112px!important;flex-direction:column!important;
+ align-items:stretch!important;gap:4px!important;
+ width:112px!important;min-width:112px!important;max-width:112px!important;
+ margin:0!important;
+}
+#developer-panel #lab-glow1 .lab-glow-controls>.lab-color-picker,
+#developer-panel #lab-glow2 .lab-glow-controls>.lab-color-picker{align-self:flex-end!important}
+#developer-panel #lab-glow1 .lab-glow-control label,
+#developer-panel #lab-glow2 .lab-glow-control label{white-space:normal!important;min-height:24px!important}
+#developer-panel #lab-glow1 .lab-glow-control input[type=range],
+#developer-panel #lab-glow2 .lab-glow-control input[type=range]{
+ display:block!important;box-sizing:border-box!important;
+ width:112px!important;min-width:112px!important;max-width:112px!important;margin:2px 0!important;
+}
+#developer-panel #lab-glow1 .lab-glow-control output,
+#developer-panel #lab-glow2 .lab-glow-control output{white-space:nowrap!important}
