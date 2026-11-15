@@ -3599,7 +3599,7 @@ body.cost-modal-open {
     display: none !important;
 }
 
-/* Заголовок и сброс занимают отдельные строки */
+/* Пять ползунков — строго одна строка */
 #cost-control-panel:not([hidden]) {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -3607,43 +3607,11 @@ body.cost-modal-open {
     align-items: start;
 }
 
-#cost-control-panel > .animation-panel-title {
-    grid-column: 1 / -1;
-    grid-row: 1;
-}
-
-/* Пять ползунков — строго одна строка */
-#cost-control-panel > .background-control:nth-child(2) {
-    grid-column: 1;
-    grid-row: 2;
-}
-
-#cost-control-panel > .background-control:nth-child(3) {
-    grid-column: 2;
-    grid-row: 2;
-}
-
-#cost-control-panel > .background-control:nth-child(4) {
-    grid-column: 3;
-    grid-row: 2;
-}
-
-#cost-control-panel > .background-control:nth-child(5) {
-    grid-column: 4;
-    grid-row: 2;
-}
-
-#cost-control-panel > .background-control:nth-child(6) {
-    grid-column: 5;
-    grid-row: 2;
-}
-
-/* Кнопка сброса — под ползунками */
-#cost-control-panel > button {
-    grid-column: 1 / -1;
-    grid-row: 3;
-    justify-self: start;
-}
+#cost-control-panel > .background-control:nth-child(1) { grid-column: 1; grid-row: 1; }
+#cost-control-panel > .background-control:nth-child(2) { grid-column: 2; grid-row: 1; }
+#cost-control-panel > .background-control:nth-child(3) { grid-column: 3; grid-row: 1; }
+#cost-control-panel > .background-control:nth-child(4) { grid-column: 4; grid-row: 1; }
+#cost-control-panel > .background-control:nth-child(5) { grid-column: 5; grid-row: 1; }
 
 /* Компактные ползунки */
 #cost-control-panel input[type="range"] {
@@ -3662,10 +3630,6 @@ body.cost-modal-open {
         grid-row: auto !important;
     }
 
-    #cost-control-panel > .animation-panel-title,
-    #cost-control-panel > button {
-        grid-column: 1 / -1;
-    }
 }
 
 
@@ -6053,8 +6017,4 @@ body.cost-modal-open #developer-panel{z-index:1!important}
  box-sizing:border-box!important;display:block!important;
  width:112px!important;min-width:112px!important;max-width:112px!important;
  margin:2px 0!important;
-}
-#developer-panel #cost-control-panel>button{
- grid-column:1/-1!important;justify-self:start!important;
- margin:2px 0 0!important;padding:5px 9px!important;font-size:10px!important;
 }
