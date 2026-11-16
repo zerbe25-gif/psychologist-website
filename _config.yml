@@ -1,0 +1,6 @@
+title: "Сергей Цербе — психологическое консультирование"
+url: "https://zerbe25-gif.github.io"
+baseurl: "/psychologist-website"
+timezone: "Europe/Berlin"
+markdown: kramdown
+permalink: /articles/:title/
