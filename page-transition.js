@@ -32,10 +32,43 @@
     return animation.finished.catch(() => {});
   };
 
+  /* Animate only the page content, never the decorative background layers. */
+  const getPageDepthTargets = () => isArticlesPage
+    ? [body.querySelector(".header"), body.querySelector(".articles-content"), body.querySelector(".articles-footer")]
+    : [body.querySelector(".header"), body.querySelector(".main-content")];
+
+  const animatePageDepth = (direction) => {
+    const targets = getPageDepthTargets().filter(Boolean);
+    const enteringPage = direction === "in";
+    const frames = enteringPage
+      ? [
+          { transform: "translate3d(0,10px,0) scale(.996)", opacity: .94 },
+          { transform: "translate3d(0,0,0) scale(1)", opacity: 1 }
+        ]
+      : [
+          { transform: "translate3d(0,0,0) scale(1)", opacity: 1 },
+          { transform: "translate3d(0,-9px,0) scale(.992)", opacity: .94 }
+        ];
+
+    const animations = targets.map((element) => element.animate(frames, {
+      duration: enteringPage ? 760 : 820,
+      easing: enteringPage
+        ? "cubic-bezier(.16,1,.3,1)"
+        : "cubic-bezier(.22,.61,.36,1)",
+      fill: "both"
+    }));
+
+    return Promise.all(animations.map(animation =>
+      animation.finished.catch(() => {}).then(() => animation.cancel())
+    ));
+  };
+
   if (entering) {
     curtain.style.transform = "translate3d(0,0,0)";
     root.classList.remove("page-transition-pending");
-    animateCurtain("0%", "-105%", 820).then(() => {
+    const reveal = animateCurtain("0%", "-105%", 820);
+    animatePageDepth("in");
+    reveal.then(() => {
       curtain.style.transform = "translate3d(0,-105%,0)";
     });
   } else {
@@ -65,7 +98,10 @@
     navigating = true;
     event.preventDefault();
     try { sessionStorage.setItem(storageKey, "enter"); } catch (error) {}
-    await animateCurtain("105%", "0%", 820);
+    await Promise.all([
+      animateCurtain("105%", "0%", 820),
+      animatePageDepth("out")
+    ]);
     window.location.assign(destination.href);
   });
 })();
