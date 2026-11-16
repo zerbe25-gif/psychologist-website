@@ -4,6 +4,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+      try {
+        if (window.matchMedia("(min-width: 768px)").matches &&
+            !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
+            sessionStorage.getItem("psychologistPageTransition") === "enter") {
+          document.documentElement.classList.add("page-transition-pending");
+        }
+      } catch (error) {}
+    </script>
   <meta name="theme-color" content="#f3ba97">
 
   <title>Сергей Цербе — психологическое консультирование</title>
