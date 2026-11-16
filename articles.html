@@ -98,6 +98,55 @@ permalink: /articles.html
             font-size:13px;
             line-height:1.8;
         }
+        .articles-page .articles-category-filter {
+            width:min(430px,48%);
+            flex:0 0 auto;
+            padding:15px 17px 16px;
+            border:1px solid rgba(52,121,126,.16);
+            background:rgba(255,255,255,.55);
+        }
+        .articles-page .articles-filter-title {
+            margin:0 0 11px;
+            color:#2D3748;
+            font-family:'Cormorant Garamond',serif;
+            font-size:21px;
+            font-weight:500;
+            line-height:1.1;
+        }
+        .articles-page .articles-filter-options {
+            display:flex;
+            flex-wrap:wrap;
+            gap:7px;
+        }
+        .articles-page .articles-filter-button {
+            padding:7px 10px;
+            border:1px solid rgba(52,121,126,.22);
+            border-radius:999px;
+            background:transparent;
+            color:#53615F;
+            font:500 10px/1.2 'Inter',sans-serif;
+            cursor:pointer;
+            transition:background .2s ease,color .2s ease,border-color .2s ease;
+        }
+        .articles-page .articles-filter-button:hover,
+        .articles-page .articles-filter-button.active {
+            border-color:#34797E;
+            background:#34797E;
+            color:#fff;
+        }
+        .articles-page .articles-filter-button:focus-visible {
+            outline:2px solid #DCB573;
+            outline-offset:3px;
+        }
+        .articles-page .article-card[hidden] { display:none !important; }
+        .articles-page .articles-empty-state {
+            display:none;
+            grid-column:1 / -1;
+            padding:34px 20px;
+            color:#787C7B;
+            text-align:center;
+            font-size:13px;
+        }
         .articles-page .articles-grid {
             display:grid;
             grid-template-columns:repeat(2,minmax(0,1fr));
@@ -293,6 +342,10 @@ permalink: /articles.html
         @media (max-width:767px) {
             .articles-page .articles-content {padding:0 18px 34px;}
             .articles-page .articles-home-row {margin:16px 0 34px;}
+            .articles-page .articles-intro {align-items:stretch;}
+            .articles-page .articles-category-filter {width:100%;box-sizing:border-box;}
+            .articles-page .articles-filter-options {gap:6px;}
+            .articles-page .articles-filter-button {font-size:10px;padding:8px 10px;}
             .articles-page .articles-grid {grid-template-columns:1fr;gap:22px;}
             .articles-page .article-image-wrap {height:220px;}
             .articles-page .article-copy {padding:23px 22px 25px;}
@@ -341,15 +394,23 @@ permalink: /articles.html
                 <span class="articles-eyebrow">Библиотека материалов</span>
                 <h1 class="articles-title" id="articles-title">Статьи о ментальном здоровье</h1>
             </div>
-            <p class="articles-lead">
-                Разборы сложных психологических состояний, механизмов защиты, отношений и способов бережной самоподдержки.
-            </p>
+            <div class="articles-category-filter" aria-label="Фильтр статей по категориям">
+                <h2 class="articles-filter-title">Выбор по категориям</h2>
+                <div class="articles-filter-options" role="group" aria-label="Категории статей">
+                    <button class="articles-filter-button active" type="button" data-category-filter="all" aria-pressed="true">Все статьи</button>
+                    <button class="articles-filter-button" type="button" data-category-filter="Психология" aria-pressed="false">Психология</button>
+                    <button class="articles-filter-button" type="button" data-category-filter="Общество" aria-pressed="false">Общество</button>
+                    <button class="articles-filter-button" type="button" data-category-filter="О мужчинах" aria-pressed="false">О мужчинах</button>
+                    <button class="articles-filter-button" type="button" data-category-filter="О женщинах" aria-pressed="false">О женщинах</button>
+                    <button class="articles-filter-button" type="button" data-category-filter="Подростки" aria-pressed="false">Подростки</button>
+                </div>
+            </div>
         </section>
 
         <section class="articles-grid" aria-label="Список статей">
             {% assign sorted_posts = site.posts | sort: "date" | reverse %}
             {% for post in sorted_posts %}
-            <article class="article-card" id="article-{{ post.slug | slugify }}" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Открыть статью: {{ post.title | escape }}">
+            <article class="article-card" data-article-category="{{ post.category | escape }}" id="article-{{ post.slug | slugify }}" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Открыть статью: {{ post.title | escape }}">
                 <div>
                     <div class="article-image-wrap">
                         {% if post.thumbnail %}
@@ -372,7 +433,32 @@ permalink: /articles.html
                 <template class="article-full-content">{{ post.content }}</template>
             </article>
             {% endfor %}
+            <p class="articles-empty-state" id="articlesEmptyState">В этой категории пока нет статей.</p>
         </section>
+        <script>
+        (() => {
+            const buttons = document.querySelectorAll('[data-category-filter]');
+            const cards = document.querySelectorAll('.article-card[data-article-category]');
+            const emptyState = document.getElementById('articlesEmptyState');
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const selected = button.dataset.categoryFilter;
+                    let visibleCount = 0;
+                    buttons.forEach(item => {
+                        const active = item === button;
+                        item.classList.toggle('active', active);
+                        item.setAttribute('aria-pressed', String(active));
+                    });
+                    cards.forEach(card => {
+                        const matches = selected === 'all' || card.dataset.articleCategory === selected;
+                        card.hidden = !matches;
+                        if (matches) visibleCount += 1;
+                    });
+                    if (emptyState) emptyState.style.display = visibleCount ? 'none' : 'block';
+                });
+            });
+        })();
+        </script>
     </main>
 
     <footer class="articles-footer">
