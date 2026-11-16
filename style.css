@@ -6181,62 +6181,30 @@ body.cost-modal-open #developer-panel{z-index:1!important}
 }
 
 
-/* ==========================================================
-   DESKTOP PAGE TRANSITION — GSAP DEPTH CURTAIN
-   Only initialized on desktop; mobile navigation is untouched.
-   ========================================================== */
+/* DESKTOP PAGE TRANSITION — one solid curtain, animated as a single layer */
 @media (min-width: 768px) {
   .page-transition-curtain {
     position: fixed;
     inset: 0;
     z-index: 2147483000;
     pointer-events: none;
-    background:
-      radial-gradient(ellipse at 82% 18%, rgba(52,121,126,.10), transparent 42%),
-      radial-gradient(ellipse at 18% 84%, rgba(220,181,115,.10), transparent 40%),
-      linear-gradient(145deg, #FAFCFB 0%, #F2F7F6 56%, #EEF3F1 100%);
-    box-shadow: 0 22px 65px rgba(35,48,54,.12);
+    background: #F3F6F3;
+    box-shadow: 0 18px 55px rgba(35,48,54,.10);
     transform: translate3d(0,105%,0);
     will-change: transform;
     backface-visibility: hidden;
   }
 
-  body.articles-page .page-transition-curtain {
-    background:
-      radial-gradient(ellipse at 82% 18%, rgba(52,121,126,.09), transparent 42%),
-      radial-gradient(ellipse at 18% 84%, rgba(220,181,115,.09), transparent 40%),
-      linear-gradient(145deg, #FFFFFF 0%, #F5F8F7 58%, #EFF4F2 100%);
-  }
-
-  body > .header,
-  body > .main-content,
-  body > .articles-content {
-    backface-visibility: hidden;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .page-transition-curtain { display: none !important; }
-}
-
-
-/* Prevent the incoming document from flashing before its transition script runs. */
-@media (min-width: 768px) {
   html.page-transition-pending::before {
     content: "";
     position: fixed;
     inset: 0;
     z-index: 2147483000;
     pointer-events: none;
-    background:
-      radial-gradient(ellipse at 82% 18%, rgba(52,121,126,.10), transparent 42%),
-      radial-gradient(ellipse at 18% 84%, rgba(220,181,115,.10), transparent 40%),
-      linear-gradient(145deg, #FAFCFB 0%, #F2F7F6 56%, #EEF3F1 100%);
+    background: #F3F6F3;
   }
-  html.page-transition-pending body.articles-page::before {
-    background:
-      radial-gradient(ellipse at 82% 18%, rgba(52,121,126,.09), transparent 42%),
-      radial-gradient(ellipse at 18% 84%, rgba(220,181,115,.09), transparent 40%),
-      linear-gradient(145deg, #FFFFFF 0%, #F5F8F7 58%, #EFF4F2 100%);
-  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-transition-curtain { display: none !important; }
 }
