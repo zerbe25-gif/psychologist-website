@@ -6218,3 +6218,25 @@ body.cost-modal-open #developer-panel{z-index:1!important}
 @media (prefers-reduced-motion: reduce) {
   .page-transition-curtain { display: none !important; }
 }
+
+
+/* Prevent the incoming document from flashing before its transition script runs. */
+@media (min-width: 768px) {
+  html.page-transition-pending::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 2147483000;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse at 82% 18%, rgba(52,121,126,.10), transparent 42%),
+      radial-gradient(ellipse at 18% 84%, rgba(220,181,115,.10), transparent 40%),
+      linear-gradient(145deg, #FAFCFB 0%, #F2F7F6 56%, #EEF3F1 100%);
+  }
+  html.page-transition-pending body.articles-page::before {
+    background:
+      radial-gradient(ellipse at 82% 18%, rgba(52,121,126,.09), transparent 42%),
+      radial-gradient(ellipse at 18% 84%, rgba(220,181,115,.09), transparent 40%),
+      linear-gradient(145deg, #FFFFFF 0%, #F5F8F7 58%, #EFF4F2 100%);
+  }
+}
