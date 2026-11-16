@@ -7,6 +7,15 @@ permalink: /articles.html
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+      try {
+        if (window.matchMedia("(min-width: 768px)").matches &&
+            !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
+            sessionStorage.getItem("psychologistPageTransition") === "enter") {
+          document.documentElement.classList.add("page-transition-pending");
+        }
+      } catch (error) {}
+    </script>
     <meta name="theme-color" content="#F2F7F6">
     <title>Статьи — Сергей Цербе</title>
     <meta name="description" content="Авторские статьи о ментальном здоровье, отношениях и психологической самоподдержке.">
