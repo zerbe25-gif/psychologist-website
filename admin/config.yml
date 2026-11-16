@@ -19,7 +19,15 @@ collections:
     fields:
       - { label: "Заголовок", name: "title", widget: "string" }
       - { label: "Дата публикации", name: "date", widget: "datetime", format: "YYYY-MM-DD HH:mm:ss", date_format: "DD.MM.YYYY", time_format: "HH:mm" }
-      - { label: "Категория", name: "category", widget: "string" }
+      - label: "Категория"
+        name: "category"
+        widget: "select"
+        options:
+          - { label: "Психология", value: "Психология" }
+          - { label: "Общество", value: "Общество" }
+          - { label: "О мужчинах", value: "О мужчинах" }
+          - { label: "О женщинах", value: "О женщинах" }
+          - { label: "Подростки", value: "Подростки" }
       - label: "Цвет категории"
         name: "category_class"
         widget: "select"
