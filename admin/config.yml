@@ -28,6 +28,9 @@ collections:
           - { label: "О мужчинах", value: "О мужчинах" }
           - { label: "О женщинах", value: "О женщинах" }
           - { label: "Подростки", value: "Подростки" }
+          - { label: "Семья / Отношения", value: "Семья / Отношения" }
+          - { label: "Эмиграция", value: "Эмиграция" }
+          - { label: "О Горе и утрате", value: "О Горе и утрате" }
       - label: "Цвет категории"
         name: "category_class"
         widget: "select"
