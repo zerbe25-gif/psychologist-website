@@ -6159,3 +6159,23 @@ body.cost-modal-open #developer-panel{z-index:1!important}
 @media(max-width:1024px){#sideDrawer{width:100vw!important}.drawer-header{padding:1.2rem 1.4rem}.block-section{padding:1.8rem 1.4rem}.drawer-footer{padding:1rem 1.4rem}}
 @media(max-width:600px){.drawer-eyebrow{font-size:10px}.drawer-tabs{gap:5px}.drawer-tabs button{font-size:10px;padding:7px 9px}.drawer-tabs button.is-active{font-size:11px;padding:8px 10px}.drawer-footer{font-size:11px}.drawer-appointment-button{padding:9px 12px;font-size:11px}.drawer-speed-controls{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.block-section,#sideDrawer,#drawerBackdrop{transition-duration:.01ms!important}}
+
+/* FIX: не переносить короткое «О» отдельно в заголовке «О МЕТОДЕ» */
+.menu-item-method,
+.menu-item-method .word-mask,
+.menu-item-method .word-from-bottom{
+  white-space:nowrap;
+  word-break:keep-all;
+  overflow-wrap:normal;
+}
+.menu-item-method .word-mask{
+  width:max-content;
+  max-width:100%;
+}
+.menu-item-method{
+  width:max-content;
+  max-width:100%;
+}
+@media(max-width:520px){
+  .menu-item-method{font-size:clamp(28px,8vw,42px);}
+}
