@@ -1,0 +1,33 @@
+locale: "ru"
+backend:
+  name: turbo-github
+  turbo_site_id: "REPLACE_WITH_TURBO_SITE_ID"
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/psychologist-website/images/uploads"
+
+collections:
+  - name: "posts"
+    label: "Статьи"
+    label_singular: "Статья"
+    folder: "_posts"
+    create: true
+    delete: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    preview_path: "articles.html"
+    fields:
+      - { label: "Заголовок", name: "title", widget: "string" }
+      - { label: "Дата публикации", name: "date", widget: "datetime", format: "YYYY-MM-DD HH:mm:ss", date_format: "DD.MM.YYYY", time_format: "HH:mm" }
+      - { label: "Категория", name: "category", widget: "string" }
+      - label: "Цвет категории"
+        name: "category_class"
+        widget: "select"
+        options:
+          - { label: "Обычный", value: "neutral" }
+          - { label: "Золотой", value: "gold" }
+        default: "neutral"
+      - { label: "Краткое описание для карточки", name: "description", widget: "text" }
+      - { label: "Время чтения (минут)", name: "reading_time", widget: "number", value_type: "int", min: 1, default: 5 }
+      - { label: "Обложка статьи", name: "thumbnail", widget: "image", required: false }
+      - { label: "Текст статьи", name: "body", widget: "markdown" }
