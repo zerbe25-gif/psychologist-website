@@ -28,6 +28,14 @@
   });
 
   const animate = async (direction) => {
+    /* The incoming curtain covers the document synchronously, before GSAP downloads. */
+    if (direction === "enter") {
+      curtain.style.transform = "translate3d(0,0,0)";
+      targets.forEach(el => {
+        el.style.transform = "translate3d(0,18px,0) scale(.985)";
+        el.style.opacity = ".55";
+      });
+    }
     const gsap = await loadGsap();
     if (gsap) {
       if (direction === "leave") {
@@ -40,7 +48,7 @@
           }, 0);
           tl.to(curtain, {
             y: "0%", duration: 0.62,
-            ease: "cubic-bezier(0.16, 1, 0.3, 1)"
+            ease: "power3.out"
           }, 0.04);
         });
       }
@@ -50,7 +58,7 @@
         const tl = gsap.timeline({ onComplete: resolve });
         tl.to(targets, {
           y: 0, scale: 1, opacity: 1,
-          duration: 0.72, ease: "cubic-bezier(0.16, 1, 0.3, 1)",
+          duration: 0.72, ease: "power3.out",
           stagger: 0.035
         }, 0);
         tl.to(curtain, {
