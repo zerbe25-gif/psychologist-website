@@ -1,7 +1,7 @@
 locale: "ru"
 backend:
   name: turbo-github
-  turbo_site_id: "REPLACE_WITH_TURBO_SITE_ID"
+  turbo_site_id: "783440a7-e221-454e-8620-bb3f9fdccefd"
   branch: main
 
 media_folder: "images/uploads"
