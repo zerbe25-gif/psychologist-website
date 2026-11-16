@@ -6181,7 +6181,7 @@ body.cost-modal-open #developer-panel{z-index:1!important}
 }
 
 
-/* DESKTOP PAGE TRANSITION — one solid curtain, animated as a single layer */
+/* DESKTOP PAGE TRANSITION — curtain is present before decorative layers */
 @media (min-width: 768px) {
   .page-transition-curtain {
     position: fixed;
@@ -6195,13 +6195,8 @@ body.cost-modal-open #developer-panel{z-index:1!important}
     backface-visibility: hidden;
   }
 
-  html.page-transition-pending::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: 2147483000;
-    pointer-events: none;
-    background: #F3F6F3;
+  html.page-transition-pending .page-transition-curtain {
+    transform: translate3d(0,0,0);
   }
 }
 
