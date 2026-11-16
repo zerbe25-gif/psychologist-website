@@ -1,4 +1,4 @@
-/* DESKTOP PAGE TRANSITION — single uninterrupted curtain (no GSAP dependency) */
+/* DESKTOP PAGE TRANSITION — curtain exists in HTML before first paint */
 (() => {
   const desktop = window.matchMedia("(min-width: 768px)");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -6,14 +6,21 @@
 
   const root = document.documentElement;
   const body = document.body;
+  const curtain = document.querySelector(".page-transition-curtain");
+  if (!curtain) {
+    root.classList.remove("page-transition-pending");
+    return;
+  }
+
   const isArticlesPage = body.classList.contains("articles-page");
   const storageKey = "psychologistPageTransition";
-  const curtain = document.createElement("div");
-  curtain.className = "page-transition-curtain";
-  curtain.setAttribute("aria-hidden", "true");
-  body.appendChild(curtain);
+  let entering = false;
+  try {
+    entering = sessionStorage.getItem(storageKey) === "enter";
+    sessionStorage.removeItem(storageKey);
+  } catch (error) {}
 
-  const moveCurtain = (from, to, duration) => {
+  const animateCurtain = (from, to, duration) => {
     curtain.style.transform = `translate3d(0,${from},0)`;
     const animation = curtain.animate(
       [
@@ -25,20 +32,15 @@
     return animation.finished.catch(() => {});
   };
 
-  let entering = false;
-  try {
-    entering = sessionStorage.getItem(storageKey) === "enter";
-    sessionStorage.removeItem(storageKey);
-  } catch (error) {}
-
   if (entering) {
-    /* The head-level veil covers the page until this curtain takes over. */
     curtain.style.transform = "translate3d(0,0,0)";
     root.classList.remove("page-transition-pending");
-    moveCurtain("0%", "-105%", 720).then(() => curtain.remove());
+    animateCurtain("0%", "-105%", 820).then(() => {
+      curtain.style.transform = "translate3d(0,-105%,0)";
+    });
   } else {
-    curtain.remove();
     root.classList.remove("page-transition-pending");
+    curtain.style.transform = "translate3d(0,105%,0)";
   }
 
   let navigating = false;
@@ -63,7 +65,7 @@
     navigating = true;
     event.preventDefault();
     try { sessionStorage.setItem(storageKey, "enter"); } catch (error) {}
-    await moveCurtain("105%", "0%", 620);
+    await animateCurtain("105%", "0%", 820);
     window.location.assign(destination.href);
   });
 })();
