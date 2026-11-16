@@ -1,16 +1,19 @@
-/* DESKTOP PAGE TRANSITION — GSAP depth curtain, with Web Animations fallback */
+/* DESKTOP PAGE TRANSITION — synchronized GSAP / Web Animations */
 (() => {
   const desktop = window.matchMedia("(min-width: 768px)");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   if (!desktop.matches || reducedMotion.matches) return;
 
   const body = document.body;
+  const root = document.documentElement;
   const isArticlesPage = body.classList.contains("articles-page");
-  const content = isArticlesPage
+  const targets = (isArticlesPage
     ? [body.querySelector(".header"), body.querySelector(".articles-content")]
-    : [body.querySelector(".header"), body.querySelector(".main-content")];
-  const targets = content.filter(Boolean);
-  if (!targets.length) return;
+    : [body.querySelector(".header"), body.querySelector(".main-content")]).filter(Boolean);
+  if (!targets.length) {
+    root.classList.remove("page-transition-pending");
+    return;
+  }
 
   const storageKey = "psychologistPageTransition";
   const curtain = document.createElement("div");
@@ -20,78 +23,96 @@
 
   const loadGsap = () => new Promise(resolve => {
     if (window.gsap) return resolve(window.gsap);
+    const existing = document.querySelector('script[data-page-transition-gsap]');
+    if (existing) {
+      existing.addEventListener("load", () => resolve(window.gsap || null), { once: true });
+      existing.addEventListener("error", () => resolve(null), { once: true });
+      return;
+    }
     const script = document.createElement("script");
+    script.dataset.pageTransitionGsap = "true";
     script.src = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js";
     script.onload = () => resolve(window.gsap || null);
     script.onerror = () => resolve(null);
     document.head.appendChild(script);
   });
 
-  const animate = async (direction) => {
-    /* The incoming curtain covers the document synchronously, before GSAP downloads. */
+  /* Start loading GSAP before the visitor clicks. Never make navigation wait for the CDN. */
+  loadGsap();
+
+  const runWaapi = async direction => {
+    const entering = direction === "enter";
+    const pageFrames = entering
+      ? [{ transform: "translate3d(0,18px,0) scale(.985)", opacity: .55 },
+         { transform: "translate3d(0,0,0) scale(1)", opacity: 1 }]
+      : [{ transform: "translate3d(0,0,0) scale(1)", opacity: 1 },
+         { transform: "translate3d(0,-14px,0) scale(.985)", opacity: .72 }];
+    const curtainFrames = entering
+      ? [{ transform: "translate3d(0,0,0)" }, { transform: "translate3d(0,-105%,0)" }]
+      : [{ transform: "translate3d(0,105%,0)" }, { transform: "translate3d(0,0,0)" }];
+
+    const pageAnimations = targets.map(el => el.animate(pageFrames, {
+      duration: entering ? 760 : 500,
+      easing: "cubic-bezier(.16,1,.3,1)",
+      fill: "both"
+    }));
+    const curtainAnimation = curtain.animate(curtainFrames, {
+      duration: entering ? 780 : 640,
+      easing: "cubic-bezier(.16,1,.3,1)",
+      fill: "both"
+    });
+    await Promise.all([...pageAnimations, curtainAnimation].map(a => a.finished.catch(() => {})));
+    pageAnimations.forEach(a => a.cancel());
+    targets.forEach(el => {
+      el.style.removeProperty("transform");
+      el.style.removeProperty("opacity");
+    });
+    curtainAnimation.cancel();
+  };
+
+  const runGsap = direction => new Promise(resolve => {
+    const gsap = window.gsap;
+    const entering = direction === "enter";
+    gsap.killTweensOf([...targets, curtain]);
+    gsap.set(curtain, { y: entering ? "0%" : "105%" });
+    gsap.set(targets, entering
+      ? { y: 18, scale: .985, opacity: .55 }
+      : { y: 0, scale: 1, opacity: 1 });
+
+    const tl = gsap.timeline({
+      onComplete: () => {
+        gsap.set(targets, { clearProps: "transform,opacity" });
+        gsap.set(curtain, { clearProps: "transform" });
+        resolve();
+      }
+    });
+
+    if (entering) {
+      tl.to(targets, {
+        y: 0, scale: 1, opacity: 1,
+        duration: .76, ease: "power3.out"
+      }, 0);
+      tl.to(curtain, {
+        y: "-105%", duration: .78, ease: "power3.out"
+      }, 0);
+    } else {
+      tl.to(targets, {
+        y: -14, scale: .985, opacity: .72,
+        duration: .50, ease: "power2.inOut"
+      }, 0);
+      tl.to(curtain, {
+        y: "0%", duration: .64, ease: "power3.out"
+      }, 0);
+    }
+  });
+
+  const animate = direction => {
+    /* On entry the head-level CSS veil is already covering the page. */
     if (direction === "enter") {
       curtain.style.transform = "translate3d(0,0,0)";
-      targets.forEach(el => {
-        el.style.transform = "translate3d(0,18px,0) scale(.985)";
-        el.style.opacity = ".55";
-      });
+      root.classList.remove("page-transition-pending");
     }
-    const gsap = await loadGsap();
-    if (gsap) {
-      if (direction === "leave") {
-        gsap.set(curtain, { y: "105%" });
-        return new Promise(resolve => {
-          const tl = gsap.timeline({ onComplete: resolve });
-          tl.to(targets, {
-            y: -14, scale: 0.985, opacity: 0.58,
-            duration: 0.48, ease: "power2.inOut", stagger: 0.015
-          }, 0);
-          tl.to(curtain, {
-            y: "0%", duration: 0.62,
-            ease: "power3.out"
-          }, 0.04);
-        });
-      }
-      gsap.set(curtain, { y: "0%" });
-      gsap.set(targets, { y: 18, scale: 0.985, opacity: 0.55 });
-      return new Promise(resolve => {
-        const tl = gsap.timeline({ onComplete: resolve });
-        tl.to(targets, {
-          y: 0, scale: 1, opacity: 1,
-          duration: 0.72, ease: "power3.out",
-          stagger: 0.035
-        }, 0);
-        tl.to(curtain, {
-          y: "-105%", duration: 0.78,
-          ease: "cubic-bezier(0.16, 1, 0.3, 1)"
-        }, 0.02);
-      });
-    }
-
-    const animations = direction === "leave"
-      ? [
-          ...targets.map(el => el.animate(
-            [{ transform: "translate3d(0,0,0) scale(1)", opacity: 1 },
-             { transform: "translate3d(0,-14px,0) scale(.985)", opacity: .58 }],
-            { duration: 480, easing: "ease-in-out", fill: "forwards" }
-          )),
-          curtain.animate(
-            [{ transform: "translate3d(0,105%,0)" }, { transform: "translate3d(0,0,0)" }],
-            { duration: 620, easing: "cubic-bezier(.16,1,.3,1)", fill: "forwards" }
-          )
-        ]
-      : [
-          ...targets.map(el => el.animate(
-            [{ transform: "translate3d(0,18px,0) scale(.985)", opacity: .55 },
-             { transform: "translate3d(0,0,0) scale(1)", opacity: 1 }],
-            { duration: 720, easing: "cubic-bezier(.16,1,.3,1)", fill: "both" }
-          )),
-          curtain.animate(
-            [{ transform: "translate3d(0,0,0)" }, { transform: "translate3d(0,-105%,0)" }],
-            { duration: 780, easing: "cubic-bezier(.16,1,.3,1)", fill: "forwards" }
-          )
-        ];
-    await Promise.all(animations.map(animation => animation.finished.catch(() => {})));
+    return window.gsap ? runGsap(direction) : runWaapi(direction);
   };
 
   let entering = false;
@@ -101,13 +122,15 @@
   } catch (error) {}
 
   if (entering) {
-    animate("enter");
+    animate("enter").then(() => curtain.remove());
   } else {
     curtain.remove();
+    root.classList.remove("page-transition-pending");
   }
 
+  let navigating = false;
   document.addEventListener("click", async event => {
-    if (event.defaultPrevented || event.button !== 0 ||
+    if (navigating || event.defaultPrevented || event.button !== 0 ||
         event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     const link = event.target.closest("a[href]");
     if (!link || link.target === "_blank" || link.hasAttribute("download")) return;
@@ -123,6 +146,7 @@
        destination.pathname === "/");
     if (!destinationIsArticles && !isHomeDestination) return;
 
+    navigating = true;
     event.preventDefault();
     try { sessionStorage.setItem(storageKey, "enter"); } catch (error) {}
     await animate("leave");
