@@ -1,3 +1,7 @@
+---
+layout: null
+permalink: /articles.html
+---
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -300,6 +304,21 @@
             .articles-page .card-image,
             .articles-page .articles-home-button {transition:none;}
         }
+
+        .articles-page .article-modal-body {
+            margin-top: 24px;
+            color: #424947;
+            font-size: 15px;
+            line-height: 1.9;
+            overflow-wrap: anywhere;
+        }
+        .articles-page .article-modal-body p { margin: 0 0 18px; }
+        .articles-page .article-modal-body h2,
+        .articles-page .article-modal-body h3 { margin: 28px 0 12px; color: #2D3748; font-family: 'Cormorant Garamond',serif; font-weight: 500; }
+        .articles-page .article-modal-body ul,
+        .articles-page .article-modal-body ol { margin: 0 0 18px 24px; }
+        .articles-page .article-modal-body blockquote { margin: 22px 0; padding: 4px 0 4px 18px; border-left: 2px solid #DCB573; color: #686f6b; }
+        .articles-page .article-modal-body img { max-width: 100%; height: auto; border-radius: 8px; }
     </style>
 </head>
 
@@ -328,85 +347,31 @@
         </section>
 
         <section class="articles-grid" aria-label="Список статей">
-            <article class="article-card" id="article-impostor" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Открыть статью: синдром самозванца">
+            {% assign sorted_posts = site.posts | sort: "date" | reverse %}
+            {% for post in sorted_posts %}
+            <article class="article-card" id="article-{{ post.slug | slugify }}" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Открыть статью: {{ post.title | escape }}">
                 <div>
                     <div class="article-image-wrap">
-                        <img class="card-image" src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?q=80&w=1000&auto=format&fit=crop" alt="Синдром самозванца" loading="lazy">
+                        {% if post.thumbnail %}
+                        <img class="card-image" src="{{ post.thumbnail | escape }}" alt="{{ post.title | escape }}" loading="lazy">
+                        {% endif %}
                     </div>
                     <div class="article-copy">
                         <div class="article-meta">
-                            <span class="article-category">Тревожность</span>
-                            <span class="article-reading-time">⏱ 5 мин чтения</span>
+                            <span class="article-category {{ post.category_class | default: 'neutral' }}">{{ post.category | escape }}</span>
+                            <span class="article-reading-time">⏱ {{ post.reading_time | default: 5 }} мин чтения</span>
                         </div>
-                        <h2 class="article-heading">Как справиться с синдромом самозванца в условиях неопределенности</h2>
-                        <p class="article-description">Практический разбор когнитивных искажений, механизмов внутреннего давления и способов восстановления опоры на собственные реальные достижения в профессиональной среде.</p>
+                        <h2 class="article-heading">{{ post.title | escape }}</h2>
+                        <p class="article-description">{{ post.description | escape }}</p>
                     </div>
                 </div>
                 <div class="article-footer">
-                    <span class="article-date">12 Ноября, 2026</span>
-                    <a class="article-read-link" href="#article-impostor" data-open-article aria-label="Статья о синдроме самозванца">Читать статью <span aria-hidden="true">→</span></a>
+                    <span class="article-date">{{ post.display_date | default: post.date | date: "%d.%m.%Y" }}</span>
+                    <a class="article-read-link" href="#article-{{ post.slug | slugify }}" data-open-article aria-label="Читать статью: {{ post.title | escape }}">Читать статью <span aria-hidden="true">→</span></a>
                 </div>
+                <template class="article-full-content">{{ post.content }}</template>
             </article>
-
-            <article class="article-card" id="article-boundaries" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Открыть статью: границы в паре">
-                <div>
-                    <div class="article-image-wrap">
-                        <img class="card-image" src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=1000&auto=format&fit=crop" alt="Границы в паре" loading="lazy">
-                    </div>
-                    <div class="article-copy">
-                        <div class="article-meta">
-                            <span class="article-category gold">Отношения</span>
-                            <span class="article-reading-time">⏱ 8 мин чтения</span>
-                        </div>
-                        <h2 class="article-heading">Границы в паре: как сохранить автономию и глубокую близость</h2>
-                        <p class="article-description">Почему потребность в личной дистанции — это не признак угасания чувств, а естественный этап зрелой привязанности и взаимного уважения двух взрослых людей.</p>
-                    </div>
-                </div>
-                <div class="article-footer">
-                    <span class="article-date">28 Октября, 2026</span>
-                    <a class="article-read-link" href="#article-boundaries" data-open-article aria-label="Статья о границах в паре">Читать статью <span aria-hidden="true">→</span></a>
-                </div>
-            </article>
-
-            <article class="article-card" id="article-fatigue" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Открыть статью: хроническая усталость">
-                <div>
-                    <div class="article-image-wrap">
-                        <img class="card-image" src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=1000&auto=format&fit=crop" alt="Хроническая усталость" loading="lazy">
-                    </div>
-                    <div class="article-copy">
-                        <div class="article-meta">
-                            <span class="article-category">Выгорание</span>
-                            <span class="article-reading-time">⏱ 6 мин чтения</span>
-                        </div>
-                        <h2 class="article-heading">Хроническая усталость или депрессия: где проходит тонкая грань?</h2>
-                        <p class="article-description">Разбираем соматические маркеры истощения нервной системы, когда привычные выходные уже не восстанавливают ресурс и требуется бережная терапевтическая поддержка.</p>
-                    </div>
-                </div>
-                <div class="article-footer">
-                    <span class="article-date">14 Октября, 2026</span>
-                    <a class="article-read-link" href="#article-fatigue" data-open-article aria-label="Статья о хронической усталости">Читать статью <span aria-hidden="true">→</span></a>
-                </div>
-            </article>
-
-            <article class="article-card" id="article-emigration" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Открыть статью: эмиграция и адаптация">
-                <div>
-                    <div class="article-image-wrap">
-                        <img class="card-image" src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1000&auto=format&fit=crop" alt="Эмиграция и адаптация" loading="lazy">
-                    </div>
-                    <div class="article-copy">
-                        <div class="article-meta">
-                            <span class="article-category neutral">Кризисы</span>
-                            <span class="article-reading-time">⏱ 7 мин чтения</span>
-                        </div>
-                        <h2 class="article-heading">Эмиграция как кризис идентичности и потеря привычных опор</h2>
-                        <p class="article-description">Этапы психологической адаптации в новой культурной и языковой среде, проживание ностальгии и способы выстраивания внутренней устойчивости на новом месте.</p>
-                    </div>
-                </div>
-                <div class="article-footer">
-                    <span class="article-date">01 Октября, 2026</span>
-                    <a class="article-read-link" href="#article-emigration" data-open-article aria-label="Статья об эмиграции и адаптации">Читать статью <span aria-hidden="true">→</span></a>
-                </div>
-            </article>
+            {% endfor %}
         </section>
     </main>
 
@@ -436,6 +401,7 @@
                     </div>
                     <h2 id="modalTitle"></h2>
                     <p id="modalDescription"></p>
+                    <div id="modalBody" class="article-modal-body"></div>
                     <div class="article-modal-bottom">
                         <span>Психологическая практика · Авторский материал</span>
                         <button type="button" class="article-modal-return" id="articleModalReturn">Вернуться к списку</button>
@@ -473,6 +439,8 @@
             document.getElementById('modalImage').alt = image ? image.alt : '';
             document.getElementById('modalTitle').textContent = card.querySelector('.article-heading')?.textContent.trim() || '';
             document.getElementById('modalDescription').textContent = card.querySelector('.article-description')?.textContent.trim() || '';
+            const fullContent = card.querySelector('.article-full-content');
+            document.getElementById('modalBody').innerHTML = fullContent ? fullContent.innerHTML : '';
             document.getElementById('modalCategory').textContent = card.querySelector('.article-category')?.textContent.trim() || 'Статья';
             document.getElementById('modalDate').textContent = card.querySelector('.article-date')?.textContent.trim() || '';
             document.getElementById('modalReadingTime').textContent = card.querySelector('.article-reading-time')?.textContent.trim() || '';
