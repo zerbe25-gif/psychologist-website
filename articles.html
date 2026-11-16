@@ -372,6 +372,29 @@ permalink: /articles.html
         .articles-page .article-modal-body ol { margin: 0 0 18px 24px; }
         .articles-page .article-modal-body blockquote { margin: 22px 0; padding: 4px 0 4px 18px; border-left: 2px solid #DCB573; color: #686f6b; }
         .articles-page .article-modal-body img { max-width: 100%; height: auto; border-radius: 8px; }
+
+        /* КОМПАКТНЫЕ КАРТОЧКИ СТАТЕЙ — уменьшение примерно на 10% */
+        .articles-page .articles-grid { gap:27px; }
+        .articles-page .article-image-wrap { height:230px; }
+        .articles-page .article-copy { padding:23px 25px 26px; }
+        .articles-page .article-meta { gap:8px; margin-bottom:12px; }
+        .articles-page .article-category { padding:5px 9px; font-size:9px; letter-spacing:.10em; }
+        .articles-page .article-reading-time,
+        .articles-page .article-date { font-size:10px; }
+        .articles-page .article-heading { margin-bottom:10px; font-size:clamp(23px,2.5vw,31px); }
+        .articles-page .article-description { font-size:11.5px; line-height:1.72; }
+        .articles-page .article-footer { gap:9px; padding:14px 25px 18px; }
+        .articles-page .article-read-link { gap:6px; font-size:9px; }
+        @media(max-width:767px) {
+            .articles-page .articles-grid { gap:20px; }
+            .articles-page .article-image-wrap { height:198px; }
+            .articles-page .article-copy { padding:20px 20px 22px; }
+            .articles-page .article-meta { gap:7px; margin-bottom:10px; }
+            .articles-page .article-heading { margin-bottom:9px; }
+            .articles-page .article-description { line-height:1.68; }
+            .articles-page .article-footer { padding:13px 20px 16px; }
+        }
+
     </style>
 </head>
 
