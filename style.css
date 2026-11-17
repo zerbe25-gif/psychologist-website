@@ -6444,3 +6444,21 @@ html.initial-load-reveal .header {
   touch-action: pan-y;
   scrollbar-gutter: stable;
 }
+
+
+/* FINAL REFINEMENT: COMPACT METHOD HEADER SPACING */
+#sideDrawer .drawer-header{
+  padding-bottom:.55rem !important;
+}
+#sideDrawer .drawer-tabs{
+  padding-bottom:0 !important;
+}
+#sideDrawer .block-section[data-drawer-panel="method"]{
+  padding-top:0 !important;
+  scroll-padding-top:0;
+}
+@media(max-width:760px){
+  #sideDrawer .block-section[data-drawer-panel="method"]{
+    padding-top:0 !important;
+  }
+}
