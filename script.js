@@ -1109,17 +1109,61 @@ function updateLensGlare(value) {
     if(event.key==="Escape"&&drawerOpen)closeDrawer();
   });
 
+  /* Перелистывание только после осознанного жеста и только у края раздела.
+     Пока внутри раздела есть что прокручивать, сохраняем нативную прокрутку текста. */
+  let wheelAccumulated=0;
+  let wheelDirection=0;
+  let wheelResetTimer=null;
+  const WHEEL_SWITCH_THRESHOLD=170;
+  const WHEEL_GESTURE_RESET=260;
   drawer.addEventListener("wheel",event=>{
     if(!drawerOpen||isAnimating||wheelCooldown)return;
-    if(Math.abs(event.deltaX)>Math.abs(event.deltaY)||Math.abs(event.deltaY)<35)return;
+    if(Math.abs(event.deltaX)>Math.abs(event.deltaY)||Math.abs(event.deltaY)<8)return;
+
+    const activeSection=sections[currentBlock];
+    if(activeSection){
+      const atTop=activeSection.scrollTop<=1;
+      const atBottom=activeSection.scrollTop+activeSection.clientHeight>=activeSection.scrollHeight-2;
+      const scrollingDown=event.deltaY>0;
+      if((scrollingDown&&!atBottom)||(!scrollingDown&&!atTop)){
+        wheelAccumulated=0;
+        wheelDirection=0;
+        return;
+      }
+    }
+
     const direction=event.deltaY>0?1:-1;
+    if(direction!==wheelDirection){
+      wheelAccumulated=0;
+      wheelDirection=direction;
+    }
+    wheelAccumulated+=Math.min(Math.abs(event.deltaY),100);
+    if(wheelResetTimer!==null)clearTimeout(wheelResetTimer);
+    wheelResetTimer=setTimeout(()=>{
+      wheelAccumulated=0;
+      wheelDirection=0;
+      wheelResetTimer=null;
+    },WHEEL_GESTURE_RESET);
+
+    if(wheelAccumulated<WHEEL_SWITCH_THRESHOLD)return;
     const next=currentBlock+direction;
-    if(next<0||next>=sections.length)return;
+    if(next<0||next>=sections.length){
+      wheelAccumulated=0;
+      return;
+    }
+
     event.preventDefault();
+    wheelAccumulated=0;
+    wheelDirection=0;
+    if(wheelResetTimer!==null)clearTimeout(wheelResetTimer);
+    wheelResetTimer=null;
     goToBlock(next);
     wheelCooldown=true;
     const duration=getSlideDuration(direction>0)*1000;
-    wheelTimer=setTimeout(()=>{wheelCooldown=false;wheelTimer=null;},duration+100);
+    wheelTimer=setTimeout(()=>{
+      wheelCooldown=false;
+      wheelTimer=null;
+    },duration+500);
   },{passive:false});
 
   updateNavUI();
