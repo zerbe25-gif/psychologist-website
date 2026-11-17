@@ -13,6 +13,19 @@
         }
       } catch (error) {}
     </script>
+    <script>
+      try {
+        const path = window.location.pathname;
+        const isHomePage = path === "/" || path.endsWith("/") || path.endsWith("/index.html");
+        const isPageTransition = sessionStorage.getItem("psychologistPageTransition") === "enter";
+        const alreadyShown = sessionStorage.getItem("psychologistInitialRevealSeen") === "1";
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (isHomePage && !isPageTransition && !alreadyShown && !reducedMotion) {
+          document.documentElement.classList.add("initial-load-pending");
+          sessionStorage.setItem("psychologistInitialRevealSeen", "1");
+        }
+      } catch (error) {}
+    </script>
   <meta name="theme-color" content="#f3ba97">
 
   <title>Сергей Цербе — психологическое консультирование</title>
@@ -26,7 +39,7 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=20261117-curtain-dom1">
+  <link rel="stylesheet" href="style.css?v=20261117-hybrid-soft1">
 <style id="lab-picker-runtime"></style></head>
 
 <body id="top">
@@ -937,5 +950,6 @@
 
 <div id="lab-color-modal" class="lab-color-modal" hidden aria-hidden="true"><div class="lab-color-dialog" role="dialog" aria-modal="true" aria-labelledby="lab-color-title"><div class="lab-color-dialog-head"><strong id="lab-color-title">Выбор цвета</strong><button type="button" id="lab-color-close" aria-label="Закрыть">×</button></div><div class="lab-color-dialog-body"><div id="lab-color-sv" class="lab-color-sv" role="slider" aria-label="Насыщенность и яркость" tabindex="0"><span id="lab-color-sv-cursor"></span></div><input id="lab-color-hue" class="lab-color-hue" type="range" min="0" max="360" value="180" aria-label="Оттенок"><div class="lab-color-preview-row"><span id="lab-color-preview"></span><label>RGB <input id="lab-color-rgb" type="text" value="30, 41, 43" aria-label="RGB"></label></div><div class="lab-color-dialog-actions"><button type="button" id="lab-color-cancel">Отмена</button><button type="button" id="lab-color-apply">Применить</button></div></div></div></div>
   <script src="page-transition.js?v=20261117-curtain-dom1"></script>
+  <script src="initial-load.js?v=20261117-hybrid-soft1"></script>
 </body>
 </html>
