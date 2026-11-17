@@ -6401,3 +6401,46 @@ html.initial-load-reveal .header {
 @media(prefers-reduced-motion:reduce){
   #sideDrawer .method-quote.is-revealed{animation:none;opacity:1;transform:none;}
 }
+
+
+/* =========================================
+   ДОПОЛНИТЕЛЬНАЯ ПРОВЕРКА ПРОКРУТКИ ШТОРКИ
+========================================= */
+
+/* Убираем лишний верхний зазор под шапкой в разделе «О методе». */
+#sideDrawer .block-section[data-drawer-panel="method"] {
+  padding-top: 0 !important;
+}
+
+/* Карточка измерений становится на 5% шире относительно прежнего размера. */
+#sideDrawer .method-dimensions {
+  width: 95% !important;
+}
+
+/* Все разделы шторки остаются полноценными вертикальными областями прокрутки.
+   Это позволяет дочитать длинный текст до самого низа на любом устройстве. */
+#sideDrawer .drawer-inner {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+#sideDrawer .viewport {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+#sideDrawer .block-section {
+  height: 100%;
+  max-height: 100%;
+  min-height: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  touch-action: pan-y;
+  scrollbar-gutter: stable;
+}
