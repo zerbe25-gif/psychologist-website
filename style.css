@@ -6253,7 +6253,7 @@ html.initial-load-reveal .header {
    ========================================= */
 #sideDrawer .drawer-header{
   background:#FFFFFF;
-  border-radius:10px 10px 0 0;
+  border-radius:10px;
 }
 #sideDrawer .drawer-tabs button.is-active{
   border-radius:0;
@@ -6390,7 +6390,7 @@ html.initial-load-reveal .header {
   to{opacity:1;transform:translate3d(0,0,0);}
 }
 @media(max-width:760px){
-  #sideDrawer .drawer-header{border-radius:10px 10px 0 0;padding:1.1rem 1.2rem;}
+  #sideDrawer .drawer-header{border-radius:10px;padding:1.1rem 1.2rem;}
   #sideDrawer .block-section[data-drawer-panel="method"]{padding:18px 22px 30px;}
   #sideDrawer .method-layout{grid-template-columns:minmax(0,1fr);gap:25px;}
   #sideDrawer .method-heading{margin-bottom:18px;}
