@@ -7089,3 +7089,121 @@ html.initial-load-reveal .header {
 @media (prefers-reduced-motion:reduce) {
   #sideDrawer .format-duration-card { transition:none; }
 }
+
+
+/* РАЗДЕЛ «ОБРАЗОВАНИЕ» — тема «Тёплый камень и твид» */
+#sideDrawer .block-section[data-drawer-panel="education"] {
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  background-color:#E7E3DC !important;
+  background-image:
+    radial-gradient(ellipse at 15% 5%, rgba(255,255,255,.6) 0%, transparent 50%),
+    radial-gradient(circle at 85% 75%, rgba(220,181,115,.1) 0%, transparent 55%),
+    linear-gradient(170deg,#ECE8E1 0%,#DED9D0 100%) !important;
+  color:#2D3748 !important;
+  padding:2rem clamp(1.5rem,4vw,3rem) 3.5rem !important;
+  font-family:Inter,Arial,sans-serif !important;
+}
+#sideDrawer .block-section[data-drawer-panel="education"]::before {
+  content:""; position:absolute; inset:0; z-index:-1; pointer-events:none; opacity:.2;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E");
+  mix-blend-mode:multiply;
+}
+#sideDrawer .education-editorial-layout { position:relative; width:100%; max-width:850px; margin:0 auto; }
+#sideDrawer .education-editorial-heading {
+  margin:0 0 1.75rem; padding:0 0 1.25rem;
+  border-bottom:1px solid rgba(120,112,99,.25);
+}
+#sideDrawer .education-editorial-heading > span {
+  display:block; margin:0 0 .45rem; color:#B8924C;
+  font:600 10px/1.5 Inter,Arial,sans-serif; letter-spacing:.2em; text-transform:uppercase;
+}
+#sideDrawer .education-editorial-heading h1 {
+  margin:0; color:#2D3748;
+  font:400 clamp(36px,5vw,44px)/1.05 "Cormorant Garamond",Georgia,serif;
+}
+#sideDrawer .education-record {
+  display:flex; align-items:stretch; gap:24px; max-width:760px;
+}
+#sideDrawer .education-timeline {
+  position:relative; flex:0 0 54px; width:54px; min-height:100%;
+  overflow:hidden; border-radius:8px; background:#005D66;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 12px 28px -6px rgba(0,93,102,.35);
+}
+#sideDrawer .education-timeline::before {
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.06) 0%,rgba(0,0,0,.14) 100%);
+}
+#sideDrawer .education-timeline-axis {
+  position:absolute; top:28px; bottom:28px; left:50%; transform:translateX(-50%);
+  width:2.5px; border-radius:999px;
+  /* Начало перехода белый → золотой сдвинуто вниз на 1 см */
+  background:linear-gradient(180deg,
+    #FFFFFF 0%,
+    #FFFFFF calc(36% + 10mm),
+    #F7EEDB calc(48% + 10mm),
+    #E8CE9C calc(60% + 10mm),
+    #DCB573 calc(72% + 10mm),
+    #DCB573 100%);
+  box-shadow:0 0 8px rgba(255,255,255,.25);
+}
+#sideDrawer .education-timeline-node {
+  position:absolute; left:50%; z-index:2; width:14px; height:14px;
+  transform:translate(-50%,-50%); border-radius:50%;
+}
+#sideDrawer .education-timeline-node.is-white {
+  background:#FFF; border:2.5px solid #005D66;
+  box-shadow:0 0 0 2px rgba(255,255,255,.85),0 2px 6px rgba(0,0,0,.25);
+}
+#sideDrawer .education-timeline-node.is-transition {
+  background:#F3DFB9; border:2.5px solid #005D66;
+  box-shadow:0 0 0 2px rgba(243,223,185,.75);
+}
+#sideDrawer .education-timeline-node.is-gold {
+  background:#DCB573; border:2.5px solid #005D66;
+  box-shadow:0 0 0 2px rgba(220,181,115,.85),0 2px 8px rgba(220,181,115,.35);
+}
+#sideDrawer .education-record-list { display:flex; flex:1 1 auto; min-width:0; flex-direction:column; gap:14px; }
+#sideDrawer .education-card {
+  padding:1.05rem 1.4rem; border:1px solid rgba(45,55,72,.08); border-radius:10px;
+  background:rgba(255,255,255,.86); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+  box-shadow:0 4px 14px -4px rgba(45,55,72,.05);
+  transition:transform .3s cubic-bezier(.16,1,.3,1),background-color .3s ease,border-color .3s ease;
+}
+#sideDrawer .education-card:hover {
+  background:rgba(255,255,255,.98); border-color:rgba(0,93,102,.25); transform:translateX(3px);
+}
+#sideDrawer .education-card.is-psychoanalysis:hover { border-color:rgba(220,181,115,.55); }
+#sideDrawer .education-card-heading {
+  display:flex; align-items:baseline; justify-content:space-between; gap:.5rem; margin:0 0 .25rem;
+}
+#sideDrawer .education-card-heading h2 {
+  margin:0; color:#2D3748; font:600 22px/1.25 "Cormorant Garamond",Georgia,serif;
+}
+#sideDrawer .education-card-heading > span {
+  flex:0 0 auto; color:rgba(0,93,102,.7);
+  font:500 9.5px/1.4 Inter,Arial,sans-serif; letter-spacing:.12em; text-transform:uppercase;
+}
+#sideDrawer .education-card.is-psychoanalysis .education-card-heading > span { color:#B8924C; font-weight:600; }
+#sideDrawer .education-card > p {
+  margin:0; color:#78736D; font:400 13px/1.6 Inter,Arial,sans-serif;
+}
+#sideDrawer .education-card > p.education-card-lead {
+  color:rgba(45,55,72,.9); font-size:13.5px; font-weight:500;
+}
+#sideDrawer .education-card > p.education-card-note {
+  margin-top:.125rem; color:#78736D; font-size:12.5px; font-style:italic;
+}
+#sideDrawer .education-card > p em { color:#78736D; font-style:italic; }
+@media (max-width:760px) {
+  #sideDrawer .block-section[data-drawer-panel="education"] { padding:1.4rem 1.1rem 2.5rem !important; }
+  #sideDrawer .education-record { gap:14px; }
+  #sideDrawer .education-timeline { flex-basis:38px; width:38px; }
+  #sideDrawer .education-card { padding:.9rem .95rem; }
+  #sideDrawer .education-card-heading { align-items:flex-start; flex-direction:column; gap:.2rem; }
+  #sideDrawer .education-card-heading h2 { font-size:20px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  #sideDrawer .education-card { transition:none; }
+}
