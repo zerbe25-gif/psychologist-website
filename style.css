@@ -6595,3 +6595,14 @@ html.initial-load-reveal .header {
     font-size: 10px !important;
   }
 }
+
+
+/* УТОЧНЕНИЕ ЦВЕТА И ОТСТУПОВ ШАПКИ ШТОРКИ */
+#sideDrawer .drawer-header {
+  background: #FFFFFF !important;
+  margin-top: .9rem !important;
+  margin-bottom: 1.3rem !important;
+}
+#sideDrawer .drawer-tabs {
+  justify-content: flex-start !important;
+}
