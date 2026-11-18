@@ -2814,7 +2814,7 @@ body.tech-3-active {
 /* Сама шторка */
 
 #sideDrawer {
-    --drawer-width: 700px;
+    --drawer-width: 750px;
 
     position: fixed;
     inset: 0 auto 0 0;
