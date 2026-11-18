@@ -6546,7 +6546,6 @@ html.initial-load-reveal .header {
 
 
 /* О МЕТОДЕ — редакционный макет по предоставленному образцу */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:wght@400;500;600&display=swap');
 
 #sideDrawer {
   width: min(100vw, 890px) !important;
