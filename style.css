@@ -6521,3 +6521,18 @@ html.initial-load-reveal .header {
     max-height: calc(100vh - var(--developer-panel-bottom, 35px)) !important;
   }
 }
+
+
+/* Уменьшаем нижнее пространство шапки под навигацией на 50%. */
+#sideDrawer .drawer-header {
+  padding-bottom: 4px !important;
+}
+#sideDrawer .drawer-tabs {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+@media (max-width: 760px) {
+  #sideDrawer .drawer-header {
+    padding-bottom: 5px !important;
+  }
+}
