@@ -7207,3 +7207,37 @@ html.initial-load-reveal .header {
 @media (prefers-reduced-motion:reduce) {
   #sideDrawer .education-card { transition:none; }
 }
+
+/* DRAWER HEADER — мягкое исчезновение контента под нижним краем шапки
+   Общие правила для всех разделов информационной шторки. */
+#sideDrawer .drawer-header {
+  position: relative !important;
+  z-index: 60 !important;
+  isolation: isolate;
+}
+#sideDrawer .drawer-header::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 46px;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, .88) 0%,
+    rgba(255, 255, 255, .62) 28%,
+    rgba(255, 255, 255, .28) 62%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  -webkit-backdrop-filter: blur(7px);
+  backdrop-filter: blur(7px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,.72) 42%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,.72) 42%, transparent 100%);
+}
+
+/* Крестик закрытия шторки — точное положение */
+#sideDrawer #drawerClose.drawer-close {
+  top: 19px !important;
+  right: 61px !important;
+}
