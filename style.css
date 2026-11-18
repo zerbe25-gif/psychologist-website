@@ -6527,3 +6527,19 @@ html.initial-load-reveal .header {
     padding-right: clamp(2rem, 3vw, 3rem) !important;
   }
 }
+
+
+/* ФИНАЛЬНО: вся поверхность информационной шторки белая, без прозрачного лабораторного слоя */
+#sideDrawer,
+#sideDrawer .drawer-inner,
+#sideDrawer .viewport,
+#sideDrawer .block-section,
+#sideDrawer .drawer-footer {
+  background: #FFFFFF !important;
+  background-color: #FFFFFF !important;
+  background-image: none !important;
+}
+#sideDrawer {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
