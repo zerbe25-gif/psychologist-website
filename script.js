@@ -1771,3 +1771,36 @@ window.applyBackgroundMood = function(mood){
     };
   }
 })();
+
+
+/* Сдвигаем информационную шторку под фактическую высоту панели управления. */
+(function syncDrawerBelowDeveloperPanel() {
+  function updateDrawerOffset() {
+    const panel = document.getElementById("developer-panel");
+    if (!panel) return;
+    const bottom = Math.max(0, Math.ceil(panel.getBoundingClientRect().bottom));
+    document.documentElement.style.setProperty("--developer-panel-bottom", bottom + "px");
+  }
+
+  function init() {
+    const panel = document.getElementById("developer-panel");
+    if (!panel) return;
+    updateDrawerOffset();
+
+    if ("ResizeObserver" in window) {
+      const observer = new ResizeObserver(updateDrawerOffset);
+      observer.observe(panel);
+      const content = document.getElementById("developer-panel-content");
+      if (content) observer.observe(content);
+    }
+
+    window.addEventListener("resize", updateDrawerOffset, { passive: true });
+    window.addEventListener("orientationchange", updateDrawerOffset, { passive: true });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init, { once: true });
+  } else {
+    init();
+  }
+})();
