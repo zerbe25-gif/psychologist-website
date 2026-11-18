@@ -6274,148 +6274,13 @@ html.initial-load-reveal .header {
   height:1px;
   background:#DCB573;
 }
-#sideDrawer .viewport,
-#sideDrawer .block-section[data-drawer-panel="method"]{background:#FFFFFF;}
-#sideDrawer .block-section[data-drawer-panel="method"]{
-  padding-top:17px;
-}
-#sideDrawer .method-layout{
-  display:grid;
-  grid-template-columns:minmax(0,1.28fr) minmax(250px,.72fr);
-  align-items:start;
-  gap:clamp(24px,3vw,46px);
-  width:100%;
-  max-width:100%;
-}
-#sideDrawer .method-copy{min-width:0;}
-#sideDrawer .method-heading{margin:0 0 22px;}
-#sideDrawer .method-kicker{
-  display:block;
-  margin:0 0 7px;
-  color:#DCB573;
-  font:600 10px/1.4 Inter,sans-serif;
-  letter-spacing:.2em;
-}
-#sideDrawer .method-heading h1{
-  margin:0;
-  color:#2D3748;
-  font:400 clamp(34px,3.2vw,42px)/1 "Lora",Georgia,serif;
-}
-#sideDrawer .method-intro{
-  color:rgba(45,55,72,.86);
-  font:400 14px/1.72 Inter,sans-serif;
-}
-#sideDrawer .method-intro p{margin:0;}
-#sideDrawer .method-intro strong{color:#34797E;font-weight:600;}
-#sideDrawer .method-drop-cap{
-  float:left;
-  padding:.07em .15em 0 0;
-  color:#34797E;
-  font:500 3.35rem/.82 "Lora",Georgia,serif;
-}
-#sideDrawer .method-dimensions{
-  width:90%;
-  justify-self:end;
-  margin-top:38px;
-}
-#sideDrawer .method-dimensions-card{
-  padding:23px 25px;
-  background:#FFFFFF;
-  border:1px solid rgba(45,55,72,.08);
-  border-radius:20px;
-  box-shadow:0 12px 32px -8px rgba(45,55,72,.07);
-}
-#sideDrawer .method-dimensions-label{
-  display:block;
-  margin:0 0 18px;
-  color:#34797E;
-  font:600 10px/1.4 Inter,sans-serif;
-  letter-spacing:.16em;
-}
-#sideDrawer .method-dimension{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:14px;
-  padding:0 0 15px;
-  margin:0 0 15px;
-  border-bottom:1px solid rgba(45,55,72,.1);
-}
-#sideDrawer .method-dimension:last-child{padding:0;margin:0;border:0;}
-#sideDrawer .method-dimension h2{
-  margin:0 0 5px;
-  color:#2D3748;
-  font:500 20px/1.25 "Lora",Georgia,serif;
-}
-#sideDrawer .method-dimension p{
-  margin:0;
-  color:#777F8A;
-  font:400 12px/1.55 Inter,sans-serif;
-}
-#sideDrawer .method-dimension>span{
-  flex:0 0 auto;
-  padding-top:2px;
-  color:#DCB573;
-  font:italic 600 13px/1 "Lora",Georgia,serif;
-}
-#sideDrawer .method-quote{
-  width:min(92%,560px);
-  box-sizing:border-box;
-  margin:28px 0 0 auto;
-  padding:19px 23px 18px;
-  border:0;
-  border-radius:16px;
-  background:linear-gradient(135deg,rgba(248,250,250,.98),rgba(243,247,246,.9));
-  box-shadow:0 8px 24px rgba(45,55,72,.045);
-  opacity:0;
-  transform:translate3d(0,24px,0);
-}
-#sideDrawer .method-quote.is-revealed{
-  animation:methodQuoteReveal .95s cubic-bezier(.16,1,.3,1) .12s forwards;
-}
-#sideDrawer .method-quote p{
-  margin:0 0 9px;
-  color:#2D3748;
-  font:italic 400 clamp(19px,2vw,22px)/1.35 "Lora",Georgia,serif;
-}
-#sideDrawer .method-quote cite{
-  display:block;
-  color:#9299A1;
-  font:500 9px/1.5 Inter,sans-serif;
-  font-style:normal;
-  letter-spacing:.16em;
-}
-@keyframes methodQuoteReveal{
-  from{opacity:0;transform:translate3d(0,24px,0);}
-  to{opacity:1;transform:translate3d(0,0,0);}
-}
-@media(max-width:760px){
-  #sideDrawer .drawer-header{border-radius:10px;padding:1.1rem 1.2rem;}
-  #sideDrawer .block-section[data-drawer-panel="method"]{padding:18px 22px 30px;}
-  #sideDrawer .method-layout{grid-template-columns:minmax(0,1fr);gap:25px;}
-  #sideDrawer .method-heading{margin-bottom:18px;}
-  #sideDrawer .method-dimensions{width:90%;margin-top:0;justify-self:end;}
-  #sideDrawer .method-dimensions-card{padding:20px;}
-  #sideDrawer .method-quote{width:100%;margin-top:24px;}
-}
-@media(prefers-reduced-motion:reduce){
-  #sideDrawer .method-quote.is-revealed{animation:none;opacity:1;transform:none;}
-}
+#sideDrawer .viewport{background:#FFFFFF;}
+
 
 
 /* =========================================
    ДОПОЛНИТЕЛЬНАЯ ПРОВЕРКА ПРОКРУТКИ ШТОРКИ
 ========================================= */
-
-/* Убираем лишний верхний зазор под шапкой в разделе «О методе». */
-#sideDrawer .block-section[data-drawer-panel="method"] {
-  padding-top: 0 !important;
-}
-
-/* Карточка измерений становится на 5% шире относительно прежнего размера. */
-#sideDrawer .method-dimensions {
-  width: 95% !important;
-}
 
 /* Все разделы шторки остаются полноценными вертикальными областями прокрутки.
    Это позволяет дочитать длинный текст до самого низа на любом устройстве. */
@@ -6453,17 +6318,6 @@ html.initial-load-reveal .header {
 #sideDrawer .drawer-tabs{
   padding-bottom:0 !important;
 }
-#sideDrawer .block-section[data-drawer-panel="method"]{
-  padding-top:0 !important;
-  scroll-padding-top:0;
-}
-@media(max-width:760px){
-  #sideDrawer .block-section[data-drawer-panel="method"]{
-    padding-top:0 !important;
-  }
-}
-
-
 /* =========================================
    КОМПАКТНАЯ ШАПКА ИНФОРМАЦИОННОЙ ШТОРКИ
 ========================================= */
@@ -6616,48 +6470,6 @@ html.initial-load-reveal .header {
   }
 }
 
-/* Каждое измерение оформлено отдельной широкой карточкой */
-#sideDrawer .method-dimensions-card {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 12px !important;
-}
-#sideDrawer .method-dimensions-label {
-  margin-bottom: 4px !important;
-}
-#sideDrawer .method-dimension,
-#sideDrawer .method-dimension:last-child {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  gap: 14px !important;
-  width: 100% !important;
-  min-height: 88px !important;
-  box-sizing: border-box !important;
-  padding: 14px 16px !important;
-  margin: 0 !important;
-  background: #F8FAFA !important;
-  border: 1px solid rgba(45, 55, 72, .09) !important;
-  border-radius: 12px !important;
-}
-#sideDrawer .method-dimension > div {
-  flex: 1 1 auto !important;
-  min-width: 0 !important;
-}
-#sideDrawer .method-dimension > span {
-  align-self: flex-start !important;
-  padding-top: 2px !important;
-}
-@media (max-width: 760px) {
-  #sideDrawer .method-dimension,
-  #sideDrawer .method-dimension:last-child {
-    min-height: 0 !important;
-    padding: 13px 14px !important;
-  }
-}
-
-
 /* ФИНАЛЬНАЯ АДАПТАЦИЯ ИНФОРМАЦИОННОЙ ШТОРКИ: БЕЛАЯ ШАПКА И ПОЛНАЯ ПРОКРУТКА */
 #sideDrawer .drawer-header {
   background: #FFFFFF !important;
@@ -6701,10 +6513,6 @@ html.initial-load-reveal .header {
   }
   #sideDrawer .block-section {
     padding: 1.8rem 1.55rem 2.5rem !important;
-  }
-  #sideDrawer .method-layout {
-    grid-template-columns: minmax(0, 1fr) minmax(250px, .72fr) !important;
-    gap: clamp(20px, 2.5vw, 32px) !important;
   }
 }
 
