@@ -6506,3 +6506,18 @@ html.initial-load-reveal .header {
   #sideDrawer .drawer-header{padding:10px 14px;gap:8px 10px;}
   #sideDrawer .drawer-tabs{justify-content:flex-start;}
 }
+
+
+/* ШТОРКА НАЧИНАЕТСЯ СРАЗУ ПОД ПАНЕЛЬЮ УПРАВЛЕНИЯ */
+#sideDrawer {
+  top: var(--developer-panel-bottom, 35px) !important;
+  bottom: auto !important;
+  height: calc(100dvh - var(--developer-panel-bottom, 35px)) !important;
+  max-height: calc(100dvh - var(--developer-panel-bottom, 35px)) !important;
+}
+@supports not (height: 100dvh) {
+  #sideDrawer {
+    height: calc(100vh - var(--developer-panel-bottom, 35px)) !important;
+    max-height: calc(100vh - var(--developer-panel-bottom, 35px)) !important;
+  }
+}
