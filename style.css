@@ -6797,3 +6797,24 @@ html.initial-load-reveal .header {
     margin-right: calc(.75rem + 5mm) !important;
   }
 }
+
+
+/* Точная подстройка по последним пожеланиям */
+#sideDrawer .method-quote {
+  left: 10mm !important;
+}
+#sideDrawer .drawer-header {
+  margin-left: calc(1.1rem + 10mm) !important;
+  margin-right: calc(1.1rem + 10mm) !important;
+  border-radius: 12px !important;
+}
+#sideDrawer .drawer-tabs {
+  position: relative !important;
+  left: 5mm !important;
+}
+@media (max-width: 760px) {
+  #sideDrawer .drawer-header {
+    margin-left: calc(.75rem + 10mm) !important;
+    margin-right: calc(.75rem + 10mm) !important;
+  }
+}
