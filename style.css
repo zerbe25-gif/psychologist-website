@@ -7208,28 +7208,43 @@ html.initial-load-reveal .header {
   #sideDrawer .education-card { transition:none; }
 }
 
-/* DRAWER HEADER — плавное затухание прокручиваемого содержимого
-   Полупрозрачный градиент перекрывает верх viewport без размытия и маски. */
-#sideDrawer .drawer-header {
-  position: relative !important;
-  z-index: 60 !important;
-}
+/* DRAWER VIEWPORT — мягкое исчезновение текста под шапкой.
+   Размытие начинается ровно от верхней границы прокручиваемой области,
+   занимает всю ширину viewport и не добавляет цветной/белой подложки. */
 #sideDrawer .drawer-header::after {
+  content: none !important;
+}
+#sideDrawer .viewport {
+  position: relative !important;
+  isolation: isolate;
+}
+#sideDrawer .viewport::before {
   content: "";
   position: absolute;
-  top: 100%;
+  top: 0;
   left: 0;
   right: 0;
-  height: 64px;
+  height: 76px;
+  z-index: 20;
   pointer-events: none;
-  z-index: 2;
-  background: linear-gradient(
+  background: transparent;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  -webkit-mask-image: linear-gradient(
     to bottom,
-    rgba(255, 255, 255, .96) 0%,
-    rgba(255, 255, 255, .82) 24%,
-    rgba(255, 255, 255, .48) 58%,
-    rgba(255, 255, 255, .16) 82%,
-    rgba(255, 255, 255, 0) 100%
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, .92) 28%,
+    rgba(0, 0, 0, .58) 58%,
+    rgba(0, 0, 0, .18) 82%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, .92) 28%,
+    rgba(0, 0, 0, .58) 58%,
+    rgba(0, 0, 0, .18) 82%,
+    rgba(0, 0, 0, 0) 100%
   );
 }
 
