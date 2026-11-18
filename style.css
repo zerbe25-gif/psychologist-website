@@ -6963,3 +6963,29 @@ html.initial-load-reveal .header {
   #sideDrawer .request-accordion-item summary b,
   #sideDrawer .request-accordion-body { transition-duration: .01ms !important; }
 }
+
+
+/* Нижняя панель убрана: кнопка записи остаётся самостоятельной */
+#sideDrawer .drawer-footer {
+  display: contents !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+#sideDrawer .drawer-footer > span {
+  display: none !important;
+}
+#sideDrawer .drawer-appointment-button {
+  position: absolute !important;
+  right: clamp(18px, 3vw, 32px) !important;
+  bottom: 24px !important;
+  z-index: 45 !important;
+  box-shadow: 0 8px 24px rgba(45, 55, 72, .2) !important;
+}
+@media (max-width: 600px) {
+  #sideDrawer .drawer-appointment-button {
+    right: 16px !important;
+    bottom: 16px !important;
+  }
+}
