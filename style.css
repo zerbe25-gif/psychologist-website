@@ -6606,3 +6606,53 @@ html.initial-load-reveal .header {
 #sideDrawer .drawer-tabs {
   justify-content: flex-start !important;
 }
+
+
+/* УВЕЛИЧЕНИЕ ШИРИНЫ ШТОРКИ И ГОРИЗОНТАЛЬНЫЙ ФОРМАТ КАРТОЧЕК ИЗМЕРЕНИЙ */
+@media (min-width: 1025px) {
+  #sideDrawer {
+    --drawer-width: 73.333vw !important;
+    width: 73.333vw !important;
+  }
+}
+
+/* Каждое измерение оформлено отдельной широкой карточкой */
+#sideDrawer .method-dimensions-card {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+}
+#sideDrawer .method-dimensions-label {
+  margin-bottom: 4px !important;
+}
+#sideDrawer .method-dimension,
+#sideDrawer .method-dimension:last-child {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 14px !important;
+  width: 100% !important;
+  min-height: 88px !important;
+  box-sizing: border-box !important;
+  padding: 14px 16px !important;
+  margin: 0 !important;
+  background: #F8FAFA !important;
+  border: 1px solid rgba(45, 55, 72, .09) !important;
+  border-radius: 12px !important;
+}
+#sideDrawer .method-dimension > div {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+#sideDrawer .method-dimension > span {
+  align-self: flex-start !important;
+  padding-top: 2px !important;
+}
+@media (max-width: 760px) {
+  #sideDrawer .method-dimension,
+  #sideDrawer .method-dimension:last-child {
+    min-height: 0 !important;
+    padding: 13px 14px !important;
+  }
+}
