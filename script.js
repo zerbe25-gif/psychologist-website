@@ -996,18 +996,6 @@ function updateLensGlare(value) {
     });
     if(currentStep)currentStep.textContent=String(currentBlock+1);
   }
-
-  let methodQuoteRevealedThisOpen=false;
-  function revealMethodQuote(){
-    if(methodQuoteRevealedThisOpen)return;
-    const quote=document.getElementById("methodQuote");
-    if(!quote)return;
-    methodQuoteRevealedThisOpen=true;
-    quote.classList.remove("is-revealed");
-    void quote.offsetWidth;
-    quote.classList.add("is-revealed");
-  }
-
   function goToBlock(targetIndex){
     if(targetIndex===currentBlock||isAnimating||targetIndex<0||targetIndex>=sections.length)return;
     isAnimating=true;
@@ -1048,7 +1036,6 @@ function updateLensGlare(value) {
 
     targetSec.scrollTop=0;
     currentBlock=targetIndex;
-    if(targetIndex===0&&drawerOpen)revealMethodQuote();
     updateNavUI();
     if(transitionTimer!==null)clearTimeout(transitionTimer);
     transitionTimer=setTimeout(()=>{
@@ -1067,9 +1054,6 @@ function updateLensGlare(value) {
     if(!drawerOpen){
       previousFocus=document.activeElement;
       drawerOpen=true;
-      methodQuoteRevealedThisOpen=false;
-      const quote=document.getElementById("methodQuote");
-      if(quote)quote.classList.remove("is-revealed");
       backdrop.classList.add("is-open");
       drawer.classList.add("is-open");
       document.body.classList.add("drawer-is-open");
@@ -1077,7 +1061,6 @@ function updateLensGlare(value) {
       backdrop.setAttribute("aria-hidden","false");
     }
     if(index!==currentBlock)goToBlock(index);
-    if(index===0)revealMethodQuote();
     updateNavUI();
     closeButton.focus();
   }
@@ -1085,7 +1068,6 @@ function updateLensGlare(value) {
   function closeDrawer(){
     if(!drawerOpen)return;
     drawerOpen=false;
-    methodQuoteRevealedThisOpen=false;
     isAnimating=false;
     wheelCooldown=false;
     if(transitionTimer!==null)clearTimeout(transitionTimer);
