@@ -6719,3 +6719,81 @@ html.initial-load-reveal .header {
 @media (prefers-reduced-motion: reduce) {
   #sideDrawer .method-quote.is-revealed { animation: none; opacity: 1; transform: none; }
 }
+
+
+/* Точная корректировка геометрии шторки и кнопки закрытия */
+@media (min-width: 1025px) {
+  #sideDrawer {
+    width: min(73.333vw, 934px) !important;
+    max-width: 934px !important;
+  }
+}
+@media (min-width: 761px) and (max-width: 1024px) {
+  #sideDrawer {
+    width: 100vw !important;
+    max-width: 100vw !important;
+  }
+}
+
+/* Внутренний контент «О Методе» — левее на 5 мм */
+#sideDrawer .method-layout {
+  position: relative;
+  left: -5mm;
+  width: calc(100% + 5mm);
+}
+
+/* Цитата отдельно смещена вправо на 5 мм относительно общего контентного сдвига */
+#sideDrawer .method-quote {
+  position: relative;
+  left: 5mm;
+}
+
+/* Шапка уже на 1 см: по 5 мм дополнительного поля с каждой стороны */
+#sideDrawer .drawer-header {
+  margin-left: calc(1.1rem + 5mm) !important;
+  margin-right: calc(1.1rem + 5mm) !important;
+}
+
+/* Симметричный крестик закрытия: две одинаковые линии в точном центре кнопки */
+#drawerClose.drawer-close {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  width: 44px !important;
+  height: 44px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+}
+#drawerClose.drawer-close::before,
+#drawerClose.drawer-close::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 19px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: currentColor;
+  transform-origin: center;
+}
+#drawerClose.drawer-close::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+#drawerClose.drawer-close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+@media (max-width: 760px) {
+  #sideDrawer .method-layout {
+    left: -5mm;
+    width: calc(100% + 5mm);
+  }
+  #sideDrawer .method-quote { left: 5mm; }
+  #sideDrawer .drawer-header {
+    margin-left: calc(.75rem + 5mm) !important;
+    margin-right: calc(.75rem + 5mm) !important;
+  }
+}
