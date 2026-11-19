@@ -2350,13 +2350,10 @@ body.tech-3-active {
 /* Сама шторка */
 
 #sideDrawer {
-    --drawer-width: 750px;
 
     position: fixed;
     inset: 0 auto 0 0;
 
-    width: var(--drawer-width);
-    max-width: 100vw;
     height: 100dvh;
 
     z-index: 99999;
@@ -5442,9 +5439,6 @@ body.cost-modal-open #developer-panel{z-index:1!important}
    Анимация переходов: вниз 1.8s, вверх 1.5s
 ========================================= */
 #sideDrawer{
-  --drawer-width:66.666vw;
-  width:66.666vw !important;
-  max-width:100vw;
   height:100dvh;
   overflow:hidden;
   background:#F2F7F6;
@@ -5787,14 +5781,6 @@ html.initial-load-reveal .header {
 }
 
 
-/* УВЕЛИЧЕНИЕ ШИРИНЫ ШТОРКИ И ГОРИЗОНТАЛЬНЫЙ ФОРМАТ КАРТОЧЕК ИЗМЕРЕНИЙ */
-@media (min-width: 1025px) {
-  #sideDrawer {
-    --drawer-width: 73.333vw !important;
-    width: 73.333vw !important;
-  }
-}
-
 /* ФИНАЛЬНАЯ АДАПТАЦИЯ ИНФОРМАЦИОННОЙ ШТОРКИ: БЕЛАЯ ШАПКА И ПОЛНАЯ ПРОКРУТКА */
 #sideDrawer .drawer-header {
   background: #FFFFFF !important;
@@ -5844,8 +5830,6 @@ html.initial-load-reveal .header {
 /* Небольшие экраны ноутбуков и мониторов: контент не обрезается, прокручивается внутри раздела */
 @media (min-width: 1025px) {
   #sideDrawer {
-    width: min(73.333vw, 1200px) !important;
-    max-width: 100vw !important;
   }
   #sideDrawer .block-section {
     padding-left: clamp(2rem, 3vw, 3rem) !important;
@@ -5873,8 +5857,6 @@ html.initial-load-reveal .header {
 /* О МЕТОДЕ — редакционный макет по предоставленному образцу */
 
 #sideDrawer {
-  width: min(100vw, 890px) !important;
-  max-width: 890px !important;
   background: #FFFFFF !important;
   background-color: #FFFFFF !important;
 }
@@ -6047,19 +6029,6 @@ html.initial-load-reveal .header {
 
 
 /* Точная корректировка геометрии шторки и кнопки закрытия */
-@media (min-width: 1025px) {
-  #sideDrawer {
-    width: min(73.333vw, 934px) !important;
-    max-width: 934px !important;
-  }
-}
-@media (min-width: 761px) and (max-width: 1024px) {
-  #sideDrawer {
-    width: 100vw !important;
-    max-width: 100vw !important;
-  }
-}
-
 /* Внутренний контент «О Методе» — левее на 5 мм */
 #sideDrawer .method-layout {
   position: relative;
