@@ -5462,7 +5462,6 @@ body.cost-modal-open #developer-panel{z-index:1!important}
 #drawerBackdrop.is-open{backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);}
 .drawer-inner{height:100%;min-height:0;padding:0;display:flex;flex-direction:column;overflow:hidden;}
 .drawer-header{flex:0 0 auto;background:#F2F7F6;border-bottom:1px solid rgba(45,55,72,.1);padding:1.4rem 3rem;z-index:30;}
-.drawer-eyebrow{margin:0 0 12px;font:600 11px Inter,sans-serif;letter-spacing:.2em;color:rgba(45,55,72,.5);}
 .drawer-tabs{display:flex;flex-wrap:nowrap;align-items:center;gap:8px;margin:0;padding:4px 0 12px;border:0;overflow-x:auto;scrollbar-width:thin;}
 .drawer-tabs button{
   flex:0 0 auto;border:1px solid transparent;border-radius:9999px;padding:.45rem .9rem;
@@ -5490,7 +5489,7 @@ body.cost-modal-open #developer-panel{z-index:1!important}
 .drawer-close:hover{background:rgba(52,121,126,.08);transform:rotate(90deg);}
 .drawer-speed-controls{display:grid;grid-template-columns:repeat(2,minmax(180px,1fr));gap:18px;padding-top:14px;margin-top:12px;border-top:1px solid rgba(45,55,72,.12);}
 @media(max-width:1024px){#sideDrawer{width:100vw!important}.drawer-header{padding:1.2rem 1.4rem}.block-section{padding:1.8rem 1.4rem}.drawer-footer{padding:1rem 1.4rem}}
-@media(max-width:600px){.drawer-eyebrow{font-size:10px}.drawer-tabs{gap:5px}.drawer-tabs button{font-size:10px;padding:7px 9px}.drawer-tabs button.is-active{font-size:11px;padding:8px 10px}.drawer-footer{font-size:11px}.drawer-appointment-button{padding:9px 12px;font-size:11px}.drawer-speed-controls{grid-template-columns:1fr}}
+@media(max-width:600px){.drawer-tabs{gap:5px}.drawer-tabs button{font-size:10px;padding:7px 9px}.drawer-tabs button.is-active{font-size:11px;padding:8px 10px}.drawer-footer{font-size:11px}.drawer-appointment-button{padding:9px 12px;font-size:11px}.drawer-speed-controls{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.block-section,#sideDrawer,#drawerBackdrop{transition-duration:.01ms!important}}
 
 /* FIX: не переносить короткое «О» отдельно в заголовке «О МЕТОДЕ» */
@@ -5664,12 +5663,6 @@ html.initial-load-reveal .header {
   border-radius:10px;
   box-sizing:border-box;
 }
-#sideDrawer .drawer-eyebrow{
-  flex:0 0 auto;
-  margin:0;
-  font-size:11px;
-  line-height:1.3;
-}
 #sideDrawer .drawer-tabs{
   flex:1 1 auto;
   min-width:0;
@@ -5740,7 +5733,6 @@ html.initial-load-reveal .header {
   box-shadow: 0 8px 24px rgba(35, 48, 65, .06), 0 2px 6px rgba(35, 48, 65, .035) !important;
   box-sizing: border-box !important;
 }
-#sideDrawer .drawer-eyebrow { display: none !important; }
 #sideDrawer .drawer-tabs {
   display: flex !important;
   flex: 1 1 auto !important;
