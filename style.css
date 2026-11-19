@@ -4865,14 +4865,6 @@ body.cost-modal-open #developer-panel {
 
 
 /* ЛАБОРАТОРИЯ ФОНА — кнопки в стиле общей панели управления */
-#developer-panel .background-lab-tab {
-  flex: 0 0 auto;
-  width: auto;
-  min-height: 0;
-  padding: 8px 12px;
-  white-space: nowrap;
-  font-size: 11px;
-}
 #developer-panel .background-lab-panels { margin: 8px 0; }
 #developer-panel .background-lab-card {
   padding: 12px 14px;
@@ -4886,9 +4878,6 @@ body.cost-modal-open #developer-panel {
   margin: 0 0 7px; color: #2B4C6F; font: 600 12px/1.4 Inter,sans-serif;
 }
 #developer-panel .background-lab-card p { margin:0; font: 11px/1.5 Inter,sans-serif; }
-@media(max-width:600px) {
- #developer-panel .background-lab-tab { padding:7px 9px; font-size:10px; }
-}
 
 /* Лаборатория фона: горизонтальная карусель вкладок */
 #developer-panel .background-lab-carousel{display:flex;align-items:center;gap:5px;width:100%;min-width:0;margin:5px 0 10px}
