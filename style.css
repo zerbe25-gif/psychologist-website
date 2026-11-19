@@ -7208,45 +7208,7 @@ html.initial-load-reveal .header {
   #sideDrawer .education-card { transition:none; }
 }
 
-/* DRAWER VIEWPORT — мягкое исчезновение текста под шапкой.
-   Размытие начинается ровно от верхней границы прокручиваемой области,
-   занимает всю ширину viewport и не добавляет цветной/белой подложки. */
-#sideDrawer .drawer-header::after {
-  content: none !important;
-}
-#sideDrawer .viewport {
-  position: relative !important;
-  isolation: isolate;
-}
-#sideDrawer .viewport::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 76px;
-  z-index: 20;
-  pointer-events: none;
-  background: transparent;
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, .92) 28%,
-    rgba(0, 0, 0, .58) 58%,
-    rgba(0, 0, 0, .18) 82%,
-    rgba(0, 0, 0, 0) 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, .92) 28%,
-    rgba(0, 0, 0, .58) 58%,
-    rgba(0, 0, 0, .18) 82%,
-    rgba(0, 0, 0, 0) 100%
-  );
-}
+/* Эффект размытия под шапкой полностью удалён. */
 
 /* Крестик закрытия шторки — точное положение */
 #sideDrawer #drawerClose.drawer-close {
