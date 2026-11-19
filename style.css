@@ -5311,7 +5311,6 @@ body.theme-v3 #sideDrawer{background:color-mix(in srgb,var(--lab-drawer-color,#2
 
 /* Компактные поля RGB; hue-slider и HEX/RGB tabs удалены */
 
-#developer-panel .lab-color-swatch{width:100%;height:29px;padding:2px;border:1px solid #d7dee8;border-radius:6px;background:#fff;cursor:pointer}
 
 
 /* MODERN WEB COLOR PICKER — saturation/value square, rainbow hue, RGB */
