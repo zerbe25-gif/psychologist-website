@@ -4899,7 +4899,6 @@ body.cost-modal-open #developer-panel {
 #developer-panel .lab-preset-actions{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0}
 #developer-panel .lab-preset-actions button{padding:7px 12px;border:1px solid #d4dce6;border-radius:8px;background:#fff;color:#2B4C6F;font-size:11px;cursor:pointer}
 #developer-panel .lab-preset-actions button:hover{background:#2B4C6F;color:#fff;border-color:#2B4C6F}
-#developer-panel .lab-preset-note{font-size:10px;color:#718096}
 @media(max-width:600px){#developer-panel .background-lab-tab{padding:7px 9px;font-size:10px}}
 
 
@@ -4955,17 +4954,11 @@ body{background-color:var(--lab-bg-base,var(--background-color))!important}
 .main-content{z-index:2}
 #developer-panel .background-lab-glow{padding:8px 10px;background:#f7f9fb;border:1px solid #e2e8f0;border-radius:9px}
 #developer-panel .background-lab-glow[hidden]{display:none!important}
-#developer-panel .lab-glow-heading{display:flex;align-items:center;gap:7px;margin-bottom:8px;color:#526078;font:11px/1.3 Inter,sans-serif}
-#developer-panel .lab-glow-heading strong{font-weight:600;color:#2B4C6F}
-#developer-panel .lab-glow-caption{color:#8792a2;font-size:10px}
-#developer-panel .lab-glow-dot{width:8px;height:8px;flex:0 0 8px;border-radius:50%;background:#34797E;box-shadow:0 0 0 3px rgba(52,121,126,.12)}
 #developer-panel .lab-glow-controls{display:grid;grid-template-columns:repeat(5,minmax(105px,1fr));gap:8px}
 #developer-panel .lab-glow-control{display:grid;grid-template-columns:1fr auto;align-items:center;gap:4px 6px;min-width:0;color:#526078;font:10px/1.2 Inter,sans-serif}
 #developer-panel .lab-glow-control label{white-space:nowrap}
 #developer-panel .lab-glow-control input[type=range]{grid-column:1/-1;width:100%;height:13px;margin:0;accent-color:#34797E}
 #developer-panel .lab-glow-control output{color:#718096;font-size:9px;text-align:right}
-#developer-panel .lab-glow-color{grid-template-columns:auto 25px 1fr}
-#developer-panel .lab-glow-color input[type=color]{width:24px;height:21px;padding:2px;border:1px solid #d7dee8;border-radius:5px;background:#fff}
 @media(max-width:700px){#developer-panel .lab-glow-controls{grid-template-columns:repeat(2,minmax(110px,1fr))}}
 
 
@@ -4979,8 +4972,6 @@ body.lab-effects-isolated #background-lab-atmosphere::before,
 body.lab-effects-isolated #background-lab-atmosphere::after{mix-blend-mode:normal}
 
 /* ВТОРОЙ ИСТОЧНИК СВЕТА */
-#developer-panel .lab-glow-dot-gold{background:#DCB573;box-shadow:0 0 0 3px rgba(220,181,115,.16)}
-#developer-panel .lab-glow-dot-gold+strong{color:#98743c}
 
 /* ОПТИКА ВСПЛЫВАЮЩЕЙ ШТОРКИ */
 #developer-panel .background-lab-optics{padding:8px 10px;background:#f7f9fb;border:1px solid #e2e8f0;border-radius:9px}
