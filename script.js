@@ -1075,9 +1075,7 @@ window.closeDeveloperPanel = function() {
     const costFormatMap = {
         individual: "Индивидуальная работа",
         couples: "Работа с парой",
-        teenagers: "Работа с подростками",
-        coaching: "Коучинг",
-        "text-therapy": "Текстовая терапия"
+        teenagers: "Работа с подростками"
     };
 
     if (costModal && appointmentModal) {
