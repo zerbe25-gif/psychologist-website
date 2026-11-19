@@ -2278,13 +2278,6 @@ body.tech-3-active {
    СОДЕРЖИМОЕ НОВОЙ ИНФОРМАЦИОННОЙ ШТОРКИ
 ========================================= */
 
-#sideDrawer {
-    transition:
-        transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-        width 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-        visibility 0.85s;
-}
-
 .drawer-tabs {
     display: flex;
     flex-direction: row;
@@ -2422,49 +2415,6 @@ body.tech-3-active {
 
 .drawer-articles-link:hover {
     color: #A64B2A;
-}
-
-/* Адаптация */
-
-@media (max-width: 700px) {
-    #sideDrawer {
-        width: 100vw !important;
-    }
-
-    .drawer-inner {
-        padding: 80px 25px 45px;
-    }
-
-    .drawer-tabs {
-        gap: 7px;
-        margin-bottom: 28px;
-    }
-
-    .drawer-tabs button {
-        font-size: 12px;
-        padding: 8px 12px;
-    }
-
-    .drawer-panel {
-        font-size: 17px;
-    }
-
-    .drawer-panel .requests-list {
-        font-size: 17px;
-        gap: 12px;
-    }
-
-    .drawer-panel .requests-note {
-        font-size: 14px;
-    }
-
-    .drawer-panel .education-entry h3 {
-        font-size: 20px;
-    }
-
-    .drawer-panel .education-entry p {
-        font-size: 17px;
-    }
 }
 
    
