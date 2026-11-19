@@ -2478,30 +2478,6 @@ body.drawer-is-open {
         transition-duration: 0.01ms !important;
     }
 
-    .drawer-inner.is-revealing > *,
-    .drawer-inner.is-revealing .drawer-panel * {
-        animation-duration: 0.01ms !important;
-    }
-}
-
-
-/* =========================================
-   ЭТАП 3 — ПЛАВНОЕ ПЕРЕКЛЮЧЕНИЕ РАЗДЕЛОВ
-========================================= */
-
-/* Плавное исчезновение заголовка и содержимого */
-#drawerTitle,
-.drawer-panels {
-    transition:
-        opacity 0.24s ease,
-        transform 0.24s ease;
-}
-
-/* Состояние перед заменой текста */
-.drawer-inner.is-switching > #drawerTitle,
-.drawer-inner.is-switching > .drawer-panels {
-    opacity: 0;
-    transform: translateY(10px);
 }
 
 
@@ -3917,11 +3893,7 @@ body.theme-v3 #sideDrawer {
     border-color: rgba(220, 181, 115, 0.2);
 }
 
-body.theme-v3 #sideDrawer .drawer-inner,
-body.theme-v3 #sideDrawer .drawer-panel,
-body.theme-v3 #sideDrawer #drawerTitle {
-    color: #F2F7F6;
-}
+
 
 body.theme-v3 #sideDrawer .drawer-tabs button {
     color: #F2F7F6;
@@ -4701,29 +4673,6 @@ body.cost-modal-open #developer-panel {
     margin-left: 1.2em;
 }
 
-/* Раздел «О Методе» использует те же анимации и типографику,
-   что и остальные информационные разделы шторки. */
-#sideDrawer [data-drawer-panel="method"] .education-entry {
-    margin-bottom: 30px;
-}
-
-#sideDrawer [data-drawer-panel="method"] .education-entry:last-child {
-    margin-bottom: 0;
-}
-
-#sideDrawer [data-drawer-panel="method"] .education-entry h3 {
-    margin-bottom: 10px;
-}
-
-#sideDrawer [data-drawer-panel="method"] .education-entry p {
-    margin: 0 0 12px;
-}
-
-#sideDrawer [data-drawer-panel="method"] .education-entry .requests-list {
-    margin: 8px 0 16px;
-}
-
-
 /* FINAL MENU POSITION FIX 2026-11-13
    Override legacy desktop offsets (including .menu-item-3 {left:100px})
    so the requested 52px shift is applied to the actual rendered menu. */
@@ -4773,12 +4722,7 @@ body.cost-modal-open #developer-panel {
   border-right-color: rgba(57, 71, 94, .12) !important;
   box-shadow: 18px 0 55px rgba(35, 45, 55, .10), 3px 0 12px rgba(35, 45, 55, .035) !important;
 }
-#sideDrawer .drawer-inner,
-#sideDrawer .drawer-panel,
-#sideDrawer #drawerTitle,
-#sideDrawer .drawer-eyebrow {
-  color: #39475E !important;
-}
+
 #sideDrawer .drawer-tabs {
   display: flex !important;
   flex-direction: row !important;
@@ -4815,9 +4759,6 @@ body.cost-modal-open #developer-panel {
 }
 #sideDrawer a {
   color: #687B91 !important;
-}
-#sideDrawer .drawer-panel .requests-list li::marker {
-  color: #B58B50 !important;
 }
 @media (max-width: 600px) {
   #sideDrawer .drawer-tabs {
@@ -5530,7 +5471,6 @@ body.cost-modal-open #developer-panel{z-index:1!important}
 }
 .drawer-tabs button:hover{color:#2D3748;background:rgba(52,121,126,.06);}
 .drawer-tabs button.is-active{font-size:13px;font-weight:600;color:#34797E;background:rgba(52,121,126,.09);border-color:rgba(52,121,126,.22);box-shadow:0 4px 14px rgba(52,121,126,.12);padding:.5rem 1.1rem;}
-#drawerTitle,.drawer-panels{display:none!important;}
 .viewport{position:relative;flex:1;min-height:0;overflow:hidden;background:#F2F7F6;}
 .block-section{
   position:absolute;inset:0;width:100%;padding:2.25rem 3rem;background:#F2F7F6;
