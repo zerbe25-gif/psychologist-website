@@ -6486,3 +6486,20 @@ html.initial-load-reveal .header {
   top: 19px !important;
   right: 61px !important;
 }
+
+
+/* ШАПКА ИНФОРМАЦИОННОЙ ШТОРКИ — ТЕКСТ СКРЫВАЕТСЯ РОВНО ЗА ЕЁ РАМКОЙ */
+#sideDrawer .drawer-header {
+  position: relative !important;
+  z-index: 100 !important;
+  margin-bottom: 0 !important;
+  background: #FFFFFF !important;
+  background-color: #FFFFFF !important;
+  isolation: isolate;
+}
+
+#sideDrawer .viewport {
+  position: relative !important;
+  z-index: 1 !important;
+  overflow: hidden !important;
+}
