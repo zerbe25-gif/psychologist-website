@@ -785,13 +785,6 @@ function updateLensGlare(value) {
   const tabs=[...document.querySelectorAll("#sideDrawer [data-drawer-tab]")];
   const sections=[...document.querySelectorAll("#sideDrawer .block-section")];
   const currentStep=document.getElementById("currentStep");
-  const methodQuote=document.getElementById("methodQuote");
-  let methodQuoteAnimated=false;
-  function revealMethodQuote(){
-    if(!methodQuote||methodQuoteAnimated)return;
-    methodQuoteAnimated=true;
-    methodQuote.classList.add("is-revealed");
-  }
   if(!drawer||!backdrop||!closeButton||sections.length!==4)return;
 
   const sectionKeys=["method","requests","format","education"];
@@ -815,7 +808,6 @@ function updateLensGlare(value) {
   }
   function goToBlock(targetIndex){
     if(targetIndex===currentBlock||isAnimating||targetIndex<0||targetIndex>=sections.length)return;
-    if(targetIndex===0&&drawerOpen)revealMethodQuote();
     isAnimating=true;
     const isNext=targetIndex>currentBlock;
     const duration=getSlideDuration(isNext);
@@ -872,7 +864,6 @@ function updateLensGlare(value) {
     if(!drawerOpen){
       previousFocus=document.activeElement;
       drawerOpen=true;
-      methodQuote.classList.remove("is-revealed");
       backdrop.classList.add("is-open");
       drawer.classList.add("is-open");
       document.body.classList.add("drawer-is-open");
@@ -880,7 +871,6 @@ function updateLensGlare(value) {
       backdrop.setAttribute("aria-hidden","false");
     }
     if(index!==currentBlock)goToBlock(index);
-    if(index===0)revealMethodQuote();
     updateNavUI();
     closeButton.focus();
   }
@@ -888,8 +878,6 @@ function updateLensGlare(value) {
   function closeDrawer(){
     if(!drawerOpen)return;
     drawerOpen=false;
-    methodQuoteAnimated=false;
-    if(methodQuote)methodQuote.classList.remove("is-revealed");
     isAnimating=false;
     wheelCooldown=false;
     if(transitionTimer!==null)clearTimeout(transitionTimer);
