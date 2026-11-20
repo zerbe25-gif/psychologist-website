@@ -6545,3 +6545,89 @@ html.initial-load-reveal .header {
   background: #FFFFFF !important;
   border-color: rgba(47,74,99,.12) !important;
 }
+
+
+/* ФИНАЛЬНОЕ ОФОРМЛЕНИЕ «О МЕТОДЕ» — редакционная структура и палитра Янтарь + глубокий тил */
+#sideDrawer .block-section[data-drawer-panel="method"] {
+  background: #FAF9F6 !important;
+  background-color: #FAF9F6 !important;
+  background-image: none !important;
+  color: #2F4A63 !important;
+  font-family: Inter, Arial, sans-serif !important;
+}
+#sideDrawer .block-section[data-drawer-panel="method"] .method-layout {
+  max-width: 790px;
+}
+#sideDrawer .block-section[data-drawer-panel="method"] .method-heading {
+  padding-bottom: 1.1rem;
+  margin-bottom: 1.35rem;
+  border-bottom: 1px solid rgba(47,74,99,.14);
+}
+#sideDrawer .block-section[data-drawer-panel="method"] .method-eyebrow,
+#sideDrawer .block-section[data-drawer-panel="method"] .method-dimensions-eyebrow {
+  color: #1E6B6B !important;
+}
+#sideDrawer .block-section[data-drawer-panel="method"] .method-heading h1,
+#sideDrawer .block-section[data-drawer-panel="method"] .method-quote p,
+#sideDrawer .block-section[data-drawer-panel="method"] .method-dimension h2 {
+  color: #2F4A63 !important;
+}
+#sideDrawer .block-section[data-drawer-panel="method"] .method-copy {
+  max-width: 740px;
+  color: #4C6277 !important;
+  font-size: 14px;
+  line-height: 1.8;
+}
+#sideDrawer .block-section[data-drawer-panel="method"] .method-copy strong,
+#sideDrawer .block-section[data-drawer-panel="method"] .method-drop-cap {
+  color: #1E6B6B !important;
+}
+#sideDrawer .block-section[data-drawer-panel="method"] .method-quote {
+  border: 0 !important;
+  border-left: 3px solid #1E6B6B !important;
+  border-radius: 0 12px 12px 0 !important;
+  background: linear-gradient(100deg, rgba(220,181,115,.16), rgba(220,181,115,.045) 72%, transparent) !important;
+  padding: 1.25rem 1.5rem;
+}
+#sideDrawer .block-section[data-drawer-panel="method"] .method-quote footer,
+#sideDrawer .block-section[data-drawer-panel="method"] .method-dimension > span {
+  color: #C99A48 !important;
+}
+#sideDrawer .block-section[data-drawer-panel="method"] .method-dimensions {
+  padding: 1.35rem 1.45rem;
+  border: 1px solid rgba(47,74,99,.12) !important;
+  border-radius: 14px;
+  background: #FFFFFF !important;
+  box-shadow: 0 10px 28px -14px rgba(47,74,99,.18);
+}
+#sideDrawer .block-section[data-drawer-panel="method"] .method-dimensions-eyebrow {
+  margin-bottom: .85rem;
+}
+#sideDrawer .block-section[data-drawer-panel="method"] .method-dimension {
+  padding: .9rem 1rem;
+  margin: 0 0 .55rem;
+  border: 1px solid rgba(47,74,99,.08);
+  border-radius: 9px;
+  background: #FAF9F6;
+}
+#sideDrawer .block-section[data-drawer-panel="method"] .method-dimension:last-child {
+  padding: .9rem 1rem;
+  margin-bottom: 0;
+  border: 1px solid rgba(47,74,99,.08);
+}
+#sideDrawer .block-section[data-drawer-panel="method"] .method-dimension p {
+  color: #4C6277 !important;
+  line-height: 1.65;
+}
+@media (max-width:760px) {
+  #sideDrawer .block-section[data-drawer-panel="method"] .method-dimensions {
+    padding: 1rem .85rem;
+  }
+  #sideDrawer .block-section[data-drawer-panel="method"] .method-dimension,
+  #sideDrawer .block-section[data-drawer-panel="method"] .method-dimension:last-child {
+    padding: .8rem .75rem;
+  }
+  #sideDrawer .block-section[data-drawer-panel="method"] .method-quote {
+    padding: 1rem 1.1rem;
+  }
+}
