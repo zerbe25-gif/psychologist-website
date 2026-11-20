@@ -6503,3 +6503,45 @@ html.initial-load-reveal .header {
   z-index: 1 !important;
   overflow: hidden !important;
 }
+
+/* ОКНО «О МЕТОДЕ» — молочный нейтральный фон и палитра «Янтарь + глубокий тил» */
+#sideDrawer .block-section[data-drawer-panel="method"] {
+  background: #FAF9F6 !important;
+  background-color: #FAF9F6 !important;
+  background-image: none !important;
+  color: #2F4A63 !important;
+}
+
+#sideDrawer .block-section[data-drawer-panel="method"] .method-heading h1,
+#sideDrawer .block-section[data-drawer-panel="method"] .method-quote p,
+#sideDrawer .block-section[data-drawer-panel="method"] .method-dimension h2 {
+  color: #2F4A63 !important;
+}
+
+#sideDrawer .block-section[data-drawer-panel="method"] .method-eyebrow,
+#sideDrawer .block-section[data-drawer-panel="method"] .method-dimensions-eyebrow,
+#sideDrawer .block-section[data-drawer-panel="method"] .method-copy strong,
+#sideDrawer .block-section[data-drawer-panel="method"] .method-drop-cap {
+  color: #1E6B6B !important;
+}
+
+#sideDrawer .block-section[data-drawer-panel="method"] .method-copy,
+#sideDrawer .block-section[data-drawer-panel="method"] .method-dimension p {
+  color: #4C6277 !important;
+}
+
+#sideDrawer .block-section[data-drawer-panel="method"] .method-quote {
+  border-left: 3px solid #1E6B6B !important;
+  border-radius: 0 !important;
+  background: linear-gradient(90deg, rgba(220,181,115,.12) 0%, rgba(220,181,115,.035) 55%, transparent 100%) !important;
+}
+
+#sideDrawer .block-section[data-drawer-panel="method"] .method-quote footer,
+#sideDrawer .block-section[data-drawer-panel="method"] .method-dimension > span {
+  color: #C99A48 !important;
+}
+
+#sideDrawer .block-section[data-drawer-panel="method"] .method-dimensions {
+  background: #FFFFFF !important;
+  border-color: rgba(47,74,99,.12) !important;
+}
