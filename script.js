@@ -1539,3 +1539,39 @@ window.applyBackgroundMood = function(mood){
     init();
   }
 })();
+
+
+/* РАЗДЕЛ «ЗАПРОСЫ»: доступное переключение направлений */
+(function initRequestsTopics() {
+  const root = document.querySelector('#sideDrawer [data-drawer-panel="requests"]');
+  if (!root) return;
+  const tabs = Array.from(root.querySelectorAll("[data-request-tab]"));
+  const panels = Array.from(root.querySelectorAll(".requests-panel"));
+  if (!tabs.length || tabs.length !== panels.length) return;
+  function activate(index, moveFocus) {
+    if (index < 0 || index >= tabs.length) return;
+    tabs.forEach((tab, i) => {
+      const selected = i === index;
+      tab.classList.toggle("is-selected", selected);
+      tab.setAttribute("aria-selected", String(selected));
+      tab.tabIndex = selected ? 0 : -1;
+      panels[i].hidden = !selected;
+      panels[i].classList.toggle("is-active", selected);
+    });
+    if (moveFocus) tabs[index].focus();
+  }
+  tabs.forEach((tab, index) => {
+    tab.addEventListener("click", () => activate(index, false));
+    tab.addEventListener("keydown", event => {
+      let next = index;
+      if (event.key === "ArrowDown" || event.key === "ArrowRight") next = (index + 1) % tabs.length;
+      else if (event.key === "ArrowUp" || event.key === "ArrowLeft") next = (index - 1 + tabs.length) % tabs.length;
+      else if (event.key === "Home") next = 0;
+      else if (event.key === "End") next = tabs.length - 1;
+      else return;
+      event.preventDefault();
+      activate(next, true);
+    });
+  });
+  activate(0, false);
+})();
