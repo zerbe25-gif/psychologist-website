@@ -6414,14 +6414,14 @@ html.initial-load-reveal .header {
   font: 500 clamp(38px, 4.2vw, 46px)/1.12 "Cormorant Garamond", Georgia, serif; letter-spacing: -.025em;
 }
 #sideDrawer .method-amber-intro {
-  margin: 0 0 1.9rem; color: var(--method-ink); font: 400 14px/1.75 Inter, Arial, sans-serif;
+  margin: 0 0 1.9rem; padding-left: 5mm; color: var(--method-ink); font: 400 14px/1.75 Inter, Arial, sans-serif;
 }
 #sideDrawer .method-amber-intro::first-letter {
   float: left; padding: 5px 14px 4px 0; color: var(--method-amber);
   font: 600 64px/.78 "Cormorant Garamond", Georgia, serif;
 }
 #sideDrawer .method-amber-quote {
-  margin: 1.5rem 0 2rem 78px; padding: 2px 15px; border: 0;
+  margin: calc(1.5rem + 5mm) 0 calc(2rem + 10mm) 78px; padding: 2px 15px; border: 0;
   border-left: 3px solid var(--method-teal); background: transparent;
   transition: transform .35s cubic-bezier(.16, 1, .3, 1);
 }
@@ -6460,14 +6460,19 @@ html.initial-load-reveal .header {
   margin: 0; color: var(--method-muted); font: 400 13px/1.7 Inter, Arial, sans-serif;
 }
 #sideDrawer .method-amber-dimension.is-offset {
-  transform: translateX(24px); background: var(--method-hover); border-bottom-color: rgba(220, 181, 115, .35);
+  transform: translateX(24px); background-color: transparent;
+  background-image: linear-gradient(to right, var(--method-hover) 0%, var(--method-hover) 80%, rgba(220, 181, 115, 0) 100%);
+  border-bottom-color: rgba(220, 181, 115, .35);
 }
 #sideDrawer .method-amber-dimension:hover { transform: translateX(30px); background: var(--method-hover); }
-#sideDrawer .method-amber-dimension.is-offset:hover { transform: translateX(34px); }
+#sideDrawer .method-amber-dimension.is-offset:hover {
+  transform: translateX(34px); background-color: transparent;
+  background-image: linear-gradient(to right, var(--method-hover) 0%, var(--method-hover) 80%, rgba(220, 181, 115, 0) 100%);
+}
 @media (max-width: 780px) {
   #sideDrawer .method-amber-kicker-row { align-items: flex-start; flex-direction: column; gap: 3px; }
   #sideDrawer .method-amber-heading h1 { margin-left: 0; }
-  #sideDrawer .method-amber-quote { margin: 1.2rem 0 1.7rem; }
+  #sideDrawer .method-amber-quote { margin: calc(1.2rem + 5mm) 0 calc(1.7rem + 10mm); }
   #sideDrawer .method-amber-dimension,
   #sideDrawer .method-amber-dimension.is-offset {
     grid-template-columns: 38px minmax(0, 1fr); gap: 7px 10px; padding: 17px 12px; transform: none;
