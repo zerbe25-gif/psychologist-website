@@ -5954,7 +5954,7 @@ html.initial-load-reveal .header {
 }
 
 
-/* РАЗДЕЛ «ЗАПРОСЫ» — аккордеон «Тёплый пергамент и Тил» */
+/* Сохранены общие размеры шторки и исходный фон окна */
 #sideDrawer {
   width: min(100vw, 980px) !important;
   max-width: 980px !important;
@@ -5968,134 +5968,8 @@ html.initial-load-reveal .header {
   background-color: #F3F1EC !important;
   background-image: linear-gradient(165deg, #F3F1EC 0%, #E6ECEB 100%) !important;
 }
-#sideDrawer .block-section[data-drawer-panel="requests"] {
-  padding: 2rem clamp(1.5rem, 4vw, 3rem) 3.5rem !important;
-  color: #2D3748 !important;
-  font-family: "Inter", Arial, sans-serif !important;
-}
-#sideDrawer .requests-layout {
-  width: 100%;
-  max-width: 850px;
-  margin: 0 auto;
-}
-#sideDrawer .requests-heading {
-  margin: 0 0 1.75rem;
-  padding: 0 0 1.25rem;
-  border-bottom: 1px solid rgba(45,55,72,.16);
-}
-#sideDrawer .requests-eyebrow {
-  display: block;
-  margin: 0 0 .55rem;
-  color: #DCB573;
-  font: 600 10px/1.5 "Inter", Arial, sans-serif;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-}
-#sideDrawer .requests-heading h1 {
-  margin: 0;
-  color: #2D3748;
-  font: 400 clamp(34px, 5vw, 44px)/1.12 "Cormorant Garamond", Georgia, serif;
-}
-#sideDrawer .requests-accordion {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-#sideDrawer .request-accordion-item {
-  overflow: hidden;
-  border: 1px solid rgba(45,55,72,.09);
-  border-radius: 22px;
-  background: rgba(255,255,255,.88);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-  transition: background .35s cubic-bezier(.16,1,.3,1), border-color .35s ease, box-shadow .35s ease;
-}
-#sideDrawer .request-accordion-item:hover,
-#sideDrawer .request-accordion-item[open] {
-  background: #FFFFFF;
-  border-color: rgba(52,121,126,.3);
-  box-shadow: 0 12px 30px -10px rgba(45,55,72,.09);
-}
-#sideDrawer .request-accordion-item summary {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1.15rem 1.65rem;
-  color: #2D3748;
-  cursor: pointer;
-  list-style: none;
-  font: 400 21px/1.25 "Cormorant Garamond", Georgia, serif;
-}
-#sideDrawer .request-accordion-item summary::-webkit-details-marker { display: none; }
-#sideDrawer .request-accordion-item summary > span { min-width: 0; }
-#sideDrawer .request-accordion-item summary i {
-  margin-right: .35rem;
-  color: rgba(52,121,126,.8);
-  font-style: normal;
-}
-#sideDrawer .request-accordion-item summary b {
-  flex: 0 0 auto;
-  color: #34797E;
-  font: 300 1.2rem/1 "Inter", Arial, sans-serif;
-  transition: transform .35s cubic-bezier(.16,1,.3,1);
-}
-#sideDrawer .request-accordion-item[open] summary b { transform: rotate(45deg); }
-#sideDrawer .request-accordion-body {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows .42s cubic-bezier(.16,1,.3,1);
-}
-#sideDrawer .request-accordion-item[open] .request-accordion-body { grid-template-rows: 1fr; }
-#sideDrawer .request-accordion-content {
-  min-height: 0;
-  overflow: hidden;
-  padding: 0 1.65rem;
-  color: rgba(45,55,72,.82);
-  font: 400 13.5px/1.7 "Inter", Arial, sans-serif;
-}
-#sideDrawer .request-accordion-content::before {
-  content: "";
-  display: block;
-  height: 1px;
-  margin: 0 0 .95rem;
-  background: rgba(45,55,72,.1);
-}
-#sideDrawer .request-accordion-content > p { margin: 0 0 1rem; }
-#sideDrawer .request-accordion-content > p:last-child { margin-bottom: 1.2rem; }
-#sideDrawer .request-accordion-content ul {
-  display: flex;
-  flex-direction: column;
-  gap: .45rem;
-  margin: 0 0 1.2rem;
-  padding: 0;
-  list-style: none;
-}
-#sideDrawer .request-accordion-content li { position: relative; padding-left: 1rem; }
-#sideDrawer .request-accordion-content li::before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  color: #DCB573;
-  font-weight: 600;
-}
-#sideDrawer .request-accordion-content strong { color: #2D3748; font-weight: 600; }
-#sideDrawer .request-accordion-content .request-important-note {
-  color: #34797E;
-  font-size: 12px;
-  font-style: italic;
-}
 @media (max-width: 760px) {
   #sideDrawer { width: 100vw !important; max-width: 100vw !important; }
-  #sideDrawer .block-section[data-drawer-panel="requests"] { padding: 1.4rem 1.1rem 2.5rem !important; }
-  #sideDrawer .requests-heading { margin-bottom: 1.3rem; }
-  #sideDrawer .request-accordion-item summary { padding: 1rem 1.1rem; font-size: 19px; }
-  #sideDrawer .request-accordion-content { padding: 0 1.1rem; font-size: 13px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  #sideDrawer .request-accordion-item,
-  #sideDrawer .request-accordion-item summary b,
-  #sideDrawer .request-accordion-body { transition-duration: .01ms !important; }
 }
 
 
