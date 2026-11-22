@@ -7009,3 +7009,13 @@ html.initial-load-reveal .header {
   #sideDrawer .fw-format-title { font-size: 20px; }
   #sideDrawer .fw-accordion-body { padding-left: 14px; }
 }
+
+
+/* ДОПОЛНИТЕЛЬНОЕ ПРОСТРАНСТВО ПО ЗАПРОСУ */
+#sideDrawer [data-drawer-panel="format"] .format-work-content {
+  padding-bottom: 3cm;
+}
+
+.header {
+  margin-top: 5mm;
+}
