@@ -1580,3 +1580,65 @@ window.applyBackgroundMood = function(mood){
   const initiallyOpen = items.find(item => item.classList.contains('is-open'));
   items.forEach(item => setOpen(item, item === initiallyOpen, false));
 })();
+
+
+/* ФОРМАТ РАБОТЫ — аккордеон и анимация блоков ритма */
+(function initFormatWorkPanel() {
+  const root = document.querySelector('#sideDrawer [data-drawer-panel="format"]');
+  if (!root) return;
+  const data = [
+    { num:"01", title:"Бесплатная диагностическая сессия", expandable:false, meta:"", details:"" },
+    { num:"02", title:"Индивидуальная терапия", expandable:true, meta:"50 минут · 40–50 € / 4000–5000 ₽", details:"Длительная индивидуальная терапия — это процесс глубокого изучения ваших переживаний; бережно исследуем актуальные запросы, внутренние опоры и повторяющиеся сценарии в спокойном контакте." },
+    { num:"03", title:"Работа с подростками", expandable:true, meta:"50 минут · 40–50 € / 4000–5000 ₽", details:"Индивидуальная терапевтическая работа с подростками с учетом их возраста, внутренней динамики, семейной системы и социальной среды." },
+    { num:"04", title:"Работа с парами", expandable:true, meta:"60–90 минут · 60–80 € / 6000–8000 ₽", details:"Совместная работа с отношениями, повторяющимися конфликтами, эмоциональной дистанцией и трудностями взаимопонимания в паре." }
+  ];
+  let openIndex = -1;
+  const container = root.querySelector('#fw-formats-container');
+  if (!container) return;
+
+  function render() {
+    container.innerHTML = data.map((item, index) => {
+      const open = item.expandable && openIndex === index;
+      const sign = item.expandable ? (open ? "−" : "+") : "";
+      return `
+        <article class="fw-format-entry">
+          <button type="button" ${item.expandable ? `aria-expanded="${open}" aria-controls="fw-format-content-${index}"` : "disabled"}
+            class="fw-format-btn ${item.expandable ? "is-expandable" : ""} ${open ? "is-open" : ""}">
+            <span class="fw-format-num">${item.num}</span>
+            <span class="fw-format-title">${item.title}</span>
+            <span class="fw-format-sign" aria-hidden="true">${sign}</span>
+          </button>
+          ${item.expandable ? `
+            <div class="fw-accordion-wrap ${open ? "is-open" : ""}" id="fw-format-content-${index}">
+              <div class="fw-accordion-clip"><div class="fw-accordion-body">
+                <p class="fw-price-meta">${item.meta}</p>
+                <p class="fw-format-details">${item.details}</p>
+              </div></div>
+            </div>` : ""}
+        </article>`;
+    }).join("");
+    container.querySelectorAll(".fw-format-btn.is-expandable").forEach((button, index) => {
+      button.addEventListener("click", () => {
+        const actualIndex = data.findIndex((item, i) => item.expandable && container.querySelectorAll(".fw-format-btn.is-expandable")[index] === button);
+        openIndex = openIndex === actualIndex ? -1 : actualIndex;
+        render();
+      });
+    });
+  }
+  render();
+
+  const rhythm = root.querySelector("#fw-rhythm-section");
+  if (rhythm && "IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          rhythm.classList.add("is-visible");
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.08 });
+    observer.observe(rhythm);
+  } else if (rhythm) {
+    rhythm.classList.add("is-visible");
+  }
+})();
