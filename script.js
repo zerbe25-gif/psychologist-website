@@ -1602,7 +1602,7 @@ window.applyBackgroundMood = function(mood){
       const sign = item.expandable ? (open ? "−" : "+") : "";
       return `
         <article class="fw-format-entry">
-          <button type="button" ${item.expandable ? `aria-expanded="${open}" aria-controls="fw-format-content-${index}"` : "disabled"}
+          <button type="button" data-format-index="${index}" ${item.expandable ? `aria-expanded="${open}" aria-controls="fw-format-content-${index}"` : "disabled"}
             class="fw-format-btn ${item.expandable ? "is-expandable" : ""} ${open ? "is-open" : ""}">
             <span class="fw-format-num">${item.num}</span>
             <span class="fw-format-title">${item.title}</span>
@@ -1617,9 +1617,9 @@ window.applyBackgroundMood = function(mood){
             </div>` : ""}
         </article>`;
     }).join("");
-    container.querySelectorAll(".fw-format-btn.is-expandable").forEach((button, index) => {
+    container.querySelectorAll(".fw-format-btn.is-expandable").forEach(button => {
       button.addEventListener("click", () => {
-        const actualIndex = data.findIndex((item, i) => item.expandable && container.querySelectorAll(".fw-format-btn.is-expandable")[index] === button);
+        const actualIndex = Number(button.dataset.formatIndex);
         openIndex = openIndex === actualIndex ? -1 : actualIndex;
         render();
       });
