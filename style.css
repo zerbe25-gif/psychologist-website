@@ -7280,3 +7280,53 @@ html.initial-load-reveal .header {
     animation-delay: 0s !important;
   }
 }
+
+
+/* =========================================================
+   УТОЧНЕНИЯ ШТОРКИ И ВНУТРЕННИХ ОТСТУПОВ — НОЯБРЬ 2026
+========================================================= */
+
+/* На 5 мм шире прежнего десктопного значения; мобильная ширина прежняя. */
+@media (min-width: 1025px) {
+  #sideDrawer {
+    width: min(100vw, calc(1127px + 5mm)) !important;
+    max-width: calc(1127px + 5mm) !important;
+  }
+}
+
+/* Дополнительное верхнее пространство и ещё 5 мм справа. */
+#sideDrawer .method-amber-content,
+#sideDrawer .requests-monolith,
+#sideDrawer .format-work-content {
+  padding-top: 20mm !important;
+  padding-right: 23mm !important;
+}
+
+/* Верхний блок форматов смещён вправо; расстояние до «Длительности» увеличено. */
+#sideDrawer .fw-upper-section {
+  position: relative !important;
+  left: 10mm !important;
+  margin-bottom: 10mm !important;
+}
+
+/* Затемнение размытой области за правым краем шторки усилено на 15%. */
+#drawerBackdrop {
+  background: linear-gradient(
+    to right,
+    rgba(36, 34, 31, 0.506) 0%,
+    rgba(36, 34, 31, 0.207) 100%
+  ) !important;
+}
+
+/* Видимая тонкая серая граница по правому краю панели. */
+#sideDrawer {
+  border-right: 1px solid rgba(128, 128, 128, 0.65) !important;
+}
+
+/* Кнопка записи: новый основной цвет, при наведении — прежний hover-цвет. */
+#sideDrawer .drawer-appointment-button {
+  background: #3F586F !important;
+}
+#sideDrawer .drawer-appointment-button:hover {
+  background: #2b666a !important;
+}
