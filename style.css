@@ -6948,3 +6948,64 @@ html.initial-load-reveal .header {
   #sideDrawer .fw-accordion-body, #sideDrawer .fw-rhythm-head-block::after,
   #sideDrawer .fw-rhythm-bottom-rule::after { transition: none; }
 }
+
+
+/* =========================================================
+   ФОРМАТ РАБОТЫ — точное соответствие исходному HTML-макету
+   Исключены только демо-навигация и дублирующая CTA-кнопка.
+========================================================= */
+#sideDrawer .fw-upper-section { padding: 34px 52px 60px; }
+#sideDrawer .fw-main-heading { margin: 0 0 24px; }
+#sideDrawer .fw-main-heading h1 { font-size: 50px; }
+#sideDrawer .fw-formats-list {
+  margin-left: 10mm;
+  border-top: 1px solid rgba(45,55,72,.14);
+}
+#sideDrawer .fw-format-entry { border-bottom-color: rgba(45,55,72,.14); }
+#sideDrawer .fw-format-btn {
+  grid-template-columns: 38px 1fr 24px;
+  gap: 14px;
+  padding: 17px 8px 17px 12px;
+}
+#sideDrawer .fw-format-num { font-weight: 400; }
+#sideDrawer .fw-format-title { font-size: 24px; font-weight: 400; }
+#sideDrawer .fw-accordion-body {
+  padding: 0 12px 18px 64px;
+  transform: translate3d(0,6px,0);
+}
+#sideDrawer .fw-format-details { font-size: 13.5px; line-height: 1.65; }
+#sideDrawer .fw-rhythm-section { padding: 56px 52px 48px; }
+#sideDrawer .fw-rhythm-kicker-wrap { margin-bottom: 44px; }
+#sideDrawer .fw-rhythm-columns { gap: 44px; }
+#sideDrawer .fw-rhythm-card { cursor: pointer; }
+#sideDrawer .fw-rhythm-body-reveal {
+  opacity: 0;
+  transform: translate3d(0,18px,0);
+  animation: fwGentleReveal 1.5s cubic-bezier(.22,1,.36,1) forwards;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+#sideDrawer .fw-rhythm-bottom-rule { margin-top: 40px; }
+#sideDrawer .fw-rhythm-card[data-col="0"] .fw-rhythm-bottom-rule {
+  margin-top: calc(40px + 5mm);
+}
+@media (max-width:899px) {
+  #sideDrawer .fw-rhythm-columns { grid-template-columns: 1fr; gap: 32px; }
+}
+@media (max-width:768px) {
+  #sideDrawer .fw-upper-section { padding: 24px 20px 60px; }
+  #sideDrawer .fw-main-heading h1 { font-size: clamp(34px, 8vw, 50px); }
+  #sideDrawer .fw-formats-list { margin-left: 0; }
+  #sideDrawer .fw-format-btn {
+    grid-template-columns: 30px minmax(0,1fr) 20px;
+    gap: 10px;
+    padding: 16px 6px;
+  }
+  #sideDrawer .fw-format-title { font-size: 22px; }
+  #sideDrawer .fw-accordion-body { padding: 0 8px 18px 14px; }
+  #sideDrawer .fw-rhythm-section { padding: 36px 20px 32px; }
+}
+@media (max-width:480px) {
+  #sideDrawer .fw-format-title { font-size: 20px; }
+  #sideDrawer .fw-accordion-body { padding-left: 14px; }
+}
