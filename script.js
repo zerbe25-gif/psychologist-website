@@ -1541,37 +1541,42 @@ window.applyBackgroundMood = function(mood){
 })();
 
 
-/* РАЗДЕЛ «ЗАПРОСЫ»: доступное переключение направлений */
-(function initRequestsTopics() {
+/* РАЗДЕЛ «ЗАПРОСЫ»: монолитный аккордеон с клавиатурной навигацией */
+(function initRequestsMonolith() {
   const root = document.querySelector('#sideDrawer [data-drawer-panel="requests"]');
   if (!root) return;
-  const tabs = Array.from(root.querySelectorAll("[data-request-tab]"));
-  const panels = Array.from(root.querySelectorAll(".requests-panel"));
-  if (!tabs.length || tabs.length !== panels.length) return;
-  function activate(index, moveFocus) {
-    if (index < 0 || index >= tabs.length) return;
-    tabs.forEach((tab, i) => {
-      const selected = i === index;
-      tab.classList.toggle("is-selected", selected);
-      tab.setAttribute("aria-selected", String(selected));
-      tab.tabIndex = selected ? 0 : -1;
-      panels[i].hidden = !selected;
-      panels[i].classList.toggle("is-active", selected);
-    });
-    if (moveFocus) tabs[index].focus();
+  const items = Array.from(root.querySelectorAll('.requests-monolith-item'));
+  if (!items.length) return;
+
+  function setOpen(item, open, moveFocus) {
+    const button = item.querySelector('.requests-monolith-trigger');
+    const content = item.querySelector('.requests-monolith-content');
+    item.classList.toggle('is-open', open);
+    button.setAttribute('aria-expanded', String(open));
+    content.hidden = !open;
+    if (moveFocus) button.focus();
   }
-  tabs.forEach((tab, index) => {
-    tab.addEventListener("click", () => activate(index, false));
-    tab.addEventListener("keydown", event => {
+
+  items.forEach((item, index) => {
+    const button = item.querySelector('.requests-monolith-trigger');
+    button.addEventListener('click', () => {
+      const shouldOpen = !item.classList.contains('is-open');
+      items.forEach(other => setOpen(other, false, false));
+      if (shouldOpen) setOpen(item, true, false);
+    });
+
+    button.addEventListener('keydown', event => {
       let next = index;
-      if (event.key === "ArrowDown" || event.key === "ArrowRight") next = (index + 1) % tabs.length;
-      else if (event.key === "ArrowUp" || event.key === "ArrowLeft") next = (index - 1 + tabs.length) % tabs.length;
-      else if (event.key === "Home") next = 0;
-      else if (event.key === "End") next = tabs.length - 1;
+      if (event.key === 'ArrowDown') next = (index + 1) % items.length;
+      else if (event.key === 'ArrowUp') next = (index - 1 + items.length) % items.length;
+      else if (event.key === 'Home') next = 0;
+      else if (event.key === 'End') next = items.length - 1;
       else return;
       event.preventDefault();
-      activate(next, true);
+      items[next].querySelector('.requests-monolith-trigger').focus();
     });
   });
-  activate(0, false);
+
+  const initiallyOpen = items.find(item => item.classList.contains('is-open'));
+  items.forEach(item => setOpen(item, item === initiallyOpen, false));
 })();
