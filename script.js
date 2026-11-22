@@ -1464,7 +1464,7 @@ window.applyBackgroundMood = function(mood){
       drawer.style.setProperty("background","color-mix(in srgb,"+optics.color+" "+Number(optics.opacity)+"%,transparent)","important");
       drawer.style.setProperty("backdrop-filter","blur("+Number(optics.blur)+"px) saturate("+Number(optics.saturation)+"%)","important");
       drawer.style.setProperty("-webkit-backdrop-filter","blur("+Number(optics.blur)+"px) saturate("+Number(optics.saturation)+"%)","important");
-      drawer.style.setProperty("border-right-color","color-mix(in srgb,"+optics.color+" 35%,transparent)","important");
+      drawer.style.setProperty("border-right-color","rgba(128,128,128,.65)","important");
     }
     syncColorPicker("lab-base-color",state.base);
     syncColorPicker("lab-glow1-color",state.glow1.color);
