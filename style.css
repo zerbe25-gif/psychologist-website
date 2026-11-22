@@ -7146,7 +7146,7 @@ html.initial-load-reveal .header {
   height: 1px;
   margin: 0 !important;
   background: #7A2E3A;
-  transform: scaleX(0) !important;
+  transform: scaleX(0);
   transform-origin: right center;
   animation: none !important;
 }
