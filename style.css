@@ -6719,3 +6719,96 @@ html.initial-load-reveal .header {
 #sideDrawer .requests-monolith-item.is-open .requests-monolith-title {
   font-weight: 500;
 }
+
+
+/* =========================================================
+   ЗАПРОСЫ — вариант 03: деликатный контраст и тонкая типографика
+   Финальная настройка: активная строка выделена мягко,
+   названия и описания набраны лёгким Cormorant Garamond.
+========================================================= */
+#sideDrawer .block-section[data-drawer-panel="requests"] {
+  --rq-line: rgba(45,55,72,.18);
+}
+#sideDrawer .requests-monolith-item:hover {
+  border-bottom-color: rgba(184,155,106,.62);
+}
+#sideDrawer .requests-monolith-trigger {
+  background: transparent;
+}
+#sideDrawer .requests-monolith-trigger:hover {
+  background: rgba(47,74,99,.035);
+}
+#sideDrawer .requests-monolith-number {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: .035em;
+}
+#sideDrawer .requests-monolith-title {
+  color: #2D3748;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(22px,2.4vw,26px);
+  font-weight: 300;
+  line-height: 1.22;
+  letter-spacing: .005em;
+}
+#sideDrawer .requests-monolith-item.is-open .requests-monolith-trigger {
+  padding-left: 18px;
+  background: #EAF0F0;
+  border-left-color: rgba(47,74,99,.72);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.72);
+}
+#sideDrawer .requests-monolith-item.is-open .requests-monolith-title {
+  color: #2F4A63;
+  font-weight: 400;
+}
+#sideDrawer .requests-monolith-content > p {
+  color: #465461;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 1.58;
+  letter-spacing: .005em;
+}
+#sideDrawer .requests-monolith-details {
+  background: rgba(47,74,99,.045);
+  border-left-color: #B89B6A;
+}
+#sideDrawer .requests-monolith-details strong {
+  color: #2D3748;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1.3;
+}
+#sideDrawer .requests-monolith-details span {
+  color: #526170;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.5;
+}
+#sideDrawer .requests-monolith-content > p.requests-monolith-note {
+  background: rgba(184,155,106,.085);
+  border-color: rgba(184,155,106,.34);
+  border-left-color: #C88A2E;
+  color: #485461;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 1.55;
+}
+#sideDrawer .requests-monolith-note strong {
+  color: #2D3748;
+  font-weight: 500;
+}
+@media (max-width:760px) {
+  #sideDrawer .requests-monolith-title { font-size: 22px; }
+  #sideDrawer .requests-monolith-content > p { font-size: 19px; }
+  #sideDrawer .requests-monolith-details strong { font-size: 18px; }
+  #sideDrawer .requests-monolith-details span { font-size: 17px; }
+}
+@media (max-width:420px) {
+  #sideDrawer .requests-monolith-title { font-size: 20px; }
+  #sideDrawer .requests-monolith-content > p { font-size: 18px; }
+}
