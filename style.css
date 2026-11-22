@@ -6713,3 +6713,9 @@ html.initial-load-reveal .header {
     font-size: 17px;
   }
 }
+
+
+/* В активной строке сохраняем лёгкое начертание Cormorant Garamond */
+#sideDrawer .requests-monolith-item.is-open .requests-monolith-title {
+  font-weight: 500;
+}
