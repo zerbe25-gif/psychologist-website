@@ -811,6 +811,7 @@ function updateLensGlare(value) {
     isAnimating=true;
     const isNext=targetIndex>currentBlock;
     const duration=getSlideDuration(isNext);
+    document.documentElement.style.setProperty("--drawer-nav-transition-duration",duration+"s");
     const currentSec=sections[currentBlock],targetSec=sections[targetIndex];
     targetSec.classList.remove("is-current");
     currentSec.style.transitionDuration=duration+"s";
@@ -1636,7 +1637,7 @@ window.applyBackgroundMood = function(mood){
           observer.disconnect();
         }
       });
-    }, { threshold: 0.08 });
+    }, { threshold: 0.33 });
     observer.observe(rhythm);
   } else if (rhythm) {
     rhythm.classList.add("is-visible");
