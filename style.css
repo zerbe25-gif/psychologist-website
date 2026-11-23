@@ -7980,3 +7980,128 @@ html.initial-load-reveal .header {
     will-change: auto;
   }
 }
+
+
+/* =========================================================
+   ДОРАБОТКА 2026-11-23 — тёплая последовательность и мягкая анимация
+   Не меняет геометрию шторки, контент или навигационные сценарии.
+========================================================= */
+
+/* Вариант A: метод сохраняет текущую поверхность; следующие страницы
+   постепенно углубляются в тёплый серо-бежевый тон. */
+#sideDrawer .viewport {
+  background: #FAF9F6 !important;
+}
+#sideDrawer .block-section[data-drawer-panel="method"] {
+  background: #FAF9F6 !important;
+  background-color: #FAF9F6 !important;
+  background-image: none !important;
+}
+#sideDrawer .block-section[data-drawer-panel="requests"] {
+  background: #F6F3ED !important;
+  background-color: #F6F3ED !important;
+  background-image: none !important;
+}
+#sideDrawer .block-section[data-drawer-panel="format"] {
+  background: #F0EEE8 !important;
+  background-color: #F0EEE8 !important;
+  background-image: none !important;
+}
+#sideDrawer .block-section[data-drawer-panel="education"] {
+  background: #EEF2EF !important;
+  background-color: #EEF2EF !important;
+  background-image: none !important;
+}
+
+/* Заголовки шапки: мягкий переход фокуса и отдельная линия-индикатор.
+   Длинный ease-out убирает резкий скачок при смене is-active. */
+#sideDrawer .drawer-tabs button,
+#sideDrawer .drawer-tabs button.is-active {
+  position: relative !important;
+  opacity: .68 !important;
+  color: #64706B !important;
+  filter: blur(.25px);
+  transform: translate3d(0, 1px, 0) !important;
+  transition:
+    color 900ms cubic-bezier(.22, 1, .36, 1),
+    opacity 900ms cubic-bezier(.22, 1, .36, 1),
+    filter 900ms cubic-bezier(.22, 1, .36, 1),
+    transform 900ms cubic-bezier(.22, 1, .36, 1) !important;
+  will-change: opacity, transform, filter;
+}
+#sideDrawer .drawer-tabs button::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1px;
+  height: 1px;
+  background: rgba(83, 105, 96, .62);
+  opacity: 0;
+  transform: scaleX(.15);
+  transform-origin: left center;
+  transition:
+    transform 950ms cubic-bezier(.22, 1, .36, 1),
+    opacity 700ms ease !important;
+  pointer-events: none;
+}
+#sideDrawer .drawer-tabs button.is-active {
+  opacity: 1 !important;
+  color: #354C49 !important;
+  filter: blur(0);
+  transform: translate3d(0, 0, 0) !important;
+}
+#sideDrawer .drawer-tabs button.is-active::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+/* Линия под «Длительность»: +30% длины влево при сохранении правого края.
+   Старт привязан JS к попаданию заголовка в нижнюю треть viewport. */
+#sideDrawer .fw-rhythm-underline {
+  width: 65% !important;
+  margin-left: -15% !important;
+  transform: scaleX(0);
+  transform-origin: right center !important;
+}
+#sideDrawer .fw-rhythm-section.is-visible .fw-rhythm-underline {
+  animation: fwDurationLineReveal 1.05s cubic-bezier(.22, 1, .36, 1) .04s both !important;
+}
+@keyframes fwDurationLineReveal {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* Линии карточек: тот же мягкий ease-out, но почти вдвое больше времени.
+   Первая часть пути проходит живо, к концу движение деликатно затухает. */
+#sideDrawer .fw-rhythm-head-block::after,
+#sideDrawer .fw-rhythm-bottom-rule::after {
+  transition: transform 880ms cubic-bezier(.22, 1, .36, 1) !important;
+}
+#sideDrawer .fw-rhythm-card[data-col="2"] .fw-rhythm-head-block::after,
+#sideDrawer .fw-rhythm-card[data-col="2"] .fw-rhythm-bottom-rule::after {
+  transition-duration: 920ms !important;
+}
+#sideDrawer .fw-rhythm-card[data-has-left-line="true"] .fw-rhythm-desc-wrap::before {
+  transition:
+    transform 880ms cubic-bezier(.22, 1, .36, 1),
+    background-color 500ms ease !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #sideDrawer .drawer-tabs button,
+  #sideDrawer .drawer-tabs button.is-active,
+  #sideDrawer .drawer-tabs button::after {
+    transition: none !important;
+    filter: none !important;
+  }
+  #sideDrawer .fw-rhythm-underline,
+  #sideDrawer .fw-rhythm-section.is-visible .fw-rhythm-underline {
+    animation-duration: .01ms !important;
+  }
+  #sideDrawer .fw-rhythm-head-block::after,
+  #sideDrawer .fw-rhythm-bottom-rule::after,
+  #sideDrawer .fw-rhythm-card[data-has-left-line="true"] .fw-rhythm-desc-wrap::before {
+    transition-duration: .01ms !important;
+  }
+}
