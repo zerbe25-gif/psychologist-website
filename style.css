@@ -8494,30 +8494,87 @@ html.initial-load-reveal .header {
   #sideDrawer .education-editorial-heading::after { animation: none; }
 }
 
-/* FORMAT: статичное состояние — убираем только анимацию блоков и линий.
-   Цветные декоративные линии сохраняются и остаются видимыми. */
-#sideDrawer .fw-rhythm-section .fw-rhythm-body-reveal,
-#sideDrawer .fw-rhythm-section .fw-rhythm-body-reveal:not(.is-body-visible),
-#sideDrawer .fw-rhythm-section .fw-rhythm-body-reveal.is-body-visible {
-  opacity: 1 !important;
-  visibility: visible !important;
-  transform: none !important;
-  animation: none !important;
-  transition: none !important;
+/* FORMAT WORK — повторяемое последовательное проявление трёх карточек.
+   Заголовок появляется первым, описание следует за ним с небольшой задержкой. */
+#sideDrawer .fw-rhythm-card .fw-rhythm-head-block,
+#sideDrawer .fw-rhythm-card .fw-rhythm-body-reveal {
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(0,14px,0);
+  transition: none;
+  will-change: opacity, transform;
 }
+#sideDrawer .fw-rhythm-card.is-revealed .fw-rhythm-head-block {
+  animation: fwRhythmHeadingIn 700ms cubic-bezier(.22,1,.36,1) both;
+  animation-delay: var(--rhythm-stagger, 0ms);
+}
+#sideDrawer .fw-rhythm-card.is-revealed .fw-rhythm-body-reveal {
+  animation: fwRhythmBodyIn 800ms cubic-bezier(.22,1,.36,1) both;
+  animation-delay: calc(var(--rhythm-stagger, 0ms) + 200ms);
+}
+#sideDrawer .fw-rhythm-card:nth-child(1) { --rhythm-stagger: 0ms; }
+#sideDrawer .fw-rhythm-card:nth-child(2) { --rhythm-stagger: 300ms; }
+#sideDrawer .fw-rhythm-card:nth-child(3) { --rhythm-stagger: 600ms; }
+
+@keyframes fwRhythmHeadingIn {
+  from { opacity: 0; visibility: visible; transform: translate3d(0,14px,0); }
+  to { opacity: 1; visibility: visible; transform: translate3d(0,0,0); }
+}
+@keyframes fwRhythmBodyIn {
+  from { opacity: 0; visibility: visible; transform: translate3d(0,10px,0); }
+  to { opacity: 1; visibility: visible; transform: translate3d(0,0,0); }
+}
+
+/* Линия под «Длительностью» проявляется слева направо при входе группы. */
 #sideDrawer .fw-rhythm-section .fw-rhythm-underline {
   opacity: 1 !important;
   visibility: visible !important;
-  transform: scaleX(1) !important;
+  transform: scaleX(0) !important;
+  transform-origin: left center !important;
   animation: none !important;
-  transition: none !important;
 }
-#sideDrawer .fw-rhythm-section .fw-rhythm-head-block::after,
-#sideDrawer .fw-rhythm-section .fw-rhythm-bottom-rule::after,
-#sideDrawer .fw-rhythm-section .fw-rhythm-desc-wrap::before {
+#sideDrawer .fw-rhythm-section.is-visible .fw-rhythm-underline {
+  animation: fwDurationLineReveal 1s cubic-bezier(.22,1,.36,1) both !important;
+  transform-origin: left center !important;
+}
+
+/* Цветные декоративные линии остаются скрытыми до наведения.
+   Движение занимает 900 мс и мягко замедляется в конце. */
+#sideDrawer .fw-rhythm-head-block::after,
+#sideDrawer .fw-rhythm-bottom-rule::after {
   opacity: 1 !important;
   visibility: visible !important;
-  transform: scaleX(1) !important;
-  animation: none !important;
-  transition: none !important;
+  transform: scaleX(0) !important;
+  transform-origin: left center !important;
+  transition: transform 900ms cubic-bezier(.16,1,.3,1) !important;
+}
+#sideDrawer .fw-rhythm-card:hover .fw-rhythm-head-block::after,
+#sideDrawer .fw-rhythm-card:hover .fw-rhythm-bottom-rule::after {
+  transform: scaleX(.52) !important;
+}
+#sideDrawer .fw-rhythm-card[data-col="2"] .fw-rhythm-head-block::after,
+#sideDrawer .fw-rhythm-card[data-col="2"] .fw-rhythm-bottom-rule::after {
+  transform-origin: left center !important;
+}
+#sideDrawer .fw-rhythm-card[data-has-left-line="true"] .fw-rhythm-desc-wrap::before {
+  transform: scaleY(0) !important;
+  transition: transform 850ms cubic-bezier(.16,1,.3,1), background-color 500ms ease !important;
+}
+#sideDrawer .fw-rhythm-card[data-has-left-line="true"]:hover .fw-rhythm-desc-wrap::before {
+  transform: scaleY(.52) !important;
+  background: #7A2E3A !important;
+}
+#sideDrawer .fw-rhythm-card[data-col="2"] .fw-rhythm-head-block::after,
+#sideDrawer .fw-rhythm-card[data-col="2"] .fw-rhythm-bottom-rule::after {
+  background: #B89B6A !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  #sideDrawer .fw-rhythm-card .fw-rhythm-head-block,
+  #sideDrawer .fw-rhythm-card .fw-rhythm-body-reveal {
+    opacity: 1 !important; visibility: visible !important; transform: none !important; animation: none !important;
+  }
+  #sideDrawer .fw-rhythm-section .fw-rhythm-underline { transform: scaleX(1) !important; animation: none !important; }
+  #sideDrawer .fw-rhythm-head-block::after,
+  #sideDrawer .fw-rhythm-bottom-rule::after,
+  #sideDrawer .fw-rhythm-desc-wrap::before { transition: none !important; }
 }
