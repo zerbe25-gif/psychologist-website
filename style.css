@@ -7936,3 +7936,19 @@ html.initial-load-reveal .header {
   max-height: none !important;
   overflow: visible !important;
 }
+
+
+/* Плавный двусторонний переход между разделами:
+   размытие предыдущего раздела привязано к реальной прокрутке и
+   поэтому так же плавно исчезает при движении назад. */
+#sideDrawer .block-section.is-transition-blurring {
+  filter: blur(var(--section-transition-blur, 0px)) !important;
+  transition: filter 90ms linear !important;
+  will-change: filter;
+}
+@media (prefers-reduced-motion: reduce) {
+  #sideDrawer .block-section.is-transition-blurring {
+    filter: none !important;
+    transition: none !important;
+  }
+}
