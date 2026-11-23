@@ -8187,9 +8187,9 @@ html.initial-load-reveal .header {
   }
 }
 
-/* ФОНЫ: оттенок раздела остаётся своим в центральной части.
-   На первых/последних 190px соседние оттенки смешиваются, поэтому стык
-   разделов при прокрутке становится непрерывным, без резкой смены заливки. */
+/* ФОНЫ: каждый раздел начинает свой цвет; только нижний край
+   постепенно растворяется в следующем оттенке. На границе двух разделов
+   цвет совпадает с начальным цветом следующей страницы — стык бесшовный. */
 #sideDrawer .viewport {
   background: #FAF9F6 !important;
 }
@@ -8208,8 +8208,7 @@ html.initial-load-reveal .header {
   background-color: #F6F3ED !important;
   background-image: linear-gradient(
     to bottom,
-    #FAF9F6 0,
-    #F6F3ED 190px,
+    #F6F3ED 0,
     #F6F3ED calc(100% - 190px),
     #F0EEE8 100%
   ) !important;
@@ -8220,8 +8219,7 @@ html.initial-load-reveal .header {
   background-color: #F0EEE8 !important;
   background-image: linear-gradient(
     to bottom,
-    #F6F3ED 0,
-    #F0EEE8 190px,
+    #F0EEE8 0,
     #F0EEE8 calc(100% - 190px),
     #EEF2EF 100%
   ) !important;
@@ -8230,14 +8228,7 @@ html.initial-load-reveal .header {
 }
 #sideDrawer .block-section[data-drawer-panel="education"] {
   background-color: #EEF2EF !important;
-  background-image: linear-gradient(
-    to bottom,
-    #F0EEE8 0,
-    #EEF2EF 190px,
-    #EEF2EF 100%
-  ) !important;
-  background-repeat: no-repeat !important;
-  background-size: 100% 100% !important;
+  background-image: none !important;
 }
 
 /* ЛИНИЯ «ДЛИТЕЛЬНОСТЬ»: анимация повторяется при каждом новом входе
