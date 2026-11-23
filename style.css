@@ -12,7 +12,7 @@
 
 
 :root {
- --header-color: rgba(255, 255, 255, 0.80);
+ --header-color: #FBFAF7;
   --background-color: #ffffff;
   --panel-color: #eae3dc;
   --accent-color: #608089;
@@ -7655,4 +7655,59 @@ html.initial-load-reveal .header {
 }
 .drawer-appointment-button:hover::before {
   opacity: 1;
+}
+
+
+/* =========================================================
+   ВАРИАНТ 1 «ЕДИНЫЙ» И СПОКОЙНАЯ АНИМАЦИЯ ЛИНИЙ
+========================================================= */
+
+/* Шапка использует тот же оттенок бумаги, что и информационная шторка. */
+.header {
+  background-color: #FBFAF7 !important;
+}
+
+/* «Длительность»: более мягкий, менее насыщенный акцент линий. */
+#sideDrawer .fw-rhythm-underline {
+  background: #98727A !important;
+}
+#sideDrawer .fw-rhythm-head-block::after {
+  background: #98727A !important;
+  transition-duration: .75s !important;
+  transition-timing-function: cubic-bezier(.16,1,.3,1) !important;
+}
+#sideDrawer .fw-rhythm-desc-wrap::before {
+  background: rgba(45,55,72,.12) !important;
+  transition-duration: .75s !important;
+  transition-timing-function: cubic-bezier(.16,1,.3,1) !important;
+}
+#sideDrawer .fw-rhythm-card[data-has-left-line="true"]:hover .fw-rhythm-desc-wrap::before {
+  background: #98727A !important;
+}
+#sideDrawer .fw-rhythm-bottom-rule::after {
+  background: #98727A !important;
+  transition-duration: .8s !important;
+  transition-timing-function: cubic-bezier(.16,1,.3,1) !important;
+}
+#sideDrawer .fw-rhythm-card[data-col="2"] .fw-rhythm-head-block::after,
+#sideDrawer .fw-rhythm-card[data-col="2"] .fw-rhythm-bottom-rule::after {
+  background: #C7B58E !important;
+  transition-duration: .85s !important;
+  transition-timing-function: cubic-bezier(.16,1,.3,1) !important;
+}
+
+/* Линия под заголовком: прежние 0.7 с увеличены на 0.3 с;
+   плавное замедление к завершению вместо резкой остановки. */
+#sideDrawer .fw-rhythm-section.is-visible .fw-rhythm-underline {
+  animation: fwDurationLineReveal 1s cubic-bezier(.16,1,.3,1) .05s forwards !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #sideDrawer .fw-rhythm-section.is-visible .fw-rhythm-underline,
+  #sideDrawer .fw-rhythm-head-block::after,
+  #sideDrawer .fw-rhythm-desc-wrap::before,
+  #sideDrawer .fw-rhythm-bottom-rule::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
 }
