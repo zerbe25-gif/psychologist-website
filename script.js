@@ -814,41 +814,30 @@ function updateLensGlare(value) {
   function goToBlock(targetIndex){
     if(targetIndex===currentBlock||isAnimating||targetIndex<0||targetIndex>=sections.length)return;
     isAnimating=true;
-    const isNext=targetIndex>currentBlock;
-    const duration=getSlideDuration(isNext);
+    const duration=getSlideDuration(targetIndex>currentBlock);
     document.documentElement.style.setProperty("--drawer-nav-transition-duration",duration+"s");
     const currentSec=sections[currentBlock],targetSec=sections[targetIndex];
-    targetSec.classList.remove("is-current");
-    currentSec.style.transitionDuration=duration+"s";
-    targetSec.style.transitionDuration=duration+"s";
+    const viewport=drawer.querySelector(".viewport");
 
-    if(isNext){
-      targetSec.style.zIndex="10";
-      currentSec.style.zIndex="5";
-      targetSec.style.transform="translateY(100%) scale(1)";
-      targetSec.style.opacity="1";
-      targetSec.style.filter="brightness(1)";
-      void targetSec.offsetWidth;
-      targetSec.style.transform="translateY(0) scale(1)";
-      targetSec.style.opacity="1";
-      targetSec.classList.add("is-current");
-      currentSec.style.transform="translateY(-35%) scale(0.96)";
-      currentSec.style.opacity="0.25";
-      currentSec.style.filter="brightness(0.92)";
-    }else{
-      targetSec.style.zIndex="10";
-      currentSec.style.zIndex="5";
-      targetSec.style.transform="translateY(-35%) scale(0.96)";
-      targetSec.style.opacity="0.25";
-      targetSec.style.filter="brightness(0.92)";
-      void targetSec.offsetWidth;
-      targetSec.style.transform="translateY(0) scale(1)";
-      targetSec.style.opacity="1";
-      targetSec.style.filter="brightness(1)";
-      targetSec.classList.add("is-current");
-      currentSec.style.transform="translateY(100%) scale(1)";
-      currentSec.style.opacity="0";
-    }
+    /* Растворение с перекрытием: оба раздела находятся в одной плоскости,
+       входящий мягко проявляется, уходящий растворяется без вертикального слайда. */
+    targetSec.style.transitionDuration=duration+"s";
+    currentSec.style.transitionDuration=duration+"s";
+    targetSec.style.zIndex="10";
+    currentSec.style.zIndex="5";
+    targetSec.style.transform="translate3d(0,8px,0) scale(.995)";
+    targetSec.style.opacity="0";
+    targetSec.style.filter="blur(2px)";
+    targetSec.classList.add("is-current");
+    if(viewport)viewport.classList.add("is-transitioning");
+    void targetSec.offsetWidth;
+
+    targetSec.style.transform="translate3d(0,0,0) scale(1)";
+    targetSec.style.opacity="1";
+    targetSec.style.filter="blur(0)";
+    currentSec.style.transform="translate3d(0,-6px,0) scale(1.003)";
+    currentSec.style.opacity="0";
+    currentSec.style.filter="blur(2px)";
 
     targetSec.scrollTop=0;
     currentBlock=targetIndex;
@@ -857,8 +846,11 @@ function updateLensGlare(value) {
     transitionTimer=setTimeout(()=>{
       currentSec.classList.remove("is-current");
       currentSec.style.opacity="0";
-      currentSec.style.filter="brightness(1)";
+      currentSec.style.filter="none";
+      currentSec.style.transform="translate3d(0,0,0) scale(1)";
       currentSec.style.zIndex="";
+      targetSec.style.filter="none";
+      if(viewport)viewport.classList.remove("is-transitioning");
       isAnimating=false;
       transitionTimer=null;
     },duration*1000);
