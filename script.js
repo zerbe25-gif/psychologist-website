@@ -789,6 +789,7 @@ function updateLensGlare(value) {
   const closeButton=document.getElementById("drawerClose");
   const viewport=document.getElementById("drawerViewport");
   const tabs=[...document.querySelectorAll("#sideDrawer [data-drawer-tab]")];
+  const tabsNav=tabs[0] ? tabs[0].parentElement : null;
   const sections=[...document.querySelectorAll("#sideDrawer .block-section")];
   const currentStep=document.getElementById("currentStep");
   if(!drawer||!backdrop||!closeButton||!viewport||sections.length!==4)return;
@@ -802,6 +803,15 @@ function updateLensGlare(value) {
       tab.classList.toggle("is-active",active);
       tab.setAttribute("aria-current",active?"location":"false");
     });
+
+    /* Один независимый индикатор движется к активному пункту.
+       CSS интерполирует его координату даже если прокрутка быстро перескочила
+       через несколько разделов — активная подпись не меняет размер и не дёргает ряд. */
+    const activeTab=tabs[currentBlock];
+    if(tabsNav && activeTab){
+      tabsNav.style.setProperty("--nav-indicator-x",activeTab.offsetLeft+"px");
+      tabsNav.style.setProperty("--nav-indicator-width",activeTab.offsetWidth+"px");
+    }
     if(currentStep)currentStep.textContent=String(currentBlock+1);
   }
 
@@ -1591,42 +1601,51 @@ window.applyBackgroundMood = function(mood){
   const rhythmKicker = rhythm && rhythm.querySelector(".fw-rhythm-kicker");
   const viewport = document.getElementById("drawerViewport");
 
-  /* Линия и карточки запускаются не по видимости всей длинной секции,
-     а в тот момент, когда сам заголовок «Длительность» входит в нижнюю треть
-     видимой области прокручиваемой шторки. */
+  /* Повторяемый цикл: при каждом входе заголовка в нижнюю треть линия
+     выдвигается заново; после полного выхода заголовка из viewport класс
+     снимается, animation сбрасывается и готовится к следующему появлению. */
   if (rhythm && rhythmKicker && viewport) {
-    let rhythmRevealDone = false;
     let rhythmRevealFrame = false;
+    let rhythmWasTriggeredInThisVisit = false;
 
     const checkRhythmReveal = () => {
       rhythmRevealFrame = false;
-      if (rhythmRevealDone) return;
-
       const viewportRect = viewport.getBoundingClientRect();
       const kickerRect = rhythmKicker.getBoundingClientRect();
+      const isInsideViewport =
+        kickerRect.bottom > viewportRect.top &&
+        kickerRect.top < viewportRect.bottom;
       const lowerThirdTop = viewportRect.bottom - viewport.clientHeight / 3;
-      const overlapsLowerThird =
+      const entersLowerThird =
         kickerRect.bottom >= lowerThirdTop &&
         kickerRect.top <= viewportRect.bottom;
 
-      if (overlapsLowerThird) {
+      if (!isInsideViewport) {
+        rhythm.classList.remove("is-visible");
+        rhythmWasTriggeredInThisVisit = false;
+        return;
+      }
+
+      if (entersLowerThird && !rhythmWasTriggeredInThisVisit) {
+        /* Два кадра гарантируют фиксацию начального transform после сброса. */
+        rhythm.classList.remove("is-visible");
+        void rhythm.offsetWidth;
         rhythm.classList.add("is-visible");
-        rhythmRevealDone = true;
-        viewport.removeEventListener("scroll", scheduleRhythmReveal);
-        window.removeEventListener("resize", scheduleRhythmReveal);
+        rhythmWasTriggeredInThisVisit = true;
       }
     };
 
     const scheduleRhythmReveal = () => {
-      if (rhythmRevealDone || rhythmRevealFrame) return;
+      if (rhythmRevealFrame) return;
       rhythmRevealFrame = true;
       window.requestAnimationFrame(checkRhythmReveal);
     };
 
+    rhythm.classList.remove("is-visible");
     viewport.addEventListener("scroll", scheduleRhythmReveal, { passive: true });
     window.addEventListener("resize", scheduleRhythmReveal, { passive: true });
     scheduleRhythmReveal();
   } else if (rhythm) {
-    rhythm.classList.add("is-visible");
+    rhythm.classList.remove("is-visible");
   }
 })();
