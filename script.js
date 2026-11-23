@@ -849,7 +849,12 @@ function updateLensGlare(value) {
   function goToBlock(targetIndex){
     if(targetIndex<0||targetIndex>=sections.length)return;
     const target=sections[targetIndex];
-    viewport.scrollTo({top:target.offsetTop,behavior:"smooth"});
+    /* Use viewport-relative geometry instead of offsetTop: nested positioned
+       sections can otherwise resolve their offset against a different ancestor. */
+    const viewportTop=viewport.getBoundingClientRect().top;
+    const targetTop=target.getBoundingClientRect().top;
+    const destination=Math.max(0,viewport.scrollTop+(targetTop-viewportTop));
+    viewport.scrollTo({top:destination,behavior:"smooth"});
     currentBlock=targetIndex;
     updateNavUI();
   }
