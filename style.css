@@ -7603,3 +7603,56 @@ html.initial-load-reveal .header {
     font-size: 21px !important;
   }
 }
+
+
+/* =========================================================
+   ТОЧЕЧНЫЕ УТОЧНЕНИЯ ШТОРКИ — НОЯБРЬ 2026
+========================================================= */
+
+/* Шторка дополнительно расширена на 10 мм относительно предыдущей версии. */
+@media (min-width: 1025px) {
+  #sideDrawer {
+    width: min(100vw, calc(1127px + 15mm)) !important;
+    max-width: calc(1127px + 15mm) !important;
+  }
+}
+
+/* Более глубокое затемнение и мягкое размытие главной страницы за шторкой. */
+#drawerBackdrop {
+  background: rgba(25, 23, 21, .58) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+/* В «Запросах» добавлены дополнительные 30 мм свободного места снизу. */
+#sideDrawer .requests-monolith {
+  padding-bottom: calc(2.6rem + 30mm) !important;
+}
+
+/* Внешнее свечение кнопки: размытие только за пределами её контура. */
+.drawer-appointment-button {
+  position: relative;
+  isolation: isolate;
+  z-index: 0;
+}
+.drawer-appointment-button::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -3mm;
+  border-radius: 16px;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(52, 121, 126, .25) 0%,
+    rgba(52, 121, 126, .14) 48%,
+    rgba(52, 121, 126, .045) 76%,
+    transparent 100%
+  );
+  filter: blur(3mm);
+  opacity: .9;
+  transition: opacity .25s ease, filter .25s ease;
+}
+.drawer-appointment-button:hover::before {
+  opacity: 1;
+}
