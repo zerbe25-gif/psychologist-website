@@ -793,8 +793,7 @@ function updateLensGlare(value) {
   if(!drawer||!backdrop||!closeButton||sections.length!==4)return;
 
   const sectionKeys=["method","requests","format","education"];
-  let currentBlock=0,isAnimating=false,drawerOpen=false,wheelCooldown=false,previousFocus=null;
-  let transitionTimer=null,wheelTimer=null;
+  let currentBlock=0,drawerOpen=false,previousFocus=null;
 
   function updateNavUI(){
     tabs.forEach((tab,index)=>{
@@ -805,42 +804,21 @@ function updateLensGlare(value) {
     if(currentStep)currentStep.textContent=String(currentBlock+1);
   }
   function goToBlock(targetIndex){
-    if(targetIndex===currentBlock||isAnimating||targetIndex<0||targetIndex>=sections.length)return;
-    isAnimating=true;
-    const duration=1.15;
-    const currentSec=sections[currentBlock],targetSec=sections[targetIndex];
-
-    /* Один механизм: одновременное растворение двух страниц в одной плоскости. */
-    sections.forEach(section=>{
+    if(targetIndex===currentBlock||targetIndex<0||targetIndex>=sections.length)return;
+    sections.forEach((section,index)=>{
       section.classList.remove("is-entering","is-entering-visible","is-leaving","is-leaving-hidden");
-      section.style.zIndex="";
+      section.classList.toggle("is-current",index===targetIndex);
+      section.style.transition="none";
+      section.style.transform="none";
+      section.style.filter="none";
+      section.style.opacity=index===targetIndex?"1":"0";
+      section.style.visibility=index===targetIndex?"visible":"hidden";
+      section.style.pointerEvents=index===targetIndex?"auto":"none";
+      section.style.zIndex=index===targetIndex?"4":"1";
     });
-    targetSec.style.zIndex="10";
-    currentSec.style.zIndex="5";
-    targetSec.classList.add("is-entering");
-    currentSec.classList.add("is-leaving");
-    void targetSec.offsetWidth;
-
-    requestAnimationFrame(()=>{
-      requestAnimationFrame(()=>{
-        targetSec.classList.add("is-entering-visible");
-        currentSec.classList.add("is-leaving-hidden");
-      });
-    });
-
-    targetSec.scrollTop=0;
     currentBlock=targetIndex;
+    sections[targetIndex].scrollTop=0;
     updateNavUI();
-    if(transitionTimer!==null)clearTimeout(transitionTimer);
-    transitionTimer=setTimeout(()=>{
-      currentSec.classList.remove("is-current","is-leaving","is-leaving-hidden");
-      targetSec.classList.remove("is-entering","is-entering-visible");
-      targetSec.classList.add("is-current");
-      currentSec.style.zIndex="";
-      targetSec.style.zIndex="";
-      isAnimating=false;
-      transitionTimer=null;
-    },duration*1000+80);
   }
 
   function openDrawer(sectionName){
@@ -863,19 +841,17 @@ function updateLensGlare(value) {
   function closeDrawer(){
     if(!drawerOpen)return;
     drawerOpen=false;
-    isAnimating=false;
-    wheelCooldown=false;
-    if(transitionTimer!==null)clearTimeout(transitionTimer);
-    if(wheelTimer!==null)clearTimeout(wheelTimer);
-    transitionTimer=wheelTimer=null;
     sections.forEach((section,index)=>{
       section.classList.remove("is-entering","is-entering-visible","is-leaving","is-leaving-hidden");
       section.classList.toggle("is-current",index===currentBlock);
-      section.style.transitionDuration="";
-      section.style.zIndex="";
+      section.style.transition="none";
+      section.style.transform="none";
+      section.style.filter="none";
+      section.style.opacity=index===currentBlock?"1":"0";
+      section.style.visibility=index===currentBlock?"visible":"hidden";
+      section.style.pointerEvents=index===currentBlock?"auto":"none";
+      section.style.zIndex=index===currentBlock?"4":"1";
     });
-    const viewport=drawer.querySelector(".viewport");
-    if(viewport)viewport.classList.remove("is-transitioning");
     drawer.classList.remove("is-open");
     backdrop.classList.remove("is-open");
     document.body.classList.remove("drawer-is-open");
@@ -894,27 +870,6 @@ function updateLensGlare(value) {
     if(event.key==="Escape"&&drawerOpen)closeDrawer();
   });
 
-  /* Колесо мыши переключает раздел только на верхней/нижней границе.
-     Без накопления жестов и искусственного «сопротивления»; прокрутка текста нативная. */
-  drawer.addEventListener("wheel",event=>{
-    if(!drawerOpen||isAnimating||wheelCooldown)return;
-    if(Math.abs(event.deltaX)>Math.abs(event.deltaY)||Math.abs(event.deltaY)<18)return;
-    const activeSection=sections[currentBlock];
-    if(!activeSection)return;
-    const atTop=activeSection.scrollTop<=1;
-    const atBottom=activeSection.scrollTop+activeSection.clientHeight>=activeSection.scrollHeight-2;
-    const direction=event.deltaY>0?1:-1;
-    if((direction>0&&!atBottom)||(direction<0&&!atTop))return;
-    const next=currentBlock+direction;
-    if(next<0||next>=sections.length)return;
-    event.preventDefault();
-    goToBlock(next);
-    wheelCooldown=true;
-    wheelTimer=setTimeout(()=>{
-      wheelCooldown=false;
-      wheelTimer=null;
-    },1250);
-  },{passive:false});
 
   updateNavUI();
 })();
