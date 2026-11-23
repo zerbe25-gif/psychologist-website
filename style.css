@@ -7974,3 +7974,55 @@ html.initial-load-reveal .header {
 @media (prefers-reduced-motion: reduce) {
   #sideDrawer .block-section { transition-duration: .01ms !important; }
 }
+
+
+/* FINAL DRAWER TRANSITION: pure overlapping crossfade (variant A).
+   Neutralizes the former vertical slide and removes the lower-edge resistance cue. */
+#sideDrawer .block-section {
+  transform: none !important;
+  filter: none !important;
+  transition: opacity 1.15s cubic-bezier(.45, 0, .55, 1) !important;
+  backface-visibility: hidden;
+}
+#sideDrawer .block-section:not(.is-current):not(.is-entering):not(.is-leaving) {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+#sideDrawer .block-section.is-current {
+  visibility: visible !important;
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  pointer-events: auto !important;
+  z-index: 4 !important;
+}
+#sideDrawer .block-section.is-entering {
+  visibility: visible !important;
+  opacity: 0 !important;
+  transform: none !important;
+  filter: none !important;
+  pointer-events: none !important;
+  z-index: 10 !important;
+}
+#sideDrawer .block-section.is-entering.is-entering-visible {
+  opacity: 1 !important;
+}
+#sideDrawer .block-section.is-leaving {
+  visibility: visible !important;
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  pointer-events: none !important;
+  z-index: 5 !important;
+}
+#sideDrawer .block-section.is-leaving.is-leaving-hidden {
+  opacity: 0 !important;
+}
+#sideDrawer .viewport::after {
+  display: none !important;
+  content: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  #sideDrawer .block-section { transition-duration: .01ms !important; }
+}
