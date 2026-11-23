@@ -2479,51 +2479,6 @@ body.drawer-is-open {
 
 
 /* =========================================
-   ПЕРЕЛИСТЫВАНИЕ ШТОРКИ КОЛЁСИКОМ
-========================================= */
-
-#sideDrawer .drawer-inner {
-    will-change: opacity, transform;
-}
-
-#sideDrawer .drawer-inner.is-wheel-next {
-    animation: drawerWheelNext 0.48s cubic-bezier(0.22, 0.7, 0.25, 1);
-}
-
-#sideDrawer .drawer-inner.is-wheel-prev {
-    animation: drawerWheelPrev 0.48s cubic-bezier(0.22, 0.7, 0.25, 1);
-}
-
-@keyframes drawerWheelNext {
-    0% {
-        opacity: 0;
-        transform: translateY(24px);
-        filter: blur(3px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-        filter: blur(0);
-    }
-}
-
-@keyframes drawerWheelPrev {
-    0% {
-        opacity: 0;
-        transform: translateY(-24px);
-        filter: blur(3px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-        filter: blur(0);
-    }
-}
-
-
-/* =========================================
    ЦЕНТРАЛЬНОЕ ОКНО СТОИМОСТИ
 ========================================= */
 
@@ -5390,9 +5345,9 @@ body.cost-modal-open #developer-panel{z-index:1!important}
 .drawer-appointment-button span{margin-left:12px;}
 .drawer-close{top:20px;right:24px;color:#2D3748;z-index:50;}
 .drawer-close:hover{background:rgba(52,121,126,.08);transform:rotate(90deg);}
-.drawer-speed-controls{display:grid;grid-template-columns:repeat(2,minmax(180px,1fr));gap:18px;padding-top:14px;margin-top:12px;border-top:1px solid rgba(45,55,72,.12);}
+
 @media(max-width:1024px){#sideDrawer{width:100vw!important}.drawer-header{padding:1.2rem 1.4rem}.block-section{padding:1.8rem 1.4rem}.drawer-footer{padding:1rem 1.4rem}}
-@media(max-width:600px){.drawer-tabs{gap:5px}.drawer-tabs button{font-size:10px;padding:7px 9px}.drawer-tabs button.is-active{font-size:11px;padding:8px 10px}.drawer-footer{font-size:11px}.drawer-appointment-button{padding:9px 12px;font-size:11px}.drawer-speed-controls{grid-template-columns:1fr}}
+@media(max-width:600px){.drawer-tabs{gap:5px}.drawer-tabs button{font-size:10px;padding:7px 9px}.drawer-tabs button.is-active{font-size:11px;padding:8px 10px}.drawer-footer{font-size:11px}.drawer-appointment-button{padding:9px 12px;font-size:11px}}
 @media(prefers-reduced-motion:reduce){#sideDrawer,#drawerBackdrop{transition-duration:.01ms!important}}
 
 /* FIX: не переносить короткое «О» отдельно в заголовке «О МЕТОДЕ» */
@@ -7040,13 +6995,7 @@ html.initial-load-reveal .header {
   line-height: 1.35 !important;
   padding: .45rem .7rem !important;
   transform: translateY(0);
-  transition:
-    color var(--drawer-nav-transition-duration, .45s) cubic-bezier(.22,1,.36,1),
-    font-size var(--drawer-nav-transition-duration, .45s) cubic-bezier(.22,1,.36,1),
-    font-weight var(--drawer-nav-transition-duration, .45s) cubic-bezier(.22,1,.36,1),
-    transform var(--drawer-nav-transition-duration, .45s) cubic-bezier(.22,1,.36,1),
-    background-color var(--drawer-nav-transition-duration, .45s) ease,
-    border-color var(--drawer-nav-transition-duration, .45s) ease;
+  transition: none !important;
 }
 #sideDrawer .drawer-tabs button:hover {
   background: transparent !important;
