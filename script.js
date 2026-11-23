@@ -806,7 +806,6 @@ function updateLensGlare(value) {
   function goToBlock(targetIndex){
     if(targetIndex===currentBlock||targetIndex<0||targetIndex>=sections.length)return;
     sections.forEach((section,index)=>{
-      section.classList.remove("is-entering","is-entering-visible","is-leaving","is-leaving-hidden");
       section.classList.toggle("is-current",index===targetIndex);
       section.style.transition="none";
       section.style.transform="none";
@@ -842,7 +841,6 @@ function updateLensGlare(value) {
     if(!drawerOpen)return;
     drawerOpen=false;
     sections.forEach((section,index)=>{
-      section.classList.remove("is-entering","is-entering-visible","is-leaving","is-leaving-hidden");
       section.classList.toggle("is-current",index===currentBlock);
       section.style.transition="none";
       section.style.transform="none";
@@ -1367,9 +1365,6 @@ window.applyBackgroundMood = function(mood){
     const grain=document.getElementById("lab-grain"),gOut=document.getElementById("lab-grain-value");
     const optics=state.optics;
     setVar("--lab-drawer-color",optics.color);setVar("--lab-drawer-opacity",Number(optics.opacity)+"%");setVar("--lab-drawer-blur",Number(optics.blur)+"px");setVar("--lab-drawer-saturation",Number(optics.saturation)+"%");
-    setVar("--drawer-slide-down",Number(optics.slideDown||1.8)+"s");setVar("--drawer-slide-up",Number(optics.slideUp||1.5)+"s");
-    const speedDown=document.getElementById("drawer-speed-down"),speedUp=document.getElementById("drawer-speed-up"),speedDownOut=document.getElementById("drawer-speed-down-value"),speedUpOut=document.getElementById("drawer-speed-up-value");
-    if(speedDown)speedDown.value=optics.slideDown||1.8;if(speedUp)speedUp.value=optics.slideUp||1.5;if(speedDownOut)speedDownOut.textContent=Number(optics.slideDown||1.8).toFixed(1)+" сек.";if(speedUpOut)speedUpOut.textContent=Number(optics.slideUp||1.5).toFixed(1)+" сек.";
     /* Применяем оптику напрямую к реальной информационной шторке, независимо от темы. */
     const drawer=document.getElementById("sideDrawer");
     if(drawer){
