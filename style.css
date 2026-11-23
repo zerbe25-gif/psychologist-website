@@ -7910,3 +7910,10 @@ html.initial-load-reveal .header {
     transition: none !important;
   }
 }
+
+/* Единая поверхность: цвет не подчёркивает границы между соседними разделами. */
+#sideDrawer .block-section[data-drawer-panel] {
+  background: #FAF9F6 !important;
+  background-color: #FAF9F6 !important;
+  background-image: none !important;
+}
