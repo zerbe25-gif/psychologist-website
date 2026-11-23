@@ -54,7 +54,12 @@ function changePhoto(baseLayer, revealLayer, images) {
 
 /* EDITORIAL CLIP-PATH — ЖУРНАЛЬНАЯ МАСКА */
 if (photoOne && photoOneNext && photoSets.first.length) {
-  window.setInterval(() => changePhoto(photoOne, photoOneNext, photoSets.first), photoChangeTime);
+  window.setInterval(() => {
+    /* Фотографии главной страницы остаются неподвижными,
+       пока пользователь читает открытую информационную шторку. */
+    if (document.body.classList.contains("drawer-is-open")) return;
+    changePhoto(photoOne, photoOneNext, photoSets.first);
+  }, photoChangeTime);
 }
 /* =========================================
    ФОРМА ЗАПИСИ
