@@ -7818,3 +7818,159 @@ html.initial-load-reveal .header {
     transition-duration: .01ms !important;
   }
 }
+
+
+/* =========================================================
+   ШТОРКА: ЧИСТАЯ ШАПКА, ПАЛИТРА РАЗДЕЛОВ И ПЕРЕХОДЫ A
+========================================================= */
+
+/* Убираем карточку/капсулу вокруг навигации: остаются только названия разделов. */
+#sideDrawer .drawer-header {
+  display: block !important;
+  margin: .85rem 0 .65rem !important;
+  padding: .55rem 1.1rem .65rem !important;
+  min-height: 0 !important;
+  width: auto !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  isolation: auto !important;
+}
+#sideDrawer .drawer-tabs {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: clamp(14px, 2vw, 28px) !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+}
+#sideDrawer .drawer-tabs::-webkit-scrollbar { display: none !important; }
+#sideDrawer .drawer-tabs button,
+#sideDrawer .drawer-tabs button:not(:first-child),
+#sideDrawer .drawer-tabs button.is-active {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 5px 0 8px !important;
+  border: 0 !important;
+  border-bottom: 1px solid transparent !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: rgba(55, 61, 61, .58) !important;
+  font: 400 11px/1.4 Inter, Arial, sans-serif !important;
+  letter-spacing: .035em !important;
+  text-transform: none !important;
+  transform: none !important;
+  transition: color .35s ease, border-color .45s ease, opacity .35s ease !important;
+}
+#sideDrawer .drawer-tabs button:hover {
+  color: #475C5A !important;
+  background: transparent !important;
+}
+#sideDrawer .drawer-tabs button.is-active {
+  color: #354C49 !important;
+  border-bottom-color: rgba(90, 116, 108, .65) !important;
+  font-weight: 500 !important;
+}
+@media (max-width: 760px) {
+  #sideDrawer .drawer-header {
+    margin: .65rem 0 .45rem !important;
+    padding: .55rem .85rem .6rem !important;
+  }
+  #sideDrawer .drawer-tabs { gap: 13px !important; }
+  #sideDrawer .drawer-tabs button,
+  #sideDrawer .drawer-tabs button:not(:first-child),
+  #sideDrawer .drawer-tabs button.is-active {
+    padding: 5px 0 7px !important;
+    font-size: 10px !important;
+  }
+}
+
+/* Цвет каждой страницы: различия тонкие, но различимые. */
+#sideDrawer .viewport { background: #F7F3EC !important; }
+#sideDrawer .block-section[data-drawer-panel="method"] {
+  background: #F7F3EC !important;
+  background-color: #F7F3EC !important;
+}
+#sideDrawer .block-section[data-drawer-panel="requests"] {
+  background: #F1EFE9 !important;
+  background-color: #F1EFE9 !important;
+}
+#sideDrawer .block-section[data-drawer-panel="format"] {
+  background: #F7F7F3 !important;
+  background-color: #F7F7F3 !important;
+}
+#sideDrawer .block-section[data-drawer-panel="education"] {
+  background: #EEF1EF !important;
+  background-color: #EEF1EF !important;
+}
+
+/* Надёжное перекрытие двух страниц при растворении.
+   Явные классы состояний исключают конфликт с прежними data-index стилями. */
+#sideDrawer .block-section {
+  visibility: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  transform: translate3d(0, 0, 0) scale(1) !important;
+  filter: blur(0) !important;
+  transition:
+    opacity var(--drawer-nav-transition-duration, 1.2s) cubic-bezier(.4, 0, .2, 1),
+    transform var(--drawer-nav-transition-duration, 1.2s) cubic-bezier(.16, 1, .3, 1),
+    filter var(--drawer-nav-transition-duration, 1.2s) cubic-bezier(.4, 0, .2, 1) !important;
+  will-change: opacity, transform, filter;
+}
+#sideDrawer .block-section.is-current {
+  visibility: visible !important;
+  pointer-events: auto !important;
+  opacity: 1 !important;
+  transform: translate3d(0, 0, 0) scale(1) !important;
+  filter: blur(0) !important;
+  z-index: 4 !important;
+}
+#sideDrawer .block-section.is-entering {
+  visibility: visible !important;
+  pointer-events: auto !important;
+  opacity: 0 !important;
+  transform: translate3d(0, 9px, 0) scale(.996) !important;
+  filter: blur(2px) !important;
+  z-index: 10 !important;
+}
+#sideDrawer .block-section.is-entering.is-entering-visible {
+  opacity: 1 !important;
+  transform: translate3d(0, 0, 0) scale(1) !important;
+  filter: blur(0) !important;
+}
+#sideDrawer .block-section.is-leaving {
+  visibility: visible !important;
+  pointer-events: none !important;
+  opacity: 1 !important;
+  transform: translate3d(0, 0, 0) scale(1) !important;
+  filter: blur(0) !important;
+  z-index: 5 !important;
+}
+#sideDrawer .block-section.is-leaving.is-leaving-hidden {
+  opacity: 0 !important;
+  transform: translate3d(0, -6px, 0) scale(1.002) !important;
+  filter: blur(2px) !important;
+}
+#sideDrawer .viewport::after {
+  height: 34%;
+  z-index: 20;
+}
+#sideDrawer .viewport.is-transitioning::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  #sideDrawer .block-section { transition-duration: .01ms !important; }
+}
