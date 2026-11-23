@@ -7330,3 +7330,19 @@ html.initial-load-reveal .header {
 #sideDrawer .drawer-appointment-button:hover {
   background: #2b666a !important;
 }
+
+
+/* =========================================================
+   ФОКУС НА ИНФОРМАЦИОННОЙ ШТОРКЕ
+   Внешняя страница затемняется равномерно, без размытия.
+========================================================= */
+#drawerBackdrop {
+  background: rgba(36, 34, 31, 0.42) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  transition: opacity 0.7s ease, visibility 0s linear 0.7s !important;
+}
+#drawerBackdrop.is-open {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
