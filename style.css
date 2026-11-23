@@ -7852,3 +7852,68 @@ html.initial-load-reveal .header {
   content: none !important;
   display: none !important;
 }
+
+
+/* =========================================
+   НЕПРЕРЫВНОЕ ЧТЕНИЕ РАЗДЕЛОВ — растворение + мягкое перекрытие
+   Все четыре раздела находятся в одном естественном потоке.
+========================================= */
+#sideDrawer .viewport {
+  display: block !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  overscroll-behavior-y: contain;
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+  background: #FFFFFF !important;
+}
+#sideDrawer .block-section {
+  position: relative !important;
+  inset: auto !important;
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  max-height: none !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  opacity: 1 !important;
+  transform: none;
+  filter: none !important;
+  z-index: auto !important;
+  flex: none !important;
+  margin: 0 !important;
+  scroll-margin-top: 0;
+  transition: none !important;
+  will-change: auto;
+}
+#sideDrawer .block-section.is-current {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transform: none !important;
+  filter: none !important;
+  z-index: auto !important;
+}
+#sideDrawer .block-section.is-entering-from-below {
+  opacity: var(--section-entry-opacity, 1) !important;
+  transform: translate3d(0, var(--section-entry-y, 0px), 0) !important;
+  transition: opacity 180ms linear, transform 220ms cubic-bezier(.2,.75,.25,1) !important;
+  will-change: opacity, transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  #sideDrawer .viewport { scroll-behavior: auto !important; }
+  #sideDrawer .block-section.is-entering-from-below {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* Единая поверхность: цвет не подчёркивает границы между соседними разделами. */
+#sideDrawer .block-section[data-drawer-panel] {
+  background: #FAF9F6 !important;
+  background-color: #FAF9F6 !important;
+  background-image: none !important;
+}

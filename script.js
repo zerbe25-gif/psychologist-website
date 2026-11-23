@@ -787,36 +787,70 @@ function updateLensGlare(value) {
   const drawer=document.getElementById("sideDrawer");
   const backdrop=document.getElementById("drawerBackdrop");
   const closeButton=document.getElementById("drawerClose");
+  const viewport=document.getElementById("drawerViewport");
   const tabs=[...document.querySelectorAll("#sideDrawer [data-drawer-tab]")];
   const sections=[...document.querySelectorAll("#sideDrawer .block-section")];
   const currentStep=document.getElementById("currentStep");
-  if(!drawer||!backdrop||!closeButton||sections.length!==4)return;
+  if(!drawer||!backdrop||!closeButton||!viewport||sections.length!==4)return;
 
   const sectionKeys=["method","requests","format","education"];
-  let currentBlock=0,drawerOpen=false,previousFocus=null;
+  let currentBlock=0,drawerOpen=false,previousFocus=null,framePending=false;
 
   function updateNavUI(){
     tabs.forEach((tab,index)=>{
       const active=index===currentBlock;
       tab.classList.toggle("is-active",active);
-      tab.setAttribute("aria-current",active?"page":"false");
+      tab.setAttribute("aria-current",active?"location":"false");
     });
     if(currentStep)currentStep.textContent=String(currentBlock+1);
   }
-  function goToBlock(targetIndex){
-    if(targetIndex===currentBlock||targetIndex<0||targetIndex>=sections.length)return;
+
+  function updateReadingPosition(){
+    framePending=false;
+    const viewportRect=viewport.getBoundingClientRect();
+    const focusLine=viewportRect.top+Math.min(viewport.clientHeight*.34,220);
+    let nearest=0;
+    let nearestDistance=Infinity;
+
     sections.forEach((section,index)=>{
-      section.classList.toggle("is-current",index===targetIndex);
-      section.style.transition="none";
-      section.style.transform="none";
-      section.style.filter="none";
-      section.style.opacity=index===targetIndex?"1":"0";
-      section.style.visibility=index===targetIndex?"visible":"hidden";
-      section.style.pointerEvents=index===targetIndex?"auto":"none";
-      section.style.zIndex=index===targetIndex?"4":"1";
+      const rect=section.getBoundingClientRect();
+      const distance=Math.abs(rect.top-focusLine);
+      if(rect.top<=focusLine+rect.height*.72&&distance<nearestDistance){
+        nearest=index;
+        nearestDistance=distance;
+      }
+
+      /* The next section rises gently from below while the current one remains readable. */
+      const enteringFromBelow=rect.top>viewportRect.top&&rect.top<viewportRect.bottom;
+      if(enteringFromBelow){
+        const progress=Math.max(0,Math.min(1,(viewportRect.bottom-rect.top)/(viewport.clientHeight*.32)));
+        section.style.setProperty("--section-entry-opacity",String(.94+.06*progress));
+        section.style.setProperty("--section-entry-y",((1-progress)*10).toFixed(2)+"px");
+        section.classList.add("is-entering-from-below");
+      }else{
+        section.style.removeProperty("--section-entry-opacity");
+        section.style.removeProperty("--section-entry-y");
+        section.classList.remove("is-entering-from-below");
+      }
     });
+
+    if(nearest!==currentBlock){
+      currentBlock=nearest;
+      updateNavUI();
+    }
+  }
+
+  function scheduleReadingPosition(){
+    if(framePending)return;
+    framePending=true;
+    window.requestAnimationFrame(updateReadingPosition);
+  }
+
+  function goToBlock(targetIndex){
+    if(targetIndex<0||targetIndex>=sections.length)return;
+    const target=sections[targetIndex];
+    viewport.scrollTo({top:target.offsetTop,behavior:"smooth"});
     currentBlock=targetIndex;
-    sections[targetIndex].scrollTop=0;
     updateNavUI();
   }
 
@@ -832,24 +866,13 @@ function updateLensGlare(value) {
       drawer.setAttribute("aria-hidden","false");
       backdrop.setAttribute("aria-hidden","false");
     }
-    if(index!==currentBlock)goToBlock(index);
-    updateNavUI();
+    goToBlock(index);
     closeButton.focus();
   }
 
   function closeDrawer(){
     if(!drawerOpen)return;
     drawerOpen=false;
-    sections.forEach((section,index)=>{
-      section.classList.toggle("is-current",index===currentBlock);
-      section.style.transition="none";
-      section.style.transform="none";
-      section.style.filter="none";
-      section.style.opacity=index===currentBlock?"1":"0";
-      section.style.visibility=index===currentBlock?"visible":"hidden";
-      section.style.pointerEvents=index===currentBlock?"auto":"none";
-      section.style.zIndex=index===currentBlock?"4":"1";
-    });
     drawer.classList.remove("is-open");
     backdrop.classList.remove("is-open");
     document.body.classList.remove("drawer-is-open");
@@ -858,6 +881,8 @@ function updateLensGlare(value) {
     if(previousFocus&&typeof previousFocus.focus==="function")previousFocus.focus();
   }
 
+  viewport.addEventListener("scroll",scheduleReadingPosition,{passive:true});
+  window.addEventListener("resize",scheduleReadingPosition,{passive:true});
   document.querySelectorAll("[data-drawer-open]").forEach(button=>{
     button.addEventListener("click",()=>openDrawer(button.dataset.drawerOpen));
   });
@@ -868,8 +893,8 @@ function updateLensGlare(value) {
     if(event.key==="Escape"&&drawerOpen)closeDrawer();
   });
 
-
   updateNavUI();
+  scheduleReadingPosition();
 })();
 
 /* ===== FINAL FIX: ОКНА И ПАНЕЛЬ ===== */
