@@ -7832,11 +7832,7 @@ html.initial-load-reveal .header {
 
 /* Переключение разделов шторки — только по клику, без анимации страниц. */
 #sideDrawer .block-section,
-#sideDrawer .block-section.is-current,
-#sideDrawer .block-section.is-entering,
-#sideDrawer .block-section.is-entering-visible,
-#sideDrawer .block-section.is-leaving,
-#sideDrawer .block-section.is-leaving-hidden {
+#sideDrawer .block-section.is-current {
   transition: none !important;
   animation: none !important;
   transform: none !important;
