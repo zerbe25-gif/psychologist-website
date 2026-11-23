@@ -8253,3 +8253,121 @@ html.initial-load-reveal .header {
     animation-duration: .01ms !important;
   }
 }
+
+
+/* =========================================================
+   ТОЧЕЧНАЯ КОРРЕКЦИЯ ШТОРКИ — высота шапки, интервалы и формат
+========================================================= */
+
+/* Шапка компактнее примерно на 5 мм; индикатор остаётся в зоне навигации. */
+#sideDrawer .drawer-header {
+  padding-top: .08rem !important;
+  padding-bottom: .08rem !important;
+}
+#sideDrawer .drawer-tabs {
+  padding-bottom: 2px !important;
+}
+#sideDrawer .drawer-tabs::before {
+  bottom: 0 !important;
+}
+#sideDrawer .drawer-tabs button,
+#sideDrawer .drawer-tabs button:not(:first-child),
+#sideDrawer .drawer-tabs button.is-active {
+  padding-top: 4px !important;
+  padding-bottom: 2px !important;
+}
+@media (max-width: 760px) {
+  #sideDrawer .drawer-header {
+    padding-top: .08rem !important;
+    padding-bottom: .08rem !important;
+  }
+  #sideDrawer .drawer-tabs { padding-bottom: 2px !important; }
+  #sideDrawer .drawer-tabs button,
+  #sideDrawer .drawer-tabs button:not(:first-child),
+  #sideDrawer .drawer-tabs button.is-active {
+    padding-top: 4px !important;
+    padding-bottom: 2px !important;
+  }
+}
+
+/* Между «О Методе» и «Запросами» — дополнительный сантиметр.
+   Между «Запросами» и «Форматом» убираем 15 мм из прежнего нижнего поля. */
+#sideDrawer .block-section[data-drawer-panel="method"] {
+  margin-bottom: 10mm !important;
+}
+#sideDrawer .requests-monolith {
+  padding-bottom: calc(2.6rem + 15mm) !important;
+}
+
+/* Левый акцент hover переносим на 3 мм левее номера.
+   Сам номер и текст сохраняют исходную сетку и положение. */
+#sideDrawer .fw-format-btn {
+  position: relative !important;
+  border-left-color: transparent !important;
+}
+#sideDrawer .fw-format-btn::before {
+  content: "";
+  position: absolute;
+  left: -3mm;
+  top: 0;
+  bottom: 0;
+  width: 1.5px;
+  background: transparent;
+  transform: scaleY(.72);
+  transform-origin: center;
+  transition:
+    background-color 420ms cubic-bezier(.22,1,.36,1),
+    transform 520ms cubic-bezier(.22,1,.36,1);
+  pointer-events: none;
+}
+#sideDrawer .fw-format-btn.is-expandable:hover::before,
+#sideDrawer .fw-format-btn.is-open::before {
+  background: #7A2E3A;
+  transform: scaleY(1);
+}
+
+/* Затемнение строки плавно растворяется на последних 20% справа. */
+#sideDrawer .fw-format-entry:hover {
+  background: linear-gradient(
+    to right,
+    rgba(45,55,72,.045) 0%,
+    rgba(45,55,72,.045) 78%,
+    rgba(45,55,72,.022) 90%,
+    rgba(45,55,72,0) 100%
+  ) !important;
+}
+#sideDrawer .fw-format-entry:has(.fw-format-btn.is-open) {
+  background: linear-gradient(
+    to right,
+    rgba(45,55,72,.045) 0%,
+    rgba(45,55,72,.045) 78%,
+    rgba(45,55,72,.022) 90%,
+    rgba(45,55,72,0) 100%
+  ) !important;
+}
+
+/* Верхняя и нижние горизонтальные линии форматов удлинены на 2 мм влево. */
+#sideDrawer .fw-formats-list {
+  margin-left: calc(10mm - 2mm) !important;
+  width: calc(100% + 2mm) !important;
+}
+#sideDrawer .fw-format-entry {
+  width: calc(100% + 2mm) !important;
+}
+
+/* FIX анимации «Длительность»:
+   transform не должен быть !important — иначе keyframes не могут раскрыть линию. */
+#sideDrawer .fw-rhythm-underline {
+  transform: scaleX(0);
+  transform-origin: right center !important;
+  animation: none !important;
+}
+#sideDrawer .fw-rhythm-section.is-visible .fw-rhythm-underline {
+  animation: fwDurationLineReveal 1.2s cubic-bezier(.2, .75, .25, 1) both !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  #sideDrawer .fw-rhythm-underline,
+  #sideDrawer .fw-rhythm-section.is-visible .fw-rhythm-underline {
+    animation-duration: .01ms !important;
+  }
+}
