@@ -1599,40 +1599,63 @@ window.applyBackgroundMood = function(mood){
 
   const rhythm = root.querySelector("#fw-rhythm-section");
   const rhythmKicker = rhythm && rhythm.querySelector(".fw-rhythm-kicker");
+  const bodyReveals = rhythm ? Array.from(rhythm.querySelectorAll(".fw-rhythm-body-reveal")) : [];
   const viewport = document.getElementById("drawerViewport");
 
-  /* Повторяемый цикл: при каждом входе заголовка в нижнюю треть линия
-     выдвигается заново; после полного выхода заголовка из viewport класс
-     снимается, animation сбрасывается и готовится к следующему появлению. */
+  /* Линия и три терапевтических блока теперь имеют независимые циклы.
+     Сброс линии зависит только от заголовка «Длительность»; каждый
+     описательный блок сбрасывается только после собственного выхода
+     из viewport, поэтому переход к «Образованию» не скрывает их преждевременно. */
   if (rhythm && rhythmKicker && viewport) {
     let rhythmRevealFrame = false;
     let rhythmWasTriggeredInThisVisit = false;
+    const bodyWasTriggered = new WeakMap();
 
     const checkRhythmReveal = () => {
       rhythmRevealFrame = false;
       const viewportRect = viewport.getBoundingClientRect();
+      const lowerThirdTop = viewportRect.bottom - viewport.clientHeight / 3;
       const kickerRect = rhythmKicker.getBoundingClientRect();
-      const isInsideViewport =
+      const kickerInside =
         kickerRect.bottom > viewportRect.top &&
         kickerRect.top < viewportRect.bottom;
-      const lowerThirdTop = viewportRect.bottom - viewport.clientHeight / 3;
-      const entersLowerThird =
+      const kickerEntersLowerThird =
         kickerRect.bottom >= lowerThirdTop &&
         kickerRect.top <= viewportRect.bottom;
 
-      if (!isInsideViewport) {
+      if (!kickerInside) {
         rhythm.classList.remove("is-visible");
         rhythmWasTriggeredInThisVisit = false;
-        return;
-      }
-
-      if (entersLowerThird && !rhythmWasTriggeredInThisVisit) {
-        /* Два кадра гарантируют фиксацию начального transform после сброса. */
+      } else if (kickerEntersLowerThird && !rhythmWasTriggeredInThisVisit) {
         rhythm.classList.remove("is-visible");
         void rhythm.offsetWidth;
         rhythm.classList.add("is-visible");
         rhythmWasTriggeredInThisVisit = true;
       }
+
+      bodyReveals.forEach((element) => {
+        const rect = element.getBoundingClientRect();
+        const inside =
+          rect.bottom > viewportRect.top &&
+          rect.top < viewportRect.bottom;
+        const entersLowerThird =
+          rect.bottom >= lowerThirdTop &&
+          rect.top <= viewportRect.bottom;
+        const wasTriggered = bodyWasTriggered.get(element) === true;
+
+        if (!inside) {
+          element.classList.remove("is-body-visible");
+          bodyWasTriggered.set(element, false);
+          return;
+        }
+
+        if (entersLowerThird && !wasTriggered) {
+          element.classList.remove("is-body-visible");
+          void element.offsetWidth;
+          element.classList.add("is-body-visible");
+          bodyWasTriggered.set(element, true);
+        }
+      });
     };
 
     const scheduleRhythmReveal = () => {
@@ -1642,10 +1665,15 @@ window.applyBackgroundMood = function(mood){
     };
 
     rhythm.classList.remove("is-visible");
+    bodyReveals.forEach(element => {
+      element.classList.remove("is-body-visible");
+      bodyWasTriggered.set(element, false);
+    });
     viewport.addEventListener("scroll", scheduleRhythmReveal, { passive: true });
     window.addEventListener("resize", scheduleRhythmReveal, { passive: true });
     scheduleRhythmReveal();
   } else if (rhythm) {
     rhythm.classList.remove("is-visible");
+    bodyReveals.forEach(element => element.classList.remove("is-body-visible"));
   }
 })();
