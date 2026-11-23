@@ -1588,16 +1588,44 @@ window.applyBackgroundMood = function(mood){
   render();
 
   const rhythm = root.querySelector("#fw-rhythm-section");
-  if (rhythm && "IntersectionObserver" in window) {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          rhythm.classList.add("is-visible");
-          observer.disconnect();
-        }
-      });
-    }, { threshold: 0.33 });
-    observer.observe(rhythm);
+  const rhythmKicker = rhythm && rhythm.querySelector(".fw-rhythm-kicker");
+  const viewport = document.getElementById("drawerViewport");
+
+  /* Линия и карточки запускаются не по видимости всей длинной секции,
+     а в тот момент, когда сам заголовок «Длительность» входит в нижнюю треть
+     видимой области прокручиваемой шторки. */
+  if (rhythm && rhythmKicker && viewport) {
+    let rhythmRevealDone = false;
+    let rhythmRevealFrame = false;
+
+    const checkRhythmReveal = () => {
+      rhythmRevealFrame = false;
+      if (rhythmRevealDone) return;
+
+      const viewportRect = viewport.getBoundingClientRect();
+      const kickerRect = rhythmKicker.getBoundingClientRect();
+      const lowerThirdTop = viewportRect.bottom - viewport.clientHeight / 3;
+      const overlapsLowerThird =
+        kickerRect.bottom >= lowerThirdTop &&
+        kickerRect.top <= viewportRect.bottom;
+
+      if (overlapsLowerThird) {
+        rhythm.classList.add("is-visible");
+        rhythmRevealDone = true;
+        viewport.removeEventListener("scroll", scheduleRhythmReveal);
+        window.removeEventListener("resize", scheduleRhythmReveal);
+      }
+    };
+
+    const scheduleRhythmReveal = () => {
+      if (rhythmRevealDone || rhythmRevealFrame) return;
+      rhythmRevealFrame = true;
+      window.requestAnimationFrame(checkRhythmReveal);
+    };
+
+    viewport.addEventListener("scroll", scheduleRhythmReveal, { passive: true });
+    window.addEventListener("resize", scheduleRhythmReveal, { passive: true });
+    scheduleRhythmReveal();
   } else if (rhythm) {
     rhythm.classList.add("is-visible");
   }
