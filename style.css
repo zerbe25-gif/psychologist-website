@@ -7191,12 +7191,12 @@ html.initial-load-reveal .header {
 /* Появление трёх описательных блоков.
    Точные параметры из переданного HTML: 1.5 с, сдвиг 18 px,
    задержки 0.2 / 0.4 / 0.6 с. До входа секции — скрыты. */
-#sideDrawer .fw-rhythm-section:not(.is-visible) .fw-rhythm-body-reveal {
+#sideDrawer .fw-rhythm-section .fw-rhythm-body-reveal:not(.is-body-visible) {
   opacity: 0 !important;
   transform: translate3d(0,18px,0) !important;
   animation: none !important;
 }
-#sideDrawer .fw-rhythm-section.is-visible .fw-rhythm-body-reveal {
+#sideDrawer .fw-rhythm-section .fw-rhythm-body-reveal.is-body-visible {
   opacity: 0;
   animation: fwGentleRevealFromTitleRule 1.5s cubic-bezier(.22,1,.36,1) forwards !important;
   backface-visibility: hidden;
@@ -7223,7 +7223,7 @@ html.initial-load-reveal .header {
 }
 @media (prefers-reduced-motion: reduce) {
   #sideDrawer .fw-rhythm-section.is-visible .fw-rhythm-underline,
-  #sideDrawer .fw-rhythm-section.is-visible .fw-rhythm-body-reveal {
+  #sideDrawer .fw-rhythm-section .fw-rhythm-body-reveal.is-body-visible {
     animation-duration: .01ms !important;
     animation-delay: 0s !important;
   }
@@ -8369,5 +8369,101 @@ html.initial-load-reveal .header {
   #sideDrawer .fw-rhythm-underline,
   #sideDrawer .fw-rhythm-section.is-visible .fw-rhythm-underline {
     animation-duration: .01ms !important;
+  }
+}
+
+
+/* =========================================================
+   FIX v9 — непрерывный градиент разделов и независимые циклы анимаций
+========================================================= */
+
+/* Метод: дополнительный сантиметр сделан внутренним пространством,
+   а не внешним margin — градиент теперь окрашивает весь переход без белой щели. */
+#sideDrawer .block-section[data-drawer-panel="method"] {
+  margin-bottom: 0 !important;
+  padding-bottom: calc(2.25rem + 10mm) !important;
+  background-image: linear-gradient(
+    to bottom,
+    #FAF9F6 0%,
+    #FAF9F6 calc(100% - 260px),
+    #F9F8F4 calc(100% - 175px),
+    #F6F3ED 100%
+  ) !important;
+  background-color: #F6F3ED !important;
+}
+
+/* Запросы → Формат: более длинный и заметный переход без тонкой светлой полосы.
+   Градиент проходит по нижнему внутреннему полю самого монолитного блока. */
+#sideDrawer .block-section[data-drawer-panel="requests"] {
+  background-image: linear-gradient(
+    to bottom,
+    #F6F3ED 0%,
+    #F6F3ED calc(100% - 280px),
+    #F3F0E9 calc(100% - 175px),
+    #F0EEE8 100%
+  ) !important;
+  background-color: #F0EEE8 !important;
+}
+#sideDrawer .requests-monolith {
+  background: transparent !important;
+}
+
+/* Все вкладки шапки сдвигаются вправо ровно на 1 см. */
+#sideDrawer .drawer-tabs {
+  padding-left: 10mm !important;
+  box-sizing: border-box !important;
+}
+
+/* Крестик поднимается над линией шапки, сохраняя правое положение. */
+#sideDrawer #drawerClose.drawer-close {
+  top: 2px !important;
+}
+
+/* Верхний список форматов целиком на 10 мм левее; размеры строк не меняются. */
+#sideDrawer .fw-formats-list {
+  margin-left: -2mm !important;
+  width: calc(100% + 2mm) !important;
+}
+
+/* Линия «Длительность»: transform без !important — иначе keyframes
+   не могут изменить scaleX и линия остаётся невидимой. */
+#sideDrawer .fw-rhythm-underline {
+  transform: scaleX(0);
+  animation: none !important;
+}
+#sideDrawer .fw-rhythm-section.is-visible .fw-rhythm-underline {
+  transform: scaleX(0);
+  animation: fwDurationLineReveal 1.2s cubic-bezier(.2, .75, .25, 1) both !important;
+}
+
+/* Независимое управление тремя блоками терапевтического ритма.
+   Класс заголовка больше не скрывает карточки при уходе заголовка за экран. */
+#sideDrawer .fw-rhythm-section .fw-rhythm-body-reveal {
+  opacity: 0 !important;
+  transform: translate3d(0,18px,0) !important;
+  animation: none !important;
+}
+#sideDrawer .fw-rhythm-section .fw-rhythm-body-reveal.is-body-visible {
+  opacity: 0 !important;
+  transform: translate3d(0,18px,0);
+  animation: fwGentleRevealFromTitleRule 1.5s cubic-bezier(.22,1,.36,1) forwards !important;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+#sideDrawer .fw-rhythm-section .fw-rhythm-card:nth-child(1) .fw-rhythm-body-reveal.is-body-visible {
+  animation-delay: .2s !important;
+}
+#sideDrawer .fw-rhythm-section .fw-rhythm-card:nth-child(2) .fw-rhythm-body-reveal.is-body-visible {
+  animation-delay: .4s !important;
+}
+#sideDrawer .fw-rhythm-section .fw-rhythm-card:nth-child(3) .fw-rhythm-body-reveal.is-body-visible {
+  animation-delay: .6s !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  #sideDrawer .fw-rhythm-section .fw-rhythm-body-reveal,
+  #sideDrawer .fw-rhythm-section .fw-rhythm-body-reveal.is-body-visible {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
   }
 }
