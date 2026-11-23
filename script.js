@@ -1314,7 +1314,7 @@ window.applyBackgroundMood = function(mood){
     base:"#1E292B",vignette:35,grain:35,
     glow1:{color:"#34797E",opacity:45,x:82,y:18,size:60},
     glow2:{color:"#DCB573",opacity:22,x:15,y:85,size:55},
-    effectsLinked:true,optics:{color:"#233235",opacity:92,blur:12,saturation:120,slideDown:1.8,slideUp:1.5}
+    effectsLinked:true,optics:{color:"#233235",opacity:92,blur:12,saturation:120}
   };
   let state={...defaults,glow1:{...defaults.glow1},glow2:{...defaults.glow2}};
   try{
@@ -1387,7 +1387,6 @@ window.applyBackgroundMood = function(mood){
   window.updateBackgroundBase=value=>{state.base=value;save();};
   window.updateBackgroundEffectsLink=value=>{state.effectsLinked=Boolean(value);save();};
   window.updateBackgroundOptics=(property,value)=>{if(!(property in defaults.optics))return;state.optics[property]=property==="color"?value:Number(value);save();};
-  window.updateDrawerSpeed=(direction,value)=>{const property=direction==="down"?"slideDown":"slideUp";state.optics[property]=Number(value);save();};
   window.updateBackgroundVignette=value=>{state.vignette=Number(value);save();};
   window.updateBackgroundGrain=value=>{state.grain=Number(value);save();};
   window.updateBackgroundGlow=(number,property,value)=>{
