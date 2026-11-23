@@ -7191,12 +7191,12 @@ html.initial-load-reveal .header {
 /* Появление трёх описательных блоков.
    Точные параметры из переданного HTML: 1.5 с, сдвиг 18 px,
    задержки 0.2 / 0.4 / 0.6 с. До входа секции — скрыты. */
-#sideDrawer .fw-rhythm-section:not(.is-visible) .fw-rhythm-body-reveal {
+#sideDrawer .fw-rhythm-section .fw-rhythm-body-reveal:not(.is-body-visible) {
   opacity: 0 !important;
   transform: translate3d(0,18px,0) !important;
   animation: none !important;
 }
-#sideDrawer .fw-rhythm-section.is-visible .fw-rhythm-body-reveal {
+#sideDrawer .fw-rhythm-section .fw-rhythm-body-reveal.is-body-visible {
   opacity: 0;
   animation: fwGentleRevealFromTitleRule 1.5s cubic-bezier(.22,1,.36,1) forwards !important;
   backface-visibility: hidden;
@@ -7223,7 +7223,7 @@ html.initial-load-reveal .header {
 }
 @media (prefers-reduced-motion: reduce) {
   #sideDrawer .fw-rhythm-section.is-visible .fw-rhythm-underline,
-  #sideDrawer .fw-rhythm-section.is-visible .fw-rhythm-body-reveal {
+  #sideDrawer .fw-rhythm-section .fw-rhythm-body-reveal.is-body-visible {
     animation-duration: .01ms !important;
     animation-delay: 0s !important;
   }
@@ -8428,7 +8428,7 @@ html.initial-load-reveal .header {
 /* Линия «Длительность»: transform без !important — иначе keyframes
    не могут изменить scaleX и линия остаётся невидимой. */
 #sideDrawer .fw-rhythm-underline {
-  transform: scaleX(0) !important;
+  transform: scaleX(0);
   animation: none !important;
 }
 #sideDrawer .fw-rhythm-section.is-visible .fw-rhythm-underline {
