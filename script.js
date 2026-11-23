@@ -1597,6 +1597,67 @@ window.applyBackgroundMood = function(mood){
   }
   render();
 
-  /* Анимации блоков «Длительность» отключены по запросу.
-     Содержимое и декоративные линии остаются в HTML/CSS. */
+  /* Повторяемый reveal: вниз — после полного входа карточки,
+     вверх — когда в область просмотра входит не менее трети карточки. */
+  const rhythmSection = root.querySelector('#fw-rhythm-section');
+  const cards = Array.from(root.querySelectorAll('.fw-rhythm-card'));
+  const viewport = root.closest('.viewport') || document.querySelector('#sideDrawer .viewport');
+  if (rhythmSection && cards.length && viewport) {
+    let previousScrollTop = viewport.scrollTop;
+    let scrollDirection = 1;
+    let framePending = false;
+
+    function updateRhythmReveal() {
+      framePending = false;
+      const viewportRect = viewport.getBoundingClientRect();
+      const viewTop = viewportRect.top;
+      const viewBottom = viewportRect.bottom;
+      const viewHeight = viewport.clientHeight || viewportRect.height;
+
+      const sectionRect = rhythmSection.getBoundingClientRect();
+      const groupOutside = sectionRect.bottom <= viewTop || sectionRect.top >= viewBottom;
+      if (groupOutside) rhythmSection.classList.remove('is-visible');
+
+      let anyCardVisible = false;
+      cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        const fullyOutside = rect.bottom <= viewTop || rect.top >= viewBottom;
+        const visibleHeight = Math.max(0, Math.min(rect.bottom, viewBottom) - Math.max(rect.top, viewTop));
+        const visibleRatio = rect.height ? visibleHeight / rect.height : 0;
+        const fullyInside = rect.top >= viewTop && rect.bottom <= viewBottom;
+        const shouldReveal = scrollDirection >= 0
+          ? fullyInside
+          : visibleRatio >= 1 / 3;
+
+        if (fullyOutside) {
+          card.classList.remove('is-revealed');
+        } else {
+          anyCardVisible = true;
+          if (shouldReveal && !card.classList.contains('is-revealed')) {
+            card.classList.add('is-revealed');
+          }
+        }
+      });
+
+      if (!anyCardVisible) rhythmSection.classList.remove('is-visible');
+      else if (cards.some(card => card.classList.contains('is-revealed'))) {
+        rhythmSection.classList.add('is-visible');
+      }
+    }
+
+    function scheduleRhythmReveal() {
+      const currentTop = viewport.scrollTop;
+      if (currentTop !== previousScrollTop) {
+        scrollDirection = currentTop > previousScrollTop ? 1 : -1;
+        previousScrollTop = currentTop;
+      }
+      if (framePending) return;
+      framePending = true;
+      window.requestAnimationFrame(updateRhythmReveal);
+    }
+
+    viewport.addEventListener('scroll', scheduleRhythmReveal, { passive: true });
+    window.addEventListener('resize', scheduleRhythmReveal, { passive: true });
+    scheduleRhythmReveal();
+  }
 })();
