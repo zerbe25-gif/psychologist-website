@@ -5377,13 +5377,12 @@ body.cost-modal-open #developer-panel{z-index:1!important}
 .viewport{position:relative;flex:1;min-height:0;overflow:hidden;background:#F2F7F6;}
 .block-section{
   position:absolute;inset:0;width:100%;padding:2.25rem 3rem;background:#F2F7F6;
-  overflow-y:auto;overflow-x:hidden;transition:transform var(--drawer-slide-down,1.8s) cubic-bezier(.16,1,.3,1),
-  opacity var(--drawer-slide-down,1.8s) cubic-bezier(.16,1,.3,1),
-  filter var(--drawer-slide-down,1.8s) cubic-bezier(.16,1,.3,1);
-  will-change:transform,opacity;z-index:1;
+  overflow-y:auto;overflow-x:hidden;transition:none;transform:none;filter:none;
+  opacity:0;visibility:hidden;pointer-events:none;will-change:auto;z-index:1;
 }
-.block-section[data-index="0"]{transform:translateY(0) scale(1);opacity:1;z-index:4;}
-.block-section[data-index="1"],.block-section[data-index="2"],.block-section[data-index="3"]{transform:translateY(100%) scale(1);opacity:0;}
+.block-section.is-current{
+  opacity:1;visibility:visible;pointer-events:auto;transform:none;filter:none;z-index:4;
+}
 .drawer-footer{flex:0 0 auto;display:flex;justify-content:space-between;align-items:center;background:#F2F7F6;border-top:1px solid rgba(45,55,72,.1);padding:1.1rem 3rem;color:rgba(45,55,72,.7);font:12px Inter,sans-serif;z-index:30;}
 .drawer-footer strong{color:#2D3748;}
 .drawer-appointment-button{border:0;border-radius:12px;padding:10px 22px;background:#34797E;color:white;font:500 13px Inter,sans-serif;cursor:pointer;box-shadow:0 3px 10px rgba(45,55,72,.1);transition:background .25s ease,transform .25s ease;}
@@ -5394,7 +5393,7 @@ body.cost-modal-open #developer-panel{z-index:1!important}
 .drawer-speed-controls{display:grid;grid-template-columns:repeat(2,minmax(180px,1fr));gap:18px;padding-top:14px;margin-top:12px;border-top:1px solid rgba(45,55,72,.12);}
 @media(max-width:1024px){#sideDrawer{width:100vw!important}.drawer-header{padding:1.2rem 1.4rem}.block-section{padding:1.8rem 1.4rem}.drawer-footer{padding:1rem 1.4rem}}
 @media(max-width:600px){.drawer-tabs{gap:5px}.drawer-tabs button{font-size:10px;padding:7px 9px}.drawer-tabs button.is-active{font-size:11px;padding:8px 10px}.drawer-footer{font-size:11px}.drawer-appointment-button{padding:9px 12px;font-size:11px}.drawer-speed-controls{grid-template-columns:1fr}}
-@media(prefers-reduced-motion:reduce){.block-section,#sideDrawer,#drawerBackdrop{transition-duration:.01ms!important}}
+@media(prefers-reduced-motion:reduce){#sideDrawer,#drawerBackdrop{transition-duration:.01ms!important}}
 
 /* FIX: не переносить короткое «О» отдельно в заголовке «О МЕТОДЕ» */
 .menu-item-method,
@@ -7757,42 +7756,6 @@ html.initial-load-reveal .header {
   border-color: rgba(45, 55, 72, .09) !important;
 }
 
-/* Соседние разделы растворяются друг в друге в одной плоскости. */
-#sideDrawer .block-section {
-  transition:
-    opacity var(--drawer-nav-transition-duration, 1.15s) cubic-bezier(.4, 0, .2, 1),
-    transform var(--drawer-nav-transition-duration, 1.15s) cubic-bezier(.16, 1, .3, 1),
-    filter var(--drawer-nav-transition-duration, 1.15s) cubic-bezier(.4, 0, .2, 1) !important;
-  backface-visibility: hidden;
-}
-
-/* Лёгкая визуальная «упругость» только в нижней трети окна:
-   проявляется на время смены раздела и не вмешивается в прокрутку. */
-#sideDrawer .viewport::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 34%;
-  z-index: 20;
-  pointer-events: none;
-  opacity: 0;
-  transform: translateY(7px);
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(85, 96, 91, .012) 42%,
-    rgba(85, 96, 91, .035) 100%
-  );
-  transition: opacity .75s cubic-bezier(.16, 1, .3, 1),
-              transform .95s cubic-bezier(.16, 1, .3, 1);
-}
-#sideDrawer .viewport.is-transitioning::after {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 /* Более заметная, но всё ещё мягкая тень вдоль левого края шторки. */
 #sideDrawer::after {
   width: 15mm !important;
@@ -7871,7 +7834,7 @@ html.initial-load-reveal .header {
   letter-spacing: .035em !important;
   text-transform: none !important;
   transform: none !important;
-  transition: color .35s ease, border-color .45s ease, opacity .35s ease !important;
+  transition: none !important;
 }
 #sideDrawer .drawer-tabs button:hover {
   color: #475C5A !important;
@@ -7915,114 +7878,32 @@ html.initial-load-reveal .header {
   background-color: #EEF1EF !important;
 }
 
-/* Надёжное перекрытие двух страниц при растворении.
-   Явные классы состояний исключают конфликт с прежними data-index стилями. */
-#sideDrawer .block-section {
-  visibility: hidden !important;
-  pointer-events: none !important;
-  opacity: 0 !important;
-  transform: translate3d(0, 0, 0) scale(1) !important;
-  filter: blur(0) !important;
-  transition:
-    opacity var(--drawer-nav-transition-duration, 1.2s) cubic-bezier(.4, 0, .2, 1),
-    transform var(--drawer-nav-transition-duration, 1.2s) cubic-bezier(.16, 1, .3, 1),
-    filter var(--drawer-nav-transition-duration, 1.2s) cubic-bezier(.4, 0, .2, 1) !important;
-  will-change: opacity, transform, filter;
-}
-#sideDrawer .block-section.is-current {
-  visibility: visible !important;
-  pointer-events: auto !important;
-  opacity: 1 !important;
-  transform: translate3d(0, 0, 0) scale(1) !important;
-  filter: blur(0) !important;
-  z-index: 4 !important;
-}
-#sideDrawer .block-section.is-entering {
-  visibility: visible !important;
-  pointer-events: auto !important;
-  opacity: 0 !important;
-  transform: translate3d(0, 9px, 0) scale(.996) !important;
-  filter: blur(2px) !important;
-  z-index: 10 !important;
-}
-#sideDrawer .block-section.is-entering.is-entering-visible {
-  opacity: 1 !important;
-  transform: translate3d(0, 0, 0) scale(1) !important;
-  filter: blur(0) !important;
-}
-#sideDrawer .block-section.is-leaving {
-  visibility: visible !important;
-  pointer-events: none !important;
-  opacity: 1 !important;
-  transform: translate3d(0, 0, 0) scale(1) !important;
-  filter: blur(0) !important;
-  z-index: 5 !important;
-}
-#sideDrawer .block-section.is-leaving.is-leaving-hidden {
-  opacity: 0 !important;
-  transform: translate3d(0, -6px, 0) scale(1.002) !important;
-  filter: blur(2px) !important;
-}
-#sideDrawer .viewport::after {
-  height: 34%;
-  z-index: 20;
-}
-#sideDrawer .viewport.is-transitioning::after {
-  opacity: 1;
-  transform: translateY(0);
-}
-@media (prefers-reduced-motion: reduce) {
-  #sideDrawer .block-section { transition-duration: .01ms !important; }
-}
 
 
-/* FINAL DRAWER TRANSITION: pure overlapping crossfade (variant A).
-   Neutralizes the former vertical slide and removes the lower-edge resistance cue. */
-#sideDrawer .block-section {
+
+/* Переключение разделов шторки — только по клику, без анимации страниц. */
+#sideDrawer .block-section,
+#sideDrawer .block-section.is-current,
+#sideDrawer .block-section.is-entering,
+#sideDrawer .block-section.is-entering-visible,
+#sideDrawer .block-section.is-leaving,
+#sideDrawer .block-section.is-leaving-hidden {
+  transition: none !important;
+  animation: none !important;
   transform: none !important;
   filter: none !important;
-  transition: opacity 1.15s cubic-bezier(.45, 0, .55, 1) !important;
-  backface-visibility: hidden;
 }
-#sideDrawer .block-section:not(.is-current):not(.is-entering):not(.is-leaving) {
-  visibility: hidden !important;
+#sideDrawer .block-section:not(.is-current) {
   opacity: 0 !important;
+  visibility: hidden !important;
   pointer-events: none !important;
 }
 #sideDrawer .block-section.is-current {
-  visibility: visible !important;
   opacity: 1 !important;
-  transform: none !important;
-  filter: none !important;
+  visibility: visible !important;
   pointer-events: auto !important;
-  z-index: 4 !important;
-}
-#sideDrawer .block-section.is-entering {
-  visibility: visible !important;
-  opacity: 0 !important;
-  transform: none !important;
-  filter: none !important;
-  pointer-events: none !important;
-  z-index: 10 !important;
-}
-#sideDrawer .block-section.is-entering.is-entering-visible {
-  opacity: 1 !important;
-}
-#sideDrawer .block-section.is-leaving {
-  visibility: visible !important;
-  opacity: 1 !important;
-  transform: none !important;
-  filter: none !important;
-  pointer-events: none !important;
-  z-index: 5 !important;
-}
-#sideDrawer .block-section.is-leaving.is-leaving-hidden {
-  opacity: 0 !important;
 }
 #sideDrawer .viewport::after {
-  display: none !important;
   content: none !important;
-}
-@media (prefers-reduced-motion: reduce) {
-  #sideDrawer .block-section { transition-duration: .01ms !important; }
+  display: none !important;
 }
