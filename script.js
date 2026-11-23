@@ -819,41 +819,40 @@ function updateLensGlare(value) {
     const currentSec=sections[currentBlock],targetSec=sections[targetIndex];
     const viewport=drawer.querySelector(".viewport");
 
-    /* Растворение с перекрытием: оба раздела находятся в одной плоскости,
-       входящий мягко проявляется, уходящий растворяется без вертикального слайда. */
+    /* Сбрасываем остаточные состояния, затем запускаем два перекрывающихся слоя. */
+    sections.forEach(section=>{
+      section.classList.remove("is-entering","is-entering-visible","is-leaving","is-leaving-hidden");
+      section.style.transitionDuration="";
+      section.style.zIndex="";
+    });
     targetSec.style.transitionDuration=duration+"s";
     currentSec.style.transitionDuration=duration+"s";
-    targetSec.style.zIndex="10";
-    currentSec.style.zIndex="5";
-    targetSec.style.transform="translate3d(0,8px,0) scale(.995)";
-    targetSec.style.opacity="0";
-    targetSec.style.filter="blur(2px)";
-    targetSec.classList.add("is-current");
+    targetSec.classList.add("is-entering");
+    currentSec.classList.add("is-leaving");
     if(viewport)viewport.classList.add("is-transitioning");
     void targetSec.offsetWidth;
 
-    targetSec.style.transform="translate3d(0,0,0) scale(1)";
-    targetSec.style.opacity="1";
-    targetSec.style.filter="blur(0)";
-    currentSec.style.transform="translate3d(0,-6px,0) scale(1.003)";
-    currentSec.style.opacity="0";
-    currentSec.style.filter="blur(2px)";
+    requestAnimationFrame(()=>{
+      requestAnimationFrame(()=>{
+        targetSec.classList.add("is-entering-visible");
+        currentSec.classList.add("is-leaving-hidden");
+      });
+    });
 
     targetSec.scrollTop=0;
     currentBlock=targetIndex;
     updateNavUI();
     if(transitionTimer!==null)clearTimeout(transitionTimer);
     transitionTimer=setTimeout(()=>{
-      currentSec.classList.remove("is-current");
-      currentSec.style.opacity="0";
-      currentSec.style.filter="none";
-      currentSec.style.transform="translate3d(0,0,0) scale(1)";
-      currentSec.style.zIndex="";
-      targetSec.style.filter="none";
+      currentSec.classList.remove("is-current","is-leaving","is-leaving-hidden");
+      targetSec.classList.remove("is-entering","is-entering-visible");
+      targetSec.classList.add("is-current");
+      currentSec.style.transitionDuration="";
+      targetSec.style.transitionDuration="";
       if(viewport)viewport.classList.remove("is-transitioning");
       isAnimating=false;
       transitionTimer=null;
-    },duration*1000);
+    },duration*1000+100);
   }
 
   function openDrawer(sectionName){
@@ -881,6 +880,14 @@ function updateLensGlare(value) {
     if(transitionTimer!==null)clearTimeout(transitionTimer);
     if(wheelTimer!==null)clearTimeout(wheelTimer);
     transitionTimer=wheelTimer=null;
+    sections.forEach((section,index)=>{
+      section.classList.remove("is-entering","is-entering-visible","is-leaving","is-leaving-hidden");
+      section.classList.toggle("is-current",index===currentBlock);
+      section.style.transitionDuration="";
+      section.style.zIndex="";
+    });
+    const viewport=drawer.querySelector(".viewport");
+    if(viewport)viewport.classList.remove("is-transitioning");
     drawer.classList.remove("is-open");
     backdrop.classList.remove("is-open");
     document.body.classList.remove("drawer-is-open");
