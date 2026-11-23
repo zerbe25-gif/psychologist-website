@@ -8467,3 +8467,57 @@ html.initial-load-reveal .header {
     animation: none !important;
   }
 }
+
+
+/* =========================================================
+   EDUCATION: деликатная микродинамика без анимации заголовка
+========================================================= */
+#sideDrawer .education-editorial-heading {
+  position: relative;
+  padding-bottom: 18px;
+}
+#sideDrawer .education-editorial-heading::after {
+  content: "";
+  display: block;
+  width: 76px;
+  height: 1px;
+  margin-top: 16px;
+  background: linear-gradient(90deg, rgba(152,114,122,.08), rgba(152,114,122,.58), rgba(199,181,142,.12));
+  transform-origin: left center;
+  animation: educationAccentDrift 7.5s ease-in-out infinite;
+}
+@keyframes educationAccentDrift {
+  0%, 100% { transform: translateX(0) scaleX(.82); opacity: .48; }
+  50% { transform: translateX(9px) scaleX(1); opacity: .82; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #sideDrawer .education-editorial-heading::after { animation: none; }
+}
+
+/* FORMAT: статичное состояние — убираем только анимацию блоков и линий.
+   Цветные декоративные линии сохраняются и остаются видимыми. */
+#sideDrawer .fw-rhythm-section .fw-rhythm-body-reveal,
+#sideDrawer .fw-rhythm-section .fw-rhythm-body-reveal:not(.is-body-visible),
+#sideDrawer .fw-rhythm-section .fw-rhythm-body-reveal.is-body-visible {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  animation: none !important;
+  transition: none !important;
+}
+#sideDrawer .fw-rhythm-section .fw-rhythm-underline {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: scaleX(1) !important;
+  animation: none !important;
+  transition: none !important;
+}
+#sideDrawer .fw-rhythm-section .fw-rhythm-head-block::after,
+#sideDrawer .fw-rhythm-section .fw-rhythm-bottom-rule::after,
+#sideDrawer .fw-rhythm-section .fw-rhythm-desc-wrap::before {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: scaleX(1) !important;
+  animation: none !important;
+  transition: none !important;
+}
