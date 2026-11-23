@@ -808,34 +808,57 @@ function updateLensGlare(value) {
   function updateReadingPosition(){
     framePending=false;
     const viewportRect=viewport.getBoundingClientRect();
-    const focusLine=viewportRect.top+Math.min(viewport.clientHeight*.34,220);
-    let nearest=0;
-    let nearestDistance=Infinity;
+    const viewportHeight=viewport.clientHeight;
+    if(!viewportHeight)return;
+
+    /* Transition begins only after the next section has entered the lower
+       third. Its progress is tied to geometry, so it reverses naturally. */
+    const startY=viewportRect.bottom-viewportHeight*.30;
+    const endY=viewportRect.top+viewportHeight*.34;
+    const span=Math.max(1,startY-endY);
+    let activeFromTransition=null;
 
     sections.forEach((section,index)=>{
-      const rect=section.getBoundingClientRect();
-      const distance=Math.abs(rect.top-focusLine);
-      if(rect.top<=focusLine+rect.height*.72&&distance<nearestDistance){
-        nearest=index;
-        nearestDistance=distance;
+      section.classList.remove("is-entering-from-below");
+      section.style.removeProperty("--section-entry-opacity");
+      section.style.removeProperty("--section-entry-y");
+
+      if(index===sections.length-1){
+        section.classList.remove("is-transition-blurring");
+        section.style.removeProperty("--section-transition-blur");
+        return;
       }
 
-      /* The next section rises gently from below while the current one remains readable. */
-      const enteringFromBelow=rect.top>viewportRect.top&&rect.top<viewportRect.bottom;
-      if(enteringFromBelow){
-        const progress=Math.max(0,Math.min(1,(viewportRect.bottom-rect.top)/(viewport.clientHeight*.32)));
-        section.style.setProperty("--section-entry-opacity",String(.94+.06*progress));
-        section.style.setProperty("--section-entry-y",((1-progress)*10).toFixed(2)+"px");
-        section.classList.add("is-entering-from-below");
+      const nextRect=sections[index+1].getBoundingClientRect();
+      const progress=Math.max(0,Math.min(1,(startY-nextRect.top)/span));
+      const blurAmount=1.35*progress;
+
+      if(blurAmount>.005){
+        section.style.setProperty("--section-transition-blur",blurAmount.toFixed(3)+"px");
+        section.classList.add("is-transition-blurring");
       }else{
-        section.style.removeProperty("--section-entry-opacity");
-        section.style.removeProperty("--section-entry-y");
-        section.classList.remove("is-entering-from-below");
+        section.style.removeProperty("--section-transition-blur");
+        section.classList.remove("is-transition-blurring");
       }
+
+      /* Header changes at the very beginning of the actual blur transition,
+         not when a tiny strip of the next section first becomes visible. */
+      if(progress>=.08)activeFromTransition=index+1;
+      else if(progress>0&&activeFromTransition===null)activeFromTransition=index;
     });
 
-    if(nearest!==currentBlock){
-      currentBlock=nearest;
+    let nextBlock=activeFromTransition;
+    if(nextBlock===null){
+      const readingLine=viewportRect.top+viewportHeight*.56;
+      nextBlock=0;
+      sections.forEach((section,index)=>{
+        if(section.getBoundingClientRect().top<=readingLine)nextBlock=index;
+      });
+    }
+
+    nextBlock=Math.max(0,Math.min(sections.length-1,nextBlock));
+    if(nextBlock!==currentBlock){
+      currentBlock=nextBlock;
       updateNavUI();
     }
   }
