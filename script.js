@@ -920,7 +920,7 @@ function updateLensGlare(value) {
   }
 
   viewport.addEventListener("scroll",scheduleReadingPosition,{passive:true});
-  window.addEventListener("resize",scheduleReadingPosition,{passive:true});
+  window.addEventListener("resize",()=>{updateNavUI();scheduleReadingPosition();},{passive:true});
   document.querySelectorAll("[data-drawer-open]").forEach(button=>{
     button.addEventListener("click",()=>openDrawer(button.dataset.drawerOpen));
   });
