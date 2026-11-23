@@ -795,13 +795,6 @@ function updateLensGlare(value) {
   const sectionKeys=["method","requests","format","education"];
   let currentBlock=0,isAnimating=false,drawerOpen=false,wheelCooldown=false,previousFocus=null;
   let transitionTimer=null,wheelTimer=null;
-  document.documentElement.style.setProperty("--drawer-slide-down","1.8s");
-  document.documentElement.style.setProperty("--drawer-slide-up","1.5s");
-  function getSlideDuration(isNext){
-    const variable=isNext?"--drawer-slide-down":"--drawer-slide-up";
-    const parsed=parseFloat(getComputedStyle(document.documentElement).getPropertyValue(variable));
-    return Number.isFinite(parsed)&&parsed>0?parsed:(isNext?1.8:1.5);
-  }
 
   function updateNavUI(){
     tabs.forEach((tab,index)=>{
@@ -814,22 +807,18 @@ function updateLensGlare(value) {
   function goToBlock(targetIndex){
     if(targetIndex===currentBlock||isAnimating||targetIndex<0||targetIndex>=sections.length)return;
     isAnimating=true;
-    const duration=getSlideDuration(targetIndex>currentBlock);
-    document.documentElement.style.setProperty("--drawer-nav-transition-duration",duration+"s");
+    const duration=1.15;
     const currentSec=sections[currentBlock],targetSec=sections[targetIndex];
-    const viewport=drawer.querySelector(".viewport");
 
-    /* Сбрасываем остаточные состояния, затем запускаем два перекрывающихся слоя. */
+    /* Один механизм: одновременное растворение двух страниц в одной плоскости. */
     sections.forEach(section=>{
       section.classList.remove("is-entering","is-entering-visible","is-leaving","is-leaving-hidden");
-      section.style.transitionDuration="";
       section.style.zIndex="";
     });
-    targetSec.style.transitionDuration=duration+"s";
-    currentSec.style.transitionDuration=duration+"s";
+    targetSec.style.zIndex="10";
+    currentSec.style.zIndex="5";
     targetSec.classList.add("is-entering");
     currentSec.classList.add("is-leaving");
-    if(viewport)viewport.classList.add("is-transitioning");
     void targetSec.offsetWidth;
 
     requestAnimationFrame(()=>{
@@ -847,12 +836,11 @@ function updateLensGlare(value) {
       currentSec.classList.remove("is-current","is-leaving","is-leaving-hidden");
       targetSec.classList.remove("is-entering","is-entering-visible");
       targetSec.classList.add("is-current");
-      currentSec.style.transitionDuration="";
-      targetSec.style.transitionDuration="";
-      if(viewport)viewport.classList.remove("is-transitioning");
+      currentSec.style.zIndex="";
+      targetSec.style.zIndex="";
       isAnimating=false;
       transitionTimer=null;
-    },duration*1000+100);
+    },duration*1000+80);
   }
 
   function openDrawer(sectionName){
@@ -906,61 +894,26 @@ function updateLensGlare(value) {
     if(event.key==="Escape"&&drawerOpen)closeDrawer();
   });
 
-  /* Перелистывание только после осознанного жеста и только у края раздела.
-     Пока внутри раздела есть что прокручивать, сохраняем нативную прокрутку текста. */
-  let wheelAccumulated=0;
-  let wheelDirection=0;
-  let wheelResetTimer=null;
-  const WHEEL_SWITCH_THRESHOLD=170;
-  const WHEEL_GESTURE_RESET=260;
+  /* Колесо мыши переключает раздел только на верхней/нижней границе.
+     Без накопления жестов и искусственного «сопротивления»; прокрутка текста нативная. */
   drawer.addEventListener("wheel",event=>{
     if(!drawerOpen||isAnimating||wheelCooldown)return;
-    if(Math.abs(event.deltaX)>Math.abs(event.deltaY)||Math.abs(event.deltaY)<8)return;
-
+    if(Math.abs(event.deltaX)>Math.abs(event.deltaY)||Math.abs(event.deltaY)<18)return;
     const activeSection=sections[currentBlock];
-    if(activeSection){
-      const atTop=activeSection.scrollTop<=1;
-      const atBottom=activeSection.scrollTop+activeSection.clientHeight>=activeSection.scrollHeight-2;
-      const scrollingDown=event.deltaY>0;
-      if((scrollingDown&&!atBottom)||(!scrollingDown&&!atTop)){
-        wheelAccumulated=0;
-        wheelDirection=0;
-        return;
-      }
-    }
-
+    if(!activeSection)return;
+    const atTop=activeSection.scrollTop<=1;
+    const atBottom=activeSection.scrollTop+activeSection.clientHeight>=activeSection.scrollHeight-2;
     const direction=event.deltaY>0?1:-1;
-    if(direction!==wheelDirection){
-      wheelAccumulated=0;
-      wheelDirection=direction;
-    }
-    wheelAccumulated+=Math.min(Math.abs(event.deltaY),100);
-    if(wheelResetTimer!==null)clearTimeout(wheelResetTimer);
-    wheelResetTimer=setTimeout(()=>{
-      wheelAccumulated=0;
-      wheelDirection=0;
-      wheelResetTimer=null;
-    },WHEEL_GESTURE_RESET);
-
-    if(wheelAccumulated<WHEEL_SWITCH_THRESHOLD)return;
+    if((direction>0&&!atBottom)||(direction<0&&!atTop))return;
     const next=currentBlock+direction;
-    if(next<0||next>=sections.length){
-      wheelAccumulated=0;
-      return;
-    }
-
+    if(next<0||next>=sections.length)return;
     event.preventDefault();
-    wheelAccumulated=0;
-    wheelDirection=0;
-    if(wheelResetTimer!==null)clearTimeout(wheelResetTimer);
-    wheelResetTimer=null;
     goToBlock(next);
     wheelCooldown=true;
-    const duration=getSlideDuration(direction>0)*1000;
     wheelTimer=setTimeout(()=>{
       wheelCooldown=false;
       wheelTimer=null;
-    },duration+500);
+    },1250);
   },{passive:false});
 
   updateNavUI();
