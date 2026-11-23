@@ -793,8 +793,7 @@ function updateLensGlare(value) {
   if(!drawer||!backdrop||!closeButton||sections.length!==4)return;
 
   const sectionKeys=["method","requests","format","education"];
-  let currentBlock=0,isAnimating=false,drawerOpen=false,wheelCooldown=false,previousFocus=null;
-  let transitionTimer=null,wheelTimer=null;
+  let currentBlock=0,drawerOpen=false,previousFocus=null;
 
   function updateNavUI(){
     tabs.forEach((tab,index)=>{
@@ -805,42 +804,20 @@ function updateLensGlare(value) {
     if(currentStep)currentStep.textContent=String(currentBlock+1);
   }
   function goToBlock(targetIndex){
-    if(targetIndex===currentBlock||isAnimating||targetIndex<0||targetIndex>=sections.length)return;
-    isAnimating=true;
-    const duration=1.15;
-    const currentSec=sections[currentBlock],targetSec=sections[targetIndex];
-
-    /* Один механизм: одновременное растворение двух страниц в одной плоскости. */
-    sections.forEach(section=>{
-      section.classList.remove("is-entering","is-entering-visible","is-leaving","is-leaving-hidden");
-      section.style.zIndex="";
+    if(targetIndex===currentBlock||targetIndex<0||targetIndex>=sections.length)return;
+    sections.forEach((section,index)=>{
+      section.classList.toggle("is-current",index===targetIndex);
+      section.style.transition="none";
+      section.style.transform="none";
+      section.style.filter="none";
+      section.style.opacity=index===targetIndex?"1":"0";
+      section.style.visibility=index===targetIndex?"visible":"hidden";
+      section.style.pointerEvents=index===targetIndex?"auto":"none";
+      section.style.zIndex=index===targetIndex?"4":"1";
     });
-    targetSec.style.zIndex="10";
-    currentSec.style.zIndex="5";
-    targetSec.classList.add("is-entering");
-    currentSec.classList.add("is-leaving");
-    void targetSec.offsetWidth;
-
-    requestAnimationFrame(()=>{
-      requestAnimationFrame(()=>{
-        targetSec.classList.add("is-entering-visible");
-        currentSec.classList.add("is-leaving-hidden");
-      });
-    });
-
-    targetSec.scrollTop=0;
     currentBlock=targetIndex;
+    sections[targetIndex].scrollTop=0;
     updateNavUI();
-    if(transitionTimer!==null)clearTimeout(transitionTimer);
-    transitionTimer=setTimeout(()=>{
-      currentSec.classList.remove("is-current","is-leaving","is-leaving-hidden");
-      targetSec.classList.remove("is-entering","is-entering-visible");
-      targetSec.classList.add("is-current");
-      currentSec.style.zIndex="";
-      targetSec.style.zIndex="";
-      isAnimating=false;
-      transitionTimer=null;
-    },duration*1000+80);
   }
 
   function openDrawer(sectionName){
@@ -863,19 +840,16 @@ function updateLensGlare(value) {
   function closeDrawer(){
     if(!drawerOpen)return;
     drawerOpen=false;
-    isAnimating=false;
-    wheelCooldown=false;
-    if(transitionTimer!==null)clearTimeout(transitionTimer);
-    if(wheelTimer!==null)clearTimeout(wheelTimer);
-    transitionTimer=wheelTimer=null;
     sections.forEach((section,index)=>{
-      section.classList.remove("is-entering","is-entering-visible","is-leaving","is-leaving-hidden");
       section.classList.toggle("is-current",index===currentBlock);
-      section.style.transitionDuration="";
-      section.style.zIndex="";
+      section.style.transition="none";
+      section.style.transform="none";
+      section.style.filter="none";
+      section.style.opacity=index===currentBlock?"1":"0";
+      section.style.visibility=index===currentBlock?"visible":"hidden";
+      section.style.pointerEvents=index===currentBlock?"auto":"none";
+      section.style.zIndex=index===currentBlock?"4":"1";
     });
-    const viewport=drawer.querySelector(".viewport");
-    if(viewport)viewport.classList.remove("is-transitioning");
     drawer.classList.remove("is-open");
     backdrop.classList.remove("is-open");
     document.body.classList.remove("drawer-is-open");
@@ -894,27 +868,6 @@ function updateLensGlare(value) {
     if(event.key==="Escape"&&drawerOpen)closeDrawer();
   });
 
-  /* Колесо мыши переключает раздел только на верхней/нижней границе.
-     Без накопления жестов и искусственного «сопротивления»; прокрутка текста нативная. */
-  drawer.addEventListener("wheel",event=>{
-    if(!drawerOpen||isAnimating||wheelCooldown)return;
-    if(Math.abs(event.deltaX)>Math.abs(event.deltaY)||Math.abs(event.deltaY)<18)return;
-    const activeSection=sections[currentBlock];
-    if(!activeSection)return;
-    const atTop=activeSection.scrollTop<=1;
-    const atBottom=activeSection.scrollTop+activeSection.clientHeight>=activeSection.scrollHeight-2;
-    const direction=event.deltaY>0?1:-1;
-    if((direction>0&&!atBottom)||(direction<0&&!atTop))return;
-    const next=currentBlock+direction;
-    if(next<0||next>=sections.length)return;
-    event.preventDefault();
-    goToBlock(next);
-    wheelCooldown=true;
-    wheelTimer=setTimeout(()=>{
-      wheelCooldown=false;
-      wheelTimer=null;
-    },1250);
-  },{passive:false});
 
   updateNavUI();
 })();
@@ -1361,7 +1314,7 @@ window.applyBackgroundMood = function(mood){
     base:"#1E292B",vignette:35,grain:35,
     glow1:{color:"#34797E",opacity:45,x:82,y:18,size:60},
     glow2:{color:"#DCB573",opacity:22,x:15,y:85,size:55},
-    effectsLinked:true,optics:{color:"#233235",opacity:92,blur:12,saturation:120,slideDown:1.8,slideUp:1.5}
+    effectsLinked:true,optics:{color:"#233235",opacity:92,blur:12,saturation:120}
   };
   let state={...defaults,glow1:{...defaults.glow1},glow2:{...defaults.glow2}};
   try{
@@ -1412,9 +1365,6 @@ window.applyBackgroundMood = function(mood){
     const grain=document.getElementById("lab-grain"),gOut=document.getElementById("lab-grain-value");
     const optics=state.optics;
     setVar("--lab-drawer-color",optics.color);setVar("--lab-drawer-opacity",Number(optics.opacity)+"%");setVar("--lab-drawer-blur",Number(optics.blur)+"px");setVar("--lab-drawer-saturation",Number(optics.saturation)+"%");
-    setVar("--drawer-slide-down",Number(optics.slideDown||1.8)+"s");setVar("--drawer-slide-up",Number(optics.slideUp||1.5)+"s");
-    const speedDown=document.getElementById("drawer-speed-down"),speedUp=document.getElementById("drawer-speed-up"),speedDownOut=document.getElementById("drawer-speed-down-value"),speedUpOut=document.getElementById("drawer-speed-up-value");
-    if(speedDown)speedDown.value=optics.slideDown||1.8;if(speedUp)speedUp.value=optics.slideUp||1.5;if(speedDownOut)speedDownOut.textContent=Number(optics.slideDown||1.8).toFixed(1)+" сек.";if(speedUpOut)speedUpOut.textContent=Number(optics.slideUp||1.5).toFixed(1)+" сек.";
     /* Применяем оптику напрямую к реальной информационной шторке, независимо от темы. */
     const drawer=document.getElementById("sideDrawer");
     if(drawer){
@@ -1437,7 +1387,6 @@ window.applyBackgroundMood = function(mood){
   window.updateBackgroundBase=value=>{state.base=value;save();};
   window.updateBackgroundEffectsLink=value=>{state.effectsLinked=Boolean(value);save();};
   window.updateBackgroundOptics=(property,value)=>{if(!(property in defaults.optics))return;state.optics[property]=property==="color"?value:Number(value);save();};
-  window.updateDrawerSpeed=(direction,value)=>{const property=direction==="down"?"slideDown":"slideUp";state.optics[property]=Number(value);save();};
   window.updateBackgroundVignette=value=>{state.vignette=Number(value);save();};
   window.updateBackgroundGrain=value=>{state.grain=Number(value);save();};
   window.updateBackgroundGlow=(number,property,value)=>{

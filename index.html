@@ -41,7 +41,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=20261123-drawer-crossfade-v4">
+  <link rel="stylesheet" href="style.css?v=20261123-no-panel-transition-v2">
 <style id="lab-picker-runtime"></style></head>
 
 <body id="top">
@@ -549,10 +549,6 @@
     <div class="lab-optics-control"><label for="lab-optics-saturation">Насыщенность <output id="lab-optics-saturation-value">120%</output></label><input id="lab-optics-saturation" type="range" min="80" max="180" value="120" oninput="updateBackgroundOptics('saturation',this.value)"></div>
   </div>
 
-  <div class="drawer-speed-controls">
-    <div class="lab-optics-control"><label for="drawer-speed-down">Перелистывание вниз <output id="drawer-speed-down-value">1.8 сек.</output></label><input id="drawer-speed-down" type="range" min="1" max="3" step="0.1" value="1.8" oninput="updateDrawerSpeed('down',this.value)"></div>
-    <div class="lab-optics-control"><label for="drawer-speed-up">Перелистывание вверх <output id="drawer-speed-up-value">1.5 сек.</output></label><input id="drawer-speed-up" type="range" min="1" max="3" step="0.1" value="1.5" oninput="updateDrawerSpeed('up',this.value)"></div>
-  </div>
 </section>
 </div>
 
@@ -1153,7 +1149,7 @@
 <!-- /ЦЕНТРАЛЬНОЕ ОКНО ЗАПИСИ -->
   <!-- ФАЙЛ С ФУНКЦИЯМИ САЙТА -->
 
-  <script src="script.js?v=20261123-drawer-crossfade-v4"></script>
+  <script src="script.js?v=20261123-no-panel-transition-v2"></script>
 
 <div id="lab-color-modal" class="lab-color-modal" hidden aria-hidden="true"><div class="lab-color-dialog" role="dialog" aria-modal="true" aria-labelledby="lab-color-title"><div class="lab-color-dialog-head"><strong id="lab-color-title">Выбор цвета</strong><button type="button" id="lab-color-close" aria-label="Закрыть">×</button></div><div class="lab-color-dialog-body"><div id="lab-color-sv" class="lab-color-sv" role="slider" aria-label="Насыщенность и яркость" tabindex="0"><span id="lab-color-sv-cursor"></span></div><input id="lab-color-hue" class="lab-color-hue" type="range" min="0" max="360" value="180" aria-label="Оттенок"><div class="lab-color-preview-row"><span id="lab-color-preview"></span><label>RGB <input id="lab-color-rgb" type="text" value="30, 41, 43" aria-label="RGB"></label></div><div class="lab-color-dialog-actions"><button type="button" id="lab-color-cancel">Отмена</button><button type="button" id="lab-color-apply">Применить</button></div></div></div></div>
   <script src="page-transition.js?v=20261117-curtain-dom1"></script>
