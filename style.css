@@ -7917,3 +7917,22 @@ html.initial-load-reveal .header {
   background-color: #FAF9F6 !important;
   background-image: none !important;
 }
+
+
+/* FIX 2026-11-23: все разделы непрерывной шторки должны оставаться видимыми.
+   Переопределяем более специфичное legacy-правило :not(.is-current),
+   которое иначе скрывает все разделы кроме первого. */
+#sideDrawer .block-section:not(.is-current) {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+#sideDrawer .block-section,
+#sideDrawer .block-section.is-current,
+#sideDrawer .block-section:not(.is-current) {
+  position: relative !important;
+  inset: auto !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
