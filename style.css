@@ -8105,3 +8105,151 @@ html.initial-load-reveal .header {
     transition-duration: .01ms !important;
   }
 }
+
+
+/* =========================================================
+   FIX 2026-11-23 — единая система переходов шапки, фонов и линии длительности
+   Эти финальные правила заменяют конфликтующие исторические анимации выше.
+========================================================= */
+
+/* ШАПКА: фиксированный размер текста, без скачков font-size/font-weight.
+   Вместо отдельных underline на кнопках используется один движущийся индикатор. */
+#sideDrawer .drawer-tabs {
+  position: relative !important;
+  isolation: isolate;
+  padding-bottom: 9px !important;
+}
+#sideDrawer .drawer-tabs::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  z-index: 2;
+  left: 0;
+  bottom: 1px;
+  width: var(--nav-indicator-width, 0px);
+  height: 1px;
+  background: #8D7770;
+  opacity: var(--nav-indicator-opacity, 1);
+  transform: translate3d(var(--nav-indicator-x, 0px), 0, 0);
+  transform-origin: left center;
+  transition:
+    transform 1250ms cubic-bezier(.2, .75, .25, 1),
+    width 950ms cubic-bezier(.2, .75, .25, 1),
+    opacity 450ms ease !important;
+  pointer-events: none;
+}
+#sideDrawer .drawer-tabs::after,
+#sideDrawer .drawer-tabs button::after {
+  content: none !important;
+  display: none !important;
+}
+#sideDrawer .drawer-tabs button,
+#sideDrawer .drawer-tabs button:not(:first-child),
+#sideDrawer .drawer-tabs button.is-active {
+  position: relative !important;
+  flex: 0 0 auto !important;
+  font-size: 11px !important;
+  font-weight: 400 !important;
+  line-height: 1.4 !important;
+  letter-spacing: .035em !important;
+  color: #68716D !important;
+  opacity: .62 !important;
+  border: 0 !important;
+  border-bottom: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 5px 0 8px !important;
+  transform: none !important;
+  filter: none !important;
+  transition:
+    color 1150ms cubic-bezier(.2, .75, .25, 1),
+    opacity 1150ms cubic-bezier(.2, .75, .25, 1) !important;
+  will-change: color, opacity;
+}
+#sideDrawer .drawer-tabs button.is-active {
+  color: #354C49 !important;
+  opacity: 1 !important;
+}
+@media (max-width: 760px) {
+  #sideDrawer .drawer-tabs { padding-bottom: 8px !important; }
+  #sideDrawer .drawer-tabs button,
+  #sideDrawer .drawer-tabs button:not(:first-child),
+  #sideDrawer .drawer-tabs button.is-active {
+    font-size: 10px !important;
+    padding: 5px 0 7px !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #sideDrawer .drawer-tabs::before,
+  #sideDrawer .drawer-tabs button,
+  #sideDrawer .drawer-tabs button.is-active {
+    transition: none !important;
+  }
+}
+
+/* ФОНЫ: каждый раздел начинает свой цвет; только нижний край
+   постепенно растворяется в следующем оттенке. На границе двух разделов
+   цвет совпадает с начальным цветом следующей страницы — стык бесшовный. */
+#sideDrawer .viewport {
+  background: #FAF9F6 !important;
+}
+#sideDrawer .block-section[data-drawer-panel="method"] {
+  background-color: #FAF9F6 !important;
+  background-image: linear-gradient(
+    to bottom,
+    #FAF9F6 0,
+    #FAF9F6 calc(100% - 190px),
+    #F6F3ED 100%
+  ) !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+}
+#sideDrawer .block-section[data-drawer-panel="requests"] {
+  background-color: #F6F3ED !important;
+  background-image: linear-gradient(
+    to bottom,
+    #F6F3ED 0,
+    #F6F3ED calc(100% - 190px),
+    #F0EEE8 100%
+  ) !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+}
+#sideDrawer .block-section[data-drawer-panel="format"] {
+  background-color: #F0EEE8 !important;
+  background-image: linear-gradient(
+    to bottom,
+    #F0EEE8 0,
+    #F0EEE8 calc(100% - 190px),
+    #EEF2EF 100%
+  ) !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+}
+#sideDrawer .block-section[data-drawer-panel="education"] {
+  background-color: #EEF2EF !important;
+  background-image: none !important;
+}
+
+/* ЛИНИЯ «ДЛИТЕЛЬНОСТЬ»: анимация повторяется при каждом новом входе
+   заголовка в нижнюю треть после полного выхода из видимой области. */
+#sideDrawer .fw-rhythm-underline {
+  width: 65% !important;
+  margin-left: -15% !important;
+  transform: scaleX(0) !important;
+  transform-origin: right center !important;
+  animation: none !important;
+}
+#sideDrawer .fw-rhythm-section.is-visible .fw-rhythm-underline {
+  animation: fwDurationLineReveal 1.2s cubic-bezier(.2, .75, .25, 1) both !important;
+}
+@keyframes fwDurationLineReveal {
+  0% { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  #sideDrawer .fw-rhythm-underline,
+  #sideDrawer .fw-rhythm-section.is-visible .fw-rhythm-underline {
+    animation-duration: .01ms !important;
+  }
+}
