@@ -7998,13 +7998,13 @@ html.initial-load-reveal .header {
   background-image: none !important;
 }
 #sideDrawer .block-section[data-drawer-panel="requests"] {
-  background: #F6F3ED !important;
-  background-color: #F6F3ED !important;
+  background: #F8F6F1 !important;
+  background-color: #F8F6F1 !important;
   background-image: none !important;
 }
 #sideDrawer .block-section[data-drawer-panel="format"] {
-  background: #F0EEE8 !important;
-  background-color: #F0EEE8 !important;
+  background: #F3F1EB !important;
+  background-color: #F3F1EB !important;
   background-image: none !important;
 }
 #sideDrawer .block-section[data-drawer-panel="education"] {
@@ -8199,28 +8199,28 @@ html.initial-load-reveal .header {
     to bottom,
     #FAF9F6 0,
     #FAF9F6 calc(100% - 190px),
-    #F6F3ED 100%
+    #F8F6F1 100%
   ) !important;
   background-repeat: no-repeat !important;
   background-size: 100% 100% !important;
 }
 #sideDrawer .block-section[data-drawer-panel="requests"] {
-  background-color: #F6F3ED !important;
+  background-color: #F8F6F1 !important;
   background-image: linear-gradient(
     to bottom,
-    #F6F3ED 0,
-    #F6F3ED calc(100% - 190px),
-    #F0EEE8 100%
+    #F8F6F1 0,
+    #F8F6F1 calc(100% - 190px),
+    #F3F1EB 100%
   ) !important;
   background-repeat: no-repeat !important;
   background-size: 100% 100% !important;
 }
 #sideDrawer .block-section[data-drawer-panel="format"] {
-  background-color: #F0EEE8 !important;
+  background-color: #F3F1EB !important;
   background-image: linear-gradient(
     to bottom,
-    #F0EEE8 0,
-    #F0EEE8 calc(100% - 190px),
+    #F3F1EB 0,
+    #F3F1EB calc(100% - 190px),
     #EEF2EF 100%
   ) !important;
   background-repeat: no-repeat !important;
@@ -8236,7 +8236,7 @@ html.initial-load-reveal .header {
 #sideDrawer .fw-rhythm-underline {
   width: 65% !important;
   margin-left: -15% !important;
-  transform: scaleX(0) !important;
+  transform: scaleX(0);
   transform-origin: right center !important;
   animation: none !important;
 }
@@ -8387,9 +8387,9 @@ html.initial-load-reveal .header {
     #FAF9F6 0%,
     #FAF9F6 calc(100% - 260px),
     #F9F8F4 calc(100% - 175px),
-    #F6F3ED 100%
+    #F8F6F1 100%
   ) !important;
-  background-color: #F6F3ED !important;
+  background-color: #F8F6F1 !important;
 }
 
 /* Запросы → Формат: более длинный и заметный переход без тонкой светлой полосы.
@@ -8397,12 +8397,12 @@ html.initial-load-reveal .header {
 #sideDrawer .block-section[data-drawer-panel="requests"] {
   background-image: linear-gradient(
     to bottom,
-    #F6F3ED 0%,
-    #F6F3ED calc(100% - 280px),
-    #F3F0E9 calc(100% - 175px),
-    #F0EEE8 100%
+    #F8F6F1 0%,
+    #F8F6F1 calc(100% - 280px),
+    #F5F3EE calc(100% - 175px),
+    #F3F1EB 100%
   ) !important;
-  background-color: #F0EEE8 !important;
+  background-color: #F3F1EB !important;
 }
 #sideDrawer .requests-monolith {
   background: transparent !important;
@@ -8444,7 +8444,7 @@ html.initial-load-reveal .header {
   animation: none !important;
 }
 #sideDrawer .fw-rhythm-section .fw-rhythm-body-reveal.is-body-visible {
-  opacity: 0 !important;
+  opacity: 0;
   transform: translate3d(0,18px,0);
   animation: fwGentleRevealFromTitleRule 1.5s cubic-bezier(.22,1,.36,1) forwards !important;
   backface-visibility: hidden;
