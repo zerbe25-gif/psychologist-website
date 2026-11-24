@@ -8431,28 +8431,59 @@ html.initial-load-reveal .header {
 }
 
 /* =========================================================
-   EDUCATION: деликатная микродинамика без анимации заголовка
+   EDUCATION: однократный световой переход и мягкое проявление заголовка
 ========================================================= */
 #sideDrawer .education-editorial-heading {
   position: relative;
   padding-bottom: 18px;
 }
-#sideDrawer .education-editorial-heading::after {
+#sideDrawer .education-editorial-heading::before {
   content: "";
   display: block;
   width: 76px;
   height: 1px;
-  margin-top: 16px;
-  background: linear-gradient(90deg, rgba(152,114,122,.08), rgba(152,114,122,.58), rgba(199,181,142,.12));
+  margin: 0 0 16px;
+  background: linear-gradient(90deg,
+    rgba(152,114,122,.12),
+    rgba(152,114,122,.48) 42%,
+    rgba(199,181,142,.18));
   transform-origin: left center;
-  animation: educationAccentDrift 7.5s ease-in-out infinite;
+  opacity: .48;
 }
-@keyframes educationAccentDrift {
-  0%, 100% { transform: translateX(0) scaleX(.82); opacity: .48; }
-  50% { transform: translateX(9px) scaleX(1); opacity: .82; }
+#sideDrawer .education-editorial-heading h1 {
+  opacity: 1;
+  transform: none;
+}
+#sideDrawer .education-editorial.education-intro-revealed .education-editorial-heading::before {
+  animation: educationLightSweep 1.25s cubic-bezier(.22,1,.36,1) both;
+}
+#sideDrawer .education-editorial.education-intro-revealed .education-editorial-heading h1 {
+  animation: educationHeadingReveal 850ms cubic-bezier(.22,1,.36,1) 180ms both;
+}
+@keyframes educationLightSweep {
+  0% {
+    opacity: .18;
+    transform: scaleX(.58);
+    background-position: 0 0;
+    filter: brightness(.9);
+  }
+  55% {
+    opacity: .9;
+    filter: brightness(1.3);
+  }
+  100% {
+    opacity: .48;
+    transform: scaleX(1);
+    filter: brightness(1);
+  }
+}
+@keyframes educationHeadingReveal {
+  from { opacity: .35; transform: translate3d(0,7px,0); }
+  to { opacity: 1; transform: translate3d(0,0,0); }
 }
 @media (prefers-reduced-motion: reduce) {
-  #sideDrawer .education-editorial-heading::after { animation: none; }
+  #sideDrawer .education-editorial-heading::before { opacity: .48; animation: none !important; }
+  #sideDrawer .education-editorial-heading h1 { opacity: 1; transform: none; animation: none !important; }
 }
 
 /* FORMAT WORK — повторяемое последовательное проявление трёх карточек.

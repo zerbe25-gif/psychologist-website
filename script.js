@@ -1653,3 +1653,42 @@ window.applyBackgroundMood = function(mood){
     scheduleRhythmReveal();
   }
 })();
+
+/* Разовый входной акцент раздела «Образование».
+   Запускается, когда заметная часть секции входит в область прокрутки шторки. */
+(function initEducationIntroReveal() {
+  const viewport = document.getElementById("drawerViewport");
+  const section = document.querySelector('#sideDrawer [data-drawer-panel="education"]');
+  if (!viewport || !section) return;
+
+  const reveal = () => {
+    if (section.classList.contains("education-intro-revealed")) return;
+    section.classList.add("education-intro-revealed");
+    if (observer) observer.disconnect();
+  };
+
+  let observer = null;
+  if ("IntersectionObserver" in window) {
+    observer = new IntersectionObserver(entries => {
+      const shouldReveal = entries.some(entry =>
+        entry.isIntersecting &&
+        entry.intersectionRect.height >= Math.min(90, viewport.clientHeight * 0.12)
+      );
+      if (shouldReveal) reveal();
+    }, { root: viewport, threshold: [0, 0.08, 0.15] });
+    observer.observe(section);
+  } else {
+    const check = () => {
+      const rect = section.getBoundingClientRect();
+      const view = viewport.getBoundingClientRect();
+      const visible = Math.max(0, Math.min(rect.bottom, view.bottom) - Math.max(rect.top, view.top));
+      if (visible >= Math.min(90, viewport.clientHeight * 0.12)) {
+        reveal();
+        viewport.removeEventListener("scroll", check);
+      }
+    };
+    viewport.addEventListener("scroll", check, { passive: true });
+    window.addEventListener("resize", check, { passive: true });
+    check();
+  }
+})();
