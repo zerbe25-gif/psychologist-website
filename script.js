@@ -1603,8 +1603,6 @@ window.applyBackgroundMood = function(mood){
   const cards = Array.from(root.querySelectorAll('.fw-rhythm-card'));
   const viewport = root.closest('.viewport') || document.querySelector('#sideDrawer .viewport');
   if (rhythmSection && cards.length && viewport) {
-    let previousScrollTop = viewport.scrollTop;
-    let scrollDirection = 1;
     let framePending = false;
 
     function updateRhythmReveal() {
@@ -1645,11 +1643,6 @@ window.applyBackgroundMood = function(mood){
     }
 
     function scheduleRhythmReveal() {
-      const currentTop = viewport.scrollTop;
-      if (currentTop !== previousScrollTop) {
-        scrollDirection = currentTop > previousScrollTop ? 1 : -1;
-        previousScrollTop = currentTop;
-      }
       if (framePending) return;
       framePending = true;
       window.requestAnimationFrame(updateRhythmReveal);
