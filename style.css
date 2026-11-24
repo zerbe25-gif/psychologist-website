@@ -8854,3 +8854,107 @@ html.initial-load-reveal .header {
     opacity: 1; transform: none; animation: none !important;
   }
 }
+
+
+/* ФИНАЛЬНАЯ НАСТРОЙКА ОТКРЫТИЯ ШТОРКИ И ПРОЯВЛЕНИЯ ЗАГОЛОВКОВ */
+#sideDrawer {
+  transition:
+    transform 1.25s cubic-bezier(.22,1,.36,1),
+    width .75s cubic-bezier(.22,1,.36,1),
+    visibility 0s linear 1.25s !important;
+}
+#sideDrawer.is-open {
+  transition:
+    transform 1.25s cubic-bezier(.22,1,.36,1),
+    width .75s cubic-bezier(.22,1,.36,1),
+    visibility 0s linear 0s !important;
+}
+#drawerBackdrop {
+  background: linear-gradient(
+    90deg,
+    rgba(24,27,28,.62) 0%,
+    rgba(24,27,28,.47) 48%,
+    rgba(24,27,28,.34) 100%
+  ) !important;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  -webkit-backdrop-filter: blur(0);
+  backdrop-filter: blur(0);
+  transition:
+    opacity 1.2s cubic-bezier(.22,1,.36,1),
+    -webkit-backdrop-filter 1.2s cubic-bezier(.22,1,.36,1),
+    backdrop-filter 1.2s cubic-bezier(.22,1,.36,1),
+    visibility 0s linear 1.2s !important;
+}
+#drawerBackdrop.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  -webkit-backdrop-filter: blur(9px);
+  backdrop-filter: blur(9px);
+  transition:
+    opacity 1.2s cubic-bezier(.22,1,.36,1),
+    -webkit-backdrop-filter 1.2s cubic-bezier(.22,1,.36,1),
+    backdrop-filter 1.2s cubic-bezier(.22,1,.36,1),
+    visibility 0s linear 0s !important;
+}
+
+#sideDrawer .drawer-entry-heading {
+  position: relative;
+  will-change: opacity, transform, filter;
+}
+#sideDrawer .drawer-entry-heading::before {
+  content: "";
+  display: block;
+  width: 0;
+  height: 1.5px;
+  margin: 0 0 17px;
+  background: linear-gradient(90deg,
+    rgba(152,114,122,.22),
+    rgba(152,114,122,.88) 46%,
+    rgba(199,181,142,.55));
+  box-shadow: 0 0 9px rgba(181,151,130,.18);
+  opacity: 0;
+}
+#sideDrawer .drawer-entry-heading.drawer-entry-revealed {
+  animation: drawerHeadingRevealVisible 760ms cubic-bezier(.22,1,.36,1) both;
+}
+#sideDrawer .drawer-entry-heading.drawer-entry-revealed::before {
+  animation: drawerHeadingLineDraw 880ms cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes drawerHeadingRevealVisible {
+  0% {
+    opacity: 0;
+    transform: translate3d(0,15px,0);
+    filter: blur(4px);
+  }
+  68% {
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0,0,0);
+    filter: blur(0);
+  }
+}
+@keyframes drawerHeadingLineDraw {
+  0% { width: 0; opacity: 0; }
+  18% { opacity: .9; }
+  100% { width: 88px; opacity: .72; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #sideDrawer,
+  #drawerBackdrop {
+    transition-duration: .01ms !important;
+  }
+  #sideDrawer .drawer-entry-heading,
+  #sideDrawer .drawer-entry-heading::before {
+    opacity: 1 !important;
+    width: auto;
+    transform: none;
+    filter: none;
+    animation: none !important;
+  }
+}
