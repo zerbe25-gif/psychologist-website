@@ -958,7 +958,7 @@ function updateLensGlare(value) {
   document.querySelectorAll("[data-drawer-open]").forEach(button=>{
     button.addEventListener("click",()=>openDrawer(button.dataset.drawerOpen));
   });
-  tabs.forEach((button,index)=>button.addEventListener("click",()=>goToBlock(index)));
+  tabs.forEach((button,index)=>button.addEventListener("click",()=>{goToBlock(index);if(index===0)window.requestAnimationFrame(revealMethodHeading);}));
   closeButton.addEventListener("click",closeDrawer);
   backdrop.addEventListener("click",closeDrawer);
   document.addEventListener("keydown",event=>{
