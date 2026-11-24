@@ -8428,62 +8428,6 @@ html.initial-load-reveal .header {
   animation: fwDurationLineReveal 1.2s cubic-bezier(.2, .75, .25, 1) both !important;
 }
 
-/* =========================================================
-   EDUCATION: однократный световой переход и мягкое проявление заголовка
-========================================================= */
-#sideDrawer .education-editorial-heading {
-  position: relative;
-  padding-bottom: 18px;
-}
-#sideDrawer .education-editorial-heading::before {
-  content: "";
-  display: block;
-  width: 76px;
-  height: 1px;
-  margin: 0 0 16px;
-  background: linear-gradient(90deg,
-    rgba(152,114,122,.12),
-    rgba(152,114,122,.48) 42%,
-    rgba(199,181,142,.18));
-  transform-origin: left center;
-  opacity: .48;
-}
-#sideDrawer .education-editorial-heading h1 {
-  opacity: 1;
-  transform: none;
-}
-#sideDrawer .education-editorial.education-intro-revealed .education-editorial-heading::before {
-  animation: educationLightSweep 1.25s cubic-bezier(.22,1,.36,1) both;
-}
-#sideDrawer .education-editorial.education-intro-revealed .education-editorial-heading h1 {
-  animation: educationHeadingReveal 850ms cubic-bezier(.22,1,.36,1) 180ms both;
-}
-@keyframes educationLightSweep {
-  0% {
-    opacity: .18;
-    transform: scaleX(.58);
-    background-position: 0 0;
-    filter: brightness(.9);
-  }
-  55% {
-    opacity: .9;
-    filter: brightness(1.3);
-  }
-  100% {
-    opacity: .48;
-    transform: scaleX(1);
-    filter: brightness(1);
-  }
-}
-@keyframes educationHeadingReveal {
-  from { opacity: .35; transform: translate3d(0,7px,0); }
-  to { opacity: 1; transform: translate3d(0,0,0); }
-}
-@media (prefers-reduced-motion: reduce) {
-  #sideDrawer .education-editorial-heading::before { opacity: .48; animation: none !important; }
-  #sideDrawer .education-editorial-heading h1 { opacity: 1; transform: none; animation: none !important; }
-}
-
 /* FORMAT WORK — повторяемое последовательное проявление трёх карточек.
    Заголовок появляется первым, описание следует за ним с небольшой задержкой. */
 #sideDrawer .fw-rhythm-card .fw-rhythm-head-block,
@@ -8567,43 +8511,6 @@ html.initial-load-reveal .header {
   #sideDrawer .fw-rhythm-head-block::after,
   #sideDrawer .fw-rhythm-bottom-rule::after,
   #sideDrawer .fw-rhythm-desc-wrap::before { transition: none !important; }
-}
-
-
-/* Единый разовый входной акцент заголовков основных разделов.
-   По визуальному ритму повторяет световую нить и мягкое проявление «Образования». */
-#sideDrawer .drawer-entry-heading {
-  position: relative;
-}
-#sideDrawer .drawer-entry-heading::before {
-  content: "";
-  display: block;
-  width: 76px;
-  height: 1px;
-  margin: 0 0 16px;
-  background: linear-gradient(90deg,
-    rgba(152,114,122,.12),
-    rgba(152,114,122,.48) 42%,
-    rgba(199,181,142,.18));
-  transform-origin: left center;
-  opacity: .48;
-}
-#sideDrawer .drawer-entry-heading.drawer-entry-revealed::before {
-  animation: educationLightSweep 1.25s cubic-bezier(.22,1,.36,1) both;
-}
-#sideDrawer .drawer-entry-heading.drawer-entry-revealed {
-  animation: educationHeadingReveal 850ms cubic-bezier(.22,1,.36,1) 180ms both;
-}
-@media (prefers-reduced-motion: reduce) {
-  #sideDrawer .drawer-entry-heading::before {
-    opacity: .48;
-    animation: none !important;
-  }
-  #sideDrawer .drawer-entry-heading {
-    opacity: 1;
-    transform: none;
-    animation: none !important;
-  }
 }
 
 
@@ -8886,45 +8793,6 @@ html.initial-load-reveal .header {
   background: #EEF1F0 !important;
 }
 
-/* Заголовки: чуть более заметное, но по-прежнему деликатное проявление.
-   Одинаковый характер сохраняется у «О Методе», «Запросов»,
-   «Формата работы» и «Образования». */
-#sideDrawer .drawer-entry-heading::before,
-#sideDrawer .education-editorial-heading::before {
-  width: 88px;
-  opacity: .58;
-}
-#sideDrawer .drawer-entry-heading.drawer-entry-revealed,
-#sideDrawer .education-editorial.education-intro-revealed .education-editorial-heading h1 {
-  animation: drawerHeadingRevealEnhanced 980ms cubic-bezier(.22,1,.36,1) 150ms both;
-}
-#sideDrawer .drawer-entry-heading.drawer-entry-revealed::before,
-#sideDrawer .education-editorial.education-intro-revealed .education-editorial-heading::before {
-  animation: drawerLightSweepEnhanced 1.4s cubic-bezier(.22,1,.36,1) both;
-}
-@keyframes drawerHeadingRevealEnhanced {
-  from { opacity: .2; transform: translate3d(0,10px,0); }
-  to { opacity: 1; transform: translate3d(0,0,0); }
-}
-@keyframes drawerLightSweepEnhanced {
-  0% { opacity: .2; transform: scaleX(.52); filter: brightness(.92); }
-  52% { opacity: .88; filter: brightness(1.24); }
-  100% { opacity: .58; transform: scaleX(1); filter: brightness(1); }
-}
-@media (prefers-reduced-motion: reduce) {
-  #sideDrawer .drawer-entry-heading::before,
-  #sideDrawer .education-editorial-heading::before {
-    opacity: .58;
-    animation: none !important;
-  }
-  #sideDrawer .drawer-entry-heading,
-  #sideDrawer .education-editorial-heading h1 {
-    opacity: 1 !important;
-    transform: none !important;
-    animation: none !important;
-  }
-}
-
 /* Общие параметры внешнего вида трёх капсульных окон:
    Стоимость, Контактные данные и Запись управляются одной панелью. */
 :root {
@@ -8949,4 +8817,40 @@ html.initial-load-reveal .header {
 #costModal .cost-service-title:hover,
 #contactsModal .contact-item:hover {
   color: var(--capsule-accent,#39475E) !important;
+}
+
+
+/* ЕДИНАЯ МИКРОАНИМАЦИЯ ЗАГОЛОВКОВ ИНФОРМАЦИОННОЙ ШТОРКИ */
+#sideDrawer .drawer-entry-heading { position: relative; }
+#sideDrawer .drawer-entry-heading::before {
+  content: "";
+  display: block;
+  width: 76px;
+  height: 1px;
+  margin: 0 0 16px;
+  background: linear-gradient(90deg, rgba(152,114,122,.12), rgba(152,114,122,.48) 42%, rgba(199,181,142,.18));
+  transform: scaleX(.72);
+  transform-origin: left center;
+  opacity: .42;
+}
+#sideDrawer .drawer-entry-heading.drawer-entry-revealed {
+  animation: drawerHeadingReveal 520ms cubic-bezier(.16,1,.3,1) both;
+}
+#sideDrawer .drawer-entry-heading.drawer-entry-revealed::before {
+  animation: drawerHeadingLightSweep 650ms cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes drawerHeadingReveal {
+  from { opacity: .4; transform: translate3d(0,7px,0); }
+  to { opacity: 1; transform: translate3d(0,0,0); }
+}
+@keyframes drawerHeadingLightSweep {
+  0% { opacity: .18; transform: scaleX(.55); filter: brightness(.94); }
+  58% { opacity: .76; filter: brightness(1.12); }
+  100% { opacity: .42; transform: scaleX(1); filter: brightness(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  #sideDrawer .drawer-entry-heading,
+  #sideDrawer .drawer-entry-heading::before {
+    opacity: 1; transform: none; animation: none !important;
+  }
 }
