@@ -1603,8 +1603,6 @@ window.applyBackgroundMood = function(mood){
   const cards = Array.from(root.querySelectorAll('.fw-rhythm-card'));
   const viewport = root.closest('.viewport') || document.querySelector('#sideDrawer .viewport');
   if (rhythmSection && cards.length && viewport) {
-    let previousScrollTop = viewport.scrollTop;
-    let scrollDirection = 1;
     let framePending = false;
 
     function updateRhythmReveal() {
@@ -1624,10 +1622,9 @@ window.applyBackgroundMood = function(mood){
         const fullyOutside = rect.bottom <= viewTop || rect.top >= viewBottom;
         const visibleHeight = Math.max(0, Math.min(rect.bottom, viewBottom) - Math.max(rect.top, viewTop));
         const visibleRatio = rect.height ? visibleHeight / rect.height : 0;
-        const fullyInside = rect.top >= viewTop && rect.bottom <= viewBottom;
-        const shouldReveal = scrollDirection >= 0
-          ? fullyInside
-          : visibleRatio >= 1 / 3;
+        /* Не ждём полного размещения карточки во viewport:
+           достаточно, чтобы в него вошла треть карточки, при любом направлении прокрутки. */
+        const shouldReveal = visibleRatio >= 1 / 3;
 
         if (fullyOutside) {
           card.classList.remove('is-revealed');
@@ -1646,11 +1643,6 @@ window.applyBackgroundMood = function(mood){
     }
 
     function scheduleRhythmReveal() {
-      const currentTop = viewport.scrollTop;
-      if (currentTop !== previousScrollTop) {
-        scrollDirection = currentTop > previousScrollTop ? 1 : -1;
-        previousScrollTop = currentTop;
-      }
       if (framePending) return;
       framePending = true;
       window.requestAnimationFrame(updateRhythmReveal);
