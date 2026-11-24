@@ -3956,27 +3956,6 @@ body.theme-v3 {
 }
 
 
-/* V3 — СВЕЧЕНИЕ ПОД ПОРТРЕТОМ */
-
-body.theme-v3 .gallery-section::after {
-    content: '';
-    position: absolute;
-    bottom: -30px;
-    right: -30px;
-    width: 200px;
-    height: 200px;
-
-    background: radial-gradient(
-        circle,
-        var(--accent-gold) 0%,
-        transparent 70%
-    );
-
-    opacity: 0.3;
-    pointer-events: none;
-    z-index: 0;
-}
-
 body.theme-v3 .photo-gallery {
     z-index: 1;
 }
