@@ -8896,3 +8896,164 @@ body.background-effects-disabled #background-lab-grain {
   color: #8993a2;
   font-size: 10px;
 }
+
+
+/* =========================================================
+   НОВОЕ РЕДАКЦИОННОЕ ОФОРМЛЕНИЕ ГЛАВНОГО ЭКРАНА
+   Работает исключительно при выключенном старом оформлении.
+   Рамка и изображение фотографии намеренно не затрагиваются.
+   ========================================================= */
+#editorial-background-panel[hidden] { display: none !important; }
+#editorial-background-panel {
+  width: 100%;
+  padding: 8px 4px 4px;
+  color: #334047;
+  font-family: Inter, Arial, sans-serif;
+}
+.editorial-panel-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 8px;
+  font-size: 10px;
+  letter-spacing: .09em;
+  color: #2F4A63;
+}
+.editorial-panel-heading span {
+  color: #8993a2;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.editorial-controls-row {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  overflow-x: auto;
+  padding: 2px 0 6px;
+}
+.editorial-control-group {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 5px;
+}
+.editorial-control-label {
+  flex: 0 0 auto;
+  color: #B89B6A;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  white-space: nowrap;
+  margin-right: 2px;
+}
+.editorial-choice {
+  flex: 0 0 auto;
+  padding: 5px 8px;
+  border: 1px solid rgba(47,74,99,.2);
+  border-radius: 5px;
+  background: rgba(255,255,255,.72);
+  color: #526078;
+  font: 10px Inter, Arial, sans-serif;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.editorial-choice:hover { background: rgba(47,74,99,.1); }
+.editorial-choice.is-active {
+  color: #fff;
+  background: #7A2E3A;
+  border-color: #7A2E3A;
+}
+.editorial-texture-choices .editorial-choice.is-active { background: #2F4A63; border-color: #2F4A63; }
+.editorial-strength-control {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+.editorial-strength-control input { width: 92px; accent-color: #B89B6A; }
+.editorial-strength-control output {
+  width: 32px;
+  color: #B89B6A;
+  font: 10px monospace;
+  text-align: right;
+}
+.editorial-mode-note {
+  margin: 2px 0 0;
+  color: #8993a2;
+  font: 10px/1.35 Inter, Arial, sans-serif;
+}
+
+/* Светлые фоны нового режима применяются только к главной области сайта. */
+body.editorial-background-active {
+  --editorial-ink: #242C30;
+  --editorial-ink-soft: #4F5B61;
+  background: #ECECE6 !important;
+  color: var(--editorial-ink);
+}
+body.editorial-background-active .main-content {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #ECECE6;
+  transition: background .5s cubic-bezier(.16,1,.3,1);
+}
+body.editorial-background-active[data-editorial-background="diagonal"] .main-content {
+  background: linear-gradient(132deg,#ECECE6 0%,#E3E5DF 46%,#BCC5C1 76%,#8C9B97 100%) !important;
+}
+body.editorial-background-active[data-editorial-background="split"] .main-content {
+  background: linear-gradient(90deg,#EAE9E3 0%,#EAE9E3 62%,#6E7F80 62%,#5E6F71 100%) !important;
+}
+body.editorial-background-active[data-editorial-background="cashmere"] .main-content {
+  background: radial-gradient(circle at 25% 30%,#E5E7E1 0%,#D4D9D2 65%,#C6CDC5 100%) !important;
+}
+body.editorial-background-active[data-editorial-background="veil"] .main-content {
+  background: radial-gradient(circle at 18% 22%,rgba(246,245,240,.88) 0%,rgba(246,245,240,.58) 55%,rgba(235,232,222,.42) 100%),linear-gradient(135deg,#4B6670 0%,#7C826D 55%,#A6936C 100%) !important;
+}
+body.editorial-background-active .main-content::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: var(--editorial-texture-strength,.45);
+  transition: opacity .3s ease;
+}
+body.editorial-background-active[data-editorial-texture="hatch"] .main-content::before {
+  background-image: repeating-linear-gradient(-42deg,rgba(36,44,48,.085) 0 1px,transparent 1px 11px);
+}
+body.editorial-background-active[data-editorial-texture="grid"] .main-content::before {
+  background-image: repeating-linear-gradient(0deg,rgba(255,255,255,.28) 0 1px,transparent 1px 3px),repeating-linear-gradient(90deg,rgba(36,44,48,.095) 0 1px,transparent 1px 4px);
+}
+body.editorial-background-active[data-editorial-texture="none"] .main-content::before {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='0.07' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+body.editorial-background-active .main-content > * { position: relative; z-index: 1; }
+body.editorial-background-active .menu-label { color: #4F5B61; opacity: .7; }
+body.editorial-background-active .menu-item {
+  color: #242C30;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 500;
+  letter-spacing: .03em;
+  transition: transform .45s cubic-bezier(.16,1,.3,1),color .35s cubic-bezier(.16,1,.3,1);
+}
+body.editorial-background-active .menu-item:hover {
+  color: #7A2E3A;
+  transform: translateX(8px);
+}
+body.editorial-background-active .menu-item-4 { color: #2F4A63; }
+body.editorial-background-active .header {
+  background: rgba(252,251,248,.88);
+  backdrop-filter: blur(8px);
+}
+@media (max-width: 760px) {
+  .editorial-controls-row { gap: 10px; }
+  .editorial-panel-heading { align-items: flex-start; flex-direction: column; gap: 3px; }
+  body.editorial-background-active .main-content { background-attachment: scroll; }
+}
