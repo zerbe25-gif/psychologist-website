@@ -7217,8 +7217,7 @@ html.initial-load-reveal .header {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  #sideDrawer .fw-rhythm-section.is-visible .fw-rhythm-underline,
-  #sideDrawer .fw-rhythm-section .fw-rhythm-body-reveal.is-body-visible {
+  #sideDrawer .fw-rhythm-section.is-visible .fw-rhythm-underline {
     animation-duration: .01ms !important;
     animation-delay: 0s !important;
   }
