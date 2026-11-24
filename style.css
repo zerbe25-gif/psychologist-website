@@ -8926,3 +8926,29 @@ html.initial-load-reveal .header {
     animation: none !important;
   }
 }
+
+/* Общие параметры внешнего вида трёх капсульных окон:
+   Стоимость, Контактные данные и Запись управляются одной панелью. */
+:root {
+  --capsule-card-opacity: .88;
+  --capsule-card-blur: 28px;
+  --capsule-card-glow: .12;
+  --capsule-accent: #39475E;
+}
+#costModal,
+#contactsModal,
+#appointmentModal {
+  background: rgba(255,255,255,var(--capsule-card-opacity,.88)) !important;
+  backdrop-filter: blur(var(--capsule-card-blur,28px)) !important;
+  -webkit-backdrop-filter: blur(var(--capsule-card-blur,28px)) !important;
+  box-shadow:
+    0 30px 60px rgba(28,38,51,.16),
+    inset 0 0 calc(90px * var(--capsule-card-glow,.12)) rgba(255,255,255,.95) !important;
+}
+#appointmentModal .appointment-submit {
+  background: var(--capsule-accent,var(--appointment-button,#39475E)) !important;
+}
+#costModal .cost-service-title:hover,
+#contactsModal .contact-item:hover {
+  color: var(--capsule-accent,#39475E) !important;
+}
