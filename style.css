@@ -9098,3 +9098,119 @@ body.editorial-background-active .main-content {
   margin-right: 0;
   background: transparent !important;
 }
+
+
+/* =========================================================
+   АДАПТИВНАЯ ВЫСОТА ГЛАВНОЙ СТРАНИЦЫ И ПАНЕЛИ НАСТРОЕК
+   Не привязываем высоту к конкретному монитору:
+   страница заполняет доступный экран и растёт при нехватке места.
+   ========================================================= */
+html {
+  min-height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  height: auto !important;
+  overflow-x: hidden;
+  overflow-y: auto !important;
+}
+
+body > #developer-panel,
+body > .header {
+  flex: 0 0 auto;
+}
+
+body > .main-content {
+  flex: 1 0 auto;
+  width: 100%;
+  min-width: 0;
+  height: auto !important;
+  min-height: 0;
+}
+
+/* На настольных экранах композиция занимает остаток высоты,
+   а на невысоких окнах страница прокручивается вместо обрезания. */
+@media (min-width: 901px) {
+  body {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  body > .main-content {
+    flex-grow: 1;
+    flex-shrink: 0;
+    height: auto !important;
+    min-height: 0;
+  }
+}
+
+/* Настройки остаются одной строкой; при недостатке ширины
+   прокручивается только сама строка, а не вся страница по горизонтали. */
+#editorial-background-panel,
+#editorial-background-panel * {
+  box-sizing: border-box;
+}
+
+#editorial-background-panel {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+#editorial-background-panel .editorial-controls-row {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  gap: clamp(5px, .65vw, 10px);
+}
+
+#editorial-background-panel .editorial-control-group,
+#editorial-background-panel .editorial-strength-control {
+  flex: 0 0 auto;
+  min-width: max-content;
+}
+
+#editorial-background-panel .editorial-control-label {
+  font-size: clamp(10px, .75vw, 12px);
+}
+
+#editorial-background-panel .editorial-choice {
+  padding: clamp(3px, .28vw, 5px) clamp(7px, .65vw, 10px);
+  font-size: clamp(10px, .75vw, 12px);
+}
+
+#editorial-background-panel .editorial-strength-control input {
+  width: clamp(72px, 7vw, 96px);
+  max-width: 22vw;
+}
+
+@media (max-width: 760px) {
+  #editorial-background-panel .editorial-controls-row {
+    gap: 8px;
+    padding-bottom: 5px;
+  }
+
+  #editorial-background-panel .editorial-control-label,
+  #editorial-background-panel .editorial-choice {
+    font-size: 11px;
+  }
+}
+
+/* Одинаковая подложка продолжается до нижнего края документа,
+   даже если содержимое выше/ниже текущего окна браузера. */
+body.editorial-background-active {
+  background-color: #ECECE6 !important;
+  background-attachment: scroll;
+}
