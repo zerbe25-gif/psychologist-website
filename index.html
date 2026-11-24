@@ -118,10 +118,9 @@
         class="developer-panel-tab"
         data-panel-section="cost"
         onclick="toggleDevPanelSection('cost')">
-    СТОИМОСТЬ
+    ОКНА
 </button>
 
-      <button type="button" class="developer-panel-tab" data-panel-section="appointment" onclick="toggleDevPanelSection('appointment')">ОКНО ЗАПИСИ</button>
 
     </div>
 
@@ -416,7 +415,7 @@
            
          </div>
 
-<!-- НАСТРОЙКИ ОКНА СТОИМОСТИ -->
+<!-- ОБЩИЕ НАСТРОЙКИ ВИЗУАЛА ТРЁХ ОКОН -->
 <div id="cost-control-panel" hidden>
 
     <div class="background-control">
@@ -495,8 +494,14 @@
     </div>
 
 
+<div class="appointment-design-controls">
+      <div class="appointment-setting"><label for="appointment-opacity">Прозрачность карточки <output id="val-appointment-opacity">88%</output></label><input id="appointment-opacity" type="range" min="65" max="100" value="88" oninput="updateAppointmentSetting('opacity', this.value)"></div>
+      <div class="appointment-setting"><label for="appointment-blur">Размытие карточки <output id="val-appointment-blur">28 px</output></label><input id="appointment-blur" type="range" min="0" max="40" value="28" oninput="updateAppointmentSetting('blur', this.value)"></div>
+      <div class="appointment-setting"><label for="appointment-glow">Внутреннее свечение <output id="val-appointment-glow">12%</output></label><input id="appointment-glow" type="range" min="0" max="40" value="12" oninput="updateAppointmentSetting('glow', this.value)"></div>
+      <div class="appointment-setting"><label for="appointment-button-color">Цвет кнопки <output id="val-appointment-button-color">#39475E</output></label><input id="appointment-button-color" type="color" value="#39475E" oninput="updateAppointmentSetting('button', this.value)"></div>
+    </div>
 </div>
-<!-- /НАСТРОЙКИ ОКНА СТОИМОСТИ -->
+<!-- /ОБЩИЕ НАСТРОЙКИ ВИЗУАЛА ТРЁХ ОКОН -->
 
 <!-- ЛАБОРАТОРИЯ ФОНА: отдельные разделы панели управления -->
 <div class="background-lab-panels" id="background-lab-panels">
@@ -552,14 +557,6 @@
 </section>
 </div>
 
-<div id="appointment-control-panel" hidden>
-      <div class="appointment-design-controls">
-      <div class="appointment-setting"><label for="appointment-opacity">Прозрачность карточки <output id="val-appointment-opacity">88%</output></label><input id="appointment-opacity" type="range" min="65" max="100" value="88" oninput="updateAppointmentSetting('opacity', this.value)"></div>
-      <div class="appointment-setting"><label for="appointment-blur">Размытие карточки <output id="val-appointment-blur">28 px</output></label><input id="appointment-blur" type="range" min="0" max="40" value="28" oninput="updateAppointmentSetting('blur', this.value)"></div>
-      <div class="appointment-setting"><label for="appointment-glow">Внутреннее свечение <output id="val-appointment-glow">12%</output></label><input id="appointment-glow" type="range" min="0" max="40" value="12" oninput="updateAppointmentSetting('glow', this.value)"></div>
-      <div class="appointment-setting"><label for="appointment-button-color">Цвет кнопки <output id="val-appointment-button-color">#39475E</output></label><input id="appointment-button-color" type="color" value="#39475E" oninput="updateAppointmentSetting('button', this.value)"></div>
-    </div>
-</div>
 
 
 
@@ -1103,17 +1100,7 @@
                 <span class="contact-arrow">↗</span>
             </a>
 
-            <a class="contact-item reveal-cost"
-               href="https://zerbe25-gif.github.io/psychologist-website/"
-               target="_blank"
-               rel="noopener noreferrer">
-                <span class="contact-icon">↗</span>
-                <span class="contact-info">
-                    <span class="contact-label">САЙТ</span>
-                    <span class="contact-value">Открыть страницу сайта</span>
-                </span>
-                <span class="contact-arrow">↗</span>
-            </a>
+            
 
         </div>
 
@@ -1167,7 +1154,7 @@
 <!-- /ЦЕНТРАЛЬНОЕ ОКНО ЗАПИСИ -->
   <!-- ФАЙЛ С ФУНКЦИЯМИ САЙТА -->
 
-  <script src="script.js?v=20261124-method-dimensions-constellation-v1"></script>
+  <script src="script.js?v=20261124-method-open-and-shared-capsules-v1"></script>
 
 <div id="lab-color-modal" class="lab-color-modal" hidden aria-hidden="true"><div class="lab-color-dialog" role="dialog" aria-modal="true" aria-labelledby="lab-color-title"><div class="lab-color-dialog-head"><strong id="lab-color-title">Выбор цвета</strong><button type="button" id="lab-color-close" aria-label="Закрыть">×</button></div><div class="lab-color-dialog-body"><div id="lab-color-sv" class="lab-color-sv" role="slider" aria-label="Насыщенность и яркость" tabindex="0"><span id="lab-color-sv-cursor"></span></div><input id="lab-color-hue" class="lab-color-hue" type="range" min="0" max="360" value="180" aria-label="Оттенок"><div class="lab-color-preview-row"><span id="lab-color-preview"></span><label>RGB <input id="lab-color-rgb" type="text" value="30, 41, 43" aria-label="RGB"></label></div><div class="lab-color-dialog-actions"><button type="button" id="lab-color-cancel">Отмена</button><button type="button" id="lab-color-apply">Применить</button></div></div></div></div>
   <script src="page-transition.js?v=20261117-curtain-dom1"></script>

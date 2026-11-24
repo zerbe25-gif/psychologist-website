@@ -892,10 +892,40 @@ function updateLensGlare(value) {
     updateNavUI();
   }
 
+  function revealMethodHeading(){
+    if(!drawerOpen || currentBlock!==0)return;
+    const heading=drawer.querySelector('[data-drawer-panel="method"] .drawer-entry-heading');
+    if(heading && !heading.classList.contains("drawer-entry-revealed")){
+      heading.classList.add("drawer-entry-revealed");
+    }
+  }
+
+  function waitForDrawerToFinishOpening(){
+    if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+      window.requestAnimationFrame(revealMethodHeading);
+      return;
+    }
+    let finished=false;
+    let fallbackTimer=null;
+    const finish=()=>{
+      if(finished)return;
+      finished=true;
+      drawer.removeEventListener("transitionend",onDrawerTransitionEnd);
+      if(fallbackTimer!==null)window.clearTimeout(fallbackTimer);
+      revealMethodHeading();
+    };
+    const onDrawerTransitionEnd=event=>{
+      if(event.target===drawer && event.propertyName==="transform")finish();
+    };
+    drawer.addEventListener("transitionend",onDrawerTransitionEnd);
+    fallbackTimer=window.setTimeout(finish,1000);
+  }
+
   function openDrawer(sectionName){
     const index=sectionKeys.indexOf(sectionName);
     if(index<0)return;
-    if(!drawerOpen){
+    const wasClosed=!drawerOpen;
+    if(wasClosed){
       previousFocus=document.activeElement;
       drawerOpen=true;
       backdrop.classList.add("is-open");
@@ -905,6 +935,10 @@ function updateLensGlare(value) {
       backdrop.setAttribute("aria-hidden","false");
     }
     goToBlock(index);
+    if(sectionName==="method"){
+      if(wasClosed)waitForDrawerToFinishOpening();
+      else window.requestAnimationFrame(revealMethodHeading);
+    }
     closeButton.focus();
   }
 
@@ -924,7 +958,7 @@ function updateLensGlare(value) {
   document.querySelectorAll("[data-drawer-open]").forEach(button=>{
     button.addEventListener("click",()=>openDrawer(button.dataset.drawerOpen));
   });
-  tabs.forEach((button,index)=>button.addEventListener("click",()=>goToBlock(index)));
+  tabs.forEach((button,index)=>button.addEventListener("click",()=>{goToBlock(index);if(index===0)window.requestAnimationFrame(revealMethodHeading);}));
   closeButton.addEventListener("click",closeDrawer);
   backdrop.addEventListener("click",closeDrawer);
   document.addEventListener("keydown",event=>{
@@ -942,8 +976,7 @@ window.toggleDevPanelSection = function(section) {
     animation: "animation-control-panel",
     background: "background-control-panel",
     photos: "photos-panel-content",
-    cost: "cost-control-panel",
-    appointment: "appointment-control-panel"
+    cost: "cost-control-panel"
   };
   const panelId = sectionIds[section];
   if (panelId) setDeveloperPanel(panelId);
@@ -1183,6 +1216,10 @@ document.addEventListener("DOMContentLoaded", () => {
     root.style.setProperty("--appointment-card-blur", Number(s.blur) + "px");
     root.style.setProperty("--appointment-glow", Number(s.glow) / 100);
     root.style.setProperty("--appointment-button", s.button);
+    root.style.setProperty("--capsule-card-opacity", Number(s.opacity) / 100);
+    root.style.setProperty("--capsule-card-blur", Number(s.blur) + "px");
+    root.style.setProperty("--capsule-card-glow", Number(s.glow) / 100);
+    root.style.setProperty("--capsule-accent", s.button);
     const fields = [["opacity","appointment-opacity","val-appointment-opacity",v=>v+"%"],["blur","appointment-blur","val-appointment-blur",v=>v+" px"],["glow","appointment-glow","val-appointment-glow",v=>v+"%"],["button","appointment-button-color","val-appointment-button-color",v=>String(v).toUpperCase()]];
     fields.forEach(([name,id,out,fmt])=>{const el=document.getElementById(id), label=document.getElementById(out);if(el)el.value=s[name];if(label)label.textContent=fmt(s[name]);});
   }
@@ -1693,7 +1730,6 @@ window.applyBackgroundMood = function(mood){
   if (!drawer || !viewport) return;
 
   const headings = Array.from(drawer.querySelectorAll(
-    '[data-drawer-panel="method"] .drawer-entry-heading, ' +
     '[data-drawer-panel="requests"] .drawer-entry-heading, ' +
     '[data-drawer-panel="format"] .drawer-entry-heading'
   ));
