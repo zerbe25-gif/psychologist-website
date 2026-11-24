@@ -1683,9 +1683,24 @@ window.applyBackgroundMood = function(mood){
       });
     }, { root: viewport, rootMargin: "0px 0px -10% 0px", threshold: 0.01 });
 
-    headings.forEach(heading => {
-      if (!heading.classList.contains("drawer-entry-revealed")) observer.observe(heading);
+    const syncObservation = () => {
+      const isOpen = drawer.getAttribute("aria-hidden") === "false";
+      headings.forEach(heading => {
+        if (heading.classList.contains("drawer-entry-revealed")) {
+          observer.unobserve(heading);
+        } else if (isOpen) {
+          observer.observe(heading);
+        } else {
+          observer.unobserve(heading);
+        }
+      });
+    };
+
+    new MutationObserver(syncObservation).observe(drawer, {
+      attributes: true,
+      attributeFilter: ["aria-hidden"]
     });
+    syncObservation();
   } else {
     const pending = new Set(headings);
     const check = () => {
