@@ -8839,3 +8839,90 @@ html.initial-load-reveal .header {
   }
   #sideDrawer .method-dimensions-en { opacity: 1; transform: none; }
 }
+
+
+/* =========================================================
+   2026-11-24 — мягкая цветовая непрерывность шторок
+   Запросы → Формат работы → Образование
+========================================================= */
+
+/* «Запросы»: немного глубже прежнего молочно-серого тона.
+   Нижняя часть заранее смешивается с начальным цветом «Формата». */
+#sideDrawer .block-section[data-drawer-panel="requests"] {
+  background-color: #EDEFEA !important;
+  background-image: linear-gradient(
+    to bottom,
+    #F3F0EA 0%,
+    #F3F0EA 68%,
+    #F1EFE9 82%,
+    #EDEFEA 100%
+  ) !important;
+  border-top: 0 !important;
+  border-bottom: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+/* «Формат работы»: верх совпадает с окончанием градиента «Запросов»,
+   бирюзовый подтон постепенно усиливается к «Образованию». */
+#sideDrawer .block-section[data-drawer-panel="format"] {
+  background-color: #EEF1F0 !important;
+  background-image:
+    radial-gradient(ellipse at 82% 38%, rgba(92, 151, 148, .095) 0%, rgba(92, 151, 148, 0) 56%),
+    linear-gradient(
+      to bottom,
+      #EDEFEA 0%,
+      #EEF0EC 24%,
+      #EDF1EF 64%,
+      #EEF1F0 100%
+    ) !important;
+  border-top: 0 !important;
+  border-bottom: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Убираем возможную светлую щель от фоновой поверхности viewport:
+   цвет подложки совпадает с конечным тоном последней панели. */
+#sideDrawer .viewport {
+  background: #EEF1F0 !important;
+}
+
+/* Заголовки: чуть более заметное, но по-прежнему деликатное проявление.
+   Одинаковый характер сохраняется у «О Методе», «Запросов»,
+   «Формата работы» и «Образования». */
+#sideDrawer .drawer-entry-heading::before,
+#sideDrawer .education-editorial-heading::before {
+  width: 88px;
+  opacity: .58;
+}
+#sideDrawer .drawer-entry-heading.drawer-entry-revealed,
+#sideDrawer .education-editorial.education-intro-revealed .education-editorial-heading h1 {
+  animation: drawerHeadingRevealEnhanced 980ms cubic-bezier(.22,1,.36,1) 150ms both;
+}
+#sideDrawer .drawer-entry-heading.drawer-entry-revealed::before,
+#sideDrawer .education-editorial.education-intro-revealed .education-editorial-heading::before {
+  animation: drawerLightSweepEnhanced 1.4s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes drawerHeadingRevealEnhanced {
+  from { opacity: .2; transform: translate3d(0,10px,0); }
+  to { opacity: 1; transform: translate3d(0,0,0); }
+}
+@keyframes drawerLightSweepEnhanced {
+  0% { opacity: .2; transform: scaleX(.52); filter: brightness(.92); }
+  52% { opacity: .88; filter: brightness(1.24); }
+  100% { opacity: .58; transform: scaleX(1); filter: brightness(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  #sideDrawer .drawer-entry-heading::before,
+  #sideDrawer .education-editorial-heading::before {
+    opacity: .58;
+    animation: none !important;
+  }
+  #sideDrawer .drawer-entry-heading,
+  #sideDrawer .education-editorial-heading h1 {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
