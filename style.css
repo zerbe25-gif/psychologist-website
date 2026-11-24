@@ -8864,47 +8864,56 @@ html.initial-load-reveal .header {
     visibility 0s linear 0s !important;
 }
 
-/* ЕДИНЫЙ РИТМ ПРОЯВЛЕНИЯ ЗАГОЛОВКОВ ШТОРКИ */
-#sideDrawer.drawer-reveal-ready .drawer-entry-heading:not(.drawer-entry-revealed) {
-  opacity: 0;
+/* Шапка начинается сразу под нижней границей панели управления. */
+.header { margin-top: 0 !important; }
+
+/* Выключатель оформления: белый холст для работы над главным окном. */
+body.background-effects-disabled {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
 }
-#sideDrawer .drawer-entry-heading {
-  position: relative;
-  will-change: opacity, transform;
+body.background-effects-disabled .main-content {
+  background: #ffffff !important;
 }
-#sideDrawer .drawer-entry-heading::before {
-  content: "";
-  display: block;
-  width: 76px;
-  height: 1px;
-  margin: 0 0 16px;
-  background: linear-gradient(90deg,
-    rgba(152,114,122,.12),
-    rgba(152,114,122,.58) 46%,
-    rgba(199,181,142,.28));
-  transform: scaleX(.72);
-  transform-origin: left center;
-  opacity: .42;
+body.background-effects-disabled .hatching-bg-layer,
+body.background-effects-disabled .floating-paper-layer,
+body.background-effects-disabled .watercolor-bg-layer,
+body.background-effects-disabled .ambient-light-bg-layer,
+body.background-effects-disabled #background-lab-atmosphere,
+body.background-effects-disabled #background-lab-grain {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
 }
-#sideDrawer .drawer-entry-heading.drawer-entry-revealed {
-  animation: drawerHeadingRevealChoreography 640ms cubic-bezier(.22,1,.36,1) both;
+
+/* Небольшая галочка в панели управления фоном. */
+.background-effects-toggle-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin: 2px 0 10px;
+  padding: 6px 9px;
+  border: 1px solid rgba(43,76,111,.12);
+  border-radius: 7px;
+  background: rgba(255,255,255,.72);
+  color: #526078;
+  font: 11px/1.3 Inter, Arial, sans-serif;
 }
-#sideDrawer .drawer-entry-heading.drawer-entry-revealed::before {
-  animation: drawerHeadingRuleReveal 720ms cubic-bezier(.22,1,.36,1) both;
+.background-effects-toggle-row label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  font-weight: 600;
 }
-@keyframes drawerHeadingRevealChoreography {
-  from { opacity: 0; transform: translate3d(0,11px,0); }
-  to { opacity: 1; transform: translate3d(0,0,0); }
+.background-effects-toggle-row input {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  accent-color: #34797E;
 }
-@keyframes drawerHeadingRuleReveal {
-  from { opacity: .12; transform: scaleX(.42); }
-  to { opacity: .42; transform: scaleX(1); }
-}
-@media (prefers-reduced-motion: reduce) {
-  #sideDrawer .drawer-entry-heading,
-  #sideDrawer .drawer-entry-heading::before {
-    opacity: 1 !important;
-    transform: none !important;
-    animation: none !important;
-  }
+.background-effects-toggle-note {
+  color: #8993a2;
+  font-size: 10px;
 }

@@ -338,6 +338,43 @@ const watercolorPalettes = {
 
 let currentWatercolorPalette = 'blue';
 
+// Единый выключатель оформления фона главной страницы.
+const backgroundEffectsStorageKey = 'psychologistBackgroundEffectsEnabled';
+
+function setBackgroundEffectsEnabled(enabled) {
+  document.body.classList.toggle('background-effects-disabled', !enabled);
+  const toggle = document.getElementById('background-effects-toggle');
+  if (toggle) toggle.checked = enabled;
+}
+
+function initializeBackgroundEffectsToggle() {
+  const toggle = document.getElementById('background-effects-toggle');
+  let enabled = false;
+  try {
+    enabled = localStorage.getItem(backgroundEffectsStorageKey) === 'true';
+  } catch (error) {
+    console.warn('Не удалось прочитать режим оформления фона.', error);
+  }
+  setBackgroundEffectsEnabled(enabled);
+  if (!toggle) return;
+  toggle.addEventListener('change', () => {
+    const nextEnabled = toggle.checked;
+    setBackgroundEffectsEnabled(nextEnabled);
+    try {
+      localStorage.setItem(backgroundEffectsStorageKey, String(nextEnabled));
+    } catch (error) {
+      console.warn('Не удалось сохранить режим оформления фона.', error);
+    }
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeBackgroundEffectsToggle, { once: true });
+} else {
+  initializeBackgroundEffectsToggle();
+}
+
+
 
 // Сохранение всех настроек фона
 
@@ -795,7 +832,7 @@ function updateLensGlare(value) {
   if(!drawer||!backdrop||!closeButton||!viewport||sections.length!==4)return;
 
   const sectionKeys=["method","requests","format","education"];
-  let currentBlock=0,drawerOpen=false,previousFocus=null,framePending=false,methodRevealTimer=null;
+  let currentBlock=0,drawerOpen=false,previousFocus=null,framePending=false;
 
   function updateNavUI(){
     tabs.forEach((tab,index)=>{
@@ -893,27 +930,6 @@ function updateLensGlare(value) {
     updateNavUI();
   }
 
-  function revealMethodHeading(){
-    if(!drawerOpen || currentBlock!==0)return;
-    const heading=drawer.querySelector('[data-drawer-panel="method"] .drawer-entry-heading');
-    if(heading && !heading.classList.contains("drawer-entry-revealed")){
-      heading.classList.add("drawer-entry-revealed");
-    }
-  }
-
-  function scheduleMethodHeadingReveal(){
-    if(methodRevealTimer!==null)window.clearTimeout(methodRevealTimer);
-    if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){
-      window.requestAnimationFrame(revealMethodHeading);
-      return;
-    }
-    /* Drawer transform lasts 1.25s. Start the title 170ms before its eased finish. */
-    methodRevealTimer=window.setTimeout(()=>{
-      methodRevealTimer=null;
-      revealMethodHeading();
-    },1080);
-  }
-
   function openDrawer(sectionName){
     const index=sectionKeys.indexOf(sectionName);
     if(index<0)return;
@@ -928,22 +944,12 @@ function updateLensGlare(value) {
       backdrop.setAttribute("aria-hidden","false");
     }
     goToBlock(index,wasClosed);
-    if(sectionName==="method"){
-      if(wasClosed) scheduleMethodHeadingReveal();
-      else window.requestAnimationFrame(revealMethodHeading);
-    } else if(methodRevealTimer!==null){
-      window.clearTimeout(methodRevealTimer);
-      methodRevealTimer=null;
-    }
     closeButton.focus();
   }
 
   function closeDrawer(){
     if(!drawerOpen)return;
     drawerOpen=false;
-    if(methodRevealTimer!==null){window.clearTimeout(methodRevealTimer);methodRevealTimer=null;}
-    const methodHeading=drawer.querySelector('[data-drawer-panel="method"] .drawer-entry-heading');
-    if(methodHeading)methodHeading.classList.remove("drawer-entry-revealed");
     drawer.classList.remove("is-open");
     backdrop.classList.remove("is-open");
     document.body.classList.remove("drawer-is-open");
@@ -1676,78 +1682,6 @@ window.applyBackgroundMood = function(mood){
     scheduleRhythmReveal();
   }
 })();
-
-/* Единая система проявления заголовков при прокрутке.
-   Триггер срабатывает заранее — когда заголовок входит в верхние 82% scrollport.
-   Сама анимация имеет постоянную длительность и не ускоряется вслед за скроллом. */
-(function initDrawerHeadingReveal() {
-  const drawer=document.getElementById("sideDrawer");
-  const viewport=document.getElementById("drawerViewport");
-  if(!drawer||!viewport)return;
-
-  const headings=Array.from(drawer.querySelectorAll(".drawer-entry-heading"))
-    .filter(heading=>!heading.closest('[data-drawer-panel="method"]'));
-  drawer.classList.add("drawer-reveal-ready");
-
-  const reveal=heading=>{
-    if(heading && !heading.classList.contains("drawer-entry-revealed")){
-      heading.classList.add("drawer-entry-revealed");
-    }
-  };
-
-  if("IntersectionObserver" in window){
-    const observer=new IntersectionObserver(entries=>{
-      if(drawer.getAttribute("aria-hidden")!=="false")return;
-      entries.forEach(entry=>{
-        if(!entry.isIntersecting || entry.intersectionRatio<=0)return;
-        reveal(entry.target);
-        observer.unobserve(entry.target);
-      });
-    },{
-      root:viewport,
-      rootMargin:"0px 0px -18% 0px",
-      threshold:0
-    });
-
-    const sync=()=>{
-      const isOpen=drawer.getAttribute("aria-hidden")==="false";
-      headings.forEach(heading=>{
-        if(isOpen && !heading.classList.contains("drawer-entry-revealed"))observer.observe(heading);
-        else observer.unobserve(heading);
-      });
-    };
-    new MutationObserver(sync).observe(drawer,{attributes:true,attributeFilter:["aria-hidden"]});
-    sync();
-  }else{
-    const pending=new Set(headings);
-    let frame=null;
-    const check=()=>{
-      frame=null;
-      if(drawer.getAttribute("aria-hidden")!=="false")return;
-      const bounds=viewport.getBoundingClientRect();
-      const triggerY=bounds.top+bounds.height*.82;
-      pending.forEach(heading=>{
-        const rect=heading.getBoundingClientRect();
-        if(rect.top<triggerY && rect.bottom>bounds.top && rect.right>bounds.left && rect.left<bounds.right){
-          reveal(heading);
-          pending.delete(heading);
-        }
-      });
-      if(!pending.size){
-        viewport.removeEventListener("scroll",scheduleCheck);
-        window.removeEventListener("resize",scheduleCheck);
-      }
-    };
-    const scheduleCheck=()=>{
-      if(frame===null)frame=window.requestAnimationFrame(check);
-    };
-    viewport.addEventListener("scroll",scheduleCheck,{passive:true});
-    window.addEventListener("resize",scheduleCheck,{passive:true});
-    new MutationObserver(scheduleCheck).observe(drawer,{attributes:true,attributeFilter:["aria-hidden"]});
-    scheduleCheck();
-  }
-})();
-
 
 /* Интерактивная композиция «Три измерения целостности». */
 (function initMethodDimensionsConstellation() {
