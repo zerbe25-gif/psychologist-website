@@ -345,6 +345,86 @@ function setBackgroundEffectsEnabled(enabled) {
   document.body.classList.toggle('background-effects-disabled', !enabled);
   const toggle = document.getElementById('background-effects-toggle');
   if (toggle) toggle.checked = enabled;
+  if (typeof applyEditorialBackgroundMode === 'function') {
+    applyEditorialBackgroundMode();
+  }
+}
+
+// Отдельный редакционный фон главного экрана. Он активен только при выключенном старом оформлении.
+const editorialBackgroundStorageKey = 'psychologistEditorialHomeBackground';
+const editorialBackgroundDefaults = { background: 'diagonal', texture: 'hatch', strength: 45 };
+let editorialBackgroundSettings = { ...editorialBackgroundDefaults };
+
+function saveEditorialBackgroundSettings() {
+  try {
+    localStorage.setItem(editorialBackgroundStorageKey, JSON.stringify(editorialBackgroundSettings));
+  } catch (error) {
+    console.warn('Не удалось сохранить новое оформление главного экрана.', error);
+  }
+}
+
+function applyEditorialBackgroundMode() {
+  const active = document.body.classList.contains('background-effects-disabled');
+  document.body.classList.toggle('editorial-background-active', active);
+  const note = document.getElementById('editorial-mode-note');
+  if (note) {
+    note.textContent = active
+      ? 'Новое оформление активно. При включении старого оформления этот режим автоматически отключится.'
+      : 'Новое оформление временно выключено: сначала снимите галочку «Включить оформление фона».';
+  }
+}
+
+function setEditorialBackground(name) {
+  if (!['diagonal', 'split', 'cashmere', 'veil'].includes(name)) return;
+  editorialBackgroundSettings.background = name;
+  document.body.dataset.editorialBackground = name;
+  document.querySelectorAll('[data-editorial-bg]').forEach(button => {
+    button.classList.toggle('is-active', button.dataset.editorialBg === name);
+  });
+  applyEditorialBackgroundMode();
+  saveEditorialBackgroundSettings();
+}
+
+function setEditorialTexture(type) {
+  if (!['hatch', 'grid', 'none'].includes(type)) return;
+  editorialBackgroundSettings.texture = type;
+  document.body.dataset.editorialTexture = type;
+  document.querySelectorAll('[data-editorial-texture]').forEach(button => {
+    button.classList.toggle('is-active', button.dataset.editorialTexture === type);
+  });
+  applyEditorialBackgroundMode();
+  saveEditorialBackgroundSettings();
+}
+
+function setEditorialTextureStrength(value) {
+  const strength = Math.max(0, Math.min(100, Number(value) || 0));
+  editorialBackgroundSettings.strength = strength;
+  document.documentElement.style.setProperty('--editorial-texture-strength', (strength / 100).toFixed(2));
+  const readout = document.getElementById('editorial-texture-readout');
+  if (readout) readout.textContent = strength + '%';
+  applyEditorialBackgroundMode();
+  saveEditorialBackgroundSettings();
+}
+
+function initializeEditorialBackground() {
+  try {
+    const saved = localStorage.getItem(editorialBackgroundStorageKey);
+    if (saved) editorialBackgroundSettings = { ...editorialBackgroundDefaults, ...JSON.parse(saved) };
+  } catch (error) {
+    console.warn('Не удалось восстановить новое оформление главного экрана.', error);
+  }
+  setEditorialBackground(editorialBackgroundSettings.background);
+  setEditorialTexture(editorialBackgroundSettings.texture);
+  const slider = document.getElementById('editorial-texture-strength');
+  if (slider) slider.value = editorialBackgroundSettings.strength;
+  setEditorialTextureStrength(editorialBackgroundSettings.strength);
+  applyEditorialBackgroundMode();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeEditorialBackground, { once: true });
+} else {
+  initializeEditorialBackground();
 }
 
 function initializeBackgroundEffectsToggle() {
@@ -1335,7 +1415,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // ЛАБОРАТОРИЯ ФОНА: независимое раскрытие модулей (этапная интеграция)
 const DEVELOPER_PANEL_IDS = [
   'animation-control-panel','background-control-panel','photos-panel-content',
-  'cost-control-panel','appointment-control-panel',
+  'cost-control-panel','appointment-control-panel','editorial-background-panel',
   'lab-presets','lab-base','lab-glow1','lab-glow2'
 ];
 
