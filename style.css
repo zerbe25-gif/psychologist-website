@@ -8607,3 +8607,20 @@ html.initial-load-reveal .header {
     animation: none !important;
   }
 }
+
+
+/* ВРЕМЕННАЯ ИЗОЛЯЦИЯ «ТРИ ИЗМЕРЕНИЯ ЦЕЛОСТНОСТИ».
+   Исходная разметка хранится в inert template и не участвует в отображении.
+   Пустая площадка сохраняет вертикальный ритм для разработки новой анимации. */
+#sideDrawer .method-dimensions-stage {
+  display: block;
+  width: 100%;
+  min-height: 360px;
+  pointer-events: none;
+  user-select: none;
+}
+@media (max-width: 780px) {
+  #sideDrawer .method-dimensions-stage {
+    min-height: 320px;
+  }
+}
