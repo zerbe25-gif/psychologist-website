@@ -1474,7 +1474,6 @@ window.applyBackgroundMood = function(mood){
   function save(){render();try{localStorage.setItem(key,JSON.stringify(state));}catch(e){}}
   window.updateBackgroundBase=value=>{state.base=value;save();};
   window.updateBackgroundEffectsLink=value=>{state.effectsLinked=Boolean(value);save();};
-  window.updateBackgroundOptics=(property,value)=>{if(!(property in defaults.optics))return;state.optics[property]=property==="color"?value:Number(value);save();};
   window.updateBackgroundVignette=value=>{state.vignette=Number(value);save();};
   window.updateBackgroundGrain=value=>{state.grain=Number(value);save();};
   window.updateBackgroundGlow=(number,property,value)=>{
