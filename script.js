@@ -1730,3 +1730,81 @@ window.applyBackgroundMood = function(mood){
   drawerObserver.observe(drawer, { attributes: true, attributeFilter: ["aria-hidden"] });
   checkHeadingPositions();
 })();
+
+
+/* Интерактивная композиция «Три измерения целостности». */
+(function initMethodDimensionsConstellation() {
+  const root = document.querySelector('#sideDrawer [data-drawer-panel="method"] [data-method-dimensions]');
+  if (!root) return;
+
+  const dimensions = [
+    { num: "01", title: "Психический уровень", en: "PSYCHOLOGY", text: "Внутренние конфликты, бессознательные сценарии, защитные механизмы и история привязанности." },
+    { num: "02", title: "Социальный контекст", en: "SOCIAL CONTEXT", text: "Культурная среда, семейная система, профессиональная нагрузка и качество отношений с другими." },
+    { num: "03", title: "Биологический ресурс", en: "PHYSIOLOGY", text: "Соматическое здоровье, нейробиология стресса, истощение нервной системы и телесные реакции." }
+  ];
+  const field = root.querySelector('[data-dimensions-field]');
+  const counter = root.querySelector('[data-dimensions-counter]');
+  const monograms = Array.from(root.querySelectorAll('[data-monogram]'));
+  if (!field || !counter) return;
+
+  let pinnedIndex = -1;
+  let hoveredIndex = -1;
+
+  function updateMonogram() {
+    const active = hoveredIndex !== -1 ? hoveredIndex : pinnedIndex;
+    monograms.forEach((item, index) => item.classList.toggle('is-visible', index === active));
+  }
+
+  function render() {
+    field.innerHTML = '<div class="method-dimensions-constellation">' +
+      dimensions.map((item, index) => {
+        const pinned = pinnedIndex === index;
+        return '<div class="method-dimensions-node coord-' + (index + 1) + (pinned ? ' is-pinned' : '') + '"' +
+          ' data-dimension-index="' + index + '" role="button" tabindex="0" aria-pressed="' + pinned + '"' +
+          ' aria-label="' + item.title + '. Нажмите, чтобы закрепить описание">' +
+          '<div class="method-dimensions-head">' +
+            '<span class="method-dimensions-num">' + item.num + '</span>' +
+            '<div class="method-dimensions-title-stack">' +
+              '<h2 class="method-dimensions-title">' + item.title + '</h2>' +
+              '<span class="method-dimensions-en">' + item.en + '</span>' +
+            '</div>' +
+            '<span class="method-dimensions-pin" aria-hidden="true"></span>' +
+          '</div>' +
+          '<div class="method-dimensions-reveal"><p>' + item.text + '</p></div>' +
+        '</div>';
+      }).join('') + '</div>';
+
+    counter.textContent = pinnedIndex >= 0 ? dimensions[pinnedIndex].num + ' — 03' : '01 — 03';
+    updateMonogram();
+  }
+
+  field.addEventListener('pointerover', event => {
+    const node = event.target.closest('[data-dimension-index]');
+    if (!node || !field.contains(node)) return;
+    hoveredIndex = Number(node.dataset.dimensionIndex);
+    updateMonogram();
+  });
+  field.addEventListener('pointerout', event => {
+    const node = event.target.closest('[data-dimension-index]');
+    if (!node || node.contains(event.relatedTarget)) return;
+    hoveredIndex = -1;
+    updateMonogram();
+  });
+  field.addEventListener('click', event => {
+    const node = event.target.closest('[data-dimension-index]');
+    if (!node || !field.contains(node)) return;
+    const index = Number(node.dataset.dimensionIndex);
+    pinnedIndex = pinnedIndex === index ? -1 : index;
+    render();
+    const next = field.querySelector('[data-dimension-index="' + index + '"]');
+    if (next) next.focus({ preventScroll: true });
+  });
+  field.addEventListener('keydown', event => {
+    const node = event.target.closest('[data-dimension-index]');
+    if (!node || !['Enter', ' '].includes(event.key)) return;
+    event.preventDefault();
+    node.click();
+  });
+
+  render();
+})();
