@@ -7217,8 +7217,7 @@ html.initial-load-reveal .header {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  #sideDrawer .fw-rhythm-section.is-visible .fw-rhythm-underline,
-  #sideDrawer .fw-rhythm-section .fw-rhythm-body-reveal.is-body-visible {
+  #sideDrawer .fw-rhythm-section.is-visible .fw-rhythm-underline {
     animation-duration: .01ms !important;
     animation-delay: 0s !important;
   }
@@ -8430,39 +8429,6 @@ html.initial-load-reveal .header {
   transform: scaleX(0);
   animation: fwDurationLineReveal 1.2s cubic-bezier(.2, .75, .25, 1) both !important;
 }
-
-/* Независимое управление тремя блоками терапевтического ритма.
-   Класс заголовка больше не скрывает карточки при уходе заголовка за экран. */
-#sideDrawer .fw-rhythm-section .fw-rhythm-body-reveal {
-  opacity: 0 !important;
-  transform: translate3d(0,18px,0) !important;
-  animation: none !important;
-}
-#sideDrawer .fw-rhythm-section .fw-rhythm-body-reveal.is-body-visible {
-  opacity: 0;
-  transform: translate3d(0,18px,0);
-  animation: fwGentleRevealFromTitleRule 1.5s cubic-bezier(.22,1,.36,1) forwards !important;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-#sideDrawer .fw-rhythm-section .fw-rhythm-card:nth-child(1) .fw-rhythm-body-reveal.is-body-visible {
-  animation-delay: .2s !important;
-}
-#sideDrawer .fw-rhythm-section .fw-rhythm-card:nth-child(2) .fw-rhythm-body-reveal.is-body-visible {
-  animation-delay: .4s !important;
-}
-#sideDrawer .fw-rhythm-section .fw-rhythm-card:nth-child(3) .fw-rhythm-body-reveal.is-body-visible {
-  animation-delay: .6s !important;
-}
-@media (prefers-reduced-motion: reduce) {
-  #sideDrawer .fw-rhythm-section .fw-rhythm-body-reveal,
-  #sideDrawer .fw-rhythm-section .fw-rhythm-body-reveal.is-body-visible {
-    opacity: 1 !important;
-    transform: none !important;
-    animation: none !important;
-  }
-}
-
 
 /* =========================================================
    EDUCATION: деликатная микродинамика без анимации заголовка
