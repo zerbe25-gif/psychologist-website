@@ -8820,42 +8820,6 @@ html.initial-load-reveal .header {
 }
 
 
-/* ЕДИНАЯ МИКРОАНИМАЦИЯ ЗАГОЛОВКОВ ИНФОРМАЦИОННОЙ ШТОРКИ */
-#sideDrawer .drawer-entry-heading { position: relative; }
-#sideDrawer .drawer-entry-heading::before {
-  content: "";
-  display: block;
-  width: 76px;
-  height: 1px;
-  margin: 0 0 16px;
-  background: linear-gradient(90deg, rgba(152,114,122,.12), rgba(152,114,122,.48) 42%, rgba(199,181,142,.18));
-  transform: scaleX(.72);
-  transform-origin: left center;
-  opacity: .42;
-}
-#sideDrawer .drawer-entry-heading.drawer-entry-revealed {
-  animation: drawerHeadingReveal 520ms cubic-bezier(.16,1,.3,1) both;
-}
-#sideDrawer .drawer-entry-heading.drawer-entry-revealed::before {
-  animation: drawerHeadingLightSweep 650ms cubic-bezier(.16,1,.3,1) both;
-}
-@keyframes drawerHeadingReveal {
-  from { opacity: .4; transform: translate3d(0,7px,0); }
-  to { opacity: 1; transform: translate3d(0,0,0); }
-}
-@keyframes drawerHeadingLightSweep {
-  0% { opacity: .18; transform: scaleX(.55); filter: brightness(.94); }
-  58% { opacity: .76; filter: brightness(1.12); }
-  100% { opacity: .42; transform: scaleX(1); filter: brightness(1); }
-}
-@media (prefers-reduced-motion: reduce) {
-  #sideDrawer .drawer-entry-heading,
-  #sideDrawer .drawer-entry-heading::before {
-    opacity: 1; transform: none; animation: none !important;
-  }
-}
-
-
 /* ФИНАЛЬНАЯ НАСТРОЙКА ОТКРЫТИЯ ШТОРКИ И ПРОЯВЛЕНИЯ ЗАГОЛОВКОВ */
 #sideDrawer {
   transition:
@@ -8900,61 +8864,47 @@ html.initial-load-reveal .header {
     visibility 0s linear 0s !important;
 }
 
+/* ЕДИНЫЙ РИТМ ПРОЯВЛЕНИЯ ЗАГОЛОВКОВ ШТОРКИ */
+#sideDrawer.drawer-reveal-ready .drawer-entry-heading:not(.drawer-entry-revealed) {
+  opacity: 0;
+}
 #sideDrawer .drawer-entry-heading {
   position: relative;
-  will-change: opacity, transform, filter;
+  will-change: opacity, transform;
 }
 #sideDrawer .drawer-entry-heading::before {
   content: "";
   display: block;
-  width: 0;
-  height: 1.5px;
-  margin: 0 0 17px;
+  width: 76px;
+  height: 1px;
+  margin: 0 0 16px;
   background: linear-gradient(90deg,
-    rgba(152,114,122,.22),
-    rgba(152,114,122,.88) 46%,
-    rgba(199,181,142,.55));
-  box-shadow: 0 0 9px rgba(181,151,130,.18);
-  opacity: 0;
+    rgba(152,114,122,.12),
+    rgba(152,114,122,.58) 46%,
+    rgba(199,181,142,.28));
+  transform: scaleX(.72);
+  transform-origin: left center;
+  opacity: .42;
 }
 #sideDrawer .drawer-entry-heading.drawer-entry-revealed {
-  animation: drawerHeadingRevealVisible 760ms cubic-bezier(.22,1,.36,1) both;
+  animation: drawerHeadingRevealChoreography 640ms cubic-bezier(.22,1,.36,1) both;
 }
 #sideDrawer .drawer-entry-heading.drawer-entry-revealed::before {
-  animation: drawerHeadingLineDraw 880ms cubic-bezier(.22,1,.36,1) both;
+  animation: drawerHeadingRuleReveal 720ms cubic-bezier(.22,1,.36,1) both;
 }
-@keyframes drawerHeadingRevealVisible {
-  0% {
-    opacity: 0;
-    transform: translate3d(0,15px,0);
-    filter: blur(4px);
-  }
-  68% {
-    opacity: 1;
-    filter: blur(0);
-  }
-  100% {
-    opacity: 1;
-    transform: translate3d(0,0,0);
-    filter: blur(0);
-  }
+@keyframes drawerHeadingRevealChoreography {
+  from { opacity: 0; transform: translate3d(0,11px,0); }
+  to { opacity: 1; transform: translate3d(0,0,0); }
 }
-@keyframes drawerHeadingLineDraw {
-  0% { width: 0; opacity: 0; }
-  18% { opacity: .9; }
-  100% { width: 88px; opacity: .72; }
+@keyframes drawerHeadingRuleReveal {
+  from { opacity: .12; transform: scaleX(.42); }
+  to { opacity: .42; transform: scaleX(1); }
 }
 @media (prefers-reduced-motion: reduce) {
-  #sideDrawer,
-  #drawerBackdrop {
-    transition-duration: .01ms !important;
-  }
   #sideDrawer .drawer-entry-heading,
   #sideDrawer .drawer-entry-heading::before {
     opacity: 1 !important;
-    width: auto;
-    transform: none;
-    filter: none;
+    transform: none !important;
     animation: none !important;
   }
 }
