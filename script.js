@@ -1655,40 +1655,31 @@ window.applyBackgroundMood = function(mood){
 })();
 
 /* Разовый входной акцент раздела «Образование».
-   Запускается, когда заметная часть секции входит в область прокрутки шторки. */
+   Запускается, когда верх заголовка пересекает линию на 75% высоты viewport шторки. */
 (function initEducationIntroReveal() {
   const viewport = document.getElementById("drawerViewport");
   const section = document.querySelector('#sideDrawer [data-drawer-panel="education"]');
-  if (!viewport || !section) return;
+  const heading = section && section.querySelector(".education-editorial-heading h1");
+  if (!viewport || !section || !heading) return;
 
-  const reveal = () => {
-    if (section.classList.contains("education-intro-revealed")) return;
-    section.classList.add("education-intro-revealed");
-    if (observer) observer.disconnect();
+  let revealed = section.classList.contains("education-intro-revealed");
+
+  const checkHeadingPosition = () => {
+    if (revealed) return;
+    const viewportRect = viewport.getBoundingClientRect();
+    const headingRect = heading.getBoundingClientRect();
+    if (viewportRect.height <= 0) return;
+
+    const triggerLine = viewportRect.top + viewportRect.height * 0.75;
+    if (headingRect.top <= triggerLine) {
+      revealed = true;
+      section.classList.add("education-intro-revealed");
+      viewport.removeEventListener("scroll", checkHeadingPosition);
+      window.removeEventListener("resize", checkHeadingPosition);
+    }
   };
 
-  let observer = null;
-  if ("IntersectionObserver" in window) {
-    observer = new IntersectionObserver(entries => {
-      const shouldReveal = entries.some(entry =>
-        entry.isIntersecting &&
-        entry.intersectionRect.height >= Math.min(90, viewport.clientHeight * 0.12)
-      );
-      if (shouldReveal) reveal();
-    }, { root: viewport, threshold: [0, 0.08, 0.15] });
-    observer.observe(section);
-  } else {
-    const check = () => {
-      const rect = section.getBoundingClientRect();
-      const view = viewport.getBoundingClientRect();
-      const visible = Math.max(0, Math.min(rect.bottom, view.bottom) - Math.max(rect.top, view.top));
-      if (visible >= Math.min(90, viewport.clientHeight * 0.12)) {
-        reveal();
-        viewport.removeEventListener("scroll", check);
-      }
-    };
-    viewport.addEventListener("scroll", check, { passive: true });
-    window.addEventListener("resize", check, { passive: true });
-    check();
-  }
+  viewport.addEventListener("scroll", checkHeadingPosition, { passive: true });
+  window.addEventListener("resize", checkHeadingPosition, { passive: true });
+  checkHeadingPosition();
 })();
