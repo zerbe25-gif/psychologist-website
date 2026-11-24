@@ -795,7 +795,7 @@ function updateLensGlare(value) {
   if(!drawer||!backdrop||!closeButton||!viewport||sections.length!==4)return;
 
   const sectionKeys=["method","requests","format","education"];
-  let currentBlock=0,drawerOpen=false,previousFocus=null,framePending=false;
+  let currentBlock=0,drawerOpen=false,previousFocus=null,framePending=false,methodRevealTimer=null;
 
   function updateNavUI(){
     tabs.forEach((tab,index)=>{
@@ -879,7 +879,7 @@ function updateLensGlare(value) {
     window.requestAnimationFrame(updateReadingPosition);
   }
 
-  function goToBlock(targetIndex){
+  function goToBlock(targetIndex, instant=false){
     if(targetIndex<0||targetIndex>=sections.length)return;
     const target=sections[targetIndex];
     /* Use viewport-relative geometry instead of offsetTop: nested positioned
@@ -887,7 +887,8 @@ function updateLensGlare(value) {
     const viewportTop=viewport.getBoundingClientRect().top;
     const targetTop=target.getBoundingClientRect().top;
     const destination=Math.max(0,viewport.scrollTop+(targetTop-viewportTop));
-    viewport.scrollTo({top:destination,behavior:"smooth"});
+    if(instant) viewport.scrollTop=destination;
+    else viewport.scrollTo({top:destination,behavior:"smooth"});
     currentBlock=targetIndex;
     updateNavUI();
   }
@@ -895,34 +896,22 @@ function updateLensGlare(value) {
   function revealMethodHeading(){
     if(!drawerOpen || currentBlock!==0)return;
     const heading=drawer.querySelector('[data-drawer-panel="method"] .drawer-entry-heading');
-    if(heading){
-      heading.classList.remove("drawer-entry-revealed");
-      void heading.offsetWidth;
+    if(heading && !heading.classList.contains("drawer-entry-revealed")){
       heading.classList.add("drawer-entry-revealed");
     }
   }
 
-  function revealMethodAfterDrawerSettles(){
-    const reducedMotion=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if(reducedMotion){
+  function scheduleMethodHeadingReveal(){
+    if(methodRevealTimer!==null)window.clearTimeout(methodRevealTimer);
+    if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){
       window.requestAnimationFrame(revealMethodHeading);
       return;
     }
-
-    let finished=false;
-    let fallback=null;
-    const finish=()=>{
-      if(finished)return;
-      finished=true;
-      drawer.removeEventListener("transitionend",onTransitionEnd);
-      if(fallback!==null)window.clearTimeout(fallback);
-      window.setTimeout(revealMethodHeading,90);
-    };
-    const onTransitionEnd=event=>{
-      if(event.target===drawer && event.propertyName==="transform")finish();
-    };
-    drawer.addEventListener("transitionend",onTransitionEnd);
-    fallback=window.setTimeout(finish,1400);
+    /* Drawer transform lasts 1.25s. Start the title 170ms before its eased finish. */
+    methodRevealTimer=window.setTimeout(()=>{
+      methodRevealTimer=null;
+      revealMethodHeading();
+    },1080);
   }
 
   function openDrawer(sectionName){
@@ -938,10 +927,13 @@ function updateLensGlare(value) {
       drawer.setAttribute("aria-hidden","false");
       backdrop.setAttribute("aria-hidden","false");
     }
-    goToBlock(index);
+    goToBlock(index,wasClosed);
     if(sectionName==="method"){
-      if(wasClosed) revealMethodAfterDrawerSettles();
+      if(wasClosed) scheduleMethodHeadingReveal();
       else window.requestAnimationFrame(revealMethodHeading);
+    } else if(methodRevealTimer!==null){
+      window.clearTimeout(methodRevealTimer);
+      methodRevealTimer=null;
     }
     closeButton.focus();
   }
@@ -949,6 +941,7 @@ function updateLensGlare(value) {
   function closeDrawer(){
     if(!drawerOpen)return;
     drawerOpen=false;
+    if(methodRevealTimer!==null){window.clearTimeout(methodRevealTimer);methodRevealTimer=null;}
     const methodHeading=drawer.querySelector('[data-drawer-panel="method"] .drawer-entry-heading');
     if(methodHeading)methodHeading.classList.remove("drawer-entry-revealed");
     drawer.classList.remove("is-open");
@@ -1684,82 +1677,74 @@ window.applyBackgroundMood = function(mood){
   }
 })();
 
-/* Единая система проявления заголовков информационной шторки.
-   Скролл-контейнер — #drawerViewport; заголовки наблюдаются именно в нём.
-   Каждый заголовок запускается один раз при реальном входе в видимую область. */
+/* Единая система проявления заголовков при прокрутке.
+   Триггер срабатывает заранее — когда заголовок входит в верхние 82% scrollport.
+   Сама анимация имеет постоянную длительность и не ускоряется вслед за скроллом. */
 (function initDrawerHeadingReveal() {
-  const drawer = document.getElementById("sideDrawer");
-  const viewport = document.getElementById("drawerViewport");
-  if (!drawer || !viewport) return;
+  const drawer=document.getElementById("sideDrawer");
+  const viewport=document.getElementById("drawerViewport");
+  if(!drawer||!viewport)return;
 
-  const headings = Array.from(drawer.querySelectorAll(
-    '[data-drawer-panel="requests"] .drawer-entry-heading, ' +
-    '[data-drawer-panel="format"] .drawer-entry-heading, ' +
-    '[data-drawer-panel="education"] .drawer-entry-heading'
-  ));
+  const headings=Array.from(drawer.querySelectorAll(".drawer-entry-heading"))
+    .filter(heading=>!heading.closest('[data-drawer-panel="method"]'));
+  drawer.classList.add("drawer-reveal-ready");
 
-  const reveal = heading => {
-    if (!heading || heading.classList.contains("drawer-entry-revealed")) return;
-    heading.classList.add("drawer-entry-revealed");
+  const reveal=heading=>{
+    if(heading && !heading.classList.contains("drawer-entry-revealed")){
+      heading.classList.add("drawer-entry-revealed");
+    }
   };
 
-  if ("IntersectionObserver" in window) {
-    const observer = new IntersectionObserver(entries => {
-      if (drawer.getAttribute("aria-hidden") !== "false") return;
-      entries.forEach(entry => {
-        if (!entry.isIntersecting || entry.intersectionRatio < 0.01) return;
+  if("IntersectionObserver" in window){
+    const observer=new IntersectionObserver(entries=>{
+      if(drawer.getAttribute("aria-hidden")!=="false")return;
+      entries.forEach(entry=>{
+        if(!entry.isIntersecting || entry.intersectionRatio<=0)return;
         reveal(entry.target);
         observer.unobserve(entry.target);
       });
-    }, {
-      root: viewport,
-      rootMargin: "0px 0px -8% 0px",
-      threshold: [0, 0.01]
+    },{
+      root:viewport,
+      rootMargin:"0px 0px -18% 0px",
+      threshold:0
     });
 
-    const syncObservation = () => {
-      const isOpen = drawer.getAttribute("aria-hidden") === "false";
-      headings.forEach(heading => {
-        if (heading.classList.contains("drawer-entry-revealed") || !isOpen) {
-          observer.unobserve(heading);
-        } else {
-          observer.observe(heading);
-        }
+    const sync=()=>{
+      const isOpen=drawer.getAttribute("aria-hidden")==="false";
+      headings.forEach(heading=>{
+        if(isOpen && !heading.classList.contains("drawer-entry-revealed"))observer.observe(heading);
+        else observer.unobserve(heading);
       });
     };
-
-    new MutationObserver(syncObservation).observe(drawer, {
-      attributes: true,
-      attributeFilter: ["aria-hidden"]
-    });
-    syncObservation();
-  } else {
-    const pending = new Set(headings);
-    const check = () => {
-      if (drawer.getAttribute("aria-hidden") !== "false") return;
-      const bounds = viewport.getBoundingClientRect();
-      pending.forEach(heading => {
-        const rect = heading.getBoundingClientRect();
-        const visible = rect.bottom > bounds.top + 8 &&
-          rect.top < bounds.bottom - 8 &&
-          rect.right > bounds.left &&
-          rect.left < bounds.right;
-        if (visible) {
+    new MutationObserver(sync).observe(drawer,{attributes:true,attributeFilter:["aria-hidden"]});
+    sync();
+  }else{
+    const pending=new Set(headings);
+    let frame=null;
+    const check=()=>{
+      frame=null;
+      if(drawer.getAttribute("aria-hidden")!=="false")return;
+      const bounds=viewport.getBoundingClientRect();
+      const triggerY=bounds.top+bounds.height*.82;
+      pending.forEach(heading=>{
+        const rect=heading.getBoundingClientRect();
+        if(rect.top<triggerY && rect.bottom>bounds.top && rect.right>bounds.left && rect.left<bounds.right){
           reveal(heading);
           pending.delete(heading);
         }
       });
-      if (!pending.size) {
-        viewport.removeEventListener("scroll", check);
-        window.removeEventListener("resize", check);
+      if(!pending.size){
+        viewport.removeEventListener("scroll",scheduleCheck);
+        window.removeEventListener("resize",scheduleCheck);
       }
     };
-    viewport.addEventListener("scroll", check, { passive: true });
-    window.addEventListener("resize", check, { passive: true });
-    new MutationObserver(check).observe(drawer, {
-      attributes: true,
-      attributeFilter: ["aria-hidden"]
-    });
+    const scheduleCheck=()=>{
+      if(frame===null)frame=window.requestAnimationFrame(check);
+    };
+    viewport.addEventListener("scroll",scheduleCheck,{passive:true});
+    window.addEventListener("resize",scheduleCheck,{passive:true});
+    new MutationObserver(scheduleCheck).observe(drawer,{attributes:true,attributeFilter:["aria-hidden"]});
+    scheduleCheck();
   }
 })();
 
