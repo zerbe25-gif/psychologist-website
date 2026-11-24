@@ -895,9 +895,34 @@ function updateLensGlare(value) {
   function revealMethodHeading(){
     if(!drawerOpen || currentBlock!==0)return;
     const heading=drawer.querySelector('[data-drawer-panel="method"] .drawer-entry-heading');
-    if(heading && !heading.classList.contains("drawer-entry-revealed")){
+    if(heading){
+      heading.classList.remove("drawer-entry-revealed");
+      void heading.offsetWidth;
       heading.classList.add("drawer-entry-revealed");
     }
+  }
+
+  function revealMethodAfterDrawerSettles(){
+    const reducedMotion=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if(reducedMotion){
+      window.requestAnimationFrame(revealMethodHeading);
+      return;
+    }
+
+    let finished=false;
+    let fallback=null;
+    const finish=()=>{
+      if(finished)return;
+      finished=true;
+      drawer.removeEventListener("transitionend",onTransitionEnd);
+      if(fallback!==null)window.clearTimeout(fallback);
+      window.setTimeout(revealMethodHeading,90);
+    };
+    const onTransitionEnd=event=>{
+      if(event.target===drawer && event.propertyName==="transform")finish();
+    };
+    drawer.addEventListener("transitionend",onTransitionEnd);
+    fallback=window.setTimeout(finish,1400);
   }
 
   function openDrawer(sectionName){
@@ -914,13 +939,18 @@ function updateLensGlare(value) {
       backdrop.setAttribute("aria-hidden","false");
     }
     goToBlock(index);
-    if(sectionName==="method") revealMethodHeading();
+    if(sectionName==="method"){
+      if(wasClosed) revealMethodAfterDrawerSettles();
+      else window.requestAnimationFrame(revealMethodHeading);
+    }
     closeButton.focus();
   }
 
   function closeDrawer(){
     if(!drawerOpen)return;
     drawerOpen=false;
+    const methodHeading=drawer.querySelector('[data-drawer-panel="method"] .drawer-entry-heading');
+    if(methodHeading)methodHeading.classList.remove("drawer-entry-revealed");
     drawer.classList.remove("is-open");
     backdrop.classList.remove("is-open");
     document.body.classList.remove("drawer-is-open");
@@ -1655,8 +1685,8 @@ window.applyBackgroundMood = function(mood){
 })();
 
 /* Единая система проявления заголовков информационной шторки.
-   «О Методе» запускается при открытии; остальные — при входе в viewport.
-   Каждый заголовок проявляется только один раз. */
+   Скролл-контейнер — #drawerViewport; заголовки наблюдаются именно в нём.
+   Каждый заголовок запускается один раз при реальном входе в видимую область. */
 (function initDrawerHeadingReveal() {
   const drawer = document.getElementById("sideDrawer");
   const viewport = document.getElementById("drawerViewport");
@@ -1677,21 +1707,23 @@ window.applyBackgroundMood = function(mood){
     const observer = new IntersectionObserver(entries => {
       if (drawer.getAttribute("aria-hidden") !== "false") return;
       entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.01) return;
         reveal(entry.target);
         observer.unobserve(entry.target);
       });
-    }, { root: viewport, rootMargin: "0px 0px -10% 0px", threshold: 0.01 });
+    }, {
+      root: viewport,
+      rootMargin: "0px 0px -8% 0px",
+      threshold: [0, 0.01]
+    });
 
     const syncObservation = () => {
       const isOpen = drawer.getAttribute("aria-hidden") === "false";
       headings.forEach(heading => {
-        if (heading.classList.contains("drawer-entry-revealed")) {
+        if (heading.classList.contains("drawer-entry-revealed") || !isOpen) {
           observer.unobserve(heading);
-        } else if (isOpen) {
-          observer.observe(heading);
         } else {
-          observer.unobserve(heading);
+          observer.observe(heading);
         }
       });
     };
@@ -1708,7 +1740,11 @@ window.applyBackgroundMood = function(mood){
       const bounds = viewport.getBoundingClientRect();
       pending.forEach(heading => {
         const rect = heading.getBoundingClientRect();
-        if (rect.bottom > bounds.top && rect.top < bounds.bottom) {
+        const visible = rect.bottom > bounds.top + 8 &&
+          rect.top < bounds.bottom - 8 &&
+          rect.right > bounds.left &&
+          rect.left < bounds.right;
+        if (visible) {
           reveal(heading);
           pending.delete(heading);
         }
@@ -1720,7 +1756,10 @@ window.applyBackgroundMood = function(mood){
     };
     viewport.addEventListener("scroll", check, { passive: true });
     window.addEventListener("resize", check, { passive: true });
-    new MutationObserver(check).observe(drawer, { attributes: true, attributeFilter: ["aria-hidden"] });
+    new MutationObserver(check).observe(drawer, {
+      attributes: true,
+      attributeFilter: ["aria-hidden"]
+    });
   }
 })();
 
