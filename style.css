@@ -8570,3 +8570,40 @@ html.initial-load-reveal .header {
   #sideDrawer .fw-rhythm-bottom-rule::after,
   #sideDrawer .fw-rhythm-desc-wrap::before { transition: none !important; }
 }
+
+
+/* Единый разовый входной акцент заголовков основных разделов.
+   По визуальному ритму повторяет световую нить и мягкое проявление «Образования». */
+#sideDrawer .drawer-entry-heading {
+  position: relative;
+}
+#sideDrawer .drawer-entry-heading::before {
+  content: "";
+  display: block;
+  width: 76px;
+  height: 1px;
+  margin: 0 0 16px;
+  background: linear-gradient(90deg,
+    rgba(152,114,122,.12),
+    rgba(152,114,122,.48) 42%,
+    rgba(199,181,142,.18));
+  transform-origin: left center;
+  opacity: .48;
+}
+#sideDrawer .drawer-entry-heading.drawer-entry-revealed::before {
+  animation: educationLightSweep 1.25s cubic-bezier(.22,1,.36,1) both;
+}
+#sideDrawer .drawer-entry-heading.drawer-entry-revealed {
+  animation: educationHeadingReveal 850ms cubic-bezier(.22,1,.36,1) 180ms both;
+}
+@media (prefers-reduced-motion: reduce) {
+  #sideDrawer .drawer-entry-heading::before {
+    opacity: .48;
+    animation: none !important;
+  }
+  #sideDrawer .drawer-entry-heading {
+    opacity: 1;
+    transform: none;
+    animation: none !important;
+  }
+}
