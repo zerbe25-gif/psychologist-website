@@ -9057,3 +9057,44 @@ body.editorial-background-active .header {
   .editorial-panel-heading { align-items: flex-start; flex-direction: column; gap: 3px; }
   body.editorial-background-active .main-content { background-attachment: scroll; }
 }
+
+
+/* Размеры настроек нового фона приведены к исходной панели управления. */
+#editorial-background-panel { padding: 0 4px !important; }
+.editorial-controls-row { gap: 6px; padding: 0; overflow-x: auto; }
+.editorial-control-group { gap: 6px; }
+.editorial-control-label { font-size: 12px; letter-spacing: .05em; margin-right: 2px; }
+.editorial-choice {
+  padding: 4px 10px;
+  font-size: 12px;
+  line-height: 1.25;
+  border-radius: 4px;
+}
+.editorial-strength-control { gap: 6px; }
+.editorial-strength-control input { width: 96px; }
+.editorial-strength-control output { font-size: 12px; }
+
+/* Один общий фон на всю ширину: боковые поля больше не показывают подложку body. */
+body.editorial-background-active {
+  background-color: #ECECE6 !important;
+  background-image: linear-gradient(132deg,#ECECE6 0%,#E3E5DF 46%,#BCC5C1 76%,#8C9B97 100%) !important;
+}
+body.editorial-background-active[data-editorial-background="diagonal"] {
+  background-image: linear-gradient(132deg,#ECECE6 0%,#E3E5DF 46%,#BCC5C1 76%,#8C9B97 100%) !important;
+}
+body.editorial-background-active[data-editorial-background="split"] {
+  background-image: linear-gradient(90deg,#EAE9E3 0%,#EAE9E3 62%,#6E7F80 62%,#5E6F71 100%) !important;
+}
+body.editorial-background-active[data-editorial-background="cashmere"] {
+  background-image: radial-gradient(circle at 25% 30%,#E5E7E1 0%,#D4D9D2 65%,#C6CDC5 100%) !important;
+}
+body.editorial-background-active[data-editorial-background="veil"] {
+  background-image: radial-gradient(circle at 18% 22%,rgba(246,245,240,.88) 0%,rgba(246,245,240,.58) 55%,rgba(235,232,222,.42) 100%),linear-gradient(135deg,#4B6670 0%,#7C826D 55%,#A6936C 100%) !important;
+}
+body.editorial-background-active .main-content {
+  width: 100%;
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+  background: transparent !important;
+}

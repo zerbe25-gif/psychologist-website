@@ -366,12 +366,6 @@ function saveEditorialBackgroundSettings() {
 function applyEditorialBackgroundMode() {
   const active = document.body.classList.contains('background-effects-disabled');
   document.body.classList.toggle('editorial-background-active', active);
-  const note = document.getElementById('editorial-mode-note');
-  if (note) {
-    note.textContent = active
-      ? 'Новое оформление активно. При включении старого оформления этот режим автоматически отключится.'
-      : 'Новое оформление временно выключено: сначала снимите галочку «Включить оформление фона».';
-  }
 }
 
 function setEditorialBackground(name) {
