@@ -1060,6 +1060,7 @@ window.toggleDevPanelSection = function(section) {
   const sectionIds = {
     animation: "animation-control-panel",
     background: "background-control-panel",
+    "editorial-background": "editorial-background-panel",
     photos: "photos-panel-content",
     cost: "cost-control-panel"
   };
