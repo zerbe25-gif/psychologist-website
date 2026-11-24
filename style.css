@@ -7188,20 +7188,15 @@ html.initial-load-reveal .header {
   line-height: 1.35 !important;
 }
 
-/* Появление трёх описательных блоков.
-   Точные параметры из переданного HTML: 1.5 с, сдвиг 18 px,
-   задержки 0.2 / 0.4 / 0.6 с. До входа секции — скрыты. */
-#sideDrawer .fw-rhythm-section .fw-rhythm-body-reveal:not(.is-body-visible) {
+/* Описания скрыты до активации карточки; после is-revealed
+   управление видимостью и анимацией передаётся общему reveal-механизму ниже. */
+#sideDrawer .fw-rhythm-card:not(.is-revealed) .fw-rhythm-body-reveal {
   opacity: 0 !important;
+  visibility: hidden !important;
   transform: translate3d(0,18px,0) !important;
   animation: none !important;
 }
-#sideDrawer .fw-rhythm-section .fw-rhythm-body-reveal.is-body-visible {
-  opacity: 0;
-  animation: fwGentleRevealFromTitleRule 1.5s cubic-bezier(.22,1,.36,1) forwards !important;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
+/* Последовательность появления описаний: 0.2 / 0.4 / 0.6 с. */
 #sideDrawer .fw-rhythm-section.is-visible .fw-rhythm-card:nth-child(1) .fw-rhythm-body-reveal {
   animation-delay: .2s !important;
 }
