@@ -1624,10 +1624,9 @@ window.applyBackgroundMood = function(mood){
         const fullyOutside = rect.bottom <= viewTop || rect.top >= viewBottom;
         const visibleHeight = Math.max(0, Math.min(rect.bottom, viewBottom) - Math.max(rect.top, viewTop));
         const visibleRatio = rect.height ? visibleHeight / rect.height : 0;
-        const fullyInside = rect.top >= viewTop && rect.bottom <= viewBottom;
-        const shouldReveal = scrollDirection >= 0
-          ? fullyInside
-          : visibleRatio >= 1 / 3;
+        /* Не ждём полного размещения карточки во viewport:
+           достаточно, чтобы в него вошла треть карточки, при любом направлении прокрутки. */
+        const shouldReveal = visibleRatio >= 1 / 3;
 
         if (fullyOutside) {
           card.classList.remove('is-revealed');
