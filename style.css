@@ -8657,26 +8657,41 @@ html.initial-load-reveal .header {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
-#sideDrawer .method-dimensions-topline,
-#sideDrawer .method-dimensions-footline {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px 16px;
-  font: 500 10px/1.5 Inter, Arial, sans-serif;
+  border-top: 1px solid var(--method-rule);
+  border-bottom: 1px solid var(--method-rule);
 }
 #sideDrawer .method-dimensions-topline {
-  padding: 0 0 12px;
-  border-bottom: 1px solid var(--method-rule);
-  color: var(--method-ink);
-  letter-spacing: .16em;
-  text-transform: uppercase;
-}
-#sideDrawer .method-dimensions-topline [data-dimensions-counter] {
+  position: absolute;
+  z-index: 2;
+  top: 9px;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
+  font: 500 10px/1.5 Inter, Arial, sans-serif;
   color: var(--method-amber);
   letter-spacing: .12em;
+}
+#sideDrawer .method-dimensions-main {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  align-items: center;
+  flex: 1;
+  min-height: 430px;
+  padding: 26px 0;
+}
+#sideDrawer .method-dimensions-side-title {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 0;
+  color: var(--method-muted);
+  font: 500 10px/1.5 Inter, Arial, sans-serif;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
 }
 #sideDrawer .method-dimensions-field {
   position: relative;
@@ -8787,12 +8802,7 @@ html.initial-load-reveal .header {
   color: var(--method-ink);
   font: 400 13px/1.55 Inter, Arial, sans-serif;
 }
-#sideDrawer .method-dimensions-footline {
-  padding: 12px 0 0;
-  border-top: 1px solid var(--method-rule);
-  color: var(--method-muted);
-  font-size: 10px;
-}
+
 @media (max-width: 919px) {
   #sideDrawer .method-dimensions-stage,
   #sideDrawer .method-dimensions-stage-inner { min-height: 510px; }
@@ -8810,9 +8820,8 @@ html.initial-load-reveal .header {
   #sideDrawer .method-dimensions-node.coord-2,
   #sideDrawer .method-dimensions-node.coord-3 { margin-left: 0; margin-top: 0; }
   #sideDrawer .method-dimensions-title { font-size: clamp(26px, 8vw, 31px); white-space: normal; }
-  #sideDrawer .method-dimensions-footline { display: block; }
-  #sideDrawer .method-dimensions-footline span { display: block; }
-  #sideDrawer .method-dimensions-footline span + span { margin-top: 4px; }
+  #sideDrawer .method-dimensions-main { grid-template-columns: 28px minmax(0, 1fr); }
+  #sideDrawer .method-dimensions-side-title { font-size: 9px; letter-spacing: .12em; }
 }
 @media (prefers-reduced-motion: reduce) {
   #sideDrawer .method-dimensions-stage *,
