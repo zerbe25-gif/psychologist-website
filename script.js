@@ -1331,7 +1331,7 @@ document.addEventListener("DOMContentLoaded", () => {
 const DEVELOPER_PANEL_IDS = [
   'animation-control-panel','background-control-panel','photos-panel-content',
   'cost-control-panel','appointment-control-panel',
-  'lab-presets','lab-base','lab-glow1','lab-glow2','lab-optics'
+  'lab-presets','lab-base','lab-glow1','lab-glow2'
 ];
 
 function setDeveloperPanel(sectionId, button) {
@@ -1414,19 +1414,19 @@ window.applyBackgroundMood = function(mood){
     base:"#1E292B",vignette:35,grain:35,
     glow1:{color:"#34797E",opacity:45,x:82,y:18,size:60},
     glow2:{color:"#DCB573",opacity:22,x:15,y:85,size:55},
-    effectsLinked:true,optics:{color:"#233235",opacity:92,blur:12,saturation:120}
+    effectsLinked:true
   };
   let state={...defaults,glow1:{...defaults.glow1},glow2:{...defaults.glow2}};
   try{
     const saved=JSON.parse(localStorage.getItem(key)||localStorage.getItem("psychologistBackgroundBaseSettings")||"{}");
-    state={...state,...saved,glow1:{...defaults.glow1,...saved.glow1},glow2:{...defaults.glow2,...saved.glow2},optics:{...defaults.optics,...saved.optics}};
+    state={...state,...saved,glow1:{...defaults.glow1,...saved.glow1},glow2:{...defaults.glow2,...saved.glow2}};
   }catch(e){}
   function setVar(name,value){root.style.setProperty(name,String(value));}
-  const colorKeys=["lab-base-color","lab-glow1-color","lab-glow2-color","lab-optics-color"];
+  const colorKeys=["lab-base-color","lab-glow1-color","lab-glow2-color"];
   function hexToRgb(hex){const m=/^#?([0-9a-f]{6})$/i.exec(hex);if(!m)return null;const n=parseInt(m[1],16);return {r:n>>16,g:(n>>8)&255,b:n&255};}
   function rgbToHex(r,g,b){return "#"+[r,g,b].map(v=>Math.max(0,Math.min(255,Math.round(Number(v)))).toString(16).padStart(2,"0")).join("").toUpperCase();}
   function syncColorPicker(id,color){const rgb=hexToRgb(color);if(!rgb)return;const swatch=document.getElementById(id+"-picker"),field=document.getElementById(id+"-display"),open=document.getElementById(id+"-open");if(swatch)swatch.value=color;if(field)field.textContent=color.toUpperCase();if(open)open.style.setProperty("--picker-color",color);}
-  function setLabColor(id,color){if(!/^#[0-9a-f]{6}$/i.test(color))return;const upper=color.toUpperCase();if(id==="lab-base-color")window.updateBackgroundBase(upper);else if(id==="lab-glow1-color")window.updateBackgroundGlow(1,"color",upper);else if(id==="lab-glow2-color")window.updateBackgroundGlow(2,"color",upper);else if(id==="lab-optics-color")window.updateBackgroundOptics("color",upper);}
+  function setLabColor(id,color){if(!/^#[0-9a-f]{6}$/i.test(color))return;const upper=color.toUpperCase();if(id==="lab-base-color")window.updateBackgroundBase(upper);else if(id==="lab-glow1-color")window.updateBackgroundGlow(1,"color",upper);else if(id==="lab-glow2-color")window.updateBackgroundGlow(2,"color",upper);}
   window.updateLabColor=(id,color)=>setLabColor(id,color);
   window.updateLabColorText=(id,value)=>{const nums=value.split(/[ ,;]+/).filter(Boolean).map(Number);if(nums.length!==3||nums.some(n=>!Number.isFinite(n)||n<0||n>255))return;setLabColor(id,rgbToHex(...nums));};
 
@@ -1436,7 +1436,7 @@ window.applyBackgroundMood = function(mood){
   function labHex(rgb){return "#"+[rgb.r,rgb.g,rgb.b].map(v=>v.toString(16).padStart(2,"0")).join("").toUpperCase();}
   function labHslFromHex(hex){const rgb=hexToRgb(hex);if(!rgb)return {h:180,s:.2,v:.25};const r=rgb.r/255,g=rgb.g/255,b=rgb.b/255,max=Math.max(r,g,b),min=Math.min(r,g,b),d=max-min;let h=0;if(d){if(max===r)h=60*(((g-b)/d)%6);else if(max===g)h=60*((b-r)/d+2);else h=60*((r-g)/d+4);if(h<0)h+=360;}return {h,s:max?d/max:0,v:max};}
   function labPickerPaint(){const sv=document.getElementById("lab-color-sv"),cur=document.getElementById("lab-color-sv-cursor"),hue=document.getElementById("lab-color-hue"),preview=document.getElementById("lab-color-preview"),rgbInput=document.getElementById("lab-color-rgb");if(!sv)return;sv.style.backgroundColor="hsl("+labPicker.h+",100%,50%)";if(cur){cur.style.left=(labPicker.s*100)+"%";cur.style.top=((1-labPicker.v)*100)+"%";}if(hue)hue.value=labPicker.h;const rgb=labRgb(),hex=labHex(rgb);if(preview)preview.style.background=hex;if(rgbInput)rgbInput.value=rgb.r+", "+rgb.g+", "+rgb.b;}
-  window.openLabColorPicker=(key)=>{labPicker.key=key;const colors={"lab-base-color":state.base,"lab-glow1-color":state.glow1.color,"lab-glow2-color":state.glow2.color,"lab-optics-color":state.optics.color};const hex=colors[key]||"#233235";Object.assign(labPicker,labHslFromHex(hex));const modal=document.getElementById("lab-color-modal"),dialog=modal.querySelector(".lab-color-dialog"),anchor=document.getElementById(key+"-open")||document.getElementById("lab-base-color-open");modal.hidden=false;modal.setAttribute("aria-hidden","false");if(dialog&&anchor){const rect=anchor.getBoundingClientRect(),width=Math.min(290,window.innerWidth-24);dialog.style.left=Math.max(12,Math.min(rect.left,window.innerWidth-width-12))+"px";dialog.style.top=Math.max(70,Math.min(rect.bottom+8,window.innerHeight-390))+"px";}labPickerPaint();};
+  window.openLabColorPicker=(key)=>{labPicker.key=key;const colors={"lab-base-color":state.base,"lab-glow1-color":state.glow1.color,"lab-glow2-color":state.glow2.color};const hex=colors[key]||"#233235";Object.assign(labPicker,labHslFromHex(hex));const modal=document.getElementById("lab-color-modal"),dialog=modal.querySelector(".lab-color-dialog"),anchor=document.getElementById(key+"-open")||document.getElementById("lab-base-color-open");modal.hidden=false;modal.setAttribute("aria-hidden","false");if(dialog&&anchor){const rect=anchor.getBoundingClientRect(),width=Math.min(290,window.innerWidth-24);dialog.style.left=Math.max(12,Math.min(rect.left,window.innerWidth-width-12))+"px";dialog.style.top=Math.max(70,Math.min(rect.bottom+8,window.innerHeight-390))+"px";}labPickerPaint();};
   function labPickerClose(){const modal=document.getElementById("lab-color-modal");modal.hidden=true;modal.setAttribute("aria-hidden","true");}
   function labPickerApply(){const hex=labHex(labRgb());setLabColor(labPicker.key,hex);labPickerClose();}
   function labPickerSVFromPointer(e){const box=document.getElementById("lab-color-sv").getBoundingClientRect();labPicker.s=Math.max(0,Math.min(1,(e.clientX-box.left)/box.width));labPicker.v=1-Math.max(0,Math.min(1,(e.clientY-box.top)/box.height));labPickerPaint();}
@@ -1463,21 +1463,9 @@ window.applyBackgroundMood = function(mood){
     const base=document.getElementById("lab-base-color"),baseOut=document.getElementById("lab-base-color-display");
     const vignette=document.getElementById("lab-vignette"),vOut=document.getElementById("lab-vignette-value");
     const grain=document.getElementById("lab-grain"),gOut=document.getElementById("lab-grain-value");
-    const optics=state.optics;
-    setVar("--lab-drawer-color",optics.color);setVar("--lab-drawer-opacity",Number(optics.opacity)+"%");setVar("--lab-drawer-blur",Number(optics.blur)+"px");setVar("--lab-drawer-saturation",Number(optics.saturation)+"%");
-    /* Применяем оптику напрямую к реальной информационной шторке, независимо от темы. */
-    const drawer=document.getElementById("sideDrawer");
-    if(drawer){
-      drawer.style.setProperty("background","color-mix(in srgb,"+optics.color+" "+Number(optics.opacity)+"%,transparent)","important");
-      drawer.style.setProperty("backdrop-filter","blur("+Number(optics.blur)+"px) saturate("+Number(optics.saturation)+"%)","important");
-      drawer.style.setProperty("-webkit-backdrop-filter","blur("+Number(optics.blur)+"px) saturate("+Number(optics.saturation)+"%)","important");
-      drawer.style.setProperty("border-right-color","rgba(128,128,128,.65)","important");
-    }
     syncColorPicker("lab-base-color",state.base);
     syncColorPicker("lab-glow1-color",state.glow1.color);
     syncColorPicker("lab-glow2-color",state.glow2.color);
-    syncColorPicker("lab-optics-color",optics.color);
-    [["color","lab-optics-color","lab-optics-color-value",v=>String(v).toUpperCase()],["opacity","lab-optics-opacity","lab-optics-opacity-value",v=>v+"%"],["blur","lab-optics-blur","lab-optics-blur-value",v=>v+" px"],["saturation","lab-optics-saturation","lab-optics-saturation-value",v=>v+"%"]].forEach(([key,id,out,fmt])=>{const input=document.getElementById(id),label=document.getElementById(out);if(input)input.value=optics[key];if(label)label.textContent=fmt(optics[key]);});
     if(base)base.value=state.base;if(baseOut)baseOut.textContent=state.base.toUpperCase();
     if(vignette)vignette.value=state.vignette;if(vOut)vOut.textContent=state.vignette+"%";
     if(grain)grain.value=state.grain;
@@ -1486,7 +1474,6 @@ window.applyBackgroundMood = function(mood){
   function save(){render();try{localStorage.setItem(key,JSON.stringify(state));}catch(e){}}
   window.updateBackgroundBase=value=>{state.base=value;save();};
   window.updateBackgroundEffectsLink=value=>{state.effectsLinked=Boolean(value);save();};
-  window.updateBackgroundOptics=(property,value)=>{if(!(property in defaults.optics))return;state.optics[property]=property==="color"?value:Number(value);save();};
   window.updateBackgroundVignette=value=>{state.vignette=Number(value);save();};
   window.updateBackgroundGrain=value=>{state.grain=Number(value);save();};
   window.updateBackgroundGlow=(number,property,value)=>{
@@ -1502,12 +1489,12 @@ window.applyBackgroundMood = function(mood){
     window.applyBackgroundMood=function(mood){
       originalApplyMood(mood);
       const presets={
-        balanced:{base:"#1E292B",vignette:35,grain:35,optics:{color:"#233235",opacity:92,blur:12,saturation:120},glow1:{color:"#34797E",opacity:45,x:82,y:18,size:60},glow2:{color:"#DCB573",opacity:22,x:15,y:85,size:55}},
-        deep:{base:"#10191B",vignette:65,grain:55,optics:{color:"#141E20",opacity:95,blur:16,saturation:110},glow1:{color:"#26595D",opacity:35,x:75,y:22,size:55},glow2:{color:"#B38E52",opacity:12,x:20,y:80,size:45}},
-        amber:{base:"#202827",vignette:30,grain:25,optics:{color:"#242B27",opacity:91,blur:14,saturation:135},glow1:{color:"#34797E",opacity:30,x:78,y:25,size:50},glow2:{color:"#DCB573",opacity:42,x:20,y:78,size:78}}
+        balanced:{base:"#1E292B",vignette:35,grain:35,glow1:{color:"#34797E",opacity:45,x:82,y:18,size:60},glow2:{color:"#DCB573",opacity:22,x:15,y:85,size:55}},
+        deep:{base:"#10191B",vignette:65,grain:55,glow1:{color:"#26595D",opacity:35,x:75,y:22,size:55},glow2:{color:"#B38E52",opacity:12,x:20,y:80,size:45}},
+        amber:{base:"#202827",vignette:30,grain:25,glow1:{color:"#34797E",opacity:30,x:78,y:25,size:50},glow2:{color:"#DCB573",opacity:42,x:20,y:78,size:78}}
       };
       if(presets[mood]){
-        state={...state,...presets[mood],glow1:{...presets[mood].glow1},glow2:{...presets[mood].glow2},optics:{...presets[mood].optics}};
+        state={...state,...presets[mood],glow1:{...presets[mood].glow1},glow2:{...presets[mood].glow2}};
         save();
       }
     };
