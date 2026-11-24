@@ -900,27 +900,6 @@ function updateLensGlare(value) {
     }
   }
 
-  function waitForDrawerToFinishOpening(){
-    if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){
-      window.requestAnimationFrame(revealMethodHeading);
-      return;
-    }
-    let finished=false;
-    let fallbackTimer=null;
-    const finish=()=>{
-      if(finished)return;
-      finished=true;
-      drawer.removeEventListener("transitionend",onDrawerTransitionEnd);
-      if(fallbackTimer!==null)window.clearTimeout(fallbackTimer);
-      revealMethodHeading();
-    };
-    const onDrawerTransitionEnd=event=>{
-      if(event.target===drawer && event.propertyName==="transform")finish();
-    };
-    drawer.addEventListener("transitionend",onDrawerTransitionEnd);
-    fallbackTimer=window.setTimeout(finish,1000);
-  }
-
   function openDrawer(sectionName){
     const index=sectionKeys.indexOf(sectionName);
     if(index<0)return;
@@ -935,10 +914,7 @@ function updateLensGlare(value) {
       backdrop.setAttribute("aria-hidden","false");
     }
     goToBlock(index);
-    if(sectionName==="method"){
-      if(wasClosed)waitForDrawerToFinishOpening();
-      else window.requestAnimationFrame(revealMethodHeading);
-    }
+    if(sectionName==="method") revealMethodHeading();
     closeButton.focus();
   }
 
@@ -958,7 +934,7 @@ function updateLensGlare(value) {
   document.querySelectorAll("[data-drawer-open]").forEach(button=>{
     button.addEventListener("click",()=>openDrawer(button.dataset.drawerOpen));
   });
-  tabs.forEach((button,index)=>button.addEventListener("click",()=>{goToBlock(index);if(index===0)window.requestAnimationFrame(revealMethodHeading);}));
+  tabs.forEach((button,index)=>button.addEventListener("click",()=>{goToBlock(index);if(index===0)revealMethodHeading();}));
   closeButton.addEventListener("click",closeDrawer);
   backdrop.addEventListener("click",closeDrawer);
   document.addEventListener("keydown",event=>{
@@ -1678,80 +1654,59 @@ window.applyBackgroundMood = function(mood){
   }
 })();
 
-/* Разовый входной акцент раздела «Образование».
-   Запускается, когда верх заголовка пересекает линию на 75% высоты viewport шторки. */
-(function initEducationIntroReveal() {
-  const viewport = document.getElementById("drawerViewport");
-  const section = document.querySelector('#sideDrawer [data-drawer-panel="education"]');
-  const heading = section && section.querySelector(".education-editorial-heading h1");
-  if (!viewport || !section || !heading) return;
-
-  let revealed = section.classList.contains("education-intro-revealed");
-
-  const checkHeadingPosition = () => {
-    if (revealed) return;
-    const viewportRect = viewport.getBoundingClientRect();
-    const headingRect = heading.getBoundingClientRect();
-    if (viewportRect.height <= 0) return;
-
-    const triggerLine = viewportRect.top + viewportRect.height * 0.75;
-    if (headingRect.top <= triggerLine) {
-      revealed = true;
-      section.classList.add("education-intro-revealed");
-      viewport.removeEventListener("scroll", checkHeadingPosition);
-      window.removeEventListener("resize", checkHeadingPosition);
-    }
-  };
-
-  viewport.addEventListener("scroll", checkHeadingPosition, { passive: true });
-  window.addEventListener("resize", checkHeadingPosition, { passive: true });
-  checkHeadingPosition();
-})();
-
-
-/* Разовый входной акцент заголовков разделов «О Методе», «Запросы» и «Формат работы».
-   Запускается при пересечении верхом заголовка линии на 75% высоты viewport шторки. */
-(function initSectionHeadingEntryReveal() {
+/* Единая система проявления заголовков информационной шторки.
+   «О Методе» запускается при открытии; остальные — при входе в viewport.
+   Каждый заголовок проявляется только один раз. */
+(function initDrawerHeadingReveal() {
   const drawer = document.getElementById("sideDrawer");
   const viewport = document.getElementById("drawerViewport");
   if (!drawer || !viewport) return;
 
   const headings = Array.from(drawer.querySelectorAll(
     '[data-drawer-panel="requests"] .drawer-entry-heading, ' +
-    '[data-drawer-panel="format"] .drawer-entry-heading'
+    '[data-drawer-panel="format"] .drawer-entry-heading, ' +
+    '[data-drawer-panel="education"] .drawer-entry-heading'
   ));
-  const pending = new Set(headings.filter(heading =>
-    !heading.classList.contains("drawer-entry-revealed")
-  ));
-  if (!pending.size) return;
 
-  const checkHeadingPositions = () => {
-    if (drawer.getAttribute("aria-hidden") !== "false") return;
-    const viewportRect = viewport.getBoundingClientRect();
-    if (viewportRect.height <= 0) return;
-    const triggerLine = viewportRect.top + viewportRect.height * 0.75;
-
-    pending.forEach(heading => {
-      const rect = heading.getBoundingClientRect();
-      const crossesTrigger = rect.top <= triggerLine && rect.bottom >= viewportRect.top;
-      if (!crossesTrigger) return;
-      heading.classList.add("drawer-entry-revealed");
-      pending.delete(heading);
-    });
-
-    if (!pending.size) {
-      viewport.removeEventListener("scroll", checkHeadingPositions);
-      window.removeEventListener("resize", checkHeadingPositions);
-      drawerObserver.disconnect();
-    }
+  const reveal = heading => {
+    if (!heading || heading.classList.contains("drawer-entry-revealed")) return;
+    heading.classList.add("drawer-entry-revealed");
   };
 
-  viewport.addEventListener("scroll", checkHeadingPositions, { passive: true });
-  window.addEventListener("resize", checkHeadingPositions, { passive: true });
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(entries => {
+      if (drawer.getAttribute("aria-hidden") !== "false") return;
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        reveal(entry.target);
+        observer.unobserve(entry.target);
+      });
+    }, { root: viewport, rootMargin: "0px 0px -10% 0px", threshold: 0.01 });
 
-  const drawerObserver = new MutationObserver(checkHeadingPositions);
-  drawerObserver.observe(drawer, { attributes: true, attributeFilter: ["aria-hidden"] });
-  checkHeadingPositions();
+    headings.forEach(heading => {
+      if (!heading.classList.contains("drawer-entry-revealed")) observer.observe(heading);
+    });
+  } else {
+    const pending = new Set(headings);
+    const check = () => {
+      if (drawer.getAttribute("aria-hidden") !== "false") return;
+      const bounds = viewport.getBoundingClientRect();
+      pending.forEach(heading => {
+        const rect = heading.getBoundingClientRect();
+        if (rect.bottom > bounds.top && rect.top < bounds.bottom) {
+          reveal(heading);
+          pending.delete(heading);
+        }
+      });
+      if (!pending.size) {
+        viewport.removeEventListener("scroll", check);
+        window.removeEventListener("resize", check);
+      }
+    };
+    viewport.addEventListener("scroll", check, { passive: true });
+    window.addEventListener("resize", check, { passive: true });
+    new MutationObserver(check).observe(drawer, { attributes: true, attributeFilter: ["aria-hidden"] });
+  }
 })();
 
 
