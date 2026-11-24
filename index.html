@@ -41,7 +41,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=20261124-white-canvas-toggle-v1">
+  <link rel="stylesheet" href="style.css?v=20261124-editorial-background-v1">
 <style id="lab-picker-runtime"></style></head>
 
 <body id="top">
@@ -106,6 +106,12 @@
           <button type="button" class="lab-carousel-arrow" aria-label="Следующие разделы" onclick="scrollBackgroundLabTabs(1)">›</button>
         </div>
 
+
+        <button type="button" class="developer-panel-tab"
+                data-panel-section="editorial-background"
+                onclick="toggleDevPanelSection('editorial-background')">
+            НОВЫЙ ФОН
+        </button>
 
         <button type="button" class="developer-panel-tab"
                 data-panel-section="photos"
@@ -375,6 +381,34 @@
     </div>
 </aside>
   
+        <section id="editorial-background-panel" hidden aria-label="Новое оформление главного экрана">
+          <div class="editorial-panel-heading">
+            <strong>НОВОЕ ОФОРМЛЕНИЕ ГЛАВНОГО ЭКРАНА</strong>
+            <span>Работает, когда «Включить оформление фона» выключено</span>
+          </div>
+          <div class="editorial-controls-row">
+            <div class="editorial-control-group editorial-bg-choices">
+              <span class="editorial-control-label">1. ФОН</span>
+              <button type="button" class="editorial-choice is-active" data-editorial-bg="diagonal" onclick="setEditorialBackground('diagonal')">Диагональ</button>
+              <button type="button" class="editorial-choice" data-editorial-bg="split" onclick="setEditorialBackground('split')">Разворот 62/38</button>
+              <button type="button" class="editorial-choice" data-editorial-bg="cashmere" onclick="setEditorialBackground('cashmere')">Тёплый шалфей</button>
+              <button type="button" class="editorial-choice" data-editorial-bg="veil" onclick="setEditorialBackground('veil')">Световая вуаль</button>
+            </div>
+            <div class="editorial-control-group editorial-texture-choices">
+              <span class="editorial-control-label">2. ТЕКСТУРА</span>
+              <button type="button" class="editorial-choice is-active" data-editorial-texture="hatch" onclick="setEditorialTexture('hatch')">Штриховка</button>
+              <button type="button" class="editorial-choice" data-editorial-texture="grid" onclick="setEditorialTexture('grid')">Клетка</button>
+              <button type="button" class="editorial-choice" data-editorial-texture="none" onclick="setEditorialTexture('none')">Чистая бумага</button>
+            </div>
+            <label class="editorial-strength-control">
+              <span class="editorial-control-label">ВИДИМОСТЬ ЛИНИЙ</span>
+              <input id="editorial-texture-strength" type="range" min="0" max="100" value="45" oninput="setEditorialTextureStrength(this.value)">
+              <output id="editorial-texture-readout">45%</output>
+            </label>
+          </div>
+          <p class="editorial-mode-note" id="editorial-mode-note">Новое оформление включено. При включении старого оформления фона этот режим автоматически отключается.</p>
+        </section>
+
          <div id="photos-panel-content" hidden>
     <div class="lens-controls-row">
 
@@ -1153,7 +1187,7 @@
 <!-- /ЦЕНТРАЛЬНОЕ ОКНО ЗАПИСИ -->
   <!-- ФАЙЛ С ФУНКЦИЯМИ САЙТА -->
 
-  <script src="script.js?v=20261124-white-canvas-toggle-v1"></script>
+  <script src="script.js?v=20261124-editorial-background-v1"></script>
 
 <div id="lab-color-modal" class="lab-color-modal" hidden aria-hidden="true"><div class="lab-color-dialog" role="dialog" aria-modal="true" aria-labelledby="lab-color-title"><div class="lab-color-dialog-head"><strong id="lab-color-title">Выбор цвета</strong><button type="button" id="lab-color-close" aria-label="Закрыть">×</button></div><div class="lab-color-dialog-body"><div id="lab-color-sv" class="lab-color-sv" role="slider" aria-label="Насыщенность и яркость" tabindex="0"><span id="lab-color-sv-cursor"></span></div><input id="lab-color-hue" class="lab-color-hue" type="range" min="0" max="360" value="180" aria-label="Оттенок"><div class="lab-color-preview-row"><span id="lab-color-preview"></span><label>RGB <input id="lab-color-rgb" type="text" value="30, 41, 43" aria-label="RGB"></label></div><div class="lab-color-dialog-actions"><button type="button" id="lab-color-cancel">Отмена</button><button type="button" id="lab-color-apply">Применить</button></div></div></div></div>
   <script src="page-transition.js?v=20261117-curtain-dom1"></script>
