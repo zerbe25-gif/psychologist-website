@@ -1683,3 +1683,50 @@ window.applyBackgroundMood = function(mood){
   window.addEventListener("resize", checkHeadingPosition, { passive: true });
   checkHeadingPosition();
 })();
+
+
+/* Разовый входной акцент заголовков разделов «О Методе», «Запросы» и «Формат работы».
+   Запускается при пересечении верхом заголовка линии на 75% высоты viewport шторки. */
+(function initSectionHeadingEntryReveal() {
+  const drawer = document.getElementById("sideDrawer");
+  const viewport = document.getElementById("drawerViewport");
+  if (!drawer || !viewport) return;
+
+  const headings = Array.from(drawer.querySelectorAll(
+    '[data-drawer-panel="method"] .drawer-entry-heading, ' +
+    '[data-drawer-panel="requests"] .drawer-entry-heading, ' +
+    '[data-drawer-panel="format"] .drawer-entry-heading'
+  ));
+  const pending = new Set(headings.filter(heading =>
+    !heading.classList.contains("drawer-entry-revealed")
+  ));
+  if (!pending.size) return;
+
+  const checkHeadingPositions = () => {
+    if (drawer.getAttribute("aria-hidden") !== "false") return;
+    const viewportRect = viewport.getBoundingClientRect();
+    if (viewportRect.height <= 0) return;
+    const triggerLine = viewportRect.top + viewportRect.height * 0.75;
+
+    pending.forEach(heading => {
+      const rect = heading.getBoundingClientRect();
+      const crossesTrigger = rect.top <= triggerLine && rect.bottom >= viewportRect.top;
+      if (!crossesTrigger) return;
+      heading.classList.add("drawer-entry-revealed");
+      pending.delete(heading);
+    });
+
+    if (!pending.size) {
+      viewport.removeEventListener("scroll", checkHeadingPositions);
+      window.removeEventListener("resize", checkHeadingPositions);
+      drawerObserver.disconnect();
+    }
+  };
+
+  viewport.addEventListener("scroll", checkHeadingPositions, { passive: true });
+  window.addEventListener("resize", checkHeadingPositions, { passive: true });
+
+  const drawerObserver = new MutationObserver(checkHeadingPositions);
+  drawerObserver.observe(drawer, { attributes: true, attributeFilter: ["aria-hidden"] });
+  checkHeadingPositions();
+})();
