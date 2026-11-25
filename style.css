@@ -7999,3 +7999,34 @@ body > .main-content {
  .home-light-control>span{font-size:8px}
  .home-light-control output{min-width:19px}
 }
+
+
+/* FINAL TOP ANCHOR FIX — fixed to the viewport, not the page's scroll container.
+   Desktop only: the developer panel owns the top edge; the site header sits directly below it. */
+@media (min-width: 901px) {
+  body > #developer-panel {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    z-index: 2147483647 !important;
+  }
+
+  body > .header {
+    position: fixed !important;
+    top: var(--developer-panel-height, 36px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    z-index: 2147483600 !important;
+  }
+
+  body > .main-content {
+    margin-top: calc(var(--developer-panel-height, 36px) + var(--site-header-height, 52px)) !important;
+    height: calc(100dvh - var(--developer-panel-height, 36px) - var(--site-header-height, 52px)) !important;
+    min-height: 0 !important;
+  }
+}

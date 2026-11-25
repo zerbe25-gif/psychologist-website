@@ -669,8 +669,11 @@ function toggleBackgroundLabBlock(panelId, button) {
     const rect = panel.getBoundingClientRect();
     const bottom = Math.max(0, Math.ceil(rect.bottom));
     const height = Math.max(0, Math.ceil(panel.offsetHeight));
+    const header = document.querySelector("body > .header");
+    const headerHeight = header ? Math.max(0, Math.ceil(header.offsetHeight)) : 52;
     document.documentElement.style.setProperty("--developer-panel-bottom", bottom + "px");
     document.documentElement.style.setProperty("--developer-panel-height", height + "px");
+    document.documentElement.style.setProperty("--site-header-height", headerHeight + "px");
   }
 
   function init() {
