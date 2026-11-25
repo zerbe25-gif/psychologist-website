@@ -1018,6 +1018,14 @@ function toggleBackgroundLabBlock(panelId, button) {
       pop.hidden = false; trigger.setAttribute("aria-expanded","true");
       state = rgbToHsv(source.value);
       paint();
+      const anchor = trigger.getBoundingClientRect();
+      const popHeight = pop.offsetHeight;
+      const left = clamp(anchor.left, 10, window.innerWidth - pop.offsetWidth - 10);
+      const top = anchor.bottom + popHeight + 12 <= window.innerHeight
+        ? anchor.bottom + 9
+        : Math.max(10, anchor.top - popHeight - 9);
+      pop.style.left = left + "px";
+      pop.style.top = top + "px";
     }
     trigger.addEventListener("click", () => pop.hidden ? open() : (pop.hidden=true,trigger.setAttribute("aria-expanded","false")));
     wrap.querySelector(".web-color-close").addEventListener("click", () => { pop.hidden=true; trigger.setAttribute("aria-expanded","false"); });
