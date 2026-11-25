@@ -4453,8 +4453,6 @@ body.cost-modal-open #developer-panel {
 #developer-panel .lab-glow-control input[type=color],#developer-panel .lab-optics-control input[type=color]{height:18px}
 #sideDrawer{transition:background-color .25s ease,backdrop-filter .25s ease,-webkit-backdrop-filter .25s ease}
 
-body.theme-v3
-
 /* COLOR PICKER новой лаборатории: выбор оттенка, ползунок и HEX/RGB */
 #developer-panel .lab-color-picker{display:grid;gap:4px;min-width:0;color:#526078;font:10px/1.2 Inter,sans-serif}
 #developer-panel .lab-color-picker>label{font-weight:600}
