@@ -75,34 +75,36 @@
         <div id="animation-description">Градиент + Мягкое смещение + Овальный маркер</div>
       </div>
         <section id="editorial-background-panel" hidden aria-label="Варианты фона главного экрана"><div class="home-background-panel">
-<div class="home-background-row"><div class="home-background-group"><span class="home-background-label">БАЗОВЫЙ ВАРИАНТ</span>
-<button type="button" class="home-background-choice is-active" data-home-variant="A" onclick="setHomeBackgroundVariant('A')">A · Открытая глубина</button>
-<button type="button" class="home-background-choice" data-home-variant="B" onclick="setHomeBackgroundVariant('B')">B · Камерное пространство</button>
-<button type="button" class="home-background-choice" data-home-variant="C" onclick="setHomeBackgroundVariant('C')">C · Интеллектуальная фактура</button></div></div>
-<div class="home-background-divider"></div>
-<div class="home-background-row"><span class="home-background-label">ФАКТУРЫ · НЕЗАВИСИМЫЕ СЛОИ</span>
-<label class="home-background-toggle"><input id="home-texture-hatch" type="checkbox" checked onchange="updateHomeBackgroundSetting('hatch',this.checked)"> Штриховка</label>
-<label class="home-background-toggle"><input id="home-texture-grid" type="checkbox" onchange="updateHomeBackgroundSetting('grid',this.checked)"> Клетка</label>
-<label class="home-background-toggle"><input id="home-texture-grain" type="checkbox" checked onchange="updateHomeBackgroundSetting('grain',this.checked)"> Зернистость</label></div>
-<div class="home-background-row home-texture-strengths">
-<label class="home-background-range"><span>Штриховка</span><input id="home-hatch-opacity" type="range" min="0" max="60" value="18" oninput="updateHomeBackgroundSetting('hatchOpacity',this.value)"><output id="home-hatch-opacity-value">18%</output></label>
-<label class="home-background-range"><span>Клетка</span><input id="home-grid-opacity" type="range" min="0" max="60" value="14" oninput="updateHomeBackgroundSetting('gridOpacity',this.value)"><output id="home-grid-opacity-value">14%</output></label>
-<label class="home-background-range"><span>Зерно</span><input id="home-grain-opacity" type="range" min="0" max="60" value="20" oninput="updateHomeBackgroundSetting('grainOpacity',this.value)"><output id="home-grain-opacity-value">20%</output></label></div>
-<div class="home-background-divider"></div><div class="home-background-light-grid">
-<div class="home-light-settings"><strong>ИСТОЧНИК СВЕТА 1 · МЯГКОЕ ОВАЛЬНОЕ ПОЛЕ</strong>
-<label class="home-background-range"><span>Цвет</span><input id="home-light1-color" type="color" value="#397A78" oninput="updateHomeLight(1,'color',this.value)"></label>
-<label class="home-background-range"><span>Интенсивность</span><input id="home-light1-opacity" type="range" min="0" max="55" value="24" oninput="updateHomeLight(1,'opacity',this.value)"><output id="home-light1-opacity-value">24%</output></label>
-<label class="home-background-range"><span>Положение X</span><input id="home-light1-x" type="range" min="0" max="100" value="82" oninput="updateHomeLight(1,'x',this.value)"><output id="home-light1-x-value">82%</output></label>
-<label class="home-background-range"><span>Положение Y</span><input id="home-light1-y" type="range" min="0" max="100" value="28" oninput="updateHomeLight(1,'y',this.value)"><output id="home-light1-y-value">28%</output></label>
-<label class="home-background-range"><span>Ширина</span><input id="home-light1-width" type="range" min="20" max="100" value="62" oninput="updateHomeLight(1,'width',this.value)"><output id="home-light1-width-value">62%</output></label>
-<label class="home-background-range"><span>Высота</span><input id="home-light1-height" type="range" min="10" max="90" value="48" oninput="updateHomeLight(1,'height',this.value)"><output id="home-light1-height-value">48%</output></label></div>
-<div class="home-light-settings"><strong>ИСТОЧНИК СВЕТА 2 · ВЫТЯНУТЫЙ АКЦЕНТ</strong>
-<label class="home-background-range"><span>Цвет</span><input id="home-light2-color" type="color" value="#D6AD76" oninput="updateHomeLight(2,'color',this.value)"></label>
-<label class="home-background-range"><span>Интенсивность</span><input id="home-light2-opacity" type="range" min="0" max="45" value="16" oninput="updateHomeLight(2,'opacity',this.value)"><output id="home-light2-opacity-value">16%</output></label>
-<label class="home-background-range"><span>Положение X</span><input id="home-light2-x" type="range" min="0" max="100" value="76" oninput="updateHomeLight(2,'x',this.value)"><output id="home-light2-x-value">76%</output></label>
-<label class="home-background-range"><span>Положение Y</span><input id="home-light2-y" type="range" min="0" max="100" value="68" oninput="updateHomeLight(2,'y',this.value)"><output id="home-light2-y-value">68%</output></label>
-<label class="home-background-range"><span>Ширина</span><input id="home-light2-width" type="range" min="25" max="100" value="82" oninput="updateHomeLight(2,'width',this.value)"><output id="home-light2-width-value">82%</output></label>
-<label class="home-background-range"><span>Высота</span><input id="home-light2-height" type="range" min="5" max="45" value="16" oninput="updateHomeLight(2,'height',this.value)"><output id="home-light2-height-value">16%</output></label></div></div></div></section>
+<div class="home-background-topline">
+ <div class="home-background-group"><span class="home-background-label">БАЗОВЫЙ ВАРИАНТ</span>
+ <button type="button" class="home-background-choice is-active" data-home-variant="A" title="A — Открытая глубина" onclick="setHomeBackgroundVariant('A')">A · Открытая</button>
+ <button type="button" class="home-background-choice" data-home-variant="B" title="B — Камерное пространство" onclick="setHomeBackgroundVariant('B')">B · Камерная</button>
+ <button type="button" class="home-background-choice" data-home-variant="C" title="C — Интеллектуальная фактура" onclick="setHomeBackgroundVariant('C')">C · Фактура</button></div>
+ <div class="home-texture-controls">
+  <span class="home-background-label">ФАКТУРЫ</span>
+  <label class="home-texture-control"><span>Штриховка</span><input id="home-texture-hatch" type="checkbox" checked onchange="updateHomeBackgroundSetting('hatch',this.checked)"><input aria-label="Интенсивность штриховки" id="home-hatch-opacity" type="range" min="0" max="60" value="18" oninput="updateHomeBackgroundSetting('hatchOpacity',this.value)"><output id="home-hatch-opacity-value">18%</output></label>
+  <label class="home-texture-control"><span>Клетка</span><input id="home-texture-grid" type="checkbox" onchange="updateHomeBackgroundSetting('grid',this.checked)"><input aria-label="Интенсивность клетки" id="home-grid-opacity" type="range" min="0" max="60" value="14" oninput="updateHomeBackgroundSetting('gridOpacity',this.value)"><output id="home-grid-opacity-value">14%</output></label>
+  <label class="home-texture-control"><span>Зернистость</span><input id="home-texture-grain" type="checkbox" checked onchange="updateHomeBackgroundSetting('grain',this.checked)"><input aria-label="Интенсивность зернистости" id="home-grain-opacity" type="range" min="0" max="60" value="20" oninput="updateHomeBackgroundSetting('grainOpacity',this.value)"><output id="home-grain-opacity-value">20%</output></label>
+ </div>
+</div>
+<div class="home-background-light-grid">
+ <div class="home-light-settings"><strong>ИСТОЧНИК СВЕТА 1 · ОВАЛЬНОЕ ПОЛЕ</strong><div class="home-light-controls">
+  <label class="home-light-control"><span>Цвет</span><input id="home-light1-color" type="color" value="#397A78" oninput="updateHomeLight(1,'color',this.value)"></label>
+  <label class="home-light-control"><span>Интенсивность</span><input id="home-light1-opacity" type="range" min="0" max="55" value="24" oninput="updateHomeLight(1,'opacity',this.value)"><output id="home-light1-opacity-value">24%</output></label>
+  <label class="home-light-control"><span>X</span><input id="home-light1-x" type="range" min="0" max="100" value="82" oninput="updateHomeLight(1,'x',this.value)"><output id="home-light1-x-value">82%</output></label>
+  <label class="home-light-control"><span>Y</span><input id="home-light1-y" type="range" min="0" max="100" value="28" oninput="updateHomeLight(1,'y',this.value)"><output id="home-light1-y-value">28%</output></label>
+  <label class="home-light-control"><span>Ширина</span><input id="home-light1-width" type="range" min="20" max="100" value="62" oninput="updateHomeLight(1,'width',this.value)"><output id="home-light1-width-value">62%</output></label>
+  <label class="home-light-control"><span>Высота</span><input id="home-light1-height" type="range" min="10" max="90" value="48" oninput="updateHomeLight(1,'height',this.value)"><output id="home-light1-height-value">48%</output></label>
+ </div></div>
+ <div class="home-light-settings"><strong>ИСТОЧНИК СВЕТА 2 · ВЫТЯНУТЫЙ АКЦЕНТ</strong><div class="home-light-controls">
+  <label class="home-light-control"><span>Цвет</span><input id="home-light2-color" type="color" value="#D6AD76" oninput="updateHomeLight(2,'color',this.value)"></label>
+  <label class="home-light-control"><span>Интенсивность</span><input id="home-light2-opacity" type="range" min="0" max="45" value="16" oninput="updateHomeLight(2,'opacity',this.value)"><output id="home-light2-opacity-value">16%</output></label>
+  <label class="home-light-control"><span>X</span><input id="home-light2-x" type="range" min="0" max="100" value="76" oninput="updateHomeLight(2,'x',this.value)"><output id="home-light2-x-value">76%</output></label>
+  <label class="home-light-control"><span>Y</span><input id="home-light2-y" type="range" min="0" max="100" value="68" oninput="updateHomeLight(2,'y',this.value)"><output id="home-light2-y-value">68%</output></label>
+  <label class="home-light-control"><span>Ширина</span><input id="home-light2-width" type="range" min="25" max="100" value="82" oninput="updateHomeLight(2,'width',this.value)"><output id="home-light2-width-value">82%</output></label>
+  <label class="home-light-control"><span>Высота</span><input id="home-light2-height" type="range" min="5" max="45" value="16" oninput="updateHomeLight(2,'height',this.value)"><output id="home-light2-height-value">16%</output></label>
+ </div></div>
+</div></div></section>
 <div id="cost-control-panel" hidden>
 
     <div class="background-control">
