@@ -8108,18 +8108,66 @@ body > .main-content {
   .home-type-scale-button { width:19px;height:19px; }
 }
 
-/* PORTRAIT ORGANIC HAZE — desktop atmosphere layers; source image untouched */
+
+/* PORTRAIT ORGANIC HAZE — layered, irregular, feathered atmosphere */
 @media (min-width:901px){
- .photo-frame-1.portrait-stage{overflow:visible!important;isolation:isolate;--portrait-haze-strength:.42;--portrait-haze-spread:68%;--portrait-haze-grain:.38;--portrait-haze-organic:72;--portrait-haze-shadow:.22}
+ .photo-frame-1.portrait-stage{
+  overflow:visible!important;isolation:isolate;
+  --portrait-haze-strength:.72;--portrait-haze-spread:-20%;
+  --portrait-haze-grain:.62;--portrait-haze-organic:82;--portrait-haze-shadow:.30;
+ }
  .photo-frame-1.portrait-stage .photo-layer{z-index:2}
- .portrait-haze-backdrop,.portrait-haze-overlay,.portrait-haze-grain{position:absolute;pointer-events:none;visibility:hidden}
- .portrait-haze-backdrop{z-index:1;inset:var(--portrait-haze-spread);background:radial-gradient(ellipse 42% 34% at 8% 62%,rgba(226,232,218,.72),transparent 76%),radial-gradient(ellipse 35% 25% at 94% 53%,rgba(209,220,207,.58),transparent 78%),radial-gradient(ellipse 44% 22% at 42% 104%,rgba(194,207,192,.35),transparent 80%);filter:blur(clamp(12px,2.4vw,34px)) url(#portrait-haze-warp);mix-blend-mode:screen}
- .portrait-haze-overlay{z-index:3;inset:-2%;background:radial-gradient(ellipse 48% 26% at 4% 68%,rgba(222,229,216,.44),transparent 76%),radial-gradient(ellipse 30% 22% at 13% 88%,rgba(224,231,219,.34),transparent 80%),radial-gradient(ellipse 30% 35% at 100% 44%,rgba(27,34,32,calc(var(--portrait-haze-shadow)*.72)),transparent 78%),radial-gradient(ellipse 24% 19% at 94% 82%,rgba(35,42,39,calc(var(--portrait-haze-shadow)*.48)),transparent 82%);filter:blur(clamp(5px,1.15vw,16px)) url(#portrait-haze-warp);mix-blend-mode:soft-light}
- .portrait-haze-grain{z-index:4;inset:-3%;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.88' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.58'/%3E%3C/svg%3E");mix-blend-mode:soft-light}
- .portrait-frame-atmosphere-on .portrait-haze-backdrop,.portrait-frame-atmosphere-on .portrait-haze-overlay,.portrait-frame-atmosphere-on .portrait-haze-grain{visibility:visible}
- .portrait-frame-atmosphere-on .portrait-haze-backdrop{opacity:calc(var(--portrait-haze-strength)*.78)}
- .portrait-frame-atmosphere-on .portrait-haze-overlay{opacity:var(--portrait-haze-strength)}
- .portrait-frame-atmosphere-on .portrait-haze-grain{opacity:calc(var(--portrait-haze-grain)*var(--portrait-haze-strength))}
+ .portrait-haze-backdrop,.portrait-haze-left-veil,.portrait-haze-overlay,.portrait-haze-grain{
+  position:absolute;pointer-events:none;visibility:hidden;
+ }
+ /* Pale illumination lives BEHIND the image and spills into the dark page background. */
+ .portrait-haze-backdrop{
+  z-index:1;inset:var(--portrait-haze-spread);
+  background:
+   radial-gradient(ellipse 56% 43% at 5% 62%,rgba(226,234,222,.86) 0%,rgba(197,214,199,.58) 33%,transparent 76%),
+   radial-gradient(ellipse 38% 30% at 30% 91%,rgba(215,226,210,.62) 0%,transparent 76%),
+   radial-gradient(ellipse 32% 28% at 98% 56%,rgba(204,218,204,.42) 0%,transparent 78%),
+   radial-gradient(ellipse 48% 23% at 54% 108%,rgba(197,211,198,.34) 0%,transparent 82%);
+  filter:blur(clamp(16px,3vw,42px)) url(#portrait-haze-warp);
+  mix-blend-mode:screen;opacity:calc(var(--portrait-haze-strength)*.88);
+ }
+ /* Main cloudy veil: several overlapping irregular fields, concentrated mid/lower left. */
+ .portrait-haze-left-veil{
+  z-index:3;inset:-12%;
+  background:
+   radial-gradient(ellipse 35% 31% at 8% 65%,rgba(225,232,218,.72) 0%,rgba(212,224,210,.34) 46%,transparent 78%),
+   radial-gradient(ellipse 25% 20% at 23% 86%,rgba(224,231,218,.62) 0%,rgba(207,221,207,.24) 54%,transparent 82%),
+   radial-gradient(ellipse 18% 28% at 3% 42%,rgba(204,218,207,.34) 0%,transparent 78%),
+   radial-gradient(ellipse 24% 18% at 38% 73%,rgba(207,220,207,.28) 0%,transparent 82%);
+  filter:blur(clamp(7px,1.3vw,18px)) url(#portrait-haze-warp);
+  mix-blend-mode:screen;opacity:calc(var(--portrait-haze-strength)*.72);
+ }
+ /* Reverse tonal veil on the right edge of the portrait. */
+ .portrait-haze-overlay{
+  z-index:4;inset:-5%;
+  background:
+   radial-gradient(ellipse 28% 39% at 98% 45%,rgba(17,25,24,calc(var(--portrait-haze-shadow)*.92)) 0%,transparent 78%),
+   radial-gradient(ellipse 23% 24% at 94% 82%,rgba(25,33,30,calc(var(--portrait-haze-shadow)*.78)) 0%,transparent 82%),
+   radial-gradient(ellipse 24% 20% at 5% 72%,rgba(218,228,214,.24) 0%,transparent 80%);
+  filter:blur(clamp(6px,1vw,14px)) url(#portrait-haze-warp);
+  mix-blend-mode:soft-light;opacity:var(--portrait-haze-strength);
+ }
+ /* Grain has a feathered, organic alpha mask — never a rectangular tile boundary. */
+ .portrait-haze-grain{
+  z-index:5;inset:-16%;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)' opacity='.82'/%3E%3C/svg%3E");
+  background-size:190px 190px;
+  -webkit-mask-image:radial-gradient(ellipse 65% 58% at 25% 66%,#000 0%,#000 25%,rgba(0,0,0,.8) 48%,transparent 83%);
+  mask-image:radial-gradient(ellipse 65% 58% at 25% 66%,#000 0%,#000 25%,rgba(0,0,0,.8) 48%,transparent 83%);
+  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+  -webkit-mask-size:100% 100%;mask-size:100% 100%;
+  filter:url(#portrait-haze-warp);
+  mix-blend-mode:soft-light;opacity:calc(var(--portrait-haze-grain)*var(--portrait-haze-strength)*.9);
+ }
+ .portrait-frame-atmosphere-on .portrait-haze-backdrop,
+ .portrait-frame-atmosphere-on .portrait-haze-left-veil,
+ .portrait-frame-atmosphere-on .portrait-haze-overlay,
+ .portrait-frame-atmosphere-on .portrait-haze-grain{visibility:visible}
  .portrait-atmosphere-controls{display:grid;grid-template-columns:repeat(5,minmax(120px,1fr));gap:8px 14px;padding:12px 14px;align-items:center}
  .portrait-atmosphere-controls>strong{grid-column:1/-1;font-size:10px;letter-spacing:.1em;color:#d9dfd9}
  .portrait-atmosphere-control{display:grid;grid-template-columns:1fr auto;gap:4px 8px;align-items:center;font-size:10px;color:#c5cec7}
