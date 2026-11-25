@@ -7907,6 +7907,7 @@ html.initial-load-reveal .header {
  body[data-home-grid="off"] #background-lab-texture::after{opacity:0}
  #background-lab-grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:var(--home-grain-opacity,.20);filter:url(#lab-film-grain);mix-blend-mode:soft-light}body[data-home-grain="off"] #background-lab-grain{opacity:0}
  .header{position:relative;z-index:4;background:rgba(246,244,238,.78)!important;backdrop-filter:blur(9px)}.main-content{position:relative;z-index:2;background:transparent!important;isolation:isolate}.main-content::before{content:none!important;display:none!important}
+ .hatching-bg-layer,.floating-paper-layer,.watercolor-bg-layer,.ambient-light-bg-layer{display:none!important;opacity:0!important;visibility:hidden!important}
  .menu-label{color:#46534f!important}.menu-item{color:#243431!important}.menu-item:hover{color:#54786e!important}
 }
 /* =========================================================
