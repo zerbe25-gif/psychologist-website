@@ -164,144 +164,6 @@ setMenuAnimation(1);
 // ПАНЕЛЬ УПРАВЛЕНИЯ ФОНОМ
 // ========================================
 
-function toggleBackgroundPanel() {
-    const content = document.getElementById('background-panel-content');
-    const button = document.querySelector('.background-panel-heading');
-    const arrow = document.getElementById('background-panel-arrow');
-
-    if (!content || !button) return;
-
-    const isOpen = !content.hidden;
-
-    content.hidden = isOpen;
-
-    button.setAttribute('aria-expanded', String(!isOpen));
-
-    if (arrow) {
-        arrow.textContent = isOpen ? '＋' : '－';
-    }
-}
-
-// =======================================================
-// УПРАВЛЕНИЕ ФОНОМ: ШТРИХОВКА И ТЕНЬ ЛИСТА
-// =======================================================
-
-// 1. ПЕРЕКЛЮЧЕНИЕ МЕЖДУ ДВУМЯ СТИЛЯМИ
-
-function switchTechnique(techNum, btnEl) {
-    const layers = [
-        'tech-hatching',
-        'tech-floating-paper',
-        'tech-watercolor',
-        'tech-ambient-light'
-    ];
-
-    const controls = [
-        'controls-hatching',
-        'controls-paper-shadow',
-        'controls-watercolor',
-        'controls-ambient-light'
-    ];
-
-    if (techNum < 1 || techNum > 4) return;
-
-    document.querySelectorAll('#background-control-panel .tech-tab')
-        .forEach(button => button.classList.remove('active'));
-
-    if (btnEl) btnEl.classList.add('active');
-
-    document.body.classList.remove(
-        'tech-1-active',
-        'tech-2-active',
-        'tech-3-active',
-        'tech-4-active'
-    );
-
-    document.body.classList.add(`tech-${techNum}-active`);
-
-    layers.forEach((id, index) => {
-        const layer = document.getElementById(id);
-        if (layer) {
-            layer.classList.toggle('active-tech', index === techNum - 1);
-        }
-    });
-
-    controls.forEach((id, index) => {
-        const panel = document.getElementById(id);
-        if (panel) {
-            panel.hidden = index !== techNum - 1;
-        }
-    });
-}
-
-// 2. НАСТРОЙКИ ТЕХНИКИ 1: ШТРИХОВКА
-
-function updateHatchAngle(val) {
-    document.documentElement.style.setProperty('--hatch-angle', val + 'deg');
-
-    const label = document.getElementById('val-hatch-angle');
-    if (label) label.textContent = val + '°';
-}
-
-function updateHatchOpacity(val) {
-    document.documentElement.style.setProperty('--hatch-opacity', val);
-
-    const label = document.getElementById('val-hatch-opacity');
-    if (label) label.textContent = Math.round(val * 100) + '%';
-}
-
-function updateHatchSpacing(val) {
-    document.documentElement.style.setProperty('--hatch-spacing', val + 'px');
-
-    const label = document.getElementById('val-hatch-spacing');
-    if (label) label.textContent = val + 'px';
-}
-
-function setHatchColor(colorHex, btnEl) {
-    document.documentElement.style.setProperty('--hatch-color', colorHex);
-
-    if (btnEl && btnEl.parentElement) {
-        btnEl.parentElement.querySelectorAll('button').forEach(button => {
-            button.classList.remove('selected');
-        });
-
-        btnEl.classList.add('selected');
-    }
-}
-
-
-// 3. НАСТРОЙКИ ТЕХНИКИ 2: ТЕНЬ ЛИСТА
-
-function updateShadowElevation(val) {
-    document.documentElement.style.setProperty('--paper-elevation-y', val + 'px');
-
-    const label = document.getElementById('val-shadow-elevation');
-    if (label) label.textContent = val + 'px';
-}
-
-function updateShadowBlur(val) {
-    document.documentElement.style.setProperty('--paper-shadow-blur', val + 'px');
-
-    const label = document.getElementById('val-shadow-blur');
-    if (label) label.textContent = val + 'px';
-}
-
-function updateShadowOpacity(val) {
-    document.documentElement.style.setProperty('--paper-shadow-opacity', val);
-
-    const label = document.getElementById('val-shadow-opacity');
-    if (label) label.textContent = Math.round(val * 100) + '%';
-}
-
-function updateShadowAngle(val) {
-    document.documentElement.style.setProperty('--paper-elevation-x', val + 'px');
-
-    const label = document.getElementById('val-shadow-angle');
-    if (label) label.textContent = val + 'px';
-}
-
-
-// =======================================================
 // ЕДИНОЕ СОХРАНЕНИЕ НАСТРОЕК ФОНА
 // =======================================================
 
@@ -338,18 +200,6 @@ const watercolorPalettes = {
 
 let currentWatercolorPalette = 'blue';
 
-// Единый выключатель оформления фона главной страницы.
-const backgroundEffectsStorageKey = 'psychologistBackgroundEffectsEnabled';
-
-function setBackgroundEffectsEnabled(enabled) {
-  document.body.classList.toggle('background-effects-disabled', !enabled);
-  const toggle = document.getElementById('background-effects-toggle');
-  if (toggle) toggle.checked = enabled;
-  if (typeof applyEditorialBackgroundMode === 'function') {
-    applyEditorialBackgroundMode();
-  }
-}
-
 // Отдельный редакционный фон главного экрана. Он активен только при выключенном старом оформлении.
 const editorialBackgroundStorageKey = 'psychologistEditorialHomeBackground';
 const editorialBackgroundDefaults = { background: 'diagonal', texture: 'hatch', strength: 45 };
@@ -364,8 +214,7 @@ function saveEditorialBackgroundSettings() {
 }
 
 function applyEditorialBackgroundMode() {
-  const active = document.body.classList.contains('background-effects-disabled');
-  document.body.classList.toggle('editorial-background-active', active);
+  document.body.classList.add('editorial-background-active');
 }
 
 function setEditorialBackground(name) {
@@ -421,424 +270,6 @@ if (document.readyState === 'loading') {
   initializeEditorialBackground();
 }
 
-function initializeBackgroundEffectsToggle() {
-  const toggle = document.getElementById('background-effects-toggle');
-  let enabled = false;
-  try {
-    enabled = localStorage.getItem(backgroundEffectsStorageKey) === 'true';
-  } catch (error) {
-    console.warn('Не удалось прочитать режим оформления фона.', error);
-  }
-  setBackgroundEffectsEnabled(enabled);
-  if (!toggle) return;
-  toggle.addEventListener('change', () => {
-    const nextEnabled = toggle.checked;
-    setBackgroundEffectsEnabled(nextEnabled);
-    try {
-      localStorage.setItem(backgroundEffectsStorageKey, String(nextEnabled));
-    } catch (error) {
-      console.warn('Не удалось сохранить режим оформления фона.', error);
-    }
-  });
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initializeBackgroundEffectsToggle, { once: true });
-} else {
-  initializeBackgroundEffectsToggle();
-}
-
-
-
-// Сохранение всех настроек фона
-
-function saveBackgroundSettings() {
-
-  const getValue = (id, fallback) =>
-    document.getElementById(id)?.value ?? fallback;
-
-  const activeTab = document.querySelector(
-    '#background-control-panel .tech-tab.active'
-  );
-
-  const tabs = Array.from(
-    document.querySelectorAll('#background-control-panel .tech-tab')
-  );
-
-  const settings = {
-
-    technique: activeTab ? tabs.indexOf(activeTab) + 1 : 3,
-
-    hatchAngle: getValue('hatch-angle-input', '45'),
-    hatchOpacity: getValue('hatch-opacity-input', '0.12'),
-    hatchSpacing: getValue('hatch-spacing-input', '12'),
-    hatchColor: getComputedStyle(document.documentElement)
-      .getPropertyValue('--hatch-color').trim() || '#2B4C6F',
-
-    shadowElevation: getValue('shadow-elevation-input', '18'),
-    shadowBlur: getValue('shadow-blur-input', '36'),
-    shadowOpacity: getValue('shadow-opacity-input', '0.08'),
-    shadowAngle: getValue('shadow-angle-input', '0'),
-
-    watercolorOpacity: getValue('watercolor-opacity-input', '0.45'),
-    watercolorSize: getValue('watercolor-size-input', '100'),
-    watercolorBlur: getValue('watercolor-blur-input', '35'),
-    watercolorOrigin: getValue('watercolor-origin-input', '25'),
-    watercolorPalette: currentWatercolorPalette,
-
-    ambientOpacity: getValue('ambient-opacity-input', '0.35'),
-    ambientSize: getValue('ambient-size-input', '100'),
-    ambientSpeed: getValue('ambient-speed-input', '20')
-
-  };
-
-  try {
-
-    localStorage.setItem(
-      backgroundStorageKey,
-      JSON.stringify(settings)
-    );
-
-  } catch (error) {
-
-    console.warn('Не удалось сохранить настройки фона.', error);
-
-  }
-
-}
-
-
-// Управление акварелью
-
-function updateWatercolorOpacity(val) {
-
-  document.documentElement.style.setProperty(
-    '--watercolor-opacity', val
-  );
-
-  const label = document.getElementById('val-watercolor-opacity');
-
-  if (label) label.textContent = Math.round(val * 100) + '%';
-
-}
-
-function updateWatercolorSize(val) {
-
-  document.documentElement.style.setProperty(
-    '--watercolor-size', val + '%'
-  );
-
-  const label = document.getElementById('val-watercolor-size');
-
-  if (label) label.textContent = val + '%';
-
-}
-
-function updateWatercolorBlur(val) {
-
-  document.documentElement.style.setProperty(
-    '--watercolor-blur', val + 'px'
-  );
-
-  const label = document.getElementById('val-watercolor-blur');
-
-  if (label) label.textContent = val + 'px';
-
-}
-
-function updateWatercolorOrigin(val) {
-
-  document.documentElement.style.setProperty(
-    '--watercolor-origin', val + '%'
-  );
-
-  const label = document.getElementById('val-watercolor-origin');
-
-  if (label) label.textContent = val + '%';
-
-}
-
-
-// Выбор палитры акварели
-
-function setWatercolorPalette(name, btnEl) {
-
-  const palette = watercolorPalettes[name];
-
-  if (!palette) return;
-
-  currentWatercolorPalette = name;
-
-  document.documentElement.style.setProperty(
-    '--watercolor-color-1', palette.first
-  );
-
-  document.documentElement.style.setProperty(
-    '--watercolor-color-2', palette.second
-  );
-
-  document.documentElement.style.setProperty(
-    '--watercolor-color-3', palette.third
-  );
-
-  document.querySelectorAll('.watercolor-palettes button')
-    .forEach(button => button.classList.remove('selected'));
-
-  if (btnEl) btnEl.classList.add('selected');
-
-}
-
-
-// Восстановление настроек при открытии сайта
-
-function initializeBackgroundSettings() {
-
-  let settings = {};
-
-  try {
-
-    const saved = localStorage.getItem(backgroundStorageKey);
-
-    if (saved) {
-
-      settings = JSON.parse(saved);
-
-    } else {
-
-      // Перенос ранее сохранённых настроек акварели
-
-      const oldSaved = localStorage.getItem(watercolorStorageKey);
-
-      if (oldSaved) {
-
-        const old = JSON.parse(oldSaved);
-
-        settings = {
-
-          watercolorOpacity: old.opacity,
-          watercolorSize: old.size,
-          watercolorBlur: old.blur,
-          watercolorOrigin: old.origin,
-          watercolorPalette: old.palette
-
-        };
-
-      }
-
-    }
-
-  } catch (error) {
-
-    console.warn('Не удалось прочитать настройки фона.', error);
-
-  }
-
-
-  const defaults = {
-
-    technique: 3,
-
-    hatchAngle: '45',
-    hatchOpacity: '0.12',
-    hatchSpacing: '12',
-    hatchColor: '#2B4C6F',
-
-    shadowElevation: '18',
-    shadowBlur: '36',
-    shadowOpacity: '0.08',
-    shadowAngle: '0',
-
-    watercolorOpacity: '0.45',
-    watercolorSize: '100',
-    watercolorBlur: '35',
-    watercolorOrigin: '25',
-    watercolorPalette: 'blue',
-
-    ambientOpacity: '0.35',
-    ambientSize: '100',
-    ambientSpeed: '20'
-
-  };
-
-  settings = { ...defaults, ...settings };
-
-
-  // Восстанавливаем положения ползунков
-
-  const inputSettings = {
-
-    'hatch-angle-input': settings.hatchAngle,
-    'hatch-opacity-input': settings.hatchOpacity,
-    'hatch-spacing-input': settings.hatchSpacing,
-
-    'shadow-elevation-input': settings.shadowElevation,
-    'shadow-blur-input': settings.shadowBlur,
-    'shadow-opacity-input': settings.shadowOpacity,
-    'shadow-angle-input': settings.shadowAngle,
-
-    'watercolor-opacity-input': settings.watercolorOpacity,
-    'watercolor-size-input': settings.watercolorSize,
-    'watercolor-blur-input': settings.watercolorBlur,
-    'watercolor-origin-input': settings.watercolorOrigin,
-
-    'ambient-opacity-input': settings.ambientOpacity,
-    'ambient-size-input': settings.ambientSize,
-    'ambient-speed-input': settings.ambientSpeed
-
-  };
-
-  Object.entries(inputSettings).forEach(([id, value]) => {
-
-    const input = document.getElementById(id);
-
-    if (input && value !== undefined && value !== null) {
-      input.value = value;
-    }
-
-  });
-
-
-  // Применяем настройки штриховки
-
-  updateHatchAngle(settings.hatchAngle);
-  updateHatchOpacity(settings.hatchOpacity);
-  updateHatchSpacing(settings.hatchSpacing);
-
-  const hatchButton = Array.from(
-    document.querySelectorAll('#background-control-panel .hatch-color-buttons button')
-  ).find(button =>
-    button.getAttribute('onclick')?.includes(settings.hatchColor)
-  );
-
-  setHatchColor(settings.hatchColor, hatchButton);
-
-
-  // Применяем настройки тени листа
-
-  updateShadowElevation(settings.shadowElevation);
-  updateShadowBlur(settings.shadowBlur);
-  updateShadowOpacity(settings.shadowOpacity);
-  updateShadowAngle(settings.shadowAngle);
-
-
-  // Применяем настройки акварели
-
-  currentWatercolorPalette =
-    watercolorPalettes[settings.watercolorPalette]
-      ? settings.watercolorPalette
-      : 'blue';
-
-  updateWatercolorOpacity(settings.watercolorOpacity);
-  updateWatercolorSize(settings.watercolorSize);
-  updateWatercolorBlur(settings.watercolorBlur);
-  updateWatercolorOrigin(settings.watercolorOrigin);
-
-  const paletteButton = document.querySelector(
-    `.watercolor-palettes button[onclick*="${currentWatercolorPalette}"]`
-  );
-
-  setWatercolorPalette(currentWatercolorPalette, paletteButton);
-
-
-  // Применяем настройки световой вуали
-
-  updateAmbientOpacity(settings.ambientOpacity);
-  updateAmbientSize(settings.ambientSize);
-  updateAmbientSpeed(settings.ambientSpeed);
-
-
-  // Восстанавливаем выбранную технику
-
-  const technique = Math.min(
-    4,
-    Math.max(1, Number(settings.technique) || 3)
-  );
-
-  const tabs = document.querySelectorAll(
-    '#background-control-panel .tech-tab'
-  );
-
-  switchTechnique(technique, tabs[technique - 1]);
-
-}
-
-
-// Сохраняем изменения ползунков
-
-document.addEventListener('input', function(event) {
-
-  if (
-    event.target.matches(
-      '#background-control-panel input[type="range"]'
-    )
-  ) {
-
-    saveBackgroundSettings();
-
-  }
-
-});
-
-
-// Сохраняем выбор техники и цветовых кнопок
-
-document.addEventListener('click', function(event) {
-
-  if (
-    event.target.closest(
-      '#background-control-panel .tech-tab, ' +
-      '#background-control-panel .hatch-color-buttons button'
-    )
-  ) {
-
-    saveBackgroundSettings();
-
-  }
-
-});
-
-
-// Запуск восстановления после загрузки страницы
-
-document.addEventListener('DOMContentLoaded', function() {
-
-  initializeBackgroundSettings();
-
-});
-
-
-// =======================================================
-// ТЕХНИКА 4: УПРАВЛЕНИЕ СВЕТОВОЙ ВУАЛЬЮ
-// =======================================================
-
-function updateAmbientOpacity(val) {
-    document.documentElement.style.setProperty(
-        '--ambient-opacity', val
-    );
-
-    const label = document.getElementById('val-ambient-opacity');
-    if (label) label.textContent = Math.round(val * 100) + '%';
-}
-
-function updateAmbientSize(val) {
-    document.documentElement.style.setProperty(
-        '--ambient-size', val + '%'
-    );
-
-    const label = document.getElementById('val-ambient-size');
-    if (label) label.textContent = val + '%';
-}
-
-function updateAmbientSpeed(val) {
-    document.documentElement.style.setProperty(
-        '--ambient-speed', val + 's'
-    );
-
-    const label = document.getElementById('val-ambient-speed');
-    if (label) label.textContent = val + ' сек.';
-}
-
-// =======================================================
 // ПЕРЕКЛЮЧЕНИЕ РАЗДЕЛОВ ПАНЕЛИ РАЗРАБОТКИ
 // =======================================================
 
@@ -1007,7 +438,6 @@ function updateAmbientSpeed(val) {
 window.toggleDevPanelSection = function(section) {
   const sectionIds = {
     animation: "animation-control-panel",
-    background: "background-control-panel",
     "editorial-background": "editorial-background-panel",
     cost: "cost-control-panel"
   };
@@ -1361,11 +791,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 // ЛАБОРАТОРИЯ ФОНА: независимое раскрытие модулей (этапная интеграция)
-const DEVELOPER_PANEL_IDS = [
-  'animation-control-panel','background-control-panel',
-  'cost-control-panel','appointment-control-panel','editorial-background-panel',
-  'lab-presets','lab-base','lab-glow1','lab-glow2'
-];
+const DEVELOPER_PANEL_IDS = ['animation-control-panel','cost-control-panel','appointment-control-panel','editorial-background-panel','lab-glow1','lab-glow2'];
 
 function setDeveloperPanel(sectionId, button) {
   const content = document.getElementById('developer-panel-content');
@@ -1408,58 +834,25 @@ function toggleBackgroundLabBlock(panelId, button) {
 }
 
 
-/* Карусель вкладок лаборатории фона + пресеты настроения */
-window.scrollBackgroundLabTabs = function(direction){
-  const track=document.getElementById('background-lab-tab-track');
-  if(track) track.scrollBy({left:direction*Math.max(150,track.clientWidth*.65),behavior:'smooth'});
-};
-window.applyBackgroundMood = function(mood){
-  const root=document.documentElement;
-  const body=document.body;
-  const presets={
-    balanced:{base:'#1E292B',teal:'rgba(52,121,126,.45)',gold:'rgba(220,181,115,.25)',drawer:'rgba(35,50,53,.92)'},
-    deep:{base:'#10191B',teal:'rgba(38,89,93,.35)',gold:'rgba(179,142,82,.12)',drawer:'rgba(20,30,32,.94)'},
-    amber:{base:'#202827',teal:'rgba(52,121,126,.30)',gold:'rgba(220,181,115,.42)',drawer:'rgba(36,43,39,.92)'}
-  };
-  const p=presets[mood]; if(!p)return;
-  body.classList.add('theme-v3');
-  root.style.setProperty('--bg-base',p.base);
-  root.style.setProperty('--background-color',p.base);
-  root.style.setProperty('--panel-color',p.drawer);
-  root.style.setProperty('--glow-1',p.teal);
-  root.style.setProperty('--glow-2',p.gold);
-  root.style.setProperty('--drawer-bg',p.drawer);
-  root.style.setProperty('--text-main','#F2F7F6');
-  root.style.setProperty('--text-color','#F2F7F6');
-  root.style.setProperty('--accent-primary','#34797E');
-  root.style.setProperty('--accent-gold','#DCB573');
-  try{localStorage.setItem('psychologistBackgroundMood',mood);localStorage.setItem('psychologistNightTealTheme','v3');}catch(e){}
-  const themeButton=document.getElementById('theme-v3-toggle');
-  if(themeButton){themeButton.classList.add('active');themeButton.setAttribute('aria-pressed','true');}
-};
-
-
 /* НОВАЯ ЛАБОРАТОРИЯ ФОНА — независимая палитра и два источника света */
 (function(){
   const root=document.documentElement;
   const key="psychologistBackgroundLabSettings";
   const defaults={
-    base:"#1E292B",vignette:35,grain:35,
+    grain:22,
     glow1:{color:"#34797E",opacity:45,x:82,y:18,size:60},
     glow2:{color:"#DCB573",opacity:22,x:15,y:85,size:55},
-    effectsLinked:true
   };
   let state={...defaults,glow1:{...defaults.glow1},glow2:{...defaults.glow2}};
   try{
-    const saved=JSON.parse(localStorage.getItem(key)||localStorage.getItem("psychologistBackgroundBaseSettings")||"{}");
-    state={...state,...saved,glow1:{...defaults.glow1,...saved.glow1},glow2:{...defaults.glow2,...saved.glow2}};
+    const saved=JSON.parse(localStorage.getItem(key)||"{}");
+    state={...state,grain:22,glow1:{...defaults.glow1,...saved.glow1},glow2:{...defaults.glow2,...saved.glow2}};
   }catch(e){}
   function setVar(name,value){root.style.setProperty(name,String(value));}
-  const colorKeys=["lab-base-color","lab-glow1-color","lab-glow2-color"];
   function hexToRgb(hex){const m=/^#?([0-9a-f]{6})$/i.exec(hex);if(!m)return null;const n=parseInt(m[1],16);return {r:n>>16,g:(n>>8)&255,b:n&255};}
   function rgbToHex(r,g,b){return "#"+[r,g,b].map(v=>Math.max(0,Math.min(255,Math.round(Number(v)))).toString(16).padStart(2,"0")).join("").toUpperCase();}
   function syncColorPicker(id,color){const rgb=hexToRgb(color);if(!rgb)return;const swatch=document.getElementById(id+"-picker"),field=document.getElementById(id+"-display"),open=document.getElementById(id+"-open");if(swatch)swatch.value=color;if(field)field.textContent=color.toUpperCase();if(open)open.style.setProperty("--picker-color",color);}
-  function setLabColor(id,color){if(!/^#[0-9a-f]{6}$/i.test(color))return;const upper=color.toUpperCase();if(id==="lab-base-color")window.updateBackgroundBase(upper);else if(id==="lab-glow1-color")window.updateBackgroundGlow(1,"color",upper);else if(id==="lab-glow2-color")window.updateBackgroundGlow(2,"color",upper);}
+  function setLabColor(id,color){if(!/^#[0-9a-f]{6}$/i.test(color))return;const upper=color.toUpperCase();if(id==="lab-glow1-color")window.updateBackgroundGlow(1,"color",upper);else if(id==="lab-glow2-color")window.updateBackgroundGlow(2,"color",upper);}
   window.updateLabColor=(id,color)=>setLabColor(id,color);
   window.updateLabColorText=(id,value)=>{const nums=value.split(/[ ,;]+/).filter(Boolean).map(Number);if(nums.length!==3||nums.some(n=>!Number.isFinite(n)||n<0||n>255))return;setLabColor(id,rgbToHex(...nums));};
 
@@ -1469,46 +862,28 @@ window.applyBackgroundMood = function(mood){
   function labHex(rgb){return "#"+[rgb.r,rgb.g,rgb.b].map(v=>v.toString(16).padStart(2,"0")).join("").toUpperCase();}
   function labHslFromHex(hex){const rgb=hexToRgb(hex);if(!rgb)return {h:180,s:.2,v:.25};const r=rgb.r/255,g=rgb.g/255,b=rgb.b/255,max=Math.max(r,g,b),min=Math.min(r,g,b),d=max-min;let h=0;if(d){if(max===r)h=60*(((g-b)/d)%6);else if(max===g)h=60*((b-r)/d+2);else h=60*((r-g)/d+4);if(h<0)h+=360;}return {h,s:max?d/max:0,v:max};}
   function labPickerPaint(){const sv=document.getElementById("lab-color-sv"),cur=document.getElementById("lab-color-sv-cursor"),hue=document.getElementById("lab-color-hue"),preview=document.getElementById("lab-color-preview"),rgbInput=document.getElementById("lab-color-rgb");if(!sv)return;sv.style.backgroundColor="hsl("+labPicker.h+",100%,50%)";if(cur){cur.style.left=(labPicker.s*100)+"%";cur.style.top=((1-labPicker.v)*100)+"%";}if(hue)hue.value=labPicker.h;const rgb=labRgb(),hex=labHex(rgb);if(preview)preview.style.background=hex;if(rgbInput)rgbInput.value=rgb.r+", "+rgb.g+", "+rgb.b;}
-  window.openLabColorPicker=(key)=>{labPicker.key=key;const colors={"lab-base-color":state.base,"lab-glow1-color":state.glow1.color,"lab-glow2-color":state.glow2.color};const hex=colors[key]||"#233235";Object.assign(labPicker,labHslFromHex(hex));const modal=document.getElementById("lab-color-modal"),dialog=modal.querySelector(".lab-color-dialog"),anchor=document.getElementById(key+"-open")||document.getElementById("lab-base-color-open");modal.hidden=false;modal.setAttribute("aria-hidden","false");if(dialog&&anchor){const rect=anchor.getBoundingClientRect(),width=Math.min(290,window.innerWidth-24);dialog.style.left=Math.max(12,Math.min(rect.left,window.innerWidth-width-12))+"px";dialog.style.top=Math.max(70,Math.min(rect.bottom+8,window.innerHeight-390))+"px";}labPickerPaint();};
+  window.openLabColorPicker=(key)=>{labPicker.key=key;const colors={"lab-glow1-color":state.glow1.color,"lab-glow2-color":state.glow2.color};const hex=colors[key]||"#233235";Object.assign(labPicker,labHslFromHex(hex));const modal=document.getElementById("lab-color-modal"),dialog=modal.querySelector(".lab-color-dialog"),anchor=document.getElementById(key+"-open");modal.hidden=false;modal.setAttribute("aria-hidden","false");if(dialog&&anchor){const rect=anchor.getBoundingClientRect(),width=Math.min(290,window.innerWidth-24);dialog.style.left=Math.max(12,Math.min(rect.left,window.innerWidth-width-12))+"px";dialog.style.top=Math.max(70,Math.min(rect.bottom+8,window.innerHeight-390))+"px";}labPickerPaint();};
   function labPickerClose(){const modal=document.getElementById("lab-color-modal");modal.hidden=true;modal.setAttribute("aria-hidden","true");}
   function labPickerApply(){const hex=labHex(labRgb());setLabColor(labPicker.key,hex);labPickerClose();}
   function labPickerSVFromPointer(e){const box=document.getElementById("lab-color-sv").getBoundingClientRect();labPicker.s=Math.max(0,Math.min(1,(e.clientX-box.left)/box.width));labPicker.v=1-Math.max(0,Math.min(1,(e.clientY-box.top)/box.height));labPickerPaint();}
   function labPickerSVKey(e){const step=e.shiftKey?.1:.01;if(e.key==="ArrowLeft")labPicker.s=Math.max(0,labPicker.s-step);else if(e.key==="ArrowRight")labPicker.s=Math.min(1,labPicker.s+step);else if(e.key==="ArrowUp")labPicker.v=Math.min(1,labPicker.v+step);else if(e.key==="ArrowDown")labPicker.v=Math.max(0,labPicker.v-step);else return;e.preventDefault();labPickerPaint();}
   document.addEventListener("DOMContentLoaded",()=>{const sv=document.getElementById("lab-color-sv"),hue=document.getElementById("lab-color-hue"),rgb=document.getElementById("lab-color-rgb");if(!sv)return;let dragging=false;sv.addEventListener("pointerdown",e=>{dragging=true;sv.setPointerCapture(e.pointerId);labPickerSVFromPointer(e);});sv.addEventListener("pointermove",e=>{if(dragging)labPickerSVFromPointer(e);});sv.addEventListener("pointerup",()=>dragging=false);sv.addEventListener("pointercancel",()=>dragging=false);sv.addEventListener("keydown",labPickerSVKey);hue.addEventListener("input",()=>{labPicker.h=Number(hue.value);labPickerPaint();});rgb.addEventListener("change",()=>{const n=rgb.value.split(/[ ,;]+/).filter(Boolean).map(Number);if(n.length!==3||n.some(v=>!Number.isFinite(v)||v<0||v>255)){labPickerPaint();return;}Object.assign(labPicker,labHslFromHex(labHex({r:n[0],g:n[1],b:n[2]})));labPickerPaint();});document.getElementById("lab-color-apply").addEventListener("click",labPickerApply);document.getElementById("lab-color-cancel").addEventListener("click",labPickerClose);document.getElementById("lab-color-close").addEventListener("click",labPickerClose);document.getElementById("lab-color-modal").addEventListener("click",e=>{if(e.target.id==="lab-color-modal")labPickerClose();});document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!document.getElementById("lab-color-modal").hidden)labPickerClose();});});
   function render(){
-    document.body.classList.toggle("lab-effects-isolated",!state.effectsLinked);
-    const link=document.getElementById("lab-effects-link");if(link)link.checked=state.effectsLinked;
-    setVar("--lab-bg-base",state.base);
-    setVar("--lab-vignette",Number(state.vignette)/100);
-    setVar("--lab-grain",Number(state.grain)+"%");
     setVar("--lab-grain-opacity",Number(state.grain)/100);
     [1,2].forEach(n=>{
       const light=state["glow"+n];
       Object.entries(light).forEach(([prop,value])=>{
-        const cssProp=prop==="opacity"?"opacity":prop;
-        setVar("--lab-glow"+n+"-"+cssProp,prop==="opacity"?Number(value)+"%":prop==="size"?Number(value)+"%":prop==="x"||prop==="y"?Number(value)+"%":value);
+        setVar("--lab-glow"+n+"-"+prop,prop==="opacity"||prop==="size"||prop==="x"||prop==="y"?Number(value)+"%":value);
         const input=document.getElementById("lab-glow"+n+"-"+prop);
         const output=document.getElementById("lab-glow"+n+"-"+prop+"-value");
         if(input)input.value=value;
         if(output)output.textContent=prop==="color"?String(value).toUpperCase():value+"%";
       });
     });
-    const base=document.getElementById("lab-base-color"),baseOut=document.getElementById("lab-base-color-display");
-    const vignette=document.getElementById("lab-vignette"),vOut=document.getElementById("lab-vignette-value");
-    const grain=document.getElementById("lab-grain"),gOut=document.getElementById("lab-grain-value");
-    syncColorPicker("lab-base-color",state.base);
     syncColorPicker("lab-glow1-color",state.glow1.color);
     syncColorPicker("lab-glow2-color",state.glow2.color);
-    if(base)base.value=state.base;if(baseOut)baseOut.textContent=state.base.toUpperCase();
-    if(vignette)vignette.value=state.vignette;if(vOut)vOut.textContent=state.vignette+"%";
-    if(grain)grain.value=state.grain;
-    if(gOut)gOut.textContent=state.grain<30?"Тонкая":state.grain>70?"Выраженная":"Средняя";
   }
   function save(){render();try{localStorage.setItem(key,JSON.stringify(state));}catch(e){}}
-  window.updateBackgroundBase=value=>{state.base=value;save();};
-  window.updateBackgroundEffectsLink=value=>{state.effectsLinked=Boolean(value);save();};
-  window.updateBackgroundVignette=value=>{state.vignette=Number(value);save();};
-  window.updateBackgroundGrain=value=>{state.grain=Number(value);save();};
   window.updateBackgroundGlow=(number,property,value)=>{
     if(![1,2].includes(Number(number))||!(property in defaults.glow1))return;
     state["glow"+number][property]=property==="color"?value:Number(value);
@@ -1516,22 +891,7 @@ window.applyBackgroundMood = function(mood){
   };
   render();
 
-  /* Пресеты задают общую цветовую основу обоим новым источникам света. */
-  const originalApplyMood=window.applyBackgroundMood;
-  if(typeof originalApplyMood==="function"){
-    window.applyBackgroundMood=function(mood){
-      originalApplyMood(mood);
-      const presets={
-        balanced:{base:"#1E292B",vignette:35,grain:35,glow1:{color:"#34797E",opacity:45,x:82,y:18,size:60},glow2:{color:"#DCB573",opacity:22,x:15,y:85,size:55}},
-        deep:{base:"#10191B",vignette:65,grain:55,glow1:{color:"#26595D",opacity:35,x:75,y:22,size:55},glow2:{color:"#B38E52",opacity:12,x:20,y:80,size:45}},
-        amber:{base:"#202827",vignette:30,grain:25,glow1:{color:"#34797E",opacity:30,x:78,y:25,size:50},glow2:{color:"#DCB573",opacity:42,x:20,y:78,size:78}}
-      };
-      if(presets[mood]){
-        state={...state,...presets[mood],glow1:{...presets[mood].glow1},glow2:{...presets[mood].glow2}};
-        save();
-      }
-    };
-  }
+
 })();
 
 

@@ -4610,29 +4610,9 @@ body.cost-modal-open #developer-panel {
 @media(max-width:600px){#developer-panel .background-lab-carousel{max-width:58vw}#developer-panel .background-lab-tab-track{width:34vw}#developer-panel .developer-panel-bar{gap:4px}}
 
 
-/* Лаборатория фона · база, виньетка и зерно */
-#developer-panel .background-lab-base{
-  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
-  padding:7px 10px;background:#f7f9fb;border:1px solid #e2e8f0;border-radius:9px;
-}
-#developer-panel .background-lab-base[hidden]{display:none!important}
-#developer-panel .lab-base-row{
-  display:flex;align-items:center;gap:7px;min-width:0;flex:1 1 170px;
-  color:#526078;font:500 10px/1.2 Inter,sans-serif;
-}
-#developer-panel .lab-base-row label{flex:0 0 auto;white-space:nowrap}
-#developer-panel .lab-base-row input[type="range"]{width:100%;min-width:45px;height:14px;margin:0;accent-color:#34797E}
-#developer-panel .lab-base-row input[type="color"]{width:24px;height:22px;padding:2px;border:1px solid #d7dee8;border-radius:5px;background:#fff;cursor:pointer}
-#developer-panel .lab-base-row output{flex:0 0 38px;text-align:right;color:#718096;font-size:10px;white-space:nowrap}
-#developer-panel .lab-base-color{flex:0 1 145px}
-@media(max-width:600px){#developer-panel .background-lab-base{gap:7px;padding:6px}#developer-panel .lab-base-row{flex-basis:145px}}
-
-
 /* НОВАЯ ЛАБОРАТОРИЯ: отдельный визуальный слой, не вмешивается в старые техники */
-body{background-color:var(--lab-bg-base,var(--background-color))!important}
 #background-lab-atmosphere{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;isolation:isolate}
-#background-lab-atmosphere::before,#background-lab-atmosphere::after{content:"";position:absolute;inset:0;pointer-events:none}
-#background-lab-atmosphere::before{
+#background-lab-atmosphere::before,#background-lab-atmosphere::before{
   background:
     radial-gradient(ellipse var(--lab-glow1-size,60%) var(--lab-glow1-size,60%) at var(--lab-glow1-x,82%) var(--lab-glow1-y,18%),color-mix(in srgb,var(--lab-glow1-color,#34797E) var(--lab-glow1-opacity,45%),transparent) 0%,transparent 72%),
     radial-gradient(ellipse var(--lab-glow2-size,55%) var(--lab-glow2-size,55%) at var(--lab-glow2-x,15%) var(--lab-glow2-y,85%),color-mix(in srgb,var(--lab-glow2-color,#DCB573) var(--lab-glow2-opacity,22%),transparent) 0%,transparent 72%);
@@ -4640,7 +4620,7 @@ body{background-color:var(--lab-bg-base,var(--background-color))!important}
 }
 #background-lab-atmosphere::after{
   background:
-    radial-gradient(ellipse at center,transparent 28%,rgba(0,0,0,var(--lab-vignette,.35)) 100%),
+    radial-gradient(ellipse at center,transparent 28%,rgba(0,0,0,0) 100%),
     repeating-linear-gradient(0deg,color-mix(in srgb,rgba(255,255,255,.18) var(--lab-grain,35%),transparent) 0 1px,transparent 1px 3px),
     repeating-linear-gradient(90deg,color-mix(in srgb,rgba(0,0,0,.18) var(--lab-grain,35%),transparent) 0 1px,transparent 1px 4px);
   opacity:1;mix-blend-mode:soft-light;
@@ -4663,9 +4643,6 @@ body{background-color:var(--lab-bg-base,var(--background-color))!important}
 .lab-effects-link-row label{display:flex;align-items:center;gap:7px;font-weight:600;white-space:nowrap}
 .lab-effects-link-row input{accent-color:#34797E}
 .lab-effects-link-row span{color:#718087;flex:1 1 230px}
-body.lab-effects-isolated #background-lab-atmosphere{background:var(--lab-bg-base,#1E292B);isolation:isolate}
-body.lab-effects-isolated #background-lab-atmosphere::before,
-body.lab-effects-isolated #background-lab-atmosphere::after{mix-blend-mode:normal}
 
 /* ВТОРОЙ ИСТОЧНИК СВЕТА */
 
@@ -4682,11 +4659,7 @@ body.lab-effects-isolated #background-lab-atmosphere::after{mix-blend-mode:norma
 
 /* НОВАЯ ЛАБОРАТОРИЯ: ЗЕРНО ВМЕСТО КЛЕТОЧНОЙ СЕТКИ */
 /* Старый клетчатый рисунок сохранён выше в .hatching-canvas, но не накладывается на слой лаборатории. */
-#background-lab-atmosphere::after{
-  background:radial-gradient(ellipse at center,transparent 28%,rgba(0,0,0,var(--lab-vignette,.35)) 100%);
-  opacity:1;mix-blend-mode:soft-light;
-}
-#background-lab-grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:var(--lab-grain-opacity,.35);filter:url(#lab-film-grain);mix-blend-mode:soft-light}
+#background-lab-grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:var(--lab-grain-opacity,.22);filter:url(#lab-film-grain);mix-blend-mode:soft-light}
 .lab-filter-defs{position:fixed;width:0;height:0;overflow:hidden;pointer-events:none}
 #developer-panel .background-lab-glow,#developer-panel .background-lab-optics{padding:4px 7px}
 #developer-panel .lab-glow-controls{gap:4px}
@@ -4744,13 +4717,11 @@ body.theme-v3
 #developer-panel #developer-panel-content{padding:6px 8px!important;overflow:auto!important}
 #developer-panel .animation-panel-title,#developer-panel .background-panel-label{margin:5px 0 7px!important;font-size:10px!important}
 #developer-panel .background-lab-card:not([hidden]){display:block!important;max-width:100%!important;overflow-x:auto!important;padding:4px 0!important}
-#developer-panel #lab-base.background-lab-base,
 #developer-panel .lab-glow-controls,
 #developer-panel .lab-optics-controls{
  display:flex!important;flex-flow:row nowrap!important;align-items:flex-end!important;
  gap:8px!important;width:max-content!important;min-width:0!important;max-width:none!important
 }
-#developer-panel #lab-base .lab-base-row,
 #developer-panel .lab-glow-control,
 #developer-panel .lab-glow-controls>.lab-color-picker,
 #developer-panel .lab-optics-control,
@@ -4758,15 +4729,12 @@ body.theme-v3
  display:flex!important;flex:0 0 112px!important;flex-direction:column!important;
  gap:4px!important;width:112px!important;min-width:112px!important;max-width:112px!important
 }
-#developer-panel #lab-base label,
 #developer-panel .lab-glow-control label,
 #developer-panel .lab-optics-control label{white-space:nowrap!important}
-#developer-panel #lab-base input[type=range],
 #developer-panel .lab-glow-control input[type=range],
 #developer-panel .lab-optics-control input[type=range]{
  display:block!important;width:100%!important;min-width:0!important;max-width:100%!important;margin:0!important
 }
-#developer-panel #lab-base output,
 #developer-panel .lab-glow-control output,
 #developer-panel .lab-optics-control output{white-space:nowrap!important;font-size:9px!important}
 #developer-panel .lab-color-open{width:100%!important;max-width:112px!important;padding:3px 4px!important}
@@ -4777,7 +4745,6 @@ body.theme-v3
 #developer-panel .developer-panel-tab{flex:0 0 auto!important}
 #developer-panel .lab-effects-link-row{white-space:nowrap}
 #developer-panel .background-lab-card[hidden],
-#developer-panel #lab-presets[hidden],#developer-panel #lab-base[hidden],
 #developer-panel #lab-glow1[hidden],#developer-panel #lab-glow2[hidden],
 #developer-panel #lab-optics[hidden]{display:none!important}
 #developer-panel{z-index:100000!important}
