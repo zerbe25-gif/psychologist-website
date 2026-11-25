@@ -179,6 +179,26 @@ function updateHomeLight(n,k,v){if(![1,2].includes(Number(n))||!['color','opacit
 function initializeHomeBackground(){if(!document.getElementById('background-lab-atmosphere')||!document.querySelector('.photo-gallery'))return;renderHomeBackground();}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initializeHomeBackground,{once:true});else initializeHomeBackground();
 
+// Масштаб заголовков главного меню: отдельная настройка, не затрагивающая шторки.
+const homeMenuScaleStorageKey='psychologistHomeMenuScaleV1';
+const homeMenuScaleDefault=90;
+let homeMenuScale=homeMenuScaleDefault;
+try {
+ const savedScale=Number(localStorage.getItem(homeMenuScaleStorageKey));
+ if(Number.isFinite(savedScale)&&savedScale>=75&&savedScale<=110)homeMenuScale=savedScale;
+} catch(error) {}
+function renderHomeMenuScale(){
+ document.documentElement.style.setProperty('--home-menu-scale',String(homeMenuScale/100));
+ const output=document.getElementById('home-menu-scale-value');
+ if(output)output.textContent=homeMenuScale+'%';
+}
+function adjustHomeMenuScale(delta){
+ homeMenuScale=Math.max(75,Math.min(110,homeMenuScale+Number(delta||0)));
+ renderHomeMenuScale();
+ try{localStorage.setItem(homeMenuScaleStorageKey,String(homeMenuScale));}catch(error){}
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',renderHomeMenuScale,{once:true});else renderHomeMenuScale();
+
 // ПЕРЕКЛЮЧЕНИЕ РАЗДЕЛОВ ПАНЕЛИ РАЗРАБОТКИ
 // =======================================================
 
