@@ -41,7 +41,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=20261125-web-color-picker-v1">
+  <link rel="stylesheet" href="style.css?v=20261125-menu-type-scale-v1">
 </head>
 
 <body id="top">
@@ -85,6 +85,14 @@
   <label class="home-texture-control"><span>Штриховка</span><input id="home-texture-hatch" type="checkbox" checked onchange="updateHomeBackgroundSetting('hatch',this.checked)"><input aria-label="Интенсивность штриховки" id="home-hatch-opacity" type="range" min="0" max="60" value="18" oninput="updateHomeBackgroundSetting('hatchOpacity',this.value)"><output id="home-hatch-opacity-value">18%</output></label>
   <label class="home-texture-control"><span>Клетка</span><input id="home-texture-grid" type="checkbox" onchange="updateHomeBackgroundSetting('grid',this.checked)"><input aria-label="Интенсивность клетки" id="home-grid-opacity" type="range" min="0" max="60" value="14" oninput="updateHomeBackgroundSetting('gridOpacity',this.value)"><output id="home-grid-opacity-value">14%</output></label>
   <label class="home-texture-control"><span>Зернистость</span><input id="home-texture-grain" type="checkbox" checked onchange="updateHomeBackgroundSetting('grain',this.checked)"><input aria-label="Интенсивность зернистости" id="home-grain-opacity" type="range" min="0" max="60" value="20" oninput="updateHomeBackgroundSetting('grainOpacity',this.value)"><output id="home-grain-opacity-value">20%</output></label>
+ </div>
+</div>
+<div class="home-type-scale-row" aria-label="Размер заголовков главного меню">
+ <span class="home-background-label">РАЗМЕР ЗАГОЛОВКОВ</span>
+ <div class="home-type-scale-control">
+  <button type="button" class="home-type-scale-button" onclick="adjustHomeMenuScale(-5)" aria-label="Уменьшить размер заголовков" title="Уменьшить">−</button>
+  <output id="home-menu-scale-value" aria-live="polite">90%</output>
+  <button type="button" class="home-type-scale-button" onclick="adjustHomeMenuScale(5)" aria-label="Увеличить размер заголовков" title="Увеличить">+</button>
  </div>
 </div>
 <div class="home-background-light-grid">
@@ -785,7 +793,7 @@
 <!-- /ЦЕНТРАЛЬНОЕ ОКНО ЗАПИСИ -->
   <!-- ФАЙЛ С ФУНКЦИЯМИ САЙТА -->
 
-  <script src="script.js?v=20261125-web-color-picker-v1"></script>
+  <script src="script.js?v=20261125-menu-type-scale-v1"></script>
 
   <script src="page-transition.js?v=20261117-curtain-dom1"></script>
   <script src="initial-load.js?v=20261117-hybrid-soft1"></script>
