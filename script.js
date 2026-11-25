@@ -438,7 +438,6 @@ if (document.readyState === 'loading') {
 window.toggleDevPanelSection = function(section) {
   const sectionIds = {
     animation: "animation-control-panel",
-    background: "background-control-panel",
     "editorial-background": "editorial-background-panel",
     cost: "cost-control-panel"
   };
@@ -840,22 +839,20 @@ function toggleBackgroundLabBlock(panelId, button) {
   const root=document.documentElement;
   const key="psychologistBackgroundLabSettings";
   const defaults={
-    base:"#1E292B",vignette:35,grain:35,
+    grain:22,
     glow1:{color:"#34797E",opacity:45,x:82,y:18,size:60},
     glow2:{color:"#DCB573",opacity:22,x:15,y:85,size:55},
-    effectsLinked:true
   };
   let state={...defaults,glow1:{...defaults.glow1},glow2:{...defaults.glow2}};
   try{
     const saved=JSON.parse(localStorage.getItem(key)||localStorage.getItem("psychologistBackgroundBaseSettings")||"{}");
-    state={...state,...saved,glow1:{...defaults.glow1,...saved.glow1},glow2:{...defaults.glow2,...saved.glow2}};
+    state={...state,grain:22,glow1:{...defaults.glow1,...saved.glow1},glow2:{...defaults.glow2,...saved.glow2}};
   }catch(e){}
   function setVar(name,value){root.style.setProperty(name,String(value));}
-  const colorKeys=["lab-base-color","lab-glow1-color","lab-glow2-color"];
   function hexToRgb(hex){const m=/^#?([0-9a-f]{6})$/i.exec(hex);if(!m)return null;const n=parseInt(m[1],16);return {r:n>>16,g:(n>>8)&255,b:n&255};}
   function rgbToHex(r,g,b){return "#"+[r,g,b].map(v=>Math.max(0,Math.min(255,Math.round(Number(v)))).toString(16).padStart(2,"0")).join("").toUpperCase();}
   function syncColorPicker(id,color){const rgb=hexToRgb(color);if(!rgb)return;const swatch=document.getElementById(id+"-picker"),field=document.getElementById(id+"-display"),open=document.getElementById(id+"-open");if(swatch)swatch.value=color;if(field)field.textContent=color.toUpperCase();if(open)open.style.setProperty("--picker-color",color);}
-  function setLabColor(id,color){if(!/^#[0-9a-f]{6}$/i.test(color))return;const upper=color.toUpperCase();if(id==="lab-base-color")window.updateBackgroundBase(upper);else if(id==="lab-glow1-color")window.updateBackgroundGlow(1,"color",upper);else if(id==="lab-glow2-color")window.updateBackgroundGlow(2,"color",upper);}
+  function setLabColor(id,color){if(!/^#[0-9a-f]{6}$/i.test(color))return;const upper=color.toUpperCase();if(id==="lab-glow1-color")window.updateBackgroundGlow(1,"color",upper);else if(id==="lab-glow2-color")window.updateBackgroundGlow(2,"color",upper);}
   window.updateLabColor=(id,color)=>setLabColor(id,color);
   window.updateLabColorText=(id,value)=>{const nums=value.split(/[ ,;]+/).filter(Boolean).map(Number);if(nums.length!==3||nums.some(n=>!Number.isFinite(n)||n<0||n>255))return;setLabColor(id,rgbToHex(...nums));};
 
@@ -865,46 +862,28 @@ function toggleBackgroundLabBlock(panelId, button) {
   function labHex(rgb){return "#"+[rgb.r,rgb.g,rgb.b].map(v=>v.toString(16).padStart(2,"0")).join("").toUpperCase();}
   function labHslFromHex(hex){const rgb=hexToRgb(hex);if(!rgb)return {h:180,s:.2,v:.25};const r=rgb.r/255,g=rgb.g/255,b=rgb.b/255,max=Math.max(r,g,b),min=Math.min(r,g,b),d=max-min;let h=0;if(d){if(max===r)h=60*(((g-b)/d)%6);else if(max===g)h=60*((b-r)/d+2);else h=60*((r-g)/d+4);if(h<0)h+=360;}return {h,s:max?d/max:0,v:max};}
   function labPickerPaint(){const sv=document.getElementById("lab-color-sv"),cur=document.getElementById("lab-color-sv-cursor"),hue=document.getElementById("lab-color-hue"),preview=document.getElementById("lab-color-preview"),rgbInput=document.getElementById("lab-color-rgb");if(!sv)return;sv.style.backgroundColor="hsl("+labPicker.h+",100%,50%)";if(cur){cur.style.left=(labPicker.s*100)+"%";cur.style.top=((1-labPicker.v)*100)+"%";}if(hue)hue.value=labPicker.h;const rgb=labRgb(),hex=labHex(rgb);if(preview)preview.style.background=hex;if(rgbInput)rgbInput.value=rgb.r+", "+rgb.g+", "+rgb.b;}
-  window.openLabColorPicker=(key)=>{labPicker.key=key;const colors={"lab-base-color":state.base,"lab-glow1-color":state.glow1.color,"lab-glow2-color":state.glow2.color};const hex=colors[key]||"#233235";Object.assign(labPicker,labHslFromHex(hex));const modal=document.getElementById("lab-color-modal"),dialog=modal.querySelector(".lab-color-dialog"),anchor=document.getElementById(key+"-open")||document.getElementById("lab-base-color-open");modal.hidden=false;modal.setAttribute("aria-hidden","false");if(dialog&&anchor){const rect=anchor.getBoundingClientRect(),width=Math.min(290,window.innerWidth-24);dialog.style.left=Math.max(12,Math.min(rect.left,window.innerWidth-width-12))+"px";dialog.style.top=Math.max(70,Math.min(rect.bottom+8,window.innerHeight-390))+"px";}labPickerPaint();};
+  window.openLabColorPicker=(key)=>{labPicker.key=key;const colors={"lab-glow1-color":state.glow1.color,"lab-glow2-color":state.glow2.color};const hex=colors[key]||"#233235";Object.assign(labPicker,labHslFromHex(hex));const modal=document.getElementById("lab-color-modal"),dialog=modal.querySelector(".lab-color-dialog"),anchor=document.getElementById(key+"-open");modal.hidden=false;modal.setAttribute("aria-hidden","false");if(dialog&&anchor){const rect=anchor.getBoundingClientRect(),width=Math.min(290,window.innerWidth-24);dialog.style.left=Math.max(12,Math.min(rect.left,window.innerWidth-width-12))+"px";dialog.style.top=Math.max(70,Math.min(rect.bottom+8,window.innerHeight-390))+"px";}labPickerPaint();};
   function labPickerClose(){const modal=document.getElementById("lab-color-modal");modal.hidden=true;modal.setAttribute("aria-hidden","true");}
   function labPickerApply(){const hex=labHex(labRgb());setLabColor(labPicker.key,hex);labPickerClose();}
   function labPickerSVFromPointer(e){const box=document.getElementById("lab-color-sv").getBoundingClientRect();labPicker.s=Math.max(0,Math.min(1,(e.clientX-box.left)/box.width));labPicker.v=1-Math.max(0,Math.min(1,(e.clientY-box.top)/box.height));labPickerPaint();}
   function labPickerSVKey(e){const step=e.shiftKey?.1:.01;if(e.key==="ArrowLeft")labPicker.s=Math.max(0,labPicker.s-step);else if(e.key==="ArrowRight")labPicker.s=Math.min(1,labPicker.s+step);else if(e.key==="ArrowUp")labPicker.v=Math.min(1,labPicker.v+step);else if(e.key==="ArrowDown")labPicker.v=Math.max(0,labPicker.v-step);else return;e.preventDefault();labPickerPaint();}
   document.addEventListener("DOMContentLoaded",()=>{const sv=document.getElementById("lab-color-sv"),hue=document.getElementById("lab-color-hue"),rgb=document.getElementById("lab-color-rgb");if(!sv)return;let dragging=false;sv.addEventListener("pointerdown",e=>{dragging=true;sv.setPointerCapture(e.pointerId);labPickerSVFromPointer(e);});sv.addEventListener("pointermove",e=>{if(dragging)labPickerSVFromPointer(e);});sv.addEventListener("pointerup",()=>dragging=false);sv.addEventListener("pointercancel",()=>dragging=false);sv.addEventListener("keydown",labPickerSVKey);hue.addEventListener("input",()=>{labPicker.h=Number(hue.value);labPickerPaint();});rgb.addEventListener("change",()=>{const n=rgb.value.split(/[ ,;]+/).filter(Boolean).map(Number);if(n.length!==3||n.some(v=>!Number.isFinite(v)||v<0||v>255)){labPickerPaint();return;}Object.assign(labPicker,labHslFromHex(labHex({r:n[0],g:n[1],b:n[2]})));labPickerPaint();});document.getElementById("lab-color-apply").addEventListener("click",labPickerApply);document.getElementById("lab-color-cancel").addEventListener("click",labPickerClose);document.getElementById("lab-color-close").addEventListener("click",labPickerClose);document.getElementById("lab-color-modal").addEventListener("click",e=>{if(e.target.id==="lab-color-modal")labPickerClose();});document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!document.getElementById("lab-color-modal").hidden)labPickerClose();});});
   function render(){
-    document.body.classList.toggle("lab-effects-isolated",!state.effectsLinked);
-    const link=document.getElementById("lab-effects-link");if(link)link.checked=state.effectsLinked;
-    setVar("--lab-bg-base",state.base);
-    setVar("--lab-vignette",Number(state.vignette)/100);
-    setVar("--lab-grain",Number(state.grain)+"%");
     setVar("--lab-grain-opacity",Number(state.grain)/100);
     [1,2].forEach(n=>{
       const light=state["glow"+n];
       Object.entries(light).forEach(([prop,value])=>{
-        const cssProp=prop==="opacity"?"opacity":prop;
-        setVar("--lab-glow"+n+"-"+cssProp,prop==="opacity"?Number(value)+"%":prop==="size"?Number(value)+"%":prop==="x"||prop==="y"?Number(value)+"%":value);
+        setVar("--lab-glow"+n+"-"+prop,prop==="opacity"||prop==="size"||prop==="x"||prop==="y"?Number(value)+"%":value);
         const input=document.getElementById("lab-glow"+n+"-"+prop);
         const output=document.getElementById("lab-glow"+n+"-"+prop+"-value");
         if(input)input.value=value;
         if(output)output.textContent=prop==="color"?String(value).toUpperCase():value+"%";
       });
     });
-    const base=document.getElementById("lab-base-color"),baseOut=document.getElementById("lab-base-color-display");
-    const vignette=document.getElementById("lab-vignette"),vOut=document.getElementById("lab-vignette-value");
-    const grain=document.getElementById("lab-grain"),gOut=document.getElementById("lab-grain-value");
-    syncColorPicker("lab-base-color",state.base);
     syncColorPicker("lab-glow1-color",state.glow1.color);
     syncColorPicker("lab-glow2-color",state.glow2.color);
-    if(base)base.value=state.base;if(baseOut)baseOut.textContent=state.base.toUpperCase();
-    if(vignette)vignette.value=state.vignette;if(vOut)vOut.textContent=state.vignette+"%";
-    if(grain)grain.value=state.grain;
-    if(gOut)gOut.textContent=state.grain<30?"Тонкая":state.grain>70?"Выраженная":"Средняя";
   }
   function save(){render();try{localStorage.setItem(key,JSON.stringify(state));}catch(e){}}
-  window.updateBackgroundBase=value=>{state.base=value;save();};
-  window.updateBackgroundEffectsLink=value=>{state.effectsLinked=Boolean(value);save();};
-  window.updateBackgroundVignette=value=>{state.vignette=Number(value);save();};
-  window.updateBackgroundGrain=value=>{state.grain=Number(value);save();};
   window.updateBackgroundGlow=(number,property,value)=>{
     if(![1,2].includes(Number(number))||!(property in defaults.glow1))return;
     state["glow"+number][property]=property==="color"?value:Number(value);
@@ -912,22 +891,7 @@ function toggleBackgroundLabBlock(panelId, button) {
   };
   render();
 
-  /* Пресеты задают общую цветовую основу обоим новым источникам света. */
-  const originalApplyMood=window.applyBackgroundMood;
-  if(typeof originalApplyMood==="function"){
-    window.applyBackgroundMood=function(mood){
-      originalApplyMood(mood);
-      const presets={
-        balanced:{base:"#1E292B",vignette:35,grain:35,glow1:{color:"#34797E",opacity:45,x:82,y:18,size:60},glow2:{color:"#DCB573",opacity:22,x:15,y:85,size:55}},
-        deep:{base:"#10191B",vignette:65,grain:55,glow1:{color:"#26595D",opacity:35,x:75,y:22,size:55},glow2:{color:"#B38E52",opacity:12,x:20,y:80,size:45}},
-        amber:{base:"#202827",vignette:30,grain:25,glow1:{color:"#34797E",opacity:30,x:78,y:25,size:50},glow2:{color:"#DCB573",opacity:42,x:20,y:78,size:78}}
-      };
-      if(presets[mood]){
-        state={...state,...presets[mood],glow1:{...presets[mood].glow1},glow2:{...presets[mood].glow2}};
-        save();
-      }
-    };
-  }
+
 })();
 
 
