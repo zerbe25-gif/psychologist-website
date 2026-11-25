@@ -7958,3 +7958,44 @@ body > .main-content {
   }
 }
 
+
+
+/* Исправление верхнего положения и компактная настольная панель фона */
+@media (min-width:901px){
+ body>#developer-panel{position:sticky!important;top:0!important;align-self:stretch;z-index:2147483647!important;margin:0!important}
+ body>.header{position:sticky!important;top:var(--developer-panel-height,36px)!important;z-index:2147483600!important}
+ #developer-panel .developer-panel-bar{min-height:32px;gap:6px}
+ #developer-panel .developer-panel-tab{padding:6px 10px;font-size:9px}
+ #developer-panel-content{padding:5px 7px 6px!important;margin-top:4px!important;max-height:52vh!important;overflow-y:auto!important}
+ #developer-panel #editorial-background-panel{padding:2px!important}
+ .home-background-panel{display:flex;flex-direction:column;gap:5px!important}
+ .home-background-topline{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:nowrap;min-width:0}
+ .home-background-group{display:flex;align-items:center;gap:5px;flex:0 0 auto;min-width:0}
+ .home-background-label{font-size:8px;letter-spacing:.06em}
+ .home-background-choice{padding:5px 7px;font-size:9px;white-space:nowrap}
+ .home-texture-controls{display:flex;align-items:center;justify-content:flex-end;gap:7px;min-width:0;flex:1 1 auto}
+ .home-texture-control{display:flex;align-items:center;gap:4px;min-width:0;white-space:nowrap;color:#596660;font-size:9px}
+ .home-texture-control>span{font-size:9px}
+ .home-texture-control input[type=checkbox]{width:12px;height:12px;margin:0;flex:0 0 auto;accent-color:#55766d}
+ .home-texture-control input[type=range]{width:54px;min-width:38px;margin:0;accent-color:#55766d}
+ .home-texture-control output{min-width:24px;font-size:9px;text-align:right}
+ .home-background-light-grid{display:grid;grid-template-columns:1fr;gap:5px}
+ .home-light-settings{display:grid;grid-template-columns:190px minmax(0,1fr);align-items:center;gap:8px;padding:4px 7px}
+ .home-light-settings strong{font-size:8px;line-height:1.2;margin:0;white-space:nowrap}
+ .home-light-controls{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));align-items:center;gap:7px;min-width:0}
+ .home-light-control{display:flex;align-items:center;gap:4px;min-width:0;color:#596660;font-size:9px;white-space:nowrap}
+ .home-light-control>span{font-size:9px;flex:0 0 auto}
+ .home-light-control input[type=range]{width:100%;min-width:28px;margin:0;accent-color:#55766d}
+ .home-light-control output{min-width:23px;font-size:8px;color:#7a8981;text-align:right}
+ .home-light-control input[type=color]{width:25px;height:19px;padding:1px;border:1px solid #d5dcd6;border-radius:4px;background:#fff}
+}
+@media (min-width:901px) and (max-width:1120px){
+ .home-background-topline{gap:6px}
+ .home-background-choice{padding:4px 5px;font-size:8px}
+ .home-texture-controls{gap:4px}
+ .home-texture-control input[type=range]{width:38px;min-width:28px}
+ .home-light-settings{grid-template-columns:155px minmax(0,1fr);gap:5px}
+ .home-light-controls{gap:4px}
+ .home-light-control>span{font-size:8px}
+ .home-light-control output{min-width:19px}
+}

@@ -666,8 +666,11 @@ function toggleBackgroundLabBlock(panelId, button) {
   function updateDrawerOffset() {
     const panel = document.getElementById("developer-panel");
     if (!panel) return;
-    const bottom = Math.max(0, Math.ceil(panel.getBoundingClientRect().bottom));
+    const rect = panel.getBoundingClientRect();
+    const bottom = Math.max(0, Math.ceil(rect.bottom));
+    const height = Math.max(0, Math.ceil(panel.offsetHeight));
     document.documentElement.style.setProperty("--developer-panel-bottom", bottom + "px");
+    document.documentElement.style.setProperty("--developer-panel-height", height + "px");
   }
 
   function init() {
