@@ -41,7 +41,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=20261125-portrait-edge-v1">
+  <link rel="stylesheet" href="style.css?v=20261125-portrait-background-tone-v1">
 </head>
 
 <body id="top">
@@ -114,7 +114,7 @@
   <label class="home-light-control"><span>Высота</span><input id="home-light2-height" type="range" min="5" max="45" value="16" oninput="updateHomeLight(2,'height',this.value)"><output id="home-light2-height-value">16%</output></label>
  </div></div>
 </div></div></section>
-<section id="portrait-atmosphere-panel" hidden aria-label="Затемнение фотографии и подсветка рамки"><div class="portrait-atmosphere-controls"><strong>ТОНАЛЬНОЕ ОФОРМЛЕНИЕ ФОТОГРАФИИ</strong><div class="portrait-atmosphere-control"><label for="portrait-edge-strength">Затемнение по краям внутри фото</label><input id="portrait-edge-strength" type="range" min="0" max="100" value="48"><output id="portrait-edge-strength-value">48%</output></div><div class="portrait-atmosphere-control"><label for="portrait-edge-width">Ширина затемнения</label><input id="portrait-edge-width" type="range" min="0" max="100" value="52"><output id="portrait-edge-width-value">52%</output></div><div class="portrait-atmosphere-control"><label for="portrait-frame-glow">Засветление за рамкой</label><input id="portrait-frame-glow" type="range" min="0" max="100" value="38"><output id="portrait-frame-glow-value">38%</output></div><div class="portrait-atmosphere-control"><label for="portrait-glow-spread">Распространение свечения</label><input id="portrait-glow-spread" type="range" min="0" max="100" value="58"><output id="portrait-glow-spread-value">58%</output></div><p class="portrait-atmosphere-note">Затемнение работает внутри фотографии, а мягкое свечение — только за её границей. Исходные снимки не изменяются.</p></div></section>
+<section id="portrait-atmosphere-panel" hidden aria-label="Затемнение фотографии и подсветка рамки"><div class="portrait-atmosphere-controls"><strong>ТОНАЛЬНОЕ ОФОРМЛЕНИЕ ФОТОГРАФИИ</strong><div class="portrait-atmosphere-control"><label for="portrait-edge-strength">Затемнение по краям внутри фото</label><input id="portrait-edge-strength" type="range" min="0" max="100" value="48"><output id="portrait-edge-strength-value">48%</output></div><div class="portrait-atmosphere-control"><label for="portrait-edge-width">Ширина затемнения</label><input id="portrait-edge-width" type="range" min="0" max="100" value="52"><output id="portrait-edge-width-value">52%</output></div><div class="portrait-atmosphere-control"><label for="portrait-frame-glow">Засветление за рамкой</label><input id="portrait-frame-glow" type="range" min="0" max="100" value="38"><output id="portrait-frame-glow-value">38%</output></div><div class="portrait-atmosphere-control"><label for="portrait-glow-spread">Распространение свечения</label><input id="portrait-glow-spread" type="range" min="0" max="100" value="58"><output id="portrait-glow-spread-value">58%</output></div><div class="portrait-atmosphere-control"><label for="portrait-edge-tint">Подтон фона по краям фото</label><input id="portrait-edge-tint" type="range" min="0" max="100" value="18"><output id="portrait-edge-tint-value">18%</output></div><p class="portrait-atmosphere-note">Световое поле снаружи и лёгкий оттенок фона по краям фотографии работают отдельно. Исходные снимки не изменяются.</p></div></section>
 <div id="cost-control-panel" hidden>
 
     <div class="background-control">
@@ -317,6 +317,7 @@
   aria-hidden="true"
 >
           <div class="portrait-edge-shading" aria-hidden="true"></div>
+          <div class="portrait-edge-tint" aria-hidden="true"></div>
           <div class="portrait-frame-glow" aria-hidden="true"></div>
         </div>
 
@@ -797,7 +798,7 @@
 <!-- /ЦЕНТРАЛЬНОЕ ОКНО ЗАПИСИ -->
   <!-- ФАЙЛ С ФУНКЦИЯМИ САЙТА -->
 
-  <script src="script.js?v=20261125-portrait-edge-v1"></script>
+  <script src="script.js?v=20261125-portrait-background-tone-v1"></script>
 
   <script src="page-transition.js?v=20261117-curtain-dom1"></script>
   <script src="initial-load.js?v=20261117-hybrid-soft1"></script>
