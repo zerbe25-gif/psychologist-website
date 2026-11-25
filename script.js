@@ -1084,13 +1084,13 @@ function toggleBackgroundLabBlock(panelId, button) {
 (function(){
  const frame=document.querySelector('.photo-frame-1.portrait-stage');if(!frame)return;
  const key='psychologistPortraitEdgeToningV1';
- const defaults={strength:48,width:52,glow:38,spread:58};
+ const defaults={strength:48,width:52,glow:38,spread:58,tint:18};
  const fields=Object.keys(defaults);
  let state={...defaults};
  try{state={...defaults,...JSON.parse(localStorage.getItem(key)||'{}')}}catch(error){}
  function render(){
-  const values={strength:state.strength/100,width:state.width+'%',glow:state.glow/100,spread:state.spread+'%'};
-  Object.entries(values).forEach(([name,value])=>frame.style.setProperty('--portrait-'+(name==='strength'?'edge-strength':name==='width'?'edge-width':name==='glow'?'frame-glow':'glow-spread'),value));
+  const values={strength:state.strength/100,width:state.width+'%',glow:state.glow/100,spread:state.spread+'%',tint:state.tint/100};
+  Object.entries(values).forEach(([name,value])=>frame.style.setProperty('--portrait-'+(name==='strength'?'edge-strength':name==='width'?'edge-width':name==='glow'?'frame-glow':name==='spread'?'glow-spread':'edge-tint'),value));
   fields.forEach(name=>{
    const input=document.getElementById('portrait-'+(name==='strength'?'edge-strength':name==='width'?'edge-width':name==='glow'?'frame-glow':'glow-spread'));
    const output=document.getElementById('portrait-'+(name==='strength'?'edge-strength':name==='width'?'edge-width':name==='glow'?'frame-glow':'glow-spread')+'-value');
