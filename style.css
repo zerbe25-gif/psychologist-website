@@ -8107,3 +8107,115 @@ body > .main-content {
   .home-type-scale-row { min-height:24px;gap:8px; }
   .home-type-scale-button { width:19px;height:19px; }
 }
+
+
+/* WHITE EDITORIAL HERO — desktop composition inspired by the Rolai reference.
+   The card is flush with the right viewport edge; the portrait sits in its right column. */
+@media (min-width:901px) {
+  body > .main-content {
+    display:block !important;
+    position:relative !important;
+    padding:0 !important;
+    overflow:hidden;
+    isolation:isolate;
+  }
+  .hero-white-surface {
+    position:absolute;
+    z-index:0;
+    top:5%;
+    bottom:5%;
+    left:47%;
+    right:0;
+    background:#fff;
+  }
+  .hero-white-caption {
+    position:absolute;
+    left:5.5%;
+    bottom:5.5%;
+    max-width:42%;
+    color:#26332f;
+    font-family:'Cormorant Garamond',Georgia,serif;
+    font-size:clamp(23px,2.15vw,34px);
+    font-weight:500;
+    line-height:1.08;
+    letter-spacing:-.025em;
+  }
+  .main-content .menu-section {
+    position:absolute !important;
+    z-index:2;
+    left:5.5%;
+    top:50%;
+    width:38%;
+    height:auto !important;
+    min-height:0 !important;
+    margin:0 !important;
+    padding:0 !important;
+    transform:translateY(-50%);
+    justify-content:flex-start !important;
+  }
+  .main-content .menu-section .menu-label {
+    margin-bottom:clamp(14px,2vh,24px);
+  }
+  .main-content .menu-section .section-menu {
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:flex-start !important;
+    gap:clamp(15px,2.05vh,25px) !important;
+    padding:0 !important;
+    width:100%;
+  }
+  .main-content .menu-section .section-menu > .menu-item {
+    position:relative !important;
+    left:auto !important;
+    margin:0 !important;
+    padding:0 !important;
+    transform:none;
+    font-size:calc(clamp(55px,4.25vw,68px) * .75) !important;
+    line-height:1 !important;
+    white-space:nowrap;
+  }
+  .main-content .menu-section .section-menu > .menu-item-4 {
+    margin-top:clamp(7.5px,1.025vh,12.5px) !important;
+    font-size:calc(42.5px * .75) !important;
+  }
+  .main-content .gallery-section {
+    position:absolute !important;
+    z-index:1;
+    top:5%;
+    right:1.7%;
+    bottom:5%;
+    width:29%;
+    min-height:0 !important;
+    height:90%;
+    margin:0 !important;
+    padding:0 !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:flex-end !important;
+    overflow:visible !important;
+  }
+  .main-content .photo-gallery {
+    display:flex !important;
+    width:100% !important;
+    height:100% !important;
+    max-width:none !important;
+    min-width:0 !important;
+    align-items:center !important;
+    justify-content:flex-end !important;
+    padding:0 !important;
+    margin:0 !important;
+  }
+  .main-content .photo-frame-1 {
+    flex:0 0 auto !important;
+    height:min(76%,60vh) !important;
+    width:auto !important;
+    max-width:none !important;
+    max-height:none !important;
+    aspect-ratio:3 / 4 !important;
+    margin:0 !important;
+    border:0 !important;
+    border-radius:0 !important;
+    box-shadow:none !important;
+    background:transparent !important;
+  }
+}
