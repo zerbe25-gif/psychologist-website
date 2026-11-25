@@ -4731,12 +4731,10 @@ body.theme-v3
 }
 #developer-panel .lab-glow-control label,
 #developer-panel .lab-optics-control label{white-space:nowrap!important}
-#developer-panel #lab-base input[type=range],
 #developer-panel .lab-glow-control input[type=range],
 #developer-panel .lab-optics-control input[type=range]{
  display:block!important;width:100%!important;min-width:0!important;max-width:100%!important;margin:0!important
 }
-#developer-panel #lab-base output,
 #developer-panel .lab-glow-control output,
 #developer-panel .lab-optics-control output{white-space:nowrap!important;font-size:9px!important}
 #developer-panel .lab-color-open{width:100%!important;max-width:112px!important;padding:3px 4px!important}
