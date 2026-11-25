@@ -845,7 +845,7 @@ function toggleBackgroundLabBlock(panelId, button) {
   };
   let state={...defaults,glow1:{...defaults.glow1},glow2:{...defaults.glow2}};
   try{
-    const saved=JSON.parse(localStorage.getItem(key)||localStorage.getItem("psychologistBackgroundBaseSettings")||"{}");
+    const saved=JSON.parse(localStorage.getItem(key)||"{}");
     state={...state,grain:22,glow1:{...defaults.glow1,...saved.glow1},glow2:{...defaults.glow2,...saved.glow2}};
   }catch(e){}
   function setVar(name,value){root.style.setProperty(name,String(value));}
