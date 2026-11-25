@@ -8075,3 +8075,35 @@ body > .main-content {
 @media(max-width:600px) {
   .web-color-popover { width:min(248px,calc(100vw - 32px)); }
 }
+
+
+/* Масштаб заголовков главного меню — только настольная композиция. */
+@media (min-width:901px) {
+  .menu-item {
+    font-size: calc(clamp(55px, 4.25vw, 68px) * var(--home-menu-scale, .9)) !important;
+  }
+  .menu-item-4 {
+    font-size: calc(42.5px * var(--home-menu-scale, .9)) !important;
+  }
+  .home-type-scale-row {
+    display:flex;align-items:center;gap:12px;min-height:27px;padding:3px 7px 4px;
+    border-top:1px solid rgba(86,105,96,.13);
+  }
+  .home-type-scale-control {
+    display:inline-flex;align-items:center;gap:7px;padding:2px 4px;
+    border:1px solid rgba(65,85,76,.16);border-radius:7px;background:rgba(255,255,255,.58);
+  }
+  .home-type-scale-button {
+    display:inline-flex;align-items:center;justify-content:center;width:22px;height:21px;padding:0;
+    border:0;border-radius:4px;background:rgba(80,112,99,.09);color:#344b43;
+    font:600 15px/1 Inter,Arial,sans-serif;cursor:pointer;
+  }
+  .home-type-scale-button:hover { background:rgba(80,112,99,.18); }
+  #home-menu-scale-value {
+    min-width:36px;color:#46584f;font:600 10px/1 ui-monospace,SFMono-Regular,Consolas,monospace;text-align:center;
+  }
+}
+@media (min-width:901px) and (max-width:1120px) {
+  .home-type-scale-row { min-height:24px;gap:8px; }
+  .home-type-scale-button { width:19px;height:19px; }
+}
