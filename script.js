@@ -180,8 +180,8 @@ function initializeHomeBackground(){if(!document.getElementById('background-lab-
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initializeHomeBackground,{once:true});else initializeHomeBackground();
 
 // Масштаб заголовков главного меню: отдельная настройка, не затрагивающая шторки.
-const homeMenuScaleStorageKey='psychologistHomeMenuScaleV1';
-const homeMenuScaleDefault=90;
+const homeMenuScaleStorageKey='psychologistHomeMenuScaleV2';
+const homeMenuScaleDefault=75;
 let homeMenuScale=homeMenuScaleDefault;
 try {
  const savedScale=Number(localStorage.getItem(homeMenuScaleStorageKey));
