@@ -160,46 +160,6 @@ document.querySelectorAll(".animation-tab").forEach(button => {
 setMenuAnimation(1);
 
 
-// ========================================
-// ПАНЕЛЬ УПРАВЛЕНИЯ ФОНОМ
-// ========================================
-
-// ЕДИНОЕ СОХРАНЕНИЕ НАСТРОЕК ФОНА
-// =======================================================
-
-const backgroundStorageKey = 'psychologistBackgroundSettings';
-const watercolorStorageKey = 'psychologistWatercolorSettings';
-
-const watercolorPalettes = {
-
-  blue: {
-    first: '#829BAA',
-    second: '#C6D2D2',
-    third: '#D8C9B5'
-  },
-
-  olive: {
-    first: '#A1A889',
-    second: '#D2CFB5',
-    third: '#D5BDA3'
-  },
-
-  rose: {
-    first: '#C99E98',
-    second: '#E4C9BE',
-    third: '#B7B9B0'
-  },
-
-  sand: {
-    first: '#C9B99C',
-    second: '#E6DCCB',
-    third: '#A9B6B4'
-  }
-
-};
-
-let currentWatercolorPalette = 'blue';
-
 // Самостоятельная система фона A/B/C с отдельным состоянием фактур и света.
 const homeBackgroundStorageKey='psychologistHomeBackgroundCompositionV1';
 const homeBackgroundDefaults={variant:'A',hatch:true,grid:false,grain:true,hatchOpacity:18,gridOpacity:14,grainOpacity:20,light1:{color:'#397A78',opacity:24,x:82,y:28,width:62,height:48},light2:{color:'#D6AD76',opacity:16,x:76,y:68,width:82,height:16}};
