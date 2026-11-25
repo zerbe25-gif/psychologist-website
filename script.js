@@ -176,7 +176,7 @@ function saveHomeBackground(){renderHomeBackground();try{localStorage.setItem(ho
 function setHomeBackgroundVariant(v){if(!['A','B','C'].includes(v))return;homeBackgroundState.variant=v;saveHomeBackground();}
 function updateHomeBackgroundSetting(k,v){if(!['hatch','grid','grain','hatchOpacity','gridOpacity','grainOpacity'].includes(k))return;homeBackgroundState[k]=['hatch','grid','grain'].includes(k)?!!v:Math.max(0,Math.min(60,Number(v)||0));saveHomeBackground();}
 function updateHomeLight(n,k,v){if(![1,2].includes(Number(n))||!['color','opacity','x','y','width','height'].includes(k))return;if(k==='color'){if(!/^#[0-9a-f]{6}$/i.test(v))return;homeBackgroundState['light'+n][k]=v.toUpperCase();}else{const max=k==='opacity'?(n===1?55:45):100;homeBackgroundState['light'+n][k]=Math.max(0,Math.min(max,Number(v)||0));}saveHomeBackground();}
-function initializeHomeBackground(){renderHomeBackground();}
+function initializeHomeBackground(){if(!document.getElementById('background-lab-atmosphere')||!document.querySelector('.photo-gallery'))return;renderHomeBackground();}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initializeHomeBackground,{once:true});else initializeHomeBackground();
 
 // ПЕРЕКЛЮЧЕНИЕ РАЗДЕЛОВ ПАНЕЛИ РАЗРАБОТКИ
