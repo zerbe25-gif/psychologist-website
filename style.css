@@ -8046,7 +8046,7 @@ body > .main-content {
 .web-color-trigger-value { font:600 10px/1 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.02em; }
 .web-color-chevron { margin-left:auto;color:#77818B;font-size:13px; }
 .web-color-popover {
-  position:absolute;top:calc(100% + 9px);left:0;width:248px;padding:13px;border:1px solid rgba(45,55,72,.13);
+  position:fixed;top:0;left:0;width:248px;padding:13px;border:1px solid rgba(45,55,72,.13);
   border-radius:13px;background:rgba(255,255,255,.98);box-shadow:0 14px 38px rgba(25,35,45,.2),0 2px 7px rgba(25,35,45,.07);
   color:#39475E;font:11px/1.4 Inter,Arial,sans-serif;z-index:2147483647;backdrop-filter:blur(16px);
 }
@@ -8073,5 +8073,5 @@ body > .main-content {
 .home-light-control .web-color-picker { grid-column:2!important;grid-row:1!important;justify-self:start!important; }
 .appointment-setting .web-color-picker { align-self:flex-start; }
 @media(max-width:600px) {
-  .web-color-popover { position:fixed;top:auto;left:50%;bottom:18px;transform:translateX(-50%);width:min(248px,calc(100vw - 32px)); }
+  .web-color-popover { width:min(248px,calc(100vw - 32px)); }
 }
