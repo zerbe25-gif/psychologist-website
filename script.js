@@ -1080,17 +1080,30 @@ function toggleBackgroundLabBlock(panelId, button) {
   });
 })();
 
+
 (function(){
  const frame=document.querySelector('.photo-frame-1.portrait-stage');if(!frame)return;
- const key='psychologistPortraitAtmosphereV2',defaults={strength:76,spread:88,grain:64,organic:84,shadow:32},fields=Object.keys(defaults);
- let state={...defaults};try{state={...defaults,...JSON.parse(localStorage.getItem(key)||'{}')}}catch(error){}
+ const key='psychologistPortraitEdgeToningV1';
+ const defaults={strength:48,width:52,glow:38,spread:58};
+ const fields=Object.keys(defaults);
+ let state={...defaults};
+ try{state={...defaults,...JSON.parse(localStorage.getItem(key)||'{}')}}catch(error){}
  function render(){
-  const values={strength:state.strength/100,spread:(state.spread*-.23)+'%',grain:state.grain/100,organic:state.organic,shadow:state.shadow/100};
-  Object.entries(values).forEach(([k,v])=>frame.style.setProperty('--portrait-haze-'+k,v));
-  const warp=document.querySelector('#portrait-haze-warp feDisplacementMap');if(warp)warp.setAttribute('scale',String(12+state.organic*.72));
-  frame.classList.toggle('portrait-frame-atmosphere-on',state.strength>0);
-  fields.forEach(k=>{const input=document.getElementById('portrait-haze-'+k),out=document.getElementById('portrait-haze-'+k+'-value');if(input)input.value=state[k];if(out)out.textContent=state[k]+'%'});
+  const values={strength:state.strength/100,width:state.width+'%',glow:state.glow/100,spread:state.spread+'%'};
+  Object.entries(values).forEach(([name,value])=>frame.style.setProperty('--portrait-'+(name==='strength'?'edge-strength':name==='width'?'edge-width':name==='glow'?'frame-glow':'glow-spread'),value));
+  fields.forEach(name=>{
+   const input=document.getElementById('portrait-'+(name==='strength'?'edge-strength':name==='width'?'edge-width':name==='glow'?'frame-glow':'glow-spread'));
+   const output=document.getElementById('portrait-'+(name==='strength'?'edge-strength':name==='width'?'edge-width':name==='glow'?'frame-glow':'glow-spread')+'-value');
+   if(input)input.value=state[name];if(output)output.textContent=state[name]+'%';
+  });
  }
- fields.forEach(k=>{const input=document.getElementById('portrait-haze-'+k);if(input)input.addEventListener('input',()=>{state[k]=Math.max(0,Math.min(100,Number(input.value)||0));render();try{localStorage.setItem(key,JSON.stringify(state))}catch(error){}})});
+ fields.forEach(name=>{
+  const id='portrait-'+(name==='strength'?'edge-strength':name==='width'?'edge-width':name==='glow'?'frame-glow':'glow-spread');
+  const input=document.getElementById(id);
+  if(input)input.addEventListener('input',()=>{
+   state[name]=Math.max(0,Math.min(100,Number(input.value)||0));render();
+   try{localStorage.setItem(key,JSON.stringify(state))}catch(error){}
+  });
+ });
  render();
 })();

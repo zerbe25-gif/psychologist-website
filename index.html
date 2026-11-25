@@ -41,14 +41,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=20261125-portrait-haze-v2">
+  <link rel="stylesheet" href="style.css?v=20261125-portrait-edge-v1">
 </head>
 
 <body id="top">
   <div class="page-transition-curtain" aria-hidden="true"></div>
 
 <!-- НЕЗАВИСИМЫЙ СЛОЙ НОВОЙ ЛАБОРАТОРИИ ФОНА -->
-<svg class="lab-filter-defs" aria-hidden="true" focusable="false"><filter id="lab-film-grain"><feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="3" stitchTiles="stitch" result="noise"/><feColorMatrix in="noise" type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 0.28"/></feComponentTransfer></filter><filter id="portrait-haze-warp" x="-25%" y="-25%" width="150%" height="150%"><feTurbulence type="fractalNoise" baseFrequency=".014" numOctaves="3" seed="17" result="warp"/><feDisplacementMap in="SourceGraphic" in2="warp" scale="34" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
+<svg class="lab-filter-defs" aria-hidden="true" focusable="false"><filter id="lab-film-grain"><feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="3" stitchTiles="stitch" result="noise"/><feColorMatrix in="noise" type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 0.28"/></feComponentTransfer></filter></svg>
 <div id="background-lab-atmosphere" aria-hidden="true"></div>
 <div id="background-lab-texture" aria-hidden="true"></div>
 <div id="background-lab-grain" aria-hidden="true"></div>
@@ -114,7 +114,7 @@
   <label class="home-light-control"><span>Высота</span><input id="home-light2-height" type="range" min="5" max="45" value="16" oninput="updateHomeLight(2,'height',this.value)"><output id="home-light2-height-value">16%</output></label>
  </div></div>
 </div></div></section>
-<section id="portrait-atmosphere-panel" hidden aria-label="Атмосфера фотографии"><div class="portrait-atmosphere-controls"><strong>АТМОСФЕРА ПОРТРЕТА · ОРГАНИЧЕСКАЯ ВУАЛЬ</strong><div class="portrait-atmosphere-control"><label for="portrait-haze-strength">Общая выраженность</label><input id="portrait-haze-strength" type="range" min="0" max="100" value="42"><output id="portrait-haze-strength-value">42%</output></div><div class="portrait-atmosphere-control"><label for="portrait-haze-spread">Распространение за рамку</label><input id="portrait-haze-spread" type="range" min="10" max="100" value="68"><output id="portrait-haze-spread-value">68%</output></div><div class="portrait-atmosphere-control"><label for="portrait-haze-grain">Зернистость</label><input id="portrait-haze-grain" type="range" min="0" max="100" value="38"><output id="portrait-haze-grain-value">38%</output></div><div class="portrait-atmosphere-control"><label for="portrait-haze-organic">Неоднородность формы</label><input id="portrait-haze-organic" type="range" min="0" max="100" value="72"><output id="portrait-haze-organic-value">72%</output></div><div class="portrait-atmosphere-control"><label for="portrait-haze-shadow">Тёмная вуаль справа</label><input id="portrait-haze-shadow" type="range" min="0" max="100" value="22"><output id="portrait-haze-shadow-value">22%</output></div><p class="portrait-atmosphere-note">Настройки влияют на отдельные слои поверх и позади фотографии. Исходный снимок не изменяется.</p></div></section>
+<section id="portrait-atmosphere-panel" hidden aria-label="Затемнение фотографии и подсветка рамки"><div class="portrait-atmosphere-controls"><strong>ТОНАЛЬНОЕ ОФОРМЛЕНИЕ ФОТОГРАФИИ</strong><div class="portrait-atmosphere-control"><label for="portrait-edge-strength">Затемнение по краям внутри фото</label><input id="portrait-edge-strength" type="range" min="0" max="100" value="48"><output id="portrait-edge-strength-value">48%</output></div><div class="portrait-atmosphere-control"><label for="portrait-edge-width">Ширина затемнения</label><input id="portrait-edge-width" type="range" min="0" max="100" value="52"><output id="portrait-edge-width-value">52%</output></div><div class="portrait-atmosphere-control"><label for="portrait-frame-glow">Засветление за рамкой</label><input id="portrait-frame-glow" type="range" min="0" max="100" value="38"><output id="portrait-frame-glow-value">38%</output></div><div class="portrait-atmosphere-control"><label for="portrait-glow-spread">Распространение свечения</label><input id="portrait-glow-spread" type="range" min="0" max="100" value="58"><output id="portrait-glow-spread-value">58%</output></div><p class="portrait-atmosphere-note">Затемнение работает внутри фотографии, а мягкое свечение — только за её границей. Исходные снимки не изменяются.</p></div></section>
 <div id="cost-control-panel" hidden>
 
     <div class="background-control">
@@ -316,10 +316,8 @@
   alt=""
   aria-hidden="true"
 >
-          <div class="portrait-haze-backdrop" aria-hidden="true"></div>
-          <div class="portrait-haze-left-veil" aria-hidden="true"></div>
-          <div class="portrait-haze-overlay" aria-hidden="true"></div>
-          <div class="portrait-haze-grain" aria-hidden="true"></div>
+          <div class="portrait-edge-shading" aria-hidden="true"></div>
+          <div class="portrait-frame-glow" aria-hidden="true"></div>
         </div>
 
       </div>
@@ -799,7 +797,7 @@
 <!-- /ЦЕНТРАЛЬНОЕ ОКНО ЗАПИСИ -->
   <!-- ФАЙЛ С ФУНКЦИЯМИ САЙТА -->
 
-  <script src="script.js?v=20261125-portrait-haze-v2"></script>
+  <script src="script.js?v=20261125-portrait-edge-v1"></script>
 
   <script src="page-transition.js?v=20261117-curtain-dom1"></script>
   <script src="initial-load.js?v=20261117-hybrid-soft1"></script>
