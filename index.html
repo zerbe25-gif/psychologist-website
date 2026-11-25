@@ -103,6 +103,92 @@
 <label class="home-background-range"><span>Положение Y</span><input id="home-light2-y" type="range" min="0" max="100" value="68" oninput="updateHomeLight(2,'y',this.value)"><output id="home-light2-y-value">68%</output></label>
 <label class="home-background-range"><span>Ширина</span><input id="home-light2-width" type="range" min="25" max="100" value="82" oninput="updateHomeLight(2,'width',this.value)"><output id="home-light2-width-value">82%</output></label>
 <label class="home-background-range"><span>Высота</span><input id="home-light2-height" type="range" min="5" max="45" value="16" oninput="updateHomeLight(2,'height',this.value)"><output id="home-light2-height-value">16%</output></label></div></div></div></section>
+<div id="cost-control-panel" hidden>
+
+    <div class="background-control">
+        <label for="cost-overlay-input">
+            Затемнение страницы:
+        </label>
+        <span id="val-cost-overlay">48%</span>
+
+        <input id="cost-overlay-input"
+               type="range"
+               min="0"
+               max="85"
+               step="1"
+               value="48"
+               oninput="updateCostOverlay(this.value)">
+    </div>
+
+    <div class="background-control">
+        <label for="cost-blur-input">
+            Размытие фона:
+        </label>
+        <span id="val-cost-blur">8 px</span>
+
+        <input id="cost-blur-input"
+               type="range"
+               min="0"
+               max="20"
+               step="1"
+               value="8"
+               oninput="updateCostBlur(this.value)">
+    </div>
+
+    <div class="background-control">
+        <label for="cost-card-input">
+            Появление карточки:
+        </label>
+        <span id="val-cost-card">0.55 сек.</span>
+
+        <input id="cost-card-input"
+               type="range"
+               min="0.15"
+               max="1.5"
+               step="0.05"
+               value="0.55"
+               oninput="updateCostCardDuration(this.value)">
+    </div>
+
+    <div class="background-control">
+        <label for="cost-content-input">
+            Анимация контента внутри:
+        </label>
+        <span id="val-cost-content">0.40 сек.</span>
+
+        <input id="cost-content-input"
+               type="range"
+               min="0.1"
+               max="1.2"
+               step="0.05"
+               value="0.4"
+               oninput="updateCostContentDuration(this.value)">
+    </div>
+
+    <div class="background-control">
+        <label for="cost-close-input">
+            Закрытие:
+        </label>
+        <span id="val-cost-close">0.35 сек.</span>
+
+        <input id="cost-close-input"
+               type="range"
+               min="0.1"
+               max="1.2"
+               step="0.05"
+               value="0.35"
+               oninput="updateCostCloseDuration(this.value)">
+    </div>
+
+
+<div class="appointment-design-controls">
+      <div class="appointment-setting"><label for="appointment-opacity">Прозрачность карточки <output id="val-appointment-opacity">88%</output></label><input id="appointment-opacity" type="range" min="65" max="100" value="88" oninput="updateAppointmentSetting('opacity', this.value)"></div>
+      <div class="appointment-setting"><label for="appointment-blur">Размытие карточки <output id="val-appointment-blur">28 px</output></label><input id="appointment-blur" type="range" min="0" max="40" value="28" oninput="updateAppointmentSetting('blur', this.value)"></div>
+      <div class="appointment-setting"><label for="appointment-glow">Внутреннее свечение <output id="val-appointment-glow">12%</output></label><input id="appointment-glow" type="range" min="0" max="40" value="12" oninput="updateAppointmentSetting('glow', this.value)"></div>
+      <div class="appointment-setting"><label for="appointment-button-color">Цвет кнопки <output id="val-appointment-button-color">#39475E</output></label><input id="appointment-button-color" type="color" value="#39475E" oninput="updateAppointmentSetting('button', this.value)"></div>
+    </div>
+</div>
+<!-- /ОБЩИЕ НАСТРОЙКИ ВИЗУАЛА ТРЁХ ОКОН -->
     </div>
 </div>
 <!-- КОНЕЦ ЕДИНОЙ ПАНЕЛИ РАЗРАБОТКИ -->
