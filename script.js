@@ -919,3 +919,134 @@ function toggleBackgroundLabBlock(panelId, button) {
 
   render();
 })();
+
+
+/* ==========================================
+   СОВРЕМЕННАЯ ВЕБ-ПАЛИТРА ЦВЕТА
+   Собственный Chromium-style picker вместо системного диалога ОС
+========================================== */
+(() => {
+  const sources = Array.from(document.querySelectorAll('input[type="color"]'));
+  if (!sources.length) return;
+
+  const presets = [
+    "#263746", "#39475E", "#526B78", "#397A78",
+    "#6F8D83", "#A9B9A8", "#D6AD76", "#C18B5B",
+    "#A86F62", "#8A6478", "#746B91", "#E8E1D5"
+  ];
+
+  const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+  const toHex = value => "#" + value.map(v => Math.round(v).toString(16).padStart(2, "0")).join("").toUpperCase();
+  const hsvToRgb = (h, s, v) => {
+    const c = v * s, x = c * (1 - Math.abs((h / 60) % 2 - 1)), m = v - c;
+    let rgb = h < 60 ? [c,x,0] : h < 120 ? [x,c,0] : h < 180 ? [0,c,x] : h < 240 ? [0,x,c] : h < 300 ? [x,0,c] : [c,0,x];
+    return rgb.map(n => (n + m) * 255);
+  };
+  const rgbToHsv = hex => {
+    const raw = hex.replace("#", "");
+    const r = parseInt(raw.slice(0,2),16)/255, g = parseInt(raw.slice(2,4),16)/255, b = parseInt(raw.slice(4,6),16)/255;
+    const max = Math.max(r,g,b), min = Math.min(r,g,b), d = max-min;
+    let h = 0;
+    if (d) {
+      if (max === r) h = 60 * (((g-b)/d) % 6);
+      else if (max === g) h = 60 * ((b-r)/d + 2);
+      else h = 60 * ((r-g)/d + 4);
+    }
+    return { h: (h+360)%360, s: max ? d/max : 0, v: max };
+  };
+
+  sources.forEach(source => {
+    const wrap = document.createElement("div");
+    wrap.className = "web-color-picker";
+    wrap.innerHTML = `
+      <button class="web-color-trigger" type="button" aria-label="Выбрать цвет" aria-expanded="false">
+        <span class="web-color-preview"></span><span class="web-color-trigger-value"></span><span class="web-color-chevron" aria-hidden="true">⌄</span>
+      </button>
+      <div class="web-color-popover" hidden>
+        <div class="web-color-popover-head"><span>Выбор цвета</span><button class="web-color-close" type="button" aria-label="Закрыть">×</button></div>
+        <div class="web-color-sv" role="slider" tabindex="0" aria-label="Насыщенность и яркость"><span class="web-color-sv-cursor"></span></div>
+        <div class="web-color-hue-row"><span>Оттенок</span><input class="web-color-hue" type="range" min="0" max="360" value="160" aria-label="Оттенок"></div>
+        <div class="web-color-hex-row"><label>HEX<input class="web-color-hex" type="text" maxlength="7" spellcheck="false" aria-label="HEX цвет"></label><span class="web-color-current"></span></div>
+        <div class="web-color-presets-label">Быстрый выбор</div><div class="web-color-presets"></div>
+      </div>`;
+    source.insertAdjacentElement("afterend", wrap);
+    source.classList.add("web-color-source");
+    const trigger = wrap.querySelector(".web-color-trigger");
+    const pop = wrap.querySelector(".web-color-popover");
+    const preview = wrap.querySelector(".web-color-preview");
+    const triggerValue = wrap.querySelector(".web-color-trigger-value");
+    const sv = wrap.querySelector(".web-color-sv");
+    const cursor = wrap.querySelector(".web-color-sv-cursor");
+    const hue = wrap.querySelector(".web-color-hue");
+    const hex = wrap.querySelector(".web-color-hex");
+    const current = wrap.querySelector(".web-color-current");
+    const presetBox = wrap.querySelector(".web-color-presets");
+    let state = rgbToHsv(source.value || "#397A78");
+
+    presets.forEach(color => {
+      const chip = document.createElement("button");
+      chip.type = "button"; chip.className = "web-color-chip";
+      chip.style.backgroundColor = color; chip.setAttribute("aria-label", color);
+      chip.addEventListener("click", () => applyHex(color));
+      presetBox.appendChild(chip);
+    });
+
+    function paint() {
+      const color = toHex(hsvToRgb(state.h,state.s,state.v));
+      source.value = color.toLowerCase();
+      preview.style.background = color;
+      triggerValue.textContent = color;
+      hex.value = color;
+      current.textContent = color;
+      hue.value = Math.round(state.h);
+      sv.style.backgroundColor = `hsl(${state.h}, 100%, 50%)`;
+      cursor.style.left = (state.s*100)+"%";
+      cursor.style.top = ((1-state.v)*100)+"%";
+      source.dispatchEvent(new Event("input", { bubbles: true }));
+      source.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+    function applyHex(value) {
+      if (!/^#?[0-9a-f]{6}$/i.test(value)) return;
+      const normalized = value.startsWith("#") ? value : "#"+value;
+      state = rgbToHsv(normalized);
+      paint();
+    }
+    function open() {
+      document.querySelectorAll(".web-color-popover:not([hidden])").forEach(other => {
+        if (other !== pop) { other.hidden = true; other.closest(".web-color-picker")?.querySelector(".web-color-trigger")?.setAttribute("aria-expanded","false"); }
+      });
+      pop.hidden = false; trigger.setAttribute("aria-expanded","true");
+      state = rgbToHsv(source.value);
+      paint();
+    }
+    trigger.addEventListener("click", () => pop.hidden ? open() : (pop.hidden=true,trigger.setAttribute("aria-expanded","false")));
+    wrap.querySelector(".web-color-close").addEventListener("click", () => { pop.hidden=true; trigger.setAttribute("aria-expanded","false"); });
+    hue.addEventListener("input", () => { state.h=Number(hue.value); paint(); });
+    hex.addEventListener("change", () => applyHex(hex.value));
+    hex.addEventListener("keydown", event => { if(event.key==="Enter"){event.preventDefault();applyHex(hex.value);} });
+    const setSV = event => {
+      const rect = sv.getBoundingClientRect();
+      state.s=clamp((event.clientX-rect.left)/rect.width,0,1);
+      state.v=1-clamp((event.clientY-rect.top)/rect.height,0,1);
+      paint();
+    };
+    sv.addEventListener("pointerdown", event => { sv.setPointerCapture(event.pointerId); setSV(event); });
+    sv.addEventListener("pointermove", event => { if(event.buttons) setSV(event); });
+    sv.addEventListener("keydown", event => {
+      const step=event.shiftKey?.1:.02;
+      if(event.key==="ArrowLeft") state.s=clamp(state.s-step,0,1);
+      else if(event.key==="ArrowRight") state.s=clamp(state.s+step,0,1);
+      else if(event.key==="ArrowUp") state.v=clamp(state.v+step,0,1);
+      else if(event.key==="ArrowDown") state.v=clamp(state.v-step,0,1);
+      else return;
+      event.preventDefault();paint();
+    });
+    document.addEventListener("pointerdown", event => {
+      if (!wrap.contains(event.target) && !pop.hidden) { pop.hidden=true; trigger.setAttribute("aria-expanded","false"); }
+    });
+    document.addEventListener("keydown", event => {
+      if(event.key==="Escape" && !pop.hidden) { pop.hidden=true;trigger.setAttribute("aria-expanded","false");trigger.focus(); }
+    });
+    paint();
+  });
+})();
