@@ -4659,10 +4659,6 @@ body.cost-modal-open #developer-panel {
 
 /* НОВАЯ ЛАБОРАТОРИЯ: ЗЕРНО ВМЕСТО КЛЕТОЧНОЙ СЕТКИ */
 /* Старый клетчатый рисунок сохранён выше в .hatching-canvas, но не накладывается на слой лаборатории. */
-#background-lab-atmosphere::after{
-  background:radial-gradient(ellipse at center,transparent 28%,rgba(0,0,0,var(--lab-vignette,.35)) 100%);
-  opacity:1;mix-blend-mode:soft-light;
-}
 #background-lab-grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:var(--lab-grain-opacity,.22);filter:url(#lab-film-grain);mix-blend-mode:soft-light}
 .lab-filter-defs{position:fixed;width:0;height:0;overflow:hidden;pointer-events:none}
 #developer-panel .background-lab-glow,#developer-panel .background-lab-optics{padding:4px 7px}
@@ -4721,13 +4717,11 @@ body.theme-v3
 #developer-panel #developer-panel-content{padding:6px 8px!important;overflow:auto!important}
 #developer-panel .animation-panel-title,#developer-panel .background-panel-label{margin:5px 0 7px!important;font-size:10px!important}
 #developer-panel .background-lab-card:not([hidden]){display:block!important;max-width:100%!important;overflow-x:auto!important;padding:4px 0!important}
-#developer-panel #lab-base.background-lab-base,
 #developer-panel .lab-glow-controls,
 #developer-panel .lab-optics-controls{
  display:flex!important;flex-flow:row nowrap!important;align-items:flex-end!important;
  gap:8px!important;width:max-content!important;min-width:0!important;max-width:none!important
 }
-#developer-panel #lab-base .lab-base-row,
 #developer-panel .lab-glow-control,
 #developer-panel .lab-glow-controls>.lab-color-picker,
 #developer-panel .lab-optics-control,
@@ -4735,7 +4729,6 @@ body.theme-v3
  display:flex!important;flex:0 0 112px!important;flex-direction:column!important;
  gap:4px!important;width:112px!important;min-width:112px!important;max-width:112px!important
 }
-#developer-panel #lab-base label,
 #developer-panel .lab-glow-control label,
 #developer-panel .lab-optics-control label{white-space:nowrap!important}
 #developer-panel #lab-base input[type=range],
