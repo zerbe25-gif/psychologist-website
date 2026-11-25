@@ -12,9 +12,9 @@ const photoSets = {
 
     // Фотографии первой рамки
     first: [
-        "images/photos/first-4.jpg",
         "images/photos/first-5.jpg",
-        "images/photos/first-6.jpg"
+        "images/photos/first-6.jpg",
+        "images/photos/first-4.jpg"
     ],
 
  
@@ -24,7 +24,7 @@ const photoOne = document.getElementById("photo-one");
 const photoOneNext = document.getElementById("photo-one-next");
 const photoChangeTime = 15000;
 const photoRevealDuration = 1000;
-let firstPhotoIndex = -1;
+let firstPhotoIndex = 0
 let photoIsChanging = false;
 
 function changePhoto(baseLayer, revealLayer, images) {
@@ -368,6 +368,7 @@ window.toggleDevPanelSection = function(section) {
   const sectionIds = {
     animation: "animation-control-panel",
     "editorial-background": "editorial-background-panel",
+    "portrait-atmosphere": "portrait-atmosphere-panel",
     cost: "cost-control-panel"
   };
   const panelId = sectionIds[section];
@@ -1077,4 +1078,19 @@ function toggleBackgroundLabBlock(panelId, button) {
     });
     paint();
   });
+})();
+
+(function(){
+ const frame=document.querySelector('.photo-frame-1.portrait-stage');if(!frame)return;
+ const key='psychologistPortraitAtmosphereV1',defaults={strength:42,spread:68,grain:38,organic:72,shadow:22},fields=Object.keys(defaults);
+ let state={...defaults};try{state={...defaults,...JSON.parse(localStorage.getItem(key)||'{}')}}catch(error){}
+ function render(){
+  const values={strength:state.strength/100,spread:(state.spread*-.23)+'%',grain:state.grain/100,organic:state.organic,shadow:state.shadow/100};
+  Object.entries(values).forEach(([k,v])=>frame.style.setProperty('--portrait-haze-'+k,v));
+  const warp=document.querySelector('#portrait-haze-warp feDisplacementMap');if(warp)warp.setAttribute('scale',String(6+state.organic*.42));
+  frame.classList.toggle('portrait-frame-atmosphere-on',state.strength>0);
+  fields.forEach(k=>{const input=document.getElementById('portrait-haze-'+k),out=document.getElementById('portrait-haze-'+k+'-value');if(input)input.value=state[k];if(out)out.textContent=state[k]+'%'});
+ }
+ fields.forEach(k=>{const input=document.getElementById('portrait-haze-'+k);if(input)input.addEventListener('input',()=>{state[k]=Math.max(0,Math.min(100,Number(input.value)||0));render();try{localStorage.setItem(key,JSON.stringify(state))}catch(error){}})});
+ render();
 })();
