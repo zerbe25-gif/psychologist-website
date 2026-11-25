@@ -1085,8 +1085,9 @@ function toggleBackgroundLabBlock(panelId, button) {
  const key='psychologistPortraitAtmosphereV1',defaults={strength:42,spread:68,grain:38,organic:72,shadow:22},fields=Object.keys(defaults);
  let state={...defaults};try{state={...defaults,...JSON.parse(localStorage.getItem(key)||'{}')}}catch(error){}
  function render(){
-  const values={strength:state.strength/100,spread:state.spread+'%',grain:state.grain/100,organic:state.organic,shadow:state.shadow/100};
+  const values={strength:state.strength/100,spread:(state.spread*-.23)+'%',grain:state.grain/100,organic:state.organic,shadow:state.shadow/100};
   Object.entries(values).forEach(([k,v])=>frame.style.setProperty('--portrait-haze-'+k,v));
+  const warp=document.querySelector('#portrait-haze-warp feDisplacementMap');if(warp)warp.setAttribute('scale',String(6+state.organic*.42));
   frame.classList.toggle('portrait-frame-atmosphere-on',state.strength>0);
   fields.forEach(k=>{const input=document.getElementById('portrait-haze-'+k),out=document.getElementById('portrait-haze-'+k+'-value');if(input)input.value=state[k];if(out)out.textContent=state[k]+'%'});
  }
