@@ -41,7 +41,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=20261125-menu-type-scale-v1">
+  <link rel="stylesheet" href="style.css?v=20261125-portrait-haze-v1">
 </head>
 
 <body id="top">
@@ -61,6 +61,7 @@
       <button type="button" class="developer-panel-close" onclick="closeDeveloperPanel()" aria-label="Закрыть панель управления" title="Закрыть панель">×</button>
       <button type="button" class="developer-panel-tab" data-panel-section="animation" onclick="toggleDevPanelSection('animation')">АНИМАЦИЯ</button>
       <button type="button" class="developer-panel-tab" data-panel-section="editorial-background" onclick="toggleDevPanelSection('editorial-background')">ФОН A / B / C</button>
+      <button type="button" class="developer-panel-tab" data-panel-section="portrait-atmosphere" onclick="toggleDevPanelSection('portrait-atmosphere')">АТМОСФЕРА ФОТО</button>
       <button type="button" class="developer-panel-tab" data-panel-section="cost" onclick="toggleDevPanelSection('cost')">ОКНА</button>
     </div>
     <div id="developer-panel-content" hidden>
@@ -113,6 +114,7 @@
   <label class="home-light-control"><span>Высота</span><input id="home-light2-height" type="range" min="5" max="45" value="16" oninput="updateHomeLight(2,'height',this.value)"><output id="home-light2-height-value">16%</output></label>
  </div></div>
 </div></div></section>
+<section id="portrait-atmosphere-panel" hidden aria-label="Атмосфера фотографии"><div class="portrait-atmosphere-controls"><strong>АТМОСФЕРА ПОРТРЕТА · ОРГАНИЧЕСКАЯ ВУАЛЬ</strong><div class="portrait-atmosphere-control"><label for="portrait-haze-strength">Общая выраженность</label><input id="portrait-haze-strength" type="range" min="0" max="100" value="42"><output id="portrait-haze-strength-value">42%</output></div><div class="portrait-atmosphere-control"><label for="portrait-haze-spread">Распространение за рамку</label><input id="portrait-haze-spread" type="range" min="10" max="100" value="68"><output id="portrait-haze-spread-value">68%</output></div><div class="portrait-atmosphere-control"><label for="portrait-haze-grain">Зернистость</label><input id="portrait-haze-grain" type="range" min="0" max="100" value="38"><output id="portrait-haze-grain-value">38%</output></div><div class="portrait-atmosphere-control"><label for="portrait-haze-organic">Неоднородность формы</label><input id="portrait-haze-organic" type="range" min="0" max="100" value="72"><output id="portrait-haze-organic-value">72%</output></div><div class="portrait-atmosphere-control"><label for="portrait-haze-shadow">Тёмная вуаль справа</label><input id="portrait-haze-shadow" type="range" min="0" max="100" value="22"><output id="portrait-haze-shadow-value">22%</output></div><p class="portrait-atmosphere-note">Настройки влияют на отдельные слои поверх и позади фотографии. Исходный снимок не изменяется.</p></div></section>
 <div id="cost-control-panel" hidden>
 
     <div class="background-control">
@@ -304,16 +306,19 @@
          <img
   class="gallery-photo photo-layer photo-layer-base"
   id="photo-one"
-  src="images/photos/first-1.jpg"
+  src="images/photos/first-5.jpg"
   alt="Фотография"
 >
          <img
   class="gallery-photo photo-layer photo-layer-reveal"
   id="photo-one-next"
-  src="images/photos/first-1.jpg"
+  src="images/photos/first-5.jpg"
   alt=""
   aria-hidden="true"
 >
+          <div class="portrait-haze-backdrop" aria-hidden="true"></div>
+          <div class="portrait-haze-overlay" aria-hidden="true"></div>
+          <div class="portrait-haze-grain" aria-hidden="true"></div>
         </div>
 
       </div>
@@ -793,7 +798,7 @@
 <!-- /ЦЕНТРАЛЬНОЕ ОКНО ЗАПИСИ -->
   <!-- ФАЙЛ С ФУНКЦИЯМИ САЙТА -->
 
-  <script src="script.js?v=20261125-menu-type-scale-v1"></script>
+  <script src="script.js?v=20261125-portrait-haze-v1"></script>
 
   <script src="page-transition.js?v=20261117-curtain-dom1"></script>
   <script src="initial-load.js?v=20261117-hybrid-soft1"></script>
