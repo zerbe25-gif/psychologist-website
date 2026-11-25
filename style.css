@@ -4610,29 +4610,9 @@ body.cost-modal-open #developer-panel {
 @media(max-width:600px){#developer-panel .background-lab-carousel{max-width:58vw}#developer-panel .background-lab-tab-track{width:34vw}#developer-panel .developer-panel-bar{gap:4px}}
 
 
-/* Лаборатория фона · база, виньетка и зерно */
-#developer-panel .background-lab-base{
-  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
-  padding:7px 10px;background:#f7f9fb;border:1px solid #e2e8f0;border-radius:9px;
-}
-#developer-panel .background-lab-base[hidden]{display:none!important}
-#developer-panel .lab-base-row{
-  display:flex;align-items:center;gap:7px;min-width:0;flex:1 1 170px;
-  color:#526078;font:500 10px/1.2 Inter,sans-serif;
-}
-#developer-panel .lab-base-row label{flex:0 0 auto;white-space:nowrap}
-#developer-panel .lab-base-row input[type="range"]{width:100%;min-width:45px;height:14px;margin:0;accent-color:#34797E}
-#developer-panel .lab-base-row input[type="color"]{width:24px;height:22px;padding:2px;border:1px solid #d7dee8;border-radius:5px;background:#fff;cursor:pointer}
-#developer-panel .lab-base-row output{flex:0 0 38px;text-align:right;color:#718096;font-size:10px;white-space:nowrap}
-#developer-panel .lab-base-color{flex:0 1 145px}
-@media(max-width:600px){#developer-panel .background-lab-base{gap:7px;padding:6px}#developer-panel .lab-base-row{flex-basis:145px}}
-
-
 /* НОВАЯ ЛАБОРАТОРИЯ: отдельный визуальный слой, не вмешивается в старые техники */
-body{background-color:var(--lab-bg-base,var(--background-color))!important}
 #background-lab-atmosphere{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;isolation:isolate}
-#background-lab-atmosphere::before,#background-lab-atmosphere::after{content:"";position:absolute;inset:0;pointer-events:none}
-#background-lab-atmosphere::before{
+#background-lab-atmosphere::before,#background-lab-atmosphere::before{
   background:
     radial-gradient(ellipse var(--lab-glow1-size,60%) var(--lab-glow1-size,60%) at var(--lab-glow1-x,82%) var(--lab-glow1-y,18%),color-mix(in srgb,var(--lab-glow1-color,#34797E) var(--lab-glow1-opacity,45%),transparent) 0%,transparent 72%),
     radial-gradient(ellipse var(--lab-glow2-size,55%) var(--lab-glow2-size,55%) at var(--lab-glow2-x,15%) var(--lab-glow2-y,85%),color-mix(in srgb,var(--lab-glow2-color,#DCB573) var(--lab-glow2-opacity,22%),transparent) 0%,transparent 72%);
