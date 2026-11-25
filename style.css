@@ -4640,7 +4640,7 @@ body{background-color:var(--lab-bg-base,var(--background-color))!important}
 }
 #background-lab-atmosphere::after{
   background:
-    radial-gradient(ellipse at center,transparent 28%,rgba(0,0,0,var(--lab-vignette,.35)) 100%),
+    radial-gradient(ellipse at center,transparent 28%,rgba(0,0,0,0) 100%),
     repeating-linear-gradient(0deg,color-mix(in srgb,rgba(255,255,255,.18) var(--lab-grain,35%),transparent) 0 1px,transparent 1px 3px),
     repeating-linear-gradient(90deg,color-mix(in srgb,rgba(0,0,0,.18) var(--lab-grain,35%),transparent) 0 1px,transparent 1px 4px);
   opacity:1;mix-blend-mode:soft-light;
@@ -4663,9 +4663,6 @@ body{background-color:var(--lab-bg-base,var(--background-color))!important}
 .lab-effects-link-row label{display:flex;align-items:center;gap:7px;font-weight:600;white-space:nowrap}
 .lab-effects-link-row input{accent-color:#34797E}
 .lab-effects-link-row span{color:#718087;flex:1 1 230px}
-body.lab-effects-isolated #background-lab-atmosphere{background:var(--lab-bg-base,#1E292B);isolation:isolate}
-body.lab-effects-isolated #background-lab-atmosphere::before,
-body.lab-effects-isolated #background-lab-atmosphere::after{mix-blend-mode:normal}
 
 /* ВТОРОЙ ИСТОЧНИК СВЕТА */
 
@@ -4686,7 +4683,7 @@ body.lab-effects-isolated #background-lab-atmosphere::after{mix-blend-mode:norma
   background:radial-gradient(ellipse at center,transparent 28%,rgba(0,0,0,var(--lab-vignette,.35)) 100%);
   opacity:1;mix-blend-mode:soft-light;
 }
-#background-lab-grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:var(--lab-grain-opacity,.35);filter:url(#lab-film-grain);mix-blend-mode:soft-light}
+#background-lab-grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:var(--lab-grain-opacity,.22);filter:url(#lab-film-grain);mix-blend-mode:soft-light}
 .lab-filter-defs{position:fixed;width:0;height:0;overflow:hidden;pointer-events:none}
 #developer-panel .background-lab-glow,#developer-panel .background-lab-optics{padding:4px 7px}
 #developer-panel .lab-glow-controls{gap:4px}
