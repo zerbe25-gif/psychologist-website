@@ -47,19 +47,6 @@
 <body id="top">
   <div class="page-transition-curtain" aria-hidden="true"></div>
 
-  <!-- ФОНОВЫЕ СЛОИ: ШТРИХОВКА И ТЕНЬ ЛИСТА -->
-<div id="tech-hatching" class="hatching-bg-layer active-tech">
-    <div class="hatching-canvas"></div>
-</div>
-
-<div id="tech-floating-paper" class="floating-paper-layer"></div>
-
-  <!-- 3. СЛОЙ ОРГАНИЧЕСКОЙ АКВАРЕЛИ -->
-<div id="tech-watercolor" class="watercolor-bg-layer"></div>
-
-<!-- 4. СЛОЙ АНИМИРОВАННОЙ ВУАЛИ СВЕТА -->
-<div id="tech-ambient-light" class="ambient-light-bg-layer"></div>
-  
   <!-- ФОНОВОЕ ДИНАМИЧЕСКОЕ СВЕЧЕНИЕ — V3 -->
 <div id="meshGlow" class="bg-mesh-glow"></div>
 
@@ -98,8 +85,8 @@
         <div class="background-lab-carousel" aria-label="Разделы лаборатории фона">
           <button type="button" class="lab-carousel-arrow" aria-label="Предыдущие разделы" onclick="scrollBackgroundLabTabs(-1)">‹</button>
           <div class="background-lab-tab-track" id="background-lab-tab-track">
-            <button type="button" class="developer-panel-tab background-lab-tab" data-panel-section="lab-presets" onclick="toggleBackgroundLabBlock('lab-presets',this)">Пресеты</button>
-            <button type="button" class="developer-panel-tab background-lab-tab" data-panel-section="lab-base" onclick="toggleBackgroundLabBlock('lab-base',this)">База · виньетка · текстура</button>
+            
+            
             <button type="button" class="developer-panel-tab background-lab-tab" data-panel-section="lab-glow1" onclick="toggleBackgroundLabBlock('lab-glow1',this)">Свет 1 · Тил</button>
             <button type="button" class="developer-panel-tab background-lab-tab" data-panel-section="lab-glow2" onclick="toggleBackgroundLabBlock('lab-glow2',this)">Свет 2 · Акцент</button>
           </div>
@@ -150,227 +137,6 @@
     </div>
 </div>
 
-<!-- ПАНЕЛЬ УПРАВЛЕНИЯ ФОНОМ -->
-<aside id="background-control-panel" hidden>
-    <button class="background-panel-heading"
-            type="button"
-            onclick="toggleBackgroundPanel()"
-            aria-expanded="false">
-        <span>УПРАВЛЕНИЕ ФОНОМ</span>
-        <span id="background-panel-arrow">＋</span>
-    </button>
-
-<div id="background-panel-content">
-<div class="background-effects-toggle-row">
-  <label for="background-effects-toggle">
-    <input type="checkbox" id="background-effects-toggle">
-    <span>Включить оформление фона</span>
-  </label>
-  <span class="background-effects-toggle-note">Без галочки — чистый белый фон</span>
-</div>
-
-
-  
-<div class="background-theme-control">
-    <div class="background-panel-label">
-        Цветовая тема главной страницы
-    </div>
-
-    <button
-        type="button"
-        id="theme-v3-toggle"
-        class="theme-v3-button"
-        aria-pressed="false"
-        onclick="toggleNightTealTheme()">
-        3. Камерный Ночной Тил
-    </button>
-</div>
-
-        <div class="background-panel-label">
-            Техника визуализации
-        </div>
-
-      <div class="background-tech-tabs">
-
-    <button onclick="switchTechnique(1, this)"
-            class="tech-tab active"
-            type="button">
-        1. Штриховка
-    </button>
-
-    <button onclick="switchTechnique(2, this)"
-            class="tech-tab"
-            type="button">
-        2. Тень листа
-    </button>
-
-    <button onclick="switchTechnique(3, this)"
-            class="tech-tab"
-            type="button">
-        3. Акварель
-    </button>
-
-    <button onclick="switchTechnique(4, this)"
-            class="tech-tab"
-            type="button">
-        4. Вуаль света
-    </button>
-
-</div>
-      
-        <!-- НАСТРОЙКИ ШТРИХОВКИ -->
-        <div id="controls-hatching">
-
-            <div class="background-control">
-                <label for="hatch-angle-input">Угол наклона:</label>
-                <span id="val-hatch-angle">45°</span>
-                <input id="hatch-angle-input" type="range"
-                       min="0" max="180" step="15" value="45"
-                       oninput="updateHatchAngle(this.value)">
-            </div>
-
-            <div class="background-control">
-                <label for="hatch-opacity-input">Интенсивность линий:</label>
-                <span id="val-hatch-opacity">12%</span>
-                <input id="hatch-opacity-input" type="range"
-                       min="0.04" max="0.35" step="0.01" value="0.12"
-                       oninput="updateHatchOpacity(this.value)">
-            </div>
-
-            <div class="background-control">
-                <label for="hatch-spacing-input">Частота (шаг):</label>
-                <span id="val-hatch-spacing">12px</span>
-                <input id="hatch-spacing-input" type="range"
-                       min="4" max="32" step="2" value="12"
-                       oninput="updateHatchSpacing(this.value)">
-            </div>
-
-            <div class="background-control">
-                <label>Цвет штриховки:</label>
-                <div class="hatch-color-buttons">
-                    <button type="button" onclick="setHatchColor('#2B4C6F', this)" style="background:#2B4C6F" title="Деним"></button>
-                    <button type="button" onclick="setHatchColor('#384E22', this)" style="background:#384E22" title="Олива"></button>
-                    <button type="button" onclick="setHatchColor('#A64B2A', this)" style="background:#A64B2A" title="Терракота"></button>
-                    <button type="button" onclick="setHatchColor('#9B8456', this)" style="background:#9B8456" title="Охра"></button>
-                </div>
-            </div>
-        </div>
-
-        <!-- НАСТРОЙКИ ТЕНИ ЛИСТА -->
-        <div id="controls-paper-shadow" hidden>
-
-            <div class="background-control">
-                <label for="shadow-elevation-input">Высота подъёма (Y):</label>
-                <span id="val-shadow-elevation">18px</span>
-                <input id="shadow-elevation-input" type="range"
-                       min="4" max="40" step="2" value="18"
-                       oninput="updateShadowElevation(this.value)">
-            </div>
-
-            <div class="background-control">
-                <label for="shadow-blur-input">Мягкость тени (Blur):</label>
-                <span id="val-shadow-blur">36px</span>
-                <input id="shadow-blur-input" type="range"
-                       min="10" max="70" step="2" value="36"
-                       oninput="updateShadowBlur(this.value)">
-            </div>
-
-            <div class="background-control">
-                <label for="shadow-opacity-input">Плотность тени:</label>
-                <span id="val-shadow-opacity">8%</span>
-                <input id="shadow-opacity-input" type="range"
-                       min="0.02" max="0.22" step="0.01" value="0.08"
-                       oninput="updateShadowOpacity(this.value)">
-            </div>
-
-            <div class="background-control">
-                <label for="shadow-angle-input">Направление света (X):</label>
-                <span id="val-shadow-angle">0px</span>
-                <input id="shadow-angle-input" type="range"
-                       min="-20" max="20" step="2" value="0"
-                       oninput="updateShadowAngle(this.value)">
-            </div>
-
-        </div>
-      <!-- НАСТРОЙКИ ТЕХНИКИ 3: АКВАРЕЛЬ -->
-<div id="controls-watercolor" hidden>
-
-    <div class="background-control">
-        <label for="watercolor-opacity-input">Интенсивность акварели:</label>
-        <span id="val-watercolor-opacity">45%</span>
-        <input id="watercolor-opacity-input" type="range"
-               min="0.10" max="1" step="0.05" value="0.45"
-               oninput="updateWatercolorOpacity(this.value)">
-    </div>
-
-    <div class="background-control">
-        <label for="watercolor-size-input">Размер мазков:</label>
-        <span id="val-watercolor-size">100%</span>
-        <input id="watercolor-size-input" type="range"
-               min="60" max="180" step="5" value="100"
-               oninput="updateWatercolorSize(this.value)">
-    </div>
-
-    <div class="background-control">
-        <label for="watercolor-blur-input">Мягкость переходов:</label>
-        <span id="val-watercolor-blur">35px</span>
-        <input id="watercolor-blur-input" type="range"
-               min="5" max="70" step="5" value="35"
-               oninput="updateWatercolorBlur(this.value)">
-    </div>
-  
-<div class="background-control">
-    <label for="watercolor-origin-input">Начало распространения цвета:</label>
-    <span id="val-watercolor-origin">25%</span>
-    <input id="watercolor-origin-input" type="range"
-           min="0" max="100" step="5" value="25"
-           oninput="updateWatercolorOrigin(this.value)">
-</div>
-    <div class="background-control">
-        <label>Цветовая палитра:</label>
-        <div class="hatch-color-buttons watercolor-palettes">
-            <button type="button" onclick="setWatercolorPalette('blue', this)"
-                    style="background:#829BAA" title="Голубая"></button>
-            <button type="button" onclick="setWatercolorPalette('olive', this)"
-                    style="background:#A1A889" title="Оливковая"></button>
-            <button type="button" onclick="setWatercolorPalette('rose', this)"
-                    style="background:#C99E98" title="Розовая"></button>
-            <button type="button" onclick="setWatercolorPalette('sand', this)"
-                    style="background:#C9B99C" title="Песочная"></button>
-        </div>
-    </div>
-
-</div>
-
-<!-- НАСТРОЙКИ ТЕХНИКИ 4: ВУАЛЬ СВЕТА -->
-<div id="controls-ambient-light" hidden>
-
-    <div class="background-control">
-        <label for="ambient-opacity-input">Интенсивность свечения:</label>
-        <span id="val-ambient-opacity">35%</span>
-        <input id="ambient-opacity-input" type="range"
-               min="0.05" max="0.8" step="0.05" value="0.35"
-               oninput="updateAmbientOpacity(this.value)">
-    </div>
-
-    <div class="background-control">
-        <label for="ambient-size-input">Размер световых областей:</label>
-        <span id="val-ambient-size">100%</span>
-        <input id="ambient-size-input" type="range"
-               min="60" max="180" step="5" value="100"
-               oninput="updateAmbientSize(this.value)">
-    </div>
-
-    <div class="background-control">
-        <label for="ambient-speed-input">Скорость движения:</label>
-        <span id="val-ambient-speed">20 сек.</span>
-        <input id="ambient-speed-input" type="range"
-               min="8" max="50" step="2" value="20"
-               oninput="updateAmbientSpeed(this.value)">
-    </div>
-
-</div>
-    </div>
 </aside>
   
         <section id="editorial-background-panel" hidden aria-label="Новое оформление главного экрана">
@@ -486,28 +252,7 @@
 
 <!-- ЛАБОРАТОРИЯ ФОНА: отдельные разделы панели управления -->
 <div class="background-lab-panels" id="background-lab-panels">
-<section class="background-lab-card" id="lab-presets" hidden><div class="lab-preset-actions"><button type="button" onclick="applyBackgroundMood('balanced')">Баланс</button><button type="button" onclick="applyBackgroundMood('deep')">Глубокий кокон</button><button type="button" onclick="applyBackgroundMood('amber')">Вечерний свет</button></div></section>
-<section class="background-lab-card background-lab-base" id="lab-base" hidden>
-  <div class="lab-effects-link-row">
-  <label for="lab-effects-link"><input id="lab-effects-link" type="checkbox" checked onchange="updateBackgroundEffectsLink(this.checked)"> Взаимодействие со старыми эффектами «Фон»</label>
-  <span>Включено — эффекты смешиваются. Выключено — новая лаборатория работает отдельным визуальным слоем; старые эффекты остаются активными.</span>
-</div>
-  <div class="lab-base-row lab-base-color">
-    <label for="lab-base-color-open">База</label>
-    <div class="lab-color-picker" data-color-key="lab-base-color"><button type="button" id="lab-base-color-open" class="lab-color-open" style="--picker-color:#1E292B" onclick="openLabColorPicker('lab-base-color')" aria-label="Открыть выбор цвета База"><span class="lab-color-open-swatch"></span><span class="lab-color-open-value" id="lab-base-color-display">#1E292B</span></button></div>
-    <input id="lab-base-color-text" class="lab-color-value" type="text" value="#1E292B" spellcheck="false" oninput="updateLabColorText('lab-base-color',this.value)" aria-label="Значение цвета База">
-    <output id="lab-base-color-default-output">#1E292B</output>
-  </div>
-  <div class="lab-base-row">
-    <label for="lab-vignette">Виньетка</label>
-    <input id="lab-vignette" type="range" min="0" max="100" step="1" value="35" oninput="updateBackgroundVignette(this.value)">
-    <output id="lab-vignette-value">35%</output>
-  </div>
-  <div class="lab-base-row">
-    <label for="lab-grain">Текстура</label>
-    <input id="lab-grain" type="range" min="0" max="100" step="1" value="35" oninput="updateBackgroundGrain(this.value)">
-    <output id="lab-grain-value">Средняя</output>
-  </div>
+</section>
 </section>
 <section class="background-lab-card background-lab-glow" id="lab-glow1" hidden>
   <div class="lab-glow-controls">
