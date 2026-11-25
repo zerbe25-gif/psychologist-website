@@ -1081,25 +1081,25 @@ function toggleBackgroundLabBlock(panelId, button) {
 })();
 
 
+
 (function(){
  const frame=document.querySelector('.photo-frame-1.portrait-stage');if(!frame)return;
  const key='psychologistPortraitEdgeToningV1';
- const defaults={strength:48,width:52,glow:38,spread:58};
- const fields=Object.keys(defaults);
+ const ids={strength:'edge-strength',width:'edge-width',glow:'frame-glow',spread:'glow-spread',tint:'edge-tint'};
+ const vars={strength:'edge-strength',width:'edge-width',glow:'frame-glow',spread:'glow-spread',tint:'edge-tint'};
+ const defaults={strength:48,width:52,glow:38,spread:58,tint:18};
  let state={...defaults};
  try{state={...defaults,...JSON.parse(localStorage.getItem(key)||'{}')}}catch(error){}
  function render(){
-  const values={strength:state.strength/100,width:state.width+'%',glow:state.glow/100,spread:state.spread+'%'};
-  Object.entries(values).forEach(([name,value])=>frame.style.setProperty('--portrait-'+(name==='strength'?'edge-strength':name==='width'?'edge-width':name==='glow'?'frame-glow':'glow-spread'),value));
-  fields.forEach(name=>{
-   const input=document.getElementById('portrait-'+(name==='strength'?'edge-strength':name==='width'?'edge-width':name==='glow'?'frame-glow':'glow-spread'));
-   const output=document.getElementById('portrait-'+(name==='strength'?'edge-strength':name==='width'?'edge-width':name==='glow'?'frame-glow':'glow-spread')+'-value');
+  Object.keys(defaults).forEach(name=>{
+   frame.style.setProperty('--portrait-'+vars[name],name==='width'||name==='spread'?state[name]+'%':state[name]/100);
+   const input=document.getElementById('portrait-'+ids[name]);
+   const output=document.getElementById('portrait-'+ids[name]+'-value');
    if(input)input.value=state[name];if(output)output.textContent=state[name]+'%';
   });
  }
- fields.forEach(name=>{
-  const id='portrait-'+(name==='strength'?'edge-strength':name==='width'?'edge-width':name==='glow'?'frame-glow':'glow-spread');
-  const input=document.getElementById(id);
+ Object.keys(defaults).forEach(name=>{
+  const input=document.getElementById('portrait-'+ids[name]);
   if(input)input.addEventListener('input',()=>{
    state[name]=Math.max(0,Math.min(100,Number(input.value)||0));render();
    try{localStorage.setItem(key,JSON.stringify(state))}catch(error){}
