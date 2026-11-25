@@ -4745,7 +4745,6 @@ body.theme-v3
 #developer-panel .developer-panel-tab{flex:0 0 auto!important}
 #developer-panel .lab-effects-link-row{white-space:nowrap}
 #developer-panel .background-lab-card[hidden],
-#developer-panel #lab-presets[hidden],#developer-panel #lab-base[hidden],
 #developer-panel #lab-glow1[hidden],#developer-panel #lab-glow2[hidden],
 #developer-panel #lab-optics[hidden]{display:none!important}
 #developer-panel{z-index:100000!important}
