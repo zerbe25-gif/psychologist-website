@@ -8069,11 +8069,14 @@ body > .main-content {
 }
 
 
-/* WHITE EDITORIAL HERO — consolidated desktop layout.
-   One viewport calculation, one menu alignment rule, no legacy staircase offsets. */
+/* WHITE EDITORIAL HERO — one desktop coordinate system.
+   The whole composition starts exactly 1.5cm below the viewport top;
+   every hero element is centered inside that same remaining stage. */
 @media (min-width:901px) {
   :root {
-    --hero-photo-height: min(60vh, calc(100dvh - var(--developer-panel-height, 36px) - var(--site-header-height, 82px) - 30px));
+    --hero-stage-top: 1.5cm;
+    --hero-stage-height: calc(100dvh - var(--hero-stage-top));
+    --hero-photo-height: min(60vh, calc(var(--hero-stage-height) - 30px));
   }
 
   body {
@@ -8081,7 +8084,7 @@ body > .main-content {
     width:100%;
     height:100dvh !important;
     min-height:100dvh !important;
-    max-height:100dvh;
+    max-height:100dvh !important;
     overflow:hidden !important;
   }
 
@@ -8103,16 +8106,20 @@ body > .main-content {
     z-index:2147483600 !important;
   }
 
+  /* Fixed stage: no cumulative header/panel margins and no second height subtraction. */
   body > .main-content {
     display:block !important;
-    position:relative !important;
-    width:100%;
-    height:calc(100dvh - var(--developer-panel-height, 36px) - var(--site-header-height, 82px)) !important;
+    position:fixed !important;
+    top:var(--hero-stage-top) !important;
+    left:0 !important;
+    right:0 !important;
+    width:100% !important;
+    height:var(--hero-stage-height) !important;
     min-height:0 !important;
-    max-height:calc(100dvh - var(--developer-panel-height, 36px) - var(--site-header-height, 82px));
-    margin:calc(var(--developer-panel-height, 36px) + var(--site-header-height, 82px)) 0 0 !important;
+    max-height:var(--hero-stage-height) !important;
+    margin:0 !important;
     padding:0 !important;
-    overflow:hidden;
+    overflow:hidden !important;
     isolation:isolate;
   }
 
@@ -8152,17 +8159,16 @@ body > .main-content {
     position:absolute !important;
     z-index:2;
     left:5.5%;
-    top:50%;
+    top:50% !important;
     width:38%;
     height:auto !important;
     min-height:0 !important;
     margin:0 !important;
     padding:0 !important;
-    transform:translateY(-50%);
+    transform:translateY(-50%) !important;
     justify-content:flex-start !important;
   }
 
-  /* Категория вынесена из потока, чтобы не сдвигать список вверх/вниз. */
   .main-content .menu-section .menu-label {
     position:absolute !important;
     left:-42px !important;
@@ -8183,7 +8189,6 @@ body > .main-content {
     width:100%;
   }
 
-  /* Все пять пунктов начинаются строго на одной вертикальной линии. */
   .main-content .menu-section .section-menu > .menu-item {
     position:relative !important;
     display:block !important;
@@ -8246,19 +8251,5 @@ body > .main-content {
     border-radius:0 !important;
     box-shadow:none !important;
     background:transparent !important;
-  }
-}
-
-/* На очень невысоких окнах сохраняем доступ к содержимому прокруткой. */
-@media (min-width:901px) and (max-height:650px) {
-  body {
-    height:auto !important;
-    min-height:100dvh !important;
-    max-height:none;
-    overflow-y:auto !important;
-  }
-  body > .main-content {
-    height:max(500px, calc(100dvh - var(--developer-panel-height, 36px) - var(--site-header-height, 82px))) !important;
-    max-height:none;
   }
 }
