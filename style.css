@@ -4063,47 +4063,7 @@ body.cost-modal-open #developer-panel {
     margin-left: 1.2em;
 }
 
-/* FINAL MENU POSITION FIX 2026-11-13
-   Override legacy desktop offsets (including .menu-item-3 {left:100px})
-   so the requested 52px shift is applied to the actual rendered menu. */
-@media (min-width: 901px) {
-  .section-menu > .menu-item-1 { margin-left: 0 !important; left: 0 !important; }
-  .section-menu > .menu-item-2 { margin-left: 38px !important; left: 0 !important; }
-  .section-menu > .menu-item-3 { margin-left: 83px !important; left: 0 !important; }
-  .section-menu > .menu-item-4 { margin-left: 128px !important; left: 0 !important; }
-}
-
-
-/* FORCE FINAL MENU OFFSETS — 2026-11-13 v2 */
-@media (min-width: 901px) {
-  .section-menu > button.menu-item-method { margin-left: 0 !important; }
-  .section-menu > button.menu-item-1 { margin-left: 0 !important; left: 0 !important; }
-  .section-menu > button.menu-item-2 { margin-left: 38px !important; left: 0 !important; }
-  .section-menu > button.menu-item-3 { margin-left: 83px !important; left: 0 !important; }
-  .section-menu > button.menu-item-4 { margin-left: 128px !important; left: 0 !important; }
-}
-
-
-/* FINAL MENU POSITION FIX — desktop + tablet windows.
-   Keep the staircase active from 601px; phones retain their two-column grid. */
-@media (min-width: 601px) {
-  .main-content .menu-section .section-menu > button.menu-item-method {
-    margin-left: 0 !important; left: auto !important; transform: translateX(0) !important;
-  }
-  .main-content .menu-section .section-menu > button.menu-item-1 {
-    margin-left: 38px !important; left: auto !important; transform: translateX(0) !important;
-  }
-  .main-content .menu-section .section-menu > button.menu-item-2 {
-    margin-left: 76px !important; left: auto !important; transform: translateX(0) !important;
-  }
-  .main-content .menu-section .section-menu > button.menu-item-3 {
-    margin-left: 112px !important; left: auto !important; transform: translateX(0) !important;
-  }
-  .main-content .menu-section .section-menu > button.menu-item-4 {
-    margin-left: 90px !important; left: auto !important; transform: translateX(0) !important;
-  }
-}
-
+/* Удалены устаревшие desktop staircase offsets: меню выравнивается единым правилом ниже. */
 
 /* SIDE DRAWER REFINEMENT — горизонтальная навигация и светлая палитра */
 #sideDrawer {
@@ -8109,11 +8069,48 @@ body > .main-content {
 }
 
 
-/* WHITE EDITORIAL HERO — desktop composition. */
+/* WHITE EDITORIAL HERO — consolidated desktop layout.
+   One viewport calculation, one menu alignment rule, no legacy staircase offsets. */
 @media (min-width:901px) {
+  :root {
+    --hero-photo-height: min(60vh, calc(100dvh - var(--developer-panel-height, 36px) - var(--site-header-height, 82px) - 30px));
+  }
+
+  body {
+    display:block !important;
+    width:100%;
+    height:100dvh !important;
+    min-height:100dvh !important;
+    max-height:100dvh;
+    overflow:hidden !important;
+  }
+
+  body > #developer-panel {
+    position:fixed !important;
+    inset:0 0 auto 0 !important;
+    width:100% !important;
+    margin:0 !important;
+    z-index:2147483647 !important;
+  }
+
+  body > .header {
+    position:fixed !important;
+    top:var(--developer-panel-height, 36px) !important;
+    left:0 !important;
+    right:0 !important;
+    width:100% !important;
+    margin:0 !important;
+    z-index:2147483600 !important;
+  }
+
   body > .main-content {
     display:block !important;
     position:relative !important;
+    width:100%;
+    height:calc(100dvh - var(--developer-panel-height, 36px) - var(--site-header-height, 82px)) !important;
+    min-height:0 !important;
+    max-height:calc(100dvh - var(--developer-panel-height, 36px) - var(--site-header-height, 82px));
+    margin:calc(var(--developer-panel-height, 36px) + var(--site-header-height, 82px)) 0 0 !important;
     padding:0 !important;
     overflow:hidden;
     isolation:isolate;
@@ -8122,11 +8119,17 @@ body > .main-content {
   .hero-white-surface {
     position:absolute;
     z-index:0;
-    top:1.7%;
-    bottom:5%;
+    top:50%;
     left:32%;
     right:0;
-    background:#F5F4F0;
+    width:auto;
+    height:calc(var(--hero-photo-height) + 10px);
+    transform:translateY(-50%);
+    box-sizing:border-box;
+    background-color:#F6F5F1;
+    background-image:radial-gradient(circle, rgba(92,88,80,.15) .7px, transparent .95px);
+    background-size:12px 12px;
+    background-position:0 0;
     border:2px solid #85847F;
     border-radius:10px 0 0 10px;
   }
@@ -8134,7 +8137,7 @@ body > .main-content {
   .hero-white-caption {
     position:absolute;
     left:5.5%;
-    bottom:4.1%;
+    bottom:5px;
     max-width:42%;
     color:#26332f;
     font-family:'Cormorant Garamond',Georgia,serif;
@@ -8158,57 +8161,59 @@ body > .main-content {
     justify-content:flex-start !important;
   }
 
+  /* Категория вынесена из потока, чтобы не сдвигать список вверх/вниз. */
   .main-content .menu-section .menu-label {
-    position:relative !important;
-    left:-38px !important;
-    top:auto !important;
-    align-self:flex-start;
-    margin:0 0 clamp(14px,2vh,24px) 0 !important;
+    position:absolute !important;
+    left:-42px !important;
+    top:50% !important;
+    margin:0 !important;
+    transform:translateY(-50%) rotate(180deg) !important;
+    align-self:auto;
   }
 
   .main-content .menu-section .section-menu {
     display:flex !important;
     flex-direction:column !important;
     align-items:flex-start !important;
+    justify-content:flex-start !important;
     gap:clamp(15px,2.05vh,25px) !important;
     padding:0 !important;
+    margin:0 !important;
     width:100%;
   }
 
-  /* Все пункты меню начинаются на одной вертикальной линии.
-     Старые смещения и отрицательные интервалы нейтрализованы в самом правиле. */
-  .main-content .menu-section .section-menu > .menu-item,
-  .main-content .menu-section .section-menu > .menu-item-1,
-  .main-content .menu-section .section-menu > .menu-item-2,
-  .main-content .menu-section .section-menu > .menu-item-3,
-  .main-content .menu-section .section-menu > .menu-item-4 {
+  /* Все пять пунктов начинаются строго на одной вертикальной линии. */
+  .main-content .menu-section .section-menu > .menu-item {
     position:relative !important;
+    display:block !important;
     left:0 !important;
+    right:auto !important;
     align-self:flex-start !important;
     margin:0 !important;
     padding:0 !important;
-    transform:none;
-    font-size:calc(clamp(55px,4.25vw,68px) * .75) !important;
+    transform:none !important;
+    text-align:left !important;
+    font-size:calc(clamp(55px,4.25vw,68px) * var(--home-menu-scale,.75)) !important;
     line-height:1 !important;
     white-space:nowrap;
   }
 
   .main-content .menu-section .section-menu > .menu-item-4 {
     margin-top:clamp(7.5px,1.025vh,12.5px) !important;
-    font-size:calc(42.5px * .75) !important;
+    font-size:calc(42.5px * var(--home-menu-scale,.75)) !important;
   }
 
   .main-content .gallery-section {
     position:absolute !important;
     z-index:1;
-    top:1.7%;
+    top:50%;
     right:1.7%;
-    bottom:5%;
     width:29%;
+    height:var(--hero-photo-height);
     min-height:0 !important;
-    height:93.3%;
     margin:0 !important;
     padding:0 !important;
+    transform:translateY(-50%);
     display:flex !important;
     align-items:center !important;
     justify-content:flex-end !important;
@@ -8229,7 +8234,7 @@ body > .main-content {
 
   .main-content .photo-frame-1 {
     flex:0 0 auto !important;
-    height:min(92%,60vh) !important;
+    height:calc(100% - 10px) !important;
     width:auto !important;
     max-width:none !important;
     max-height:none !important;
@@ -8239,5 +8244,19 @@ body > .main-content {
     border-radius:0 !important;
     box-shadow:none !important;
     background:transparent !important;
+  }
+}
+
+/* На очень невысоких окнах сохраняем доступ к содержимому прокруткой. */
+@media (min-width:901px) and (max-height:650px) {
+  body {
+    height:auto !important;
+    min-height:100dvh !important;
+    max-height:none;
+    overflow-y:auto !important;
+  }
+  body > .main-content {
+    height:max(500px, calc(100dvh - var(--developer-panel-height, 36px) - var(--site-header-height, 82px))) !important;
+    max-height:none;
   }
 }
