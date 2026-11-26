@@ -22,6 +22,10 @@ let activePhotoDissolveSide = "left";
 try {
  const saved = JSON.parse(localStorage.getItem(photoDissolveStorageKey)||"{}");
  ["left","right"].forEach(side=>{if(saved[side])photoDissolveState[side]={...photoDissolveDefaults,...saved[side]};});
+ if(!saved.left) {
+  const previousLeft = JSON.parse(localStorage.getItem("psychologistPhotoLeftPixelDissolveV1")||"null");
+  if(previousLeft)photoDissolveState.left={...photoDissolveDefaults,...previousLeft};
+ }
 } catch(error) {}
 function renderPhotoDissolve() {
  ["left","right"].forEach(side=>{
