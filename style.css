@@ -8581,7 +8581,7 @@ body > .main-content {
   
 }
 
-/* FIXED PORTRAIT — ONE LEFT-SIDE PIXEL DISSOLVE EFFECT */
+/* FIXED PORTRAIT — INDEPENDENT LEFT/RIGHT PIXEL DISSOLVE */
 .photo-dissolve-defs{position:absolute;width:0;height:0;overflow:hidden;pointer-events:none}
 .photo-frame-1.portrait-stage{position:relative!important;isolation:isolate!important;overflow:visible!important}
 .photo-frame-1.portrait-stage .gallery-photo{
@@ -8594,6 +8594,9 @@ body > .main-content {
 }
 .photo-diffusion-panel{display:flex;flex-direction:column;gap:8px;padding:7px 9px;color:#e4e9e3;background:rgba(34,42,37,.96);border:1px solid rgba(210,222,210,.16);border-radius:8px}
 .photo-diffusion-heading{display:flex;align-items:center;justify-content:space-between;gap:18px;color:#d5ded5;font:600 9px/1.3 Inter,Arial,sans-serif;letter-spacing:.12em}
+.photo-dissolve-side-switch{display:flex;gap:6px;padding:3px;border:1px solid rgba(210,222,210,.15);border-radius:7px;width:max-content;max-width:100%}
+.photo-dissolve-side{padding:7px 16px;border:1px solid transparent;border-radius:5px;background:transparent;color:rgba(225,232,224,.66);font:600 10px/1 Inter,Arial,sans-serif;cursor:pointer}
+.photo-dissolve-side.active{border-color:rgba(233,154,85,.48);background:rgba(233,154,85,.14);color:#f0b27e}
 .photo-diffusion-controls{display:grid;grid-template-columns:repeat(2,minmax(210px,1fr));gap:8px 14px}
 .photo-diffusion-control{display:grid;grid-template-columns:112px minmax(60px,1fr) 42px;align-items:center;gap:7px;min-width:0;color:#c7d0c8;font:500 10px/1.2 Inter,Arial,sans-serif}
 .photo-diffusion-control>span{white-space:nowrap}
