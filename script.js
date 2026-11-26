@@ -13,7 +13,7 @@ const fixedHomepagePhoto = "images/photos/first-3.jpg";
 const photoOne = document.getElementById("photo-one");
 if(photoOne) photoOne.src = fixedHomepagePhoto;
 const photoDissolveStorageKey = "psychologistPhotoEdgePixelDissolveV2";
-const photoDissolveDefaults = {height:65,y:50,width:28,intensity:100,softness:55};
+const photoDissolveDefaults = {height:65,y:50,width:28,intensity:100,softness:55,depthSoftness:55};
 const photoDissolveState = {
  left:{...photoDissolveDefaults},
  right:{...photoDissolveDefaults}
@@ -32,18 +32,26 @@ function renderPhotoDissolve() {
   const state=photoDissolveState[side],prefix="photo-"+side+"-";
   const horizontal=document.getElementById(prefix+"horizontal-fade");
   const intensityStop=document.getElementById(prefix+"intensity-stop");
+  const depthSoftStart=document.getElementById(prefix+"depth-soft-start");
   const topStart=document.getElementById(prefix+"top-soft-start");
   const topEnd=document.getElementById(prefix+"top-soft-end");
   const bottomStart=document.getElementById(prefix+"bottom-soft-start");
   const bottomEnd=document.getElementById(prefix+"bottom-soft-end");
-  if(!horizontal||!intensityStop||!topStart||!topEnd||!bottomStart||!bottomEnd)return;
-  const height=state.height/100,width=state.width/100,softness=state.softness/100,center=state.y/100;
+  if(!horizontal||!intensityStop||!depthSoftStart||!topStart||!topEnd||!bottomStart||!bottomEnd)return;
+  const height=state.height/100,width=state.width/100,softness=state.softness/100,depthSoftness=state.depthSoftness/100,center=state.y/100;
   const bandTop=Math.max(0,Math.min(1,center-height/2));
   const bandBottom=Math.max(0,Math.min(1,center+height/2));
   const actualHeight=Math.max(0,bandBottom-bandTop);
   const edge=actualHeight*softness/2;
-  if(side==="left")horizontal.setAttribute("x2",String(width));
-  else horizontal.setAttribute("x1",String(1-width));
+  if(side==="left"){
+   horizontal.setAttribute("x1","-0.002");
+   horizontal.setAttribute("x2",String(width));
+   depthSoftStart.setAttribute("offset",String(1-depthSoftness));
+  } else {
+   horizontal.setAttribute("x1","1.002");
+   horizontal.setAttribute("x2",String(1-width));
+   depthSoftStart.setAttribute("offset",String(1-depthSoftness));
+  }
   const grey=Math.round(255*(1-state.intensity/100));
   intensityStop.setAttribute("stop-color",`rgb(${grey},${grey},${grey})`);
   topStart.setAttribute("offset",String(bandTop));
@@ -51,8 +59,9 @@ function renderPhotoDissolve() {
   bottomStart.setAttribute("offset",String(Math.max(bandTop,bandBottom-edge)));
   bottomEnd.setAttribute("offset",String(bandBottom));
  });
- ["height","y","width","intensity","softness"].forEach(key=>{
-  const input=document.getElementById("photo-dissolve-"+key),output=document.getElementById("photo-dissolve-"+key+"-value");
+ ["height","y","width","intensity","softness","depthSoftness"].forEach(key=>{
+  const controlId=key==="depthSoftness"?"depth-softness":key;
+  const input=document.getElementById("photo-dissolve-"+controlId),output=document.getElementById("photo-dissolve-"+controlId+"-value");
   const value=photoDissolveState[activePhotoDissolveSide][key];
   if(input)input.value=value;
   if(output)output.textContent=value+"%";
@@ -73,7 +82,7 @@ function selectPhotoDissolveSide(side) {
  renderPhotoDissolve();
 }
 function updatePhotoDissolve(key,value) {
- const limits={height:[5,100],y:[0,100],width:[1,65],intensity:[0,100],softness:[0,100]};
+ const limits={height:[5,100],y:[0,100],width:[1,65],intensity:[0,100],softness:[0,100],depthSoftness:[0,100]};
  if(!limits[key])return;
  const bounds=limits[key],state=photoDissolveState[activePhotoDissolveSide];
  state[key]=Math.max(bounds[0],Math.min(bounds[1],Number(value)||0));
