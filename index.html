@@ -41,7 +41,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=20261126-photo-diffusion-v1">
+  <link rel="stylesheet" href="style.css?v=20261126-directional-mask-v2">
 </head>
 
 <body id="top">
@@ -77,18 +77,19 @@
         <section id="editorial-background-panel" hidden aria-label="Настройки растворения фотографии">
 <div class="photo-diffusion-panel">
 <div class="photo-diffusion-heading"><span>РАСТВОРЕНИЕ ВЕРХНЕЙ ОБЛАСТИ ФОТОГРАФИИ</span><label class="photo-diffusion-toggle"><input id="photo-diffusion-enabled" type="checkbox" checked onchange="updatePhotoDiffusion('enabled',this.checked)"><span>Эффект включён</span></label></div>
-<div class="photo-diffusion-controls">
-<label class="photo-diffusion-control"><span>Ширина зоны</span><input id="photo-diffusion-width" type="range" min="20" max="140" value="100" oninput="updatePhotoDiffusion('width',this.value)"><output id="photo-diffusion-width-value">100%</output></label>
-<label class="photo-diffusion-control"><span>Высота зоны</span><input id="photo-diffusion-height" type="range" min="10" max="100" value="38" oninput="updatePhotoDiffusion('height',this.value)"><output id="photo-diffusion-height-value">38%</output></label>
-<label class="photo-diffusion-control"><span>Положение X</span><input id="photo-diffusion-x" type="range" min="0" max="100" value="50" oninput="updatePhotoDiffusion('x',this.value)"><output id="photo-diffusion-x-value">50%</output></label>
-<label class="photo-diffusion-control"><span>Положение Y</span><input id="photo-diffusion-y" type="range" min="0" max="60" value="17" oninput="updatePhotoDiffusion('y',this.value)"><output id="photo-diffusion-y-value">17%</output></label>
+<div class="photo-diffusion-controls photo-directional-controls">
+<label class="photo-diffusion-control"><span>Глубина сверху</span><input id="photo-diffusion-topDepth" type="range" min="5" max="75" value="38" oninput="updatePhotoDiffusion('topDepth',this.value)"><output id="photo-diffusion-topDepth-value">38%</output></label>
+<label class="photo-diffusion-control"><span>Зона слева</span><input id="photo-diffusion-leftWidth" type="range" min="1" max="55" value="24" oninput="updatePhotoDiffusion('leftWidth',this.value)"><output id="photo-diffusion-leftWidth-value">24%</output></label>
+<label class="photo-diffusion-control"><span>Зона справа</span><input id="photo-diffusion-rightWidth" type="range" min="1" max="55" value="24" oninput="updatePhotoDiffusion('rightWidth',this.value)"><output id="photo-diffusion-rightWidth-value">24%</output></label>
+<label class="photo-diffusion-control"><span>Положение X</span><input id="photo-diffusion-x" type="range" min="-25" max="25" value="0" oninput="updatePhotoDiffusion('x',this.value)"><output id="photo-diffusion-x-value">0%</output></label>
+<label class="photo-diffusion-control"><span>Положение Y</span><input id="photo-diffusion-y" type="range" min="0" max="25" value="0" oninput="updatePhotoDiffusion('y',this.value)"><output id="photo-diffusion-y-value">0%</output></label>
+<label class="photo-diffusion-control"><span>Мягкость перехода</span><input id="photo-diffusion-feather" type="range" min="0" max="100" value="65" oninput="updatePhotoDiffusion('feather',this.value)"><output id="photo-diffusion-feather-value">65%</output></label>
 <label class="photo-diffusion-control"><span>Размытие</span><input id="photo-diffusion-blur" type="range" min="0" max="40" value="18" oninput="updatePhotoDiffusion('blur',this.value)"><output id="photo-diffusion-blur-value">18 px</output></label>
-<label class="photo-diffusion-control"><span>Прозрачность</span><input id="photo-diffusion-opacity" type="range" min="0" max="100" value="65" oninput="updatePhotoDiffusion('opacity',this.value)"><output id="photo-diffusion-opacity-value">65%</output></label>
-<label class="photo-diffusion-control"><span>Мягкость края</span><input id="photo-diffusion-feather" type="range" min="0" max="100" value="65" oninput="updatePhotoDiffusion('feather',this.value)"><output id="photo-diffusion-feather-value">65%</output></label>
-<label class="photo-diffusion-control"><span>Дымка</span><input id="photo-diffusion-haze" type="range" min="0" max="100" value="25" oninput="updatePhotoDiffusion('haze',this.value)"><output id="photo-diffusion-haze-value">25%</output></label>
+<label class="photo-diffusion-control"><span>Сила размытия</span><input id="photo-diffusion-blurOpacity" type="range" min="0" max="100" value="62" oninput="updatePhotoDiffusion('blurOpacity',this.value)"><output id="photo-diffusion-blurOpacity-value">62%</output></label>
+<label class="photo-diffusion-control"><span>Интенсивность дымки</span><input id="photo-diffusion-haze" type="range" min="0" max="100" value="25" oninput="updatePhotoDiffusion('haze',this.value)"><output id="photo-diffusion-haze-value">25%</output></label>
 <label class="photo-diffusion-control"><span>Зернистость</span><input id="photo-diffusion-grain" type="range" min="0" max="100" value="18" oninput="updatePhotoDiffusion('grain',this.value)"><output id="photo-diffusion-grain-value">18%</output></label>
 </div>
-<p class="photo-diffusion-note">Зона действует сверху фотографии. Ширину, высоту и положение можно менять независимо; размытие и прозрачность регулируют силу мягкого перехода.</p>
+<p class="photo-diffusion-note">Маска растворяет исходные пиксели сверху и по бокам. Нижняя часть защищена. Смещение X/Y перемещает верхнюю область эффекта; размытие, дымка и зерно ограничены той же маской.</p>
 </div></section>
 
 <div id="cost-control-panel" hidden>

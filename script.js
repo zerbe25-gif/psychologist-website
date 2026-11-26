@@ -15,19 +15,34 @@ const photoOneNext = document.getElementById("photo-one-next");
 const photoOneDiffusion = document.getElementById("photo-one-diffusion");
 [photoOne,photoOneNext,photoOneDiffusion].forEach(image=>{if(image)image.src=fixedHomepagePhoto;});
 
-/* Persistent local controls for the upper portrait diffusion zone. */
-const photoDiffusionStorageKey = "psychologistPhotoDiffusionV1";
-const photoDiffusionDefaults = {enabled:true,width:100,height:38,x:50,y:17,blur:18,opacity:65,feather:65,haze:25,grain:18};
+/* Directional alpha mask and local effects for the fixed homepage portrait. */
+const photoDiffusionStorageKey = "psychologistPhotoDirectionalMaskV2";
+const photoDiffusionDefaults = {enabled:true,topDepth:38,leftWidth:24,rightWidth:24,x:0,y:0,blur:18,blurOpacity:62,feather:65,haze:25,grain:18};
 let photoDiffusionState = {...photoDiffusionDefaults};
 try { photoDiffusionState={...photoDiffusionDefaults,...JSON.parse(localStorage.getItem(photoDiffusionStorageKey)||"{}")}; } catch(error) {}
 function renderPhotoDiffusion() {
  const frame=document.querySelector(".photo-frame-1.portrait-stage");
  if(!frame)return;
- const vars={width:photoDiffusionState.width+"%",height:photoDiffusionState.height+"%",x:photoDiffusionState.x+"%",y:photoDiffusionState.y+"%",blur:photoDiffusionState.blur+"px",opacity:photoDiffusionState.opacity/100,feather:photoDiffusionState.feather+"%",haze:photoDiffusionState.haze/100,grain:photoDiffusionState.grain/100};
+ const vars={
+  "top-depth":photoDiffusionState.topDepth+"%",
+  "top-end":Math.min(100,photoDiffusionState.y+photoDiffusionState.topDepth)+"%",
+  "top-start":(photoDiffusionState.y+photoDiffusionState.topDepth*(1-photoDiffusionState.feather/100))+"%",
+  "side-feather-start":(photoDiffusionState.feather*0.8)+"%",
+  "left-width":photoDiffusionState.leftWidth+"%",
+  "right-width":photoDiffusionState.rightWidth+"%",
+  "shift-x":photoDiffusionState.x+"%",
+  "shift-y":photoDiffusionState.y+"%",
+  "blur":photoDiffusionState.blur+"px",
+  "blur-opacity":photoDiffusionState.blurOpacity/100,
+  "feather":photoDiffusionState.feather+"%",
+  "haze":photoDiffusionState.haze/100,
+  "haze-alpha":(photoDiffusionState.haze/100)*0.36,
+  "grain":photoDiffusionState.grain/100
+ };
  Object.entries(vars).forEach(([key,value])=>frame.style.setProperty("--photo-diffusion-"+key,value));
  frame.classList.toggle("photo-diffusion-enabled",!!photoDiffusionState.enabled);
  const toggle=document.getElementById("photo-diffusion-enabled");if(toggle)toggle.checked=!!photoDiffusionState.enabled;
- ["width","height","x","y","blur","opacity","feather","haze","grain"].forEach(key=>{
+ ["topDepth","leftWidth","rightWidth","x","y","blur","blurOpacity","feather","haze","grain"].forEach(key=>{
   const input=document.getElementById("photo-diffusion-"+key),output=document.getElementById("photo-diffusion-"+key+"-value");
   if(input)input.value=photoDiffusionState[key];
   if(output)output.textContent=photoDiffusionState[key]+(key==="blur"?" px":"%");
@@ -36,7 +51,7 @@ function renderPhotoDiffusion() {
 function updatePhotoDiffusion(key,value) {
  if(key==="enabled")photoDiffusionState.enabled=!!value;
  else {
-  const limits={width:[20,140],height:[10,100],x:[0,100],y:[0,60],blur:[0,40],opacity:[0,100],feather:[0,100],haze:[0,100],grain:[0,100]};
+  const limits={topDepth:[5,75],leftWidth:[1,55],rightWidth:[1,55],x:[-25,25],y:[0,25],blur:[0,40],blurOpacity:[0,100],feather:[0,100],haze:[0,100],grain:[0,100]};
   if(!limits[key])return;
   photoDiffusionState[key]=Math.max(limits[key][0],Math.min(limits[key][1],Number(value)||0));
  }
