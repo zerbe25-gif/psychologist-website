@@ -41,14 +41,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=20261126-directional-mask-v2">
+  <link rel="stylesheet" href="style.css?v=20261126-left-pixel-dissolve-v1">
 </head>
 
 <body id="top">
   <div class="page-transition-curtain" aria-hidden="true"></div>
 
 <!-- НЕЗАВИСИМЫЙ СЛОЙ НОВОЙ ЛАБОРАТОРИИ ФОНА -->
-<svg class="lab-filter-defs" aria-hidden="true" focusable="false"><filter id="lab-film-grain"><feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="3" stitchTiles="stitch" result="noise"/><feColorMatrix in="noise" type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 0.28"/></feComponentTransfer></filter></svg>
 <div id="background-lab-atmosphere" aria-hidden="true"></div>
 <div id="background-lab-texture" aria-hidden="true"></div>
 <div id="background-lab-grain" aria-hidden="true"></div>
@@ -74,22 +73,16 @@
         </div>
         <div id="animation-description">Градиент + Мягкое смещение + Овальный маркер</div>
       </div>
-        <section id="editorial-background-panel" hidden aria-label="Настройки растворения фотографии">
+        <section id="editorial-background-panel" hidden aria-label="Растворение пикселей слева">
 <div class="photo-diffusion-panel">
-<div class="photo-diffusion-heading"><span>РАСТВОРЕНИЕ ВЕРХНЕЙ ОБЛАСТИ ФОТОГРАФИИ</span><label class="photo-diffusion-toggle"><input id="photo-diffusion-enabled" type="checkbox" checked onchange="updatePhotoDiffusion('enabled',this.checked)"><span>Эффект включён</span></label></div>
+<div class="photo-diffusion-heading">РАСТВОРЕНИЕ ПИКСЕЛЕЙ · ЛЕВАЯ СТОРОНА</div>
 <div class="photo-diffusion-controls photo-directional-controls">
-<label class="photo-diffusion-control"><span>Глубина сверху</span><input id="photo-diffusion-topDepth" type="range" min="5" max="75" value="38" oninput="updatePhotoDiffusion('topDepth',this.value)"><output id="photo-diffusion-topDepth-value">38%</output></label>
-<label class="photo-diffusion-control"><span>Зона слева</span><input id="photo-diffusion-leftWidth" type="range" min="1" max="55" value="24" oninput="updatePhotoDiffusion('leftWidth',this.value)"><output id="photo-diffusion-leftWidth-value">24%</output></label>
-<label class="photo-diffusion-control"><span>Зона справа</span><input id="photo-diffusion-rightWidth" type="range" min="1" max="55" value="24" oninput="updatePhotoDiffusion('rightWidth',this.value)"><output id="photo-diffusion-rightWidth-value">24%</output></label>
-<label class="photo-diffusion-control"><span>Положение X</span><input id="photo-diffusion-x" type="range" min="-25" max="25" value="0" oninput="updatePhotoDiffusion('x',this.value)"><output id="photo-diffusion-x-value">0%</output></label>
-<label class="photo-diffusion-control"><span>Положение Y</span><input id="photo-diffusion-y" type="range" min="0" max="25" value="0" oninput="updatePhotoDiffusion('y',this.value)"><output id="photo-diffusion-y-value">0%</output></label>
-<label class="photo-diffusion-control"><span>Мягкость перехода</span><input id="photo-diffusion-feather" type="range" min="0" max="100" value="65" oninput="updatePhotoDiffusion('feather',this.value)"><output id="photo-diffusion-feather-value">65%</output></label>
-<label class="photo-diffusion-control"><span>Размытие</span><input id="photo-diffusion-blur" type="range" min="0" max="40" value="18" oninput="updatePhotoDiffusion('blur',this.value)"><output id="photo-diffusion-blur-value">18 px</output></label>
-<label class="photo-diffusion-control"><span>Сила размытия</span><input id="photo-diffusion-blurOpacity" type="range" min="0" max="100" value="62" oninput="updatePhotoDiffusion('blurOpacity',this.value)"><output id="photo-diffusion-blurOpacity-value">62%</output></label>
-<label class="photo-diffusion-control"><span>Интенсивность дымки</span><input id="photo-diffusion-haze" type="range" min="0" max="100" value="25" oninput="updatePhotoDiffusion('haze',this.value)"><output id="photo-diffusion-haze-value">25%</output></label>
-<label class="photo-diffusion-control"><span>Зернистость</span><input id="photo-diffusion-grain" type="range" min="0" max="100" value="18" oninput="updatePhotoDiffusion('grain',this.value)"><output id="photo-diffusion-grain-value">18%</output></label>
+<label class="photo-diffusion-control"><span>Высота зоны</span><input id="photo-dissolve-height" type="range" min="5" max="100" value="65" oninput="updatePhotoDissolve('height',this.value)"><output id="photo-dissolve-height-value">65%</output></label>
+<label class="photo-diffusion-control"><span>Глубина вправо</span><input id="photo-dissolve-width" type="range" min="1" max="65" value="28" oninput="updatePhotoDissolve('width',this.value)"><output id="photo-dissolve-width-value">28%</output></label>
+<label class="photo-diffusion-control"><span>Интенсивность</span><input id="photo-dissolve-intensity" type="range" min="0" max="100" value="100" oninput="updatePhotoDissolve('intensity',this.value)"><output id="photo-dissolve-intensity-value">100%</output></label>
+<label class="photo-diffusion-control"><span>Мягкость перехода</span><input id="photo-dissolve-softness" type="range" min="0" max="100" value="55" oninput="updatePhotoDissolve('softness',this.value)"><output id="photo-dissolve-softness-value">55%</output></label>
 </div>
-<p class="photo-diffusion-note">Маска растворяет исходные пиксели сверху и по бокам. Нижняя часть защищена. Смещение X/Y перемещает верхнюю область эффекта; размытие, дымка и зерно ограничены той же маской.</p>
+<p class="photo-diffusion-note">Исчезают только исходные пиксели слева. Высота зоны расположена по центру фотографии; глубина задаёт, насколько далеко растворение уходит вправо. Размытия, дымки и зернистости нет.</p>
 </div></section>
 
 <div id="cost-control-panel" hidden>
@@ -297,20 +290,8 @@
       <div class="photo-gallery">
 
         <div class="photo-frame photo-frame-1 portrait-stage">
-         <img
-  class="gallery-photo photo-layer photo-layer-base"
-  id="photo-one"
-  src="images/photos/first-3.jpg"
-  alt="Фотография"
->
-         <img
-  class="gallery-photo photo-layer photo-layer-reveal"
-  id="photo-one-next"
-  src="images/photos/first-3.jpg"
-  alt=""
-  aria-hidden="true"
-><img class="photo-diffusion-layer" id="photo-one-diffusion" src="images/photos/first-3.jpg" alt="" aria-hidden="true">
-        </div>
+<img class="gallery-photo" id="photo-one" src="images/photos/first-3.jpg" alt="Фотография">
+</div>
 
       </div>
 
@@ -320,6 +301,12 @@
 
 
 
+<svg class="photo-dissolve-defs" aria-hidden="true" width="0" height="0" focusable="false"><defs>
+<linearGradient id="photo-left-horizontal-fade" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="0.28" y2="0"><stop id="photo-left-intensity-stop" offset="0" stop-color="rgb(0,0,0)"/><stop offset="1" stop-color="white"/></linearGradient>
+<linearGradient id="photo-left-vertical-band" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="black"/><stop id="photo-left-top-soft-start" offset="0.15" stop-color="black"/><stop id="photo-left-top-soft-end" offset="0.3" stop-color="white"/><stop id="photo-left-bottom-soft-start" offset="0.7" stop-color="white"/><stop id="photo-left-bottom-soft-end" offset="0.85" stop-color="black"/><stop offset="1" stop-color="black"/></linearGradient>
+<mask id="photo-left-band-mask" maskUnits="objectBoundingBox" maskContentUnits="objectBoundingBox" x="0" y="0" width="1" height="1" style="mask-type:luminance"><rect width="1" height="1" fill="url(#photo-left-vertical-band)"/></mask>
+<mask id="photo-left-dissolve-mask" maskUnits="objectBoundingBox" maskContentUnits="objectBoundingBox" x="0" y="0" width="1" height="1" style="mask-type:luminance"><rect width="1" height="1" fill="white"/><rect width="1" height="1" fill="url(#photo-left-horizontal-fade)" mask="url(#photo-left-band-mask)"/></mask>
+</defs></svg>
 <!-- ЕДИНАЯ ИНФОРМАЦИОННАЯ ШТОРКА — ВЕРТИКАЛЬНАЯ ПАРАЛЛАКС-ШТОРКА -->
 <div id="drawerBackdrop" aria-hidden="true"></div>
 <aside id="sideDrawer" role="dialog" aria-modal="true" aria-label="Информационные разделы" aria-hidden="true">
