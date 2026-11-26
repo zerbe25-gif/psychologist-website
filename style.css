@@ -8130,7 +8130,7 @@ body > .main-content {
     bottom:auto !important;
     left:auto !important;
     right:0 !important;
-    width:calc((100% - 32%) * .9);
+    width:61.2%;
     height:calc(var(--hero-photo-height) + 20px) !important;
     transform:translate(-15px,-50%) !important;
     transform-origin:right center;
