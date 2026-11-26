@@ -8633,11 +8633,11 @@ body > .main-content {
  .photo-frame-1.portrait-stage .photo-layer-base,
  .photo-frame-1.portrait-stage .photo-layer-reveal {
   -webkit-mask-image:
-   linear-gradient(to bottom, transparent 0%, transparent var(--photo-diffusion-top-start), #000 calc(var(--photo-diffusion-shift-y) + var(--photo-diffusion-top-depth)), #000 100%),
+   linear-gradient(to bottom, transparent 0%, transparent var(--photo-diffusion-top-start), #000 var(--photo-diffusion-top-end), #000 100%),
    radial-gradient(ellipse var(--photo-diffusion-left-width) var(--photo-diffusion-top-depth) at calc(0% + var(--photo-diffusion-shift-x)) calc(var(--photo-diffusion-shift-y) + 0%), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%),
    radial-gradient(ellipse var(--photo-diffusion-right-width) var(--photo-diffusion-top-depth) at calc(100% + var(--photo-diffusion-shift-x)) calc(var(--photo-diffusion-shift-y) + 0%), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%)!important;
   mask-image:
-   linear-gradient(to bottom, transparent 0%, transparent var(--photo-diffusion-top-start), #000 calc(var(--photo-diffusion-shift-y) + var(--photo-diffusion-top-depth)), #000 100%),
+   linear-gradient(to bottom, transparent 0%, transparent var(--photo-diffusion-top-start), #000 var(--photo-diffusion-top-end), #000 100%),
    radial-gradient(ellipse var(--photo-diffusion-left-width) var(--photo-diffusion-top-depth) at calc(0% + var(--photo-diffusion-shift-x)) calc(var(--photo-diffusion-shift-y) + 0%), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%),
    radial-gradient(ellipse var(--photo-diffusion-right-width) var(--photo-diffusion-top-depth) at calc(100% + var(--photo-diffusion-shift-x)) calc(var(--photo-diffusion-shift-y) + 0%), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%)!important;
   -webkit-mask-composite:source-in,source-in!important;
@@ -8650,11 +8650,11 @@ body > .main-content {
   display:block!important;object-fit:cover!important;object-position:center 42%!important;border:0!important;border-radius:0!important;
   pointer-events:none!important;opacity:0!important;filter:blur(var(--photo-diffusion-blur)) saturate(.86)!important;transform:scale(1.025)!important;
   -webkit-mask-image:
-   linear-gradient(to bottom, transparent 0%, transparent var(--photo-diffusion-top-start), #000 calc(var(--photo-diffusion-shift-y) + var(--photo-diffusion-top-depth)), #000 100%),
+   linear-gradient(to bottom, transparent 0%, transparent var(--photo-diffusion-top-start), #000 var(--photo-diffusion-top-end), #000 100%),
    radial-gradient(ellipse var(--photo-diffusion-left-width) var(--photo-diffusion-top-depth) at calc(0% + var(--photo-diffusion-shift-x)) var(--photo-diffusion-shift-y), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%),
    radial-gradient(ellipse var(--photo-diffusion-right-width) var(--photo-diffusion-top-depth) at calc(100% + var(--photo-diffusion-shift-x)) var(--photo-diffusion-shift-y), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%)!important;
   mask-image:
-   linear-gradient(to bottom, transparent 0%, transparent var(--photo-diffusion-top-start), #000 calc(var(--photo-diffusion-shift-y) + var(--photo-diffusion-top-depth)), #000 100%),
+   linear-gradient(to bottom, transparent 0%, transparent var(--photo-diffusion-top-start), #000 var(--photo-diffusion-top-end), #000 100%),
    radial-gradient(ellipse var(--photo-diffusion-left-width) var(--photo-diffusion-top-depth) at calc(0% + var(--photo-diffusion-shift-x)) var(--photo-diffusion-shift-y), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%),
    radial-gradient(ellipse var(--photo-diffusion-right-width) var(--photo-diffusion-top-depth) at calc(100% + var(--photo-diffusion-shift-x)) var(--photo-diffusion-shift-y), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%)!important;
   -webkit-mask-composite:source-in,source-in!important;mask-composite:intersect!important;
@@ -8664,11 +8664,11 @@ body > .main-content {
   content:""!important;position:absolute!important;inset:0!important;z-index:4!important;pointer-events:none!important;opacity:0!important;
   background:rgba(220,226,211,.55)!important;filter:url(#lab-film-grain)!important;mix-blend-mode:soft-light!important;
   -webkit-mask-image:
-   linear-gradient(to bottom, transparent 0%, transparent var(--photo-diffusion-top-start), #000 calc(var(--photo-diffusion-shift-y) + var(--photo-diffusion-top-depth)), #000 100%),
+   linear-gradient(to bottom, transparent 0%, transparent var(--photo-diffusion-top-start), #000 var(--photo-diffusion-top-end), #000 100%),
    radial-gradient(ellipse var(--photo-diffusion-left-width) var(--photo-diffusion-top-depth) at calc(0% + var(--photo-diffusion-shift-x)) var(--photo-diffusion-shift-y), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%),
    radial-gradient(ellipse var(--photo-diffusion-right-width) var(--photo-diffusion-top-depth) at calc(100% + var(--photo-diffusion-shift-x)) var(--photo-diffusion-shift-y), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%)!important;
   mask-image:
-   linear-gradient(to bottom, transparent 0%, transparent var(--photo-diffusion-top-start), #000 calc(var(--photo-diffusion-shift-y) + var(--photo-diffusion-top-depth)), #000 100%),
+   linear-gradient(to bottom, transparent 0%, transparent var(--photo-diffusion-top-start), #000 var(--photo-diffusion-top-end), #000 100%),
    radial-gradient(ellipse var(--photo-diffusion-left-width) var(--photo-diffusion-top-depth) at calc(0% + var(--photo-diffusion-shift-x)) var(--photo-diffusion-shift-y), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%),
    radial-gradient(ellipse var(--photo-diffusion-right-width) var(--photo-diffusion-top-depth) at calc(100% + var(--photo-diffusion-shift-x)) var(--photo-diffusion-shift-y), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%)!important;
   -webkit-mask-composite:source-in,source-in!important;mask-composite:intersect!important;
@@ -8676,13 +8676,13 @@ body > .main-content {
  .photo-frame-1.portrait-stage.photo-diffusion-enabled::before{opacity:var(--photo-diffusion-grain,.18)!important}
  .photo-frame-1.portrait-stage::after {
   content:""!important;position:absolute!important;inset:0!important;z-index:5!important;pointer-events:none!important;opacity:0!important;
-  background:rgba(220,226,211,calc(var(--photo-diffusion-haze,.25)*.36))!important;mix-blend-mode:screen!important;filter:blur(8px)!important;
+  background:rgba(220,226,211,var(--photo-diffusion-haze-alpha,.09))!important;mix-blend-mode:screen!important;filter:blur(8px)!important;
   -webkit-mask-image:
-   linear-gradient(to bottom, transparent 0%, transparent var(--photo-diffusion-top-start), #000 calc(var(--photo-diffusion-shift-y) + var(--photo-diffusion-top-depth)), #000 100%),
+   linear-gradient(to bottom, transparent 0%, transparent var(--photo-diffusion-top-start), #000 var(--photo-diffusion-top-end), #000 100%),
    radial-gradient(ellipse var(--photo-diffusion-left-width) var(--photo-diffusion-top-depth) at calc(0% + var(--photo-diffusion-shift-x)) var(--photo-diffusion-shift-y), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%),
    radial-gradient(ellipse var(--photo-diffusion-right-width) var(--photo-diffusion-top-depth) at calc(100% + var(--photo-diffusion-shift-x)) var(--photo-diffusion-shift-y), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%)!important;
   mask-image:
-   linear-gradient(to bottom, transparent 0%, transparent var(--photo-diffusion-top-start), #000 calc(var(--photo-diffusion-shift-y) + var(--photo-diffusion-top-depth)), #000 100%),
+   linear-gradient(to bottom, transparent 0%, transparent var(--photo-diffusion-top-start), #000 var(--photo-diffusion-top-end), #000 100%),
    radial-gradient(ellipse var(--photo-diffusion-left-width) var(--photo-diffusion-top-depth) at calc(0% + var(--photo-diffusion-shift-x)) var(--photo-diffusion-shift-y), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%),
    radial-gradient(ellipse var(--photo-diffusion-right-width) var(--photo-diffusion-top-depth) at calc(100% + var(--photo-diffusion-shift-x)) var(--photo-diffusion-shift-y), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%)!important;
   -webkit-mask-composite:source-in,source-in!important;mask-composite:intersect!important;
