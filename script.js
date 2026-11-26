@@ -17,7 +17,7 @@ const photoOneDiffusion = document.getElementById("photo-one-diffusion");
 
 /* Directional alpha mask and local effects for the fixed homepage portrait. */
 const photoDiffusionStorageKey = "psychologistPhotoDirectionalMaskV2";
-const photoDiffusionDefaults = {enabled:true,topDepth:38,leftWidth:24,rightWidth:24,x:0,y:0,blur:18,feather:65,haze:25,grain:18};
+const photoDiffusionDefaults = {enabled:true,topDepth:38,leftWidth:24,rightWidth:24,x:0,y:0,blur:18,blurOpacity:62,feather:65,haze:25,grain:18};
 let photoDiffusionState = {...photoDiffusionDefaults};
 try { photoDiffusionState={...photoDiffusionDefaults,...JSON.parse(localStorage.getItem(photoDiffusionStorageKey)||"{}")}; } catch(error) {}
 function renderPhotoDiffusion() {
@@ -25,11 +25,14 @@ function renderPhotoDiffusion() {
  if(!frame)return;
  const vars={
   "top-depth":photoDiffusionState.topDepth+"%",
+  "top-start":(photoDiffusionState.y+photoDiffusionState.topDepth*(1-photoDiffusionState.feather/100))+"%",
+  "side-feather-start":(photoDiffusionState.feather*0.8)+"%",
   "left-width":photoDiffusionState.leftWidth+"%",
   "right-width":photoDiffusionState.rightWidth+"%",
   "shift-x":photoDiffusionState.x+"%",
   "shift-y":photoDiffusionState.y+"%",
   "blur":photoDiffusionState.blur+"px",
+  "blur-opacity":photoDiffusionState.blurOpacity/100,
   "feather":photoDiffusionState.feather+"%",
   "haze":photoDiffusionState.haze/100,
   "grain":photoDiffusionState.grain/100
@@ -37,7 +40,7 @@ function renderPhotoDiffusion() {
  Object.entries(vars).forEach(([key,value])=>frame.style.setProperty("--photo-diffusion-"+key,value));
  frame.classList.toggle("photo-diffusion-enabled",!!photoDiffusionState.enabled);
  const toggle=document.getElementById("photo-diffusion-enabled");if(toggle)toggle.checked=!!photoDiffusionState.enabled;
- ["topDepth","leftWidth","rightWidth","x","y","blur","feather","haze","grain"].forEach(key=>{
+ ["topDepth","leftWidth","rightWidth","x","y","blur","blurOpacity","feather","haze","grain"].forEach(key=>{
   const input=document.getElementById("photo-diffusion-"+key),output=document.getElementById("photo-diffusion-"+key+"-value");
   if(input)input.value=photoDiffusionState[key];
   if(output)output.textContent=photoDiffusionState[key]+(key==="blur"?" px":"%");
@@ -46,7 +49,7 @@ function renderPhotoDiffusion() {
 function updatePhotoDiffusion(key,value) {
  if(key==="enabled")photoDiffusionState.enabled=!!value;
  else {
-  const limits={topDepth:[5,75],leftWidth:[0,55],rightWidth:[0,55],x:[-25,25],y:[0,35],blur:[0,40],feather:[0,100],haze:[0,100],grain:[0,100]};
+  const limits={topDepth:[5,75],leftWidth:[0,55],rightWidth:[0,55],x:[-25,25],y:[0,35],blur:[0,40],blurOpacity:[0,100],feather:[0,100],haze:[0,100],grain:[0,100]};
   if(!limits[key])return;
   photoDiffusionState[key]=Math.max(limits[key][0],Math.min(limits[key][1],Number(value)||0));
  }
