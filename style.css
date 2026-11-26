@@ -8131,7 +8131,7 @@ body > .main-content {
     left:auto !important;
     right:0 !important;
     width:61.2%;
-    height:calc(var(--hero-photo-height) + 20px) !important;
+    height:calc(var(--hero-photo-height) + 35px) !important;
     transform:translate(-15px,-50%) !important;
     transform-origin:right center;
     box-sizing:border-box;
@@ -8217,7 +8217,7 @@ body > .main-content {
   .main-content .gallery-section {
     position:absolute !important;
     z-index:1;
-    top:50% !important;
+    top:calc(50% + 10px) !important;
     bottom:auto !important;
     right:1.7% !important;
     width:29%;
