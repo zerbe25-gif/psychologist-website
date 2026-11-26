@@ -8535,10 +8535,10 @@ body > .main-content {
     isolation:isolate !important;
     animation:none !important;
   }
-  .main-content 
-  .main-content 
-  .main-content 
-  .main-content 
+  
+  
+  
+  
 
   /* Keep the established left navigation exactly as authored. */
   .main-content .menu-section { z-index:4 !important; }
@@ -8578,7 +8578,7 @@ body > .main-content {
   body { background:#222925 !important; }
   #background-lab-atmosphere,#background-lab-texture,#background-lab-grain,.lab-filter-defs { display:none !important; }
   .main-content .photo-frame-1.portrait-stage { border:0 !important; overflow:visible !important; background:transparent !important; box-shadow:none !important; }
-  .main-content 
+  
 }
 
 /* FIXED PORTRAIT — ONE LEFT-SIDE PIXEL DISSOLVE EFFECT */
