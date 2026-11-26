@@ -8117,17 +8117,18 @@ body > .main-content {
   }
 
   .hero-white-surface {
-    position:absolute;
+    position:absolute !important;
     z-index:0;
-    top:50%;
-    left:32%;
-    right:0;
+    top:50% !important;
+    bottom:auto !important;
+    left:32% !important;
+    right:0 !important;
     width:auto;
-    height:calc(var(--hero-photo-height) + 10px);
-    transform:translateY(-50%);
+    height:calc(var(--hero-photo-height) + 20px) !important;
+    transform:translateY(-50%) !important;
     box-sizing:border-box;
     background-color:#F6F5F1;
-    background-image:radial-gradient(circle, rgba(92,88,80,.15) .7px, transparent .95px);
+    background-image:radial-gradient(circle, rgba(92,88,80,.135) .7px, transparent .95px);
     background-size:12px 12px;
     background-position:0 0;
     border:2px solid #85847F;
@@ -8193,27 +8194,28 @@ body > .main-content {
     padding:0 !important;
     transform:none !important;
     text-align:left !important;
-    font-size:calc(clamp(55px,4.25vw,68px) * var(--home-menu-scale,.75)) !important;
+    font-size:calc(clamp(55px,4.25vw,68px) * var(--home-menu-scale,.75) * .95) !important;
     line-height:1 !important;
     white-space:nowrap;
   }
 
   .main-content .menu-section .section-menu > .menu-item-4 {
     margin-top:clamp(7.5px,1.025vh,12.5px) !important;
-    font-size:calc(42.5px * var(--home-menu-scale,.75)) !important;
+    font-size:calc(42.5px * var(--home-menu-scale,.75) * .95) !important;
   }
 
   .main-content .gallery-section {
     position:absolute !important;
     z-index:1;
-    top:50%;
-    right:1.7%;
+    top:50% !important;
+    bottom:auto !important;
+    right:1.7% !important;
     width:29%;
-    height:var(--hero-photo-height);
+    height:var(--hero-photo-height) !important;
     min-height:0 !important;
     margin:0 !important;
     padding:0 !important;
-    transform:translateY(-50%);
+    transform:translateY(-50%) !important;
     display:flex !important;
     align-items:center !important;
     justify-content:flex-end !important;
