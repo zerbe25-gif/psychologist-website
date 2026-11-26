@@ -8,60 +8,43 @@
 // Каждую фотографию можно будет заменить,
 // не меняя остальную часть программы.
 
-const photoSets = {
-
-    // Фотографии первой рамки
-    first: [
-        "images/photos/first-3.jpg",
-        "images/photos/first-5.jpg",
-        "images/photos/first-6.jpg",
-        "images/photos/first-4.jpg"
-    ],
-
- 
-};
-
+/* FIXED HOMEPAGE PORTRAIT — NO AUTOMATIC ROTATION */
+const fixedHomepagePhoto = "images/photos/first-3.jpg";
 const photoOne = document.getElementById("photo-one");
 const photoOneNext = document.getElementById("photo-one-next");
-const photoChangeTime = 15000;
-const photoRevealDuration = 1000;
-let firstPhotoIndex = 0
-let photoIsChanging = false;
+const photoOneDiffusion = document.getElementById("photo-one-diffusion");
+[photoOne,photoOneNext,photoOneDiffusion].forEach(image=>{if(image)image.src=fixedHomepagePhoto;});
 
-function changePhoto(baseLayer, revealLayer, images) {
-  if (!baseLayer || !revealLayer || !images.length || photoIsChanging) return;
-  const nextIndex = (firstPhotoIndex + 1) % images.length;
-  const nextSrc = images[nextIndex];
-  photoIsChanging = true;
-  const preload = new Image();
-  preload.onload = () => {
-    revealLayer.src = nextSrc;
-    revealLayer.classList.remove("is-revealing");
-    void revealLayer.offsetWidth;
-    revealLayer.classList.add("is-revealing");
-    window.setTimeout(() => {
-      baseLayer.src = nextSrc;
-      revealLayer.classList.remove("is-revealing");
-      firstPhotoIndex = nextIndex;
-      photoIsChanging = false;
-    }, photoRevealDuration + 60);
-  };
-  preload.onerror = () => {
-    photoIsChanging = false;
-    console.warn("Не удалось загрузить фотографию:", nextSrc);
-  };
-  preload.src = nextSrc;
+/* Persistent local controls for the upper portrait diffusion zone. */
+const photoDiffusionStorageKey = "psychologistPhotoDiffusionV1";
+const photoDiffusionDefaults = {enabled:true,width:100,height:38,x:50,y:17,blur:18,opacity:65,feather:65,haze:25,grain:18};
+let photoDiffusionState = {...photoDiffusionDefaults};
+try { photoDiffusionState={...photoDiffusionDefaults,...JSON.parse(localStorage.getItem(photoDiffusionStorageKey)||"{}")}; } catch(error) {}
+function renderPhotoDiffusion() {
+ const frame=document.querySelector(".photo-frame-1.portrait-stage");
+ if(!frame)return;
+ const vars={width:photoDiffusionState.width+"%",height:photoDiffusionState.height+"%",x:photoDiffusionState.x+"%",y:photoDiffusionState.y+"%",blur:photoDiffusionState.blur+"px",opacity:photoDiffusionState.opacity/100,feather:photoDiffusionState.feather+"%",haze:photoDiffusionState.haze/100,grain:photoDiffusionState.grain/100};
+ Object.entries(vars).forEach(([key,value])=>frame.style.setProperty("--photo-diffusion-"+key,value));
+ frame.classList.toggle("photo-diffusion-enabled",!!photoDiffusionState.enabled);
+ const toggle=document.getElementById("photo-diffusion-enabled");if(toggle)toggle.checked=!!photoDiffusionState.enabled;
+ ["width","height","x","y","blur","opacity","feather","haze","grain"].forEach(key=>{
+  const input=document.getElementById("photo-diffusion-"+key),output=document.getElementById("photo-diffusion-"+key+"-value");
+  if(input)input.value=photoDiffusionState[key];
+  if(output)output.textContent=photoDiffusionState[key]+(key==="blur"?" px":"%");
+ });
 }
+function updatePhotoDiffusion(key,value) {
+ if(key==="enabled")photoDiffusionState.enabled=!!value;
+ else {
+  const limits={width:[20,140],height:[10,100],x:[0,100],y:[0,60],blur:[0,40],opacity:[0,100],feather:[0,100],haze:[0,100],grain:[0,100]};
+  if(!limits[key])return;
+  photoDiffusionState[key]=Math.max(limits[key][0],Math.min(limits[key][1],Number(value)||0));
+ }
+ renderPhotoDiffusion();
+ try{localStorage.setItem(photoDiffusionStorageKey,JSON.stringify(photoDiffusionState));}catch(error){}
+}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",renderPhotoDiffusion,{once:true});else renderPhotoDiffusion();
 
-/* EDITORIAL CLIP-PATH — ЖУРНАЛЬНАЯ МАСКА */
-if (photoOne && photoOneNext && photoSets.first.length) {
-  window.setInterval(() => {
-    /* Фотографии главной страницы остаются неподвижными,
-       пока пользователь читает открытую информационную шторку. */
-    if (document.body.classList.contains("drawer-is-open")) return;
-    changePhoto(photoOne, photoOneNext, photoSets.first);
-  }, photoChangeTime);
-}
 /* =========================================
    ФОРМА ЗАПИСИ
 ========================================= */
@@ -177,7 +160,7 @@ function saveHomeBackground(){renderHomeBackground();try{localStorage.setItem(ho
 function setHomeBackgroundVariant(v){if(!['A','B','C'].includes(v))return;homeBackgroundState.variant=v;saveHomeBackground();}
 function updateHomeBackgroundSetting(k,v){if(!['hatch','grid','grain','hatchOpacity','gridOpacity','grainOpacity'].includes(k))return;homeBackgroundState[k]=['hatch','grid','grain'].includes(k)?!!v:Math.max(0,Math.min(60,Number(v)||0));saveHomeBackground();}
 function updateHomeLight(n,k,v){if(![1,2].includes(Number(n))||!['color','opacity','x','y','width','height'].includes(k))return;if(k==='color'){if(!/^#[0-9a-f]{6}$/i.test(v))return;homeBackgroundState['light'+n][k]=v.toUpperCase();}else{const max=k==='opacity'?(n===1?55:45):100;homeBackgroundState['light'+n][k]=Math.max(0,Math.min(max,Number(v)||0));}saveHomeBackground();}
-function initializeHomeBackground(){if(!document.getElementById('background-lab-atmosphere')||!document.querySelector('.photo-gallery'))return;renderHomeBackground();}
+function initializeHomeBackground(){if(!document.getElementById('background-lab-atmosphere')||!document.querySelector('.photo-gallery'))return;document.body.classList.remove('home-background-active');}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initializeHomeBackground,{once:true});else initializeHomeBackground();
 
 // Масштаб заголовков главного меню: отдельная настройка, не затрагивающая шторки.
