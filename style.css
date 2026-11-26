@@ -3989,21 +3989,11 @@ body.cost-modal-open #developer-panel {
 
 /* EDITORIAL CLIP-PATH — ЖУРНАЛЬНАЯ МАСКА */
 .photo-frame-1.portrait-stage { position: relative; overflow: hidden; isolation: isolate; }
-.photo-frame-1.portrait-stage .photo-layer {
-  position: absolute; inset: 0; display: block;
-  width: 100%; height: 100%;
-  object-fit: cover; object-position: center 50%;
-  border-radius: 0;
-  transform: scale(1); transition: none;
-  will-change: clip-path, transform;
-}
-.photo-frame-1.portrait-stage .photo-layer-base { z-index: 0; }
-.photo-frame-1.portrait-stage .photo-layer-reveal {
-  z-index: 1; clip-path: inset(0 100% 0 0); transform: scale(1.05);
-  transition: clip-path 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.photo-frame-1.portrait-stage .photo-layer-reveal.is-revealing { clip-path: inset(0 0 0 0); transform: scale(1); }
-@media (prefers-reduced-motion: reduce) { .photo-frame-1.portrait-stage .photo-layer-reveal { transition-duration: 0.01ms; } }
+
+
+
+
+@media (prefers-reduced-motion: reduce) {  }
 
 /* ARTICLE: independent Minimalism + Line animation */
 .section-menu.effect-mode-1 .menu-item-4,
@@ -8545,33 +8535,10 @@ body > .main-content {
     isolation:isolate !important;
     animation:none !important;
   }
-  .main-content .photo-frame-1.portrait-stage .photo-layer {
-    position:absolute !important;
-    inset:0 !important;
-    display:block !important;
-    width:100% !important; height:100% !important;
-    object-fit:cover !important;
-    object-position:center 42% !important;
-    border:0 !important; border-radius:0 !important;
-    -webkit-mask-image:radial-gradient(ellipse 76% 78% at 53% 48%, #000 38%, rgba(0,0,0,.96) 52%, rgba(0,0,0,.72) 66%, rgba(0,0,0,.28) 82%, transparent 100%) !important;
-    mask-image:radial-gradient(ellipse 76% 78% at 53% 48%, #000 38%, rgba(0,0,0,.96) 52%, rgba(0,0,0,.72) 66%, rgba(0,0,0,.28) 82%, transparent 100%) !important;
-    -webkit-mask-repeat:no-repeat !important;
-    mask-repeat:no-repeat !important;
-    -webkit-mask-size:100% 100% !important;
-    mask-size:100% 100% !important;
-    filter:saturate(.82) contrast(.96) !important;
-  }
-  .main-content .photo-frame-1.portrait-stage .photo-layer-base { z-index:0 !important; }
-  .main-content .photo-frame-1.portrait-stage .photo-layer-reveal {
-    z-index:1 !important;
-    clip-path:inset(0 100% 0 0);
-    transform:scale(1.015) !important;
-    transition:clip-path 1s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1) !important;
-  }
-  .main-content .photo-frame-1.portrait-stage .photo-layer-reveal.is-revealing {
-    clip-path:inset(0 0 0 0) !important;
-    transform:scale(1) !important;
-  }
+  
+  
+  
+  
 
   /* Keep the established left navigation exactly as authored. */
   .main-content .menu-section { z-index:4 !important; }
@@ -8611,94 +8578,26 @@ body > .main-content {
   body { background:#222925 !important; }
   #background-lab-atmosphere,#background-lab-texture,#background-lab-grain,.lab-filter-defs { display:none !important; }
   .main-content .photo-frame-1.portrait-stage { border:0 !important; overflow:visible !important; background:transparent !important; box-shadow:none !important; }
-  .main-content .photo-frame-1.portrait-stage .photo-layer {
-    -webkit-mask-image:radial-gradient(ellipse 76% 78% at 53% 48%, #000 38%, rgba(0,0,0,.96) 52%, rgba(0,0,0,.72) 66%, rgba(0,0,0,.28) 82%, transparent 100%) !important;
-    mask-image:radial-gradient(ellipse 76% 78% at 53% 48%, #000 38%, rgba(0,0,0,.96) 52%, rgba(0,0,0,.72) 66%, rgba(0,0,0,.28) 82%, transparent 100%) !important;
-  }
+  
 }
 
-/* FIXED PORTRAIT — DIRECTIONAL SOURCE-PIXEL DISSOLUTION */
-@media (min-width:901px) {
- .photo-frame-1.portrait-stage {
-  --photo-diffusion-top-depth:38%;
-  --photo-diffusion-left-width:24%;
-  --photo-diffusion-right-width:24%;
-  --photo-diffusion-shift-x:0%;
-  --photo-diffusion-shift-y:0%;
-  --photo-diffusion-feather:65%;
-  --photo-diffusion-blur:18px;
-  position:relative!important;
-  isolation:isolate;
- }
- .photo-frame-1.portrait-stage.photo-diffusion-enabled .photo-layer-base,
- .photo-frame-1.portrait-stage.photo-diffusion-enabled .photo-layer-reveal {
-  -webkit-mask-image:
-   linear-gradient(to bottom, transparent 0%, transparent var(--photo-diffusion-top-start), #000 var(--photo-diffusion-top-end), #000 100%),
-   radial-gradient(ellipse var(--photo-diffusion-left-width) var(--photo-diffusion-top-depth) at calc(0% + var(--photo-diffusion-shift-x)) calc(var(--photo-diffusion-shift-y) + 0%), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%),
-   radial-gradient(ellipse var(--photo-diffusion-right-width) var(--photo-diffusion-top-depth) at calc(100% + var(--photo-diffusion-shift-x)) calc(var(--photo-diffusion-shift-y) + 0%), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%)!important;
-  mask-image:
-   linear-gradient(to bottom, transparent 0%, transparent var(--photo-diffusion-top-start), #000 var(--photo-diffusion-top-end), #000 100%),
-   radial-gradient(ellipse var(--photo-diffusion-left-width) var(--photo-diffusion-top-depth) at calc(0% + var(--photo-diffusion-shift-x)) calc(var(--photo-diffusion-shift-y) + 0%), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%),
-   radial-gradient(ellipse var(--photo-diffusion-right-width) var(--photo-diffusion-top-depth) at calc(100% + var(--photo-diffusion-shift-x)) calc(var(--photo-diffusion-shift-y) + 0%), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%)!important;
-  -webkit-mask-composite:source-in,source-in!important;
-  mask-composite:intersect!important;
-  opacity:1!important;
-  filter:none!important;
- }
- .photo-frame-1.portrait-stage .photo-diffusion-layer {
-  position:absolute!important;inset:0!important;z-index:3!important;width:100%!important;height:100%!important;
-  display:block!important;object-fit:cover!important;object-position:center 42%!important;border:0!important;border-radius:0!important;
-  pointer-events:none!important;opacity:0!important;filter:blur(var(--photo-diffusion-blur)) saturate(.86)!important;transform:scale(1.025)!important;
-  -webkit-mask-image:
-   linear-gradient(to bottom, transparent 0%, transparent var(--photo-diffusion-top-start), #000 var(--photo-diffusion-top-end), #000 100%),
-   radial-gradient(ellipse var(--photo-diffusion-left-width) var(--photo-diffusion-top-depth) at calc(0% + var(--photo-diffusion-shift-x)) var(--photo-diffusion-shift-y), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%),
-   radial-gradient(ellipse var(--photo-diffusion-right-width) var(--photo-diffusion-top-depth) at calc(100% + var(--photo-diffusion-shift-x)) var(--photo-diffusion-shift-y), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%)!important;
-  mask-image:
-   linear-gradient(to bottom, transparent 0%, transparent var(--photo-diffusion-top-start), #000 var(--photo-diffusion-top-end), #000 100%),
-   radial-gradient(ellipse var(--photo-diffusion-left-width) var(--photo-diffusion-top-depth) at calc(0% + var(--photo-diffusion-shift-x)) var(--photo-diffusion-shift-y), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%),
-   radial-gradient(ellipse var(--photo-diffusion-right-width) var(--photo-diffusion-top-depth) at calc(100% + var(--photo-diffusion-shift-x)) var(--photo-diffusion-shift-y), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%)!important;
-  -webkit-mask-composite:source-in,source-in!important;mask-composite:intersect!important;
- }
- .photo-frame-1.portrait-stage.photo-diffusion-enabled .photo-diffusion-layer{opacity:var(--photo-diffusion-blur-opacity,.62)!important}
- .photo-frame-1.portrait-stage::before {
-  content:""!important;position:absolute!important;inset:0!important;z-index:4!important;pointer-events:none!important;opacity:0!important;
-  background:rgba(220,226,211,.55)!important;filter:url(#lab-film-grain)!important;mix-blend-mode:soft-light!important;
-  -webkit-mask-image:
-   linear-gradient(to bottom, transparent 0%, transparent var(--photo-diffusion-top-start), #000 var(--photo-diffusion-top-end), #000 100%),
-   radial-gradient(ellipse var(--photo-diffusion-left-width) var(--photo-diffusion-top-depth) at calc(0% + var(--photo-diffusion-shift-x)) var(--photo-diffusion-shift-y), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%),
-   radial-gradient(ellipse var(--photo-diffusion-right-width) var(--photo-diffusion-top-depth) at calc(100% + var(--photo-diffusion-shift-x)) var(--photo-diffusion-shift-y), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%)!important;
-  mask-image:
-   linear-gradient(to bottom, transparent 0%, transparent var(--photo-diffusion-top-start), #000 var(--photo-diffusion-top-end), #000 100%),
-   radial-gradient(ellipse var(--photo-diffusion-left-width) var(--photo-diffusion-top-depth) at calc(0% + var(--photo-diffusion-shift-x)) var(--photo-diffusion-shift-y), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%),
-   radial-gradient(ellipse var(--photo-diffusion-right-width) var(--photo-diffusion-top-depth) at calc(100% + var(--photo-diffusion-shift-x)) var(--photo-diffusion-shift-y), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%)!important;
-  -webkit-mask-composite:source-in,source-in!important;mask-composite:intersect!important;
- }
- .photo-frame-1.portrait-stage.photo-diffusion-enabled::before{opacity:var(--photo-diffusion-grain,.18)!important}
- .photo-frame-1.portrait-stage::after {
-  content:""!important;position:absolute!important;inset:0!important;z-index:5!important;pointer-events:none!important;opacity:0!important;
-  background:rgba(220,226,211,var(--photo-diffusion-haze-alpha,.09))!important;mix-blend-mode:screen!important;filter:blur(8px)!important;
-  -webkit-mask-image:
-   linear-gradient(to bottom, transparent 0%, transparent var(--photo-diffusion-top-start), #000 var(--photo-diffusion-top-end), #000 100%),
-   radial-gradient(ellipse var(--photo-diffusion-left-width) var(--photo-diffusion-top-depth) at calc(0% + var(--photo-diffusion-shift-x)) var(--photo-diffusion-shift-y), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%),
-   radial-gradient(ellipse var(--photo-diffusion-right-width) var(--photo-diffusion-top-depth) at calc(100% + var(--photo-diffusion-shift-x)) var(--photo-diffusion-shift-y), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%)!important;
-  mask-image:
-   linear-gradient(to bottom, transparent 0%, transparent var(--photo-diffusion-top-start), #000 var(--photo-diffusion-top-end), #000 100%),
-   radial-gradient(ellipse var(--photo-diffusion-left-width) var(--photo-diffusion-top-depth) at calc(0% + var(--photo-diffusion-shift-x)) var(--photo-diffusion-shift-y), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%),
-   radial-gradient(ellipse var(--photo-diffusion-right-width) var(--photo-diffusion-top-depth) at calc(100% + var(--photo-diffusion-shift-x)) var(--photo-diffusion-shift-y), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%)!important;
-  -webkit-mask-composite:source-in,source-in!important;mask-composite:intersect!important;
- }
- .photo-frame-1.portrait-stage.photo-diffusion-enabled::after{opacity:1!important}
+/* FIXED PORTRAIT — ONE LEFT-SIDE PIXEL DISSOLVE EFFECT */
+.photo-dissolve-defs{position:absolute;width:0;height:0;overflow:hidden;pointer-events:none}
+.photo-frame-1.portrait-stage{position:relative!important;isolation:isolate!important;overflow:visible!important}
+.photo-frame-1.portrait-stage .gallery-photo{
+ display:block!important;position:relative!important;z-index:1!important;width:100%!important;height:100%!important;
+ object-fit:cover!important;object-position:center 42%!important;border:0!important;border-radius:0!important;
+ filter:none!important;opacity:1!important;transform:none!important;
+ -webkit-mask:url(#photo-left-dissolve-mask)!important;mask:url(#photo-left-dissolve-mask)!important;
+ -webkit-mask-repeat:no-repeat!important;mask-repeat:no-repeat!important;
+ -webkit-mask-size:100% 100%!important;mask-size:100% 100%!important;
 }
-@media (max-width:900px){.photo-diffusion-layer{display:none!important}}
 .photo-diffusion-panel{display:flex;flex-direction:column;gap:8px;padding:7px 9px;color:#e4e9e3;background:rgba(34,42,37,.96);border:1px solid rgba(210,222,210,.16);border-radius:8px}
 .photo-diffusion-heading{display:flex;align-items:center;justify-content:space-between;gap:18px;color:#d5ded5;font:600 9px/1.3 Inter,Arial,sans-serif;letter-spacing:.12em}
-.photo-diffusion-toggle{display:flex;align-items:center;gap:6px;white-space:nowrap;color:#e9a365;font:500 10px/1 Inter,Arial,sans-serif;letter-spacing:0}
-.photo-diffusion-toggle input{accent-color:#e99a55;margin:0}
-.photo-diffusion-controls{display:grid;grid-template-columns:repeat(3,minmax(210px,1fr));gap:7px 12px}
+.photo-diffusion-controls{display:grid;grid-template-columns:repeat(2,minmax(210px,1fr));gap:8px 14px}
 .photo-diffusion-control{display:grid;grid-template-columns:112px minmax(60px,1fr) 42px;align-items:center;gap:7px;min-width:0;color:#c7d0c8;font:500 10px/1.2 Inter,Arial,sans-serif}
 .photo-diffusion-control>span{white-space:nowrap}
 .photo-diffusion-control input[type=range]{width:100%;min-width:0;margin:0;accent-color:#e99a55}
 .photo-diffusion-control output{color:#e9ad78;text-align:right;font:500 9px/1 ui-monospace,monospace;white-space:nowrap}
 .photo-diffusion-note{margin:0;color:rgba(215,224,216,.58);font:400 9px/1.45 Inter,Arial,sans-serif}
-@media(max-width:1100px){.photo-diffusion-controls{grid-template-columns:repeat(2,minmax(210px,1fr))}}
 @media(max-width:700px){.photo-diffusion-controls{grid-template-columns:1fr}.photo-diffusion-control{grid-template-columns:120px minmax(70px,1fr) 42px}}
