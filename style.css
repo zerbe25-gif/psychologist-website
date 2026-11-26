@@ -8171,6 +8171,8 @@ body > .main-content {
 
   .hero-caption-title {
     display:block;
+    margin:0;
+    padding:0;
     color:#51483f;
     font-family:'Cormorant Garamond',Georgia,serif;
     font-size:clamp(24px,2.05vw,32px);
