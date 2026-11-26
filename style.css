@@ -8588,7 +8588,7 @@ body > .main-content {
  display:block!important;position:relative!important;z-index:1!important;width:100%!important;height:100%!important;
  object-fit:cover!important;object-position:center 42%!important;border:0!important;border-radius:0!important;
  filter:none!important;opacity:1!important;transform:none!important;
- -webkit-mask:url(#photo-left-dissolve-mask)!important;mask:url(#photo-left-dissolve-mask)!important;
+ -webkit-mask:url(#photo-combined-dissolve-mask)!important;mask:url(#photo-combined-dissolve-mask)!important;
  -webkit-mask-repeat:no-repeat!important;mask-repeat:no-repeat!important;
  -webkit-mask-size:100% 100%!important;mask-size:100% 100%!important;
 }
