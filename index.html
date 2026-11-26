@@ -41,7 +41,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=20261126-left-pixel-dissolve-v1">
+  <link rel="stylesheet" href="style.css?v=20261126-depth-softness-v2">
 </head>
 
 <body id="top">
@@ -85,7 +85,8 @@
 <label class="photo-diffusion-control"><span>Положение по Y</span><input id="photo-dissolve-y" type="range" min="0" max="100" value="50" oninput="updatePhotoDissolve('y',this.value)"><output id="photo-dissolve-y-value">50%</output></label>
 <label class="photo-diffusion-control"><span>Глубина от края</span><input id="photo-dissolve-width" type="range" min="1" max="65" value="28" oninput="updatePhotoDissolve('width',this.value)"><output id="photo-dissolve-width-value">28%</output></label>
 <label class="photo-diffusion-control"><span>Интенсивность</span><input id="photo-dissolve-intensity" type="range" min="0" max="100" value="100" oninput="updatePhotoDissolve('intensity',this.value)"><output id="photo-dissolve-intensity-value">100%</output></label>
-<label class="photo-diffusion-control"><span>Мягкость перехода</span><input id="photo-dissolve-softness" type="range" min="0" max="100" value="55" oninput="updatePhotoDissolve('softness',this.value)"><output id="photo-dissolve-softness-value">55%</output></label>
+<label class="photo-diffusion-control"><span>Мягкость по краям зоны</span><input id="photo-dissolve-softness" type="range" min="0" max="100" value="55" oninput="updatePhotoDissolve('softness',this.value)"><output id="photo-dissolve-softness-value">55%</output></label>
+<label class="photo-diffusion-control"><span>Мягкость по глубине</span><input id="photo-dissolve-depth-softness" type="range" min="0" max="100" value="55" oninput="updatePhotoDissolve('depthSoftness',this.value)"><output id="photo-dissolve-depth-softness-value">55%</output></label>
 </div>
 <p class="photo-diffusion-note">Выберите край, затем настройте высоту и положение зоны по вертикали. Остальные параметры управляют глубиной и характером исчезновения исходных пикселей. Настройки двух краёв независимы.</p>
 </div></section>
@@ -307,8 +308,8 @@
 
 
 <svg class="photo-dissolve-defs" aria-hidden="true" width="0" height="0" focusable="false"><defs>
-<linearGradient id="photo-left-horizontal-fade" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="0.28" y2="0"><stop id="photo-left-intensity-stop" offset="0" stop-color="black"/><stop offset="1" stop-color="white"/></linearGradient>
-<linearGradient id="photo-right-horizontal-fade" gradientUnits="objectBoundingBox" x1="0.72" y1="0" x2="1" y2="0"><stop offset="0" stop-color="white"/><stop id="photo-right-intensity-stop" offset="1" stop-color="black"/></linearGradient>
+<linearGradient id="photo-left-horizontal-fade" gradientUnits="objectBoundingBox" x1="-0.002" y1="0" x2="0.28" y2="0"><stop id="photo-left-intensity-stop" offset="0" stop-color="black"/><stop id="photo-left-depth-soft-start" offset="0.45" stop-color="black"/><stop offset="1" stop-color="white"/></linearGradient>
+<linearGradient id="photo-right-horizontal-fade" gradientUnits="objectBoundingBox" x1="1.002" y1="0" x2="0.72" y2="0"><stop id="photo-right-intensity-stop" offset="0" stop-color="black"/><stop id="photo-right-depth-soft-start" offset="0.45" stop-color="black"/><stop offset="1" stop-color="white"/></linearGradient>
 <linearGradient id="photo-left-vertical-band" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="black"/><stop id="photo-left-top-soft-start" offset="0.175" stop-color="black"/><stop id="photo-left-top-soft-end" offset="0.35" stop-color="white"/><stop id="photo-left-bottom-soft-start" offset="0.65" stop-color="white"/><stop id="photo-left-bottom-soft-end" offset="0.825" stop-color="black"/><stop offset="1" stop-color="black"/></linearGradient>
 <linearGradient id="photo-right-vertical-band" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="black"/><stop id="photo-right-top-soft-start" offset="0.175" stop-color="black"/><stop id="photo-right-top-soft-end" offset="0.35" stop-color="white"/><stop id="photo-right-bottom-soft-start" offset="0.65" stop-color="white"/><stop id="photo-right-bottom-soft-end" offset="0.825" stop-color="black"/><stop offset="1" stop-color="black"/></linearGradient>
 <mask id="photo-left-band-mask" maskUnits="objectBoundingBox" maskContentUnits="objectBoundingBox" x="0" y="0" width="1" height="1" style="mask-type:luminance"><rect width="1" height="1" fill="url(#photo-left-vertical-band)"/></mask>
@@ -786,7 +787,7 @@
 <!-- /ЦЕНТРАЛЬНОЕ ОКНО ЗАПИСИ -->
   <!-- ФАЙЛ С ФУНКЦИЯМИ САЙТА -->
 
-  <script src="script.js?v=20261125-white-card-hero-v1"></script>
+  <script src="script.js?v=20261126-depth-softness-v2"></script>
 
   <script src="page-transition.js?v=20261117-curtain-dom1"></script>
   <script src="initial-load.js?v=20261117-hybrid-soft1"></script>
