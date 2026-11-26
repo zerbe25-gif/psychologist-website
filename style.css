@@ -8630,8 +8630,8 @@ body > .main-content {
   position:relative!important;
   isolation:isolate;
  }
- .photo-frame-1.portrait-stage .photo-layer-base,
- .photo-frame-1.portrait-stage .photo-layer-reveal {
+ .photo-frame-1.portrait-stage.photo-diffusion-enabled .photo-layer-base,
+ .photo-frame-1.portrait-stage.photo-diffusion-enabled .photo-layer-reveal {
   -webkit-mask-image:
    linear-gradient(to bottom, transparent 0%, transparent var(--photo-diffusion-top-start), #000 var(--photo-diffusion-top-end), #000 100%),
    radial-gradient(ellipse var(--photo-diffusion-left-width) var(--photo-diffusion-top-depth) at calc(0% + var(--photo-diffusion-shift-x)) calc(var(--photo-diffusion-shift-y) + 0%), transparent 0%, transparent var(--photo-diffusion-side-feather-start), #000 100%),
