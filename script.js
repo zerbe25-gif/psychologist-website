@@ -8,41 +8,67 @@
 // Каждую фотографию можно будет заменить,
 // не меняя остальную часть программы.
 
-/* FIXED HOMEPAGE PORTRAIT — SINGLE LEFT PIXEL DISSOLVE EFFECT */
+/* FIXED HOMEPAGE PORTRAIT — INDEPENDENT LEFT/RIGHT PIXEL DISSOLVE */
 const fixedHomepagePhoto = "images/photos/first-3.jpg";
 const photoOne = document.getElementById("photo-one");
 if(photoOne) photoOne.src = fixedHomepagePhoto;
-const photoDissolveStorageKey = "psychologistPhotoLeftPixelDissolveV1";
-const photoDissolveDefaults = {height:65,width:28,intensity:100,softness:55};
-let photoDissolveState = {...photoDissolveDefaults};
-try { photoDissolveState = {...photoDissolveDefaults,...JSON.parse(localStorage.getItem(photoDissolveStorageKey)||"{}")}; } catch(error) {}
+const photoDissolveStorageKey = "psychologistPhotoEdgePixelDissolveV2";
+const photoDissolveDefaults = {height:65,y:50,width:28,intensity:100,softness:55};
+const photoDissolveState = {
+ left:{...photoDissolveDefaults},
+ right:{...photoDissolveDefaults}
+};
+let activePhotoDissolveSide = "left";
+try {
+ const saved = JSON.parse(localStorage.getItem(photoDissolveStorageKey)||"{}");
+ ["left","right"].forEach(side=>{if(saved[side])photoDissolveState[side]={...photoDissolveDefaults,...saved[side]};});
+} catch(error) {}
 function renderPhotoDissolve() {
- const horizontal=document.getElementById("photo-left-horizontal-fade");
- const intensityStop=document.getElementById("photo-left-intensity-stop");
- const topStart=document.getElementById("photo-left-top-soft-start");
- const topEnd=document.getElementById("photo-left-top-soft-end");
- const bottomStart=document.getElementById("photo-left-bottom-soft-start");
- const bottomEnd=document.getElementById("photo-left-bottom-soft-end");
- if(!horizontal||!intensityStop||!topStart||!topEnd||!bottomStart||!bottomEnd)return;
- const height=photoDissolveState.height/100,width=photoDissolveState.width/100,softness=photoDissolveState.softness/100;
- const bandTop=(1-height)/2,bandBottom=1-bandTop,edge=height*softness/2;
- horizontal.setAttribute("x2",String(width));
- const grey=Math.round(255*(1-photoDissolveState.intensity/100));
- intensityStop.setAttribute("stop-color",`rgb(${grey},${grey},${grey})`);
- topStart.setAttribute("offset",String(bandTop));
- topEnd.setAttribute("offset",String(bandTop+edge));
- bottomStart.setAttribute("offset",String(bandBottom-edge));
- bottomEnd.setAttribute("offset",String(bandBottom));
- ["height","width","intensity","softness"].forEach(key=>{
+ ["left","right"].forEach(side=>{
+  const state=photoDissolveState[side],prefix="photo-"+side+"-";
+  const horizontal=document.getElementById(prefix+"horizontal-fade");
+  const intensityStop=document.getElementById(prefix+"intensity-stop");
+  const topStart=document.getElementById(prefix+"top-soft-start");
+  const topEnd=document.getElementById(prefix+"top-soft-end");
+  const bottomStart=document.getElementById(prefix+"bottom-soft-start");
+  const bottomEnd=document.getElementById(prefix+"bottom-soft-end");
+  if(!horizontal||!intensityStop||!topStart||!topEnd||!bottomStart||!bottomEnd)return;
+  const height=state.height/100,width=state.width/100,softness=state.softness/100,center=state.y/100;
+  const bandTop=Math.max(0,Math.min(1,center-height/2));
+  const bandBottom=Math.max(0,Math.min(1,center+height/2));
+  const actualHeight=Math.max(0,bandBottom-bandTop);
+  const edge=actualHeight*softness/2;
+  if(side==="left")horizontal.setAttribute("x2",String(width));
+  else horizontal.setAttribute("x1",String(1-width));
+  const grey=Math.round(255*(1-state.intensity/100));
+  intensityStop.setAttribute("stop-color",`rgb(${grey},${grey},${grey})`);
+  topStart.setAttribute("offset",String(bandTop));
+  topEnd.setAttribute("offset",String(Math.min(bandBottom,bandTop+edge)));
+  bottomStart.setAttribute("offset",String(Math.max(bandTop,bandBottom-edge)));
+  bottomEnd.setAttribute("offset",String(bandBottom));
+ });
+ ["height","y","width","intensity","softness"].forEach(key=>{
   const input=document.getElementById("photo-dissolve-"+key),output=document.getElementById("photo-dissolve-"+key+"-value");
-  if(input)input.value=photoDissolveState[key];
-  if(output)output.textContent=photoDissolveState[key]+"%";
+  const value=photoDissolveState[activePhotoDissolveSide][key];
+  if(input)input.value=value;
+  if(output)output.textContent=value+"%";
+ });
+ document.querySelectorAll("[data-photo-dissolve-side]").forEach(button=>{
+  const selected=button.dataset.photoDissolveSide===activePhotoDissolveSide;
+  button.classList.toggle("active",selected);
+  button.setAttribute("aria-pressed",String(selected));
  });
 }
+function selectPhotoDissolveSide(side) {
+ if(side!=="left"&&side!=="right")return;
+ activePhotoDissolveSide=side;
+ renderPhotoDissolve();
+}
 function updatePhotoDissolve(key,value) {
- const limits={height:[5,100],width:[1,65],intensity:[0,100],softness:[0,100]};
+ const limits={height:[5,100],y:[0,100],width:[1,65],intensity:[0,100],softness:[0,100]};
  if(!limits[key])return;
- photoDissolveState[key]=Math.max(limits[key][0],Math.min(limits[key][1],Number(value)||0));
+ const bounds=limits[key],state=photoDissolveState[activePhotoDissolveSide];
+ state[key]=Math.max(bounds[0],Math.min(bounds[1],Number(value)||0));
  renderPhotoDissolve();
  try{localStorage.setItem(photoDissolveStorageKey,JSON.stringify(photoDissolveState));}catch(error){}
 }
