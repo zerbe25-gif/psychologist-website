@@ -63,8 +63,12 @@ function renderPhotoDissolve() {
   button.setAttribute("aria-pressed",String(selected));
  });
 }
+function savePhotoDissolveSettings() {
+ try{localStorage.setItem(photoDissolveStorageKey,JSON.stringify(photoDissolveState));}catch(error){}
+}
 function selectPhotoDissolveSide(side) {
  if(side!=="left"&&side!=="right")return;
+ savePhotoDissolveSettings();
  activePhotoDissolveSide=side;
  renderPhotoDissolve();
 }
@@ -74,7 +78,7 @@ function updatePhotoDissolve(key,value) {
  const bounds=limits[key],state=photoDissolveState[activePhotoDissolveSide];
  state[key]=Math.max(bounds[0],Math.min(bounds[1],Number(value)||0));
  renderPhotoDissolve();
- try{localStorage.setItem(photoDissolveStorageKey,JSON.stringify(photoDissolveState));}catch(error){}
+ savePhotoDissolveSettings();
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",renderPhotoDissolve,{once:true});else renderPhotoDissolve();
 
