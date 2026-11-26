@@ -8225,7 +8225,7 @@ body > .main-content {
   .main-content .photo-gallery {
     display:flex !important;
     width:100% !important;
-    height:calc(100% - 20px) !important;
+    height:100% !important;
     max-width:none !important;
     min-width:0 !important;
     align-items:center !important;
