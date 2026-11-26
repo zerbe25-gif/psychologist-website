@@ -12,6 +12,7 @@ const photoSets = {
 
     // Фотографии первой рамки
     first: [
+        "images/photos/first-3.jpg",
         "images/photos/first-5.jpg",
         "images/photos/first-6.jpg",
         "images/photos/first-4.jpg"
