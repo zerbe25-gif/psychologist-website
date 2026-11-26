@@ -8604,3 +8604,9 @@ body > .main-content {
 .photo-diffusion-control output{color:#e9ad78;text-align:right;font:500 9px/1 ui-monospace,monospace;white-space:nowrap}
 .photo-diffusion-note{margin:0;color:rgba(215,224,216,.58);font:400 9px/1.45 Inter,Arial,sans-serif}
 @media(max-width:700px){.photo-diffusion-controls{grid-template-columns:1fr}.photo-diffusion-control{grid-template-columns:120px minmax(70px,1fr) 42px}}
+
+/* FOUR INDEPENDENT CORNER PIXEL-DISSOLVE ZONES */
+.photo-dissolve-zone-switch{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));width:100%!important}
+.photo-dissolve-zone-switch .photo-dissolve-side{padding:7px 8px;white-space:nowrap}
+.photo-bottom-x-control[hidden]{display:none!important}
+@media(max-width:700px){.photo-dissolve-zone-switch{grid-template-columns:repeat(2,minmax(0,1fr))}}
