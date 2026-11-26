@@ -25,6 +25,7 @@ function renderPhotoDiffusion() {
  if(!frame)return;
  const vars={
   "top-depth":photoDiffusionState.topDepth+"%",
+  "top-end":Math.min(100,photoDiffusionState.y+photoDiffusionState.topDepth)+"%",
   "top-start":(photoDiffusionState.y+photoDiffusionState.topDepth*(1-photoDiffusionState.feather/100))+"%",
   "side-feather-start":(photoDiffusionState.feather*0.8)+"%",
   "left-width":photoDiffusionState.leftWidth+"%",
@@ -35,6 +36,7 @@ function renderPhotoDiffusion() {
   "blur-opacity":photoDiffusionState.blurOpacity/100,
   "feather":photoDiffusionState.feather+"%",
   "haze":photoDiffusionState.haze/100,
+  "haze-alpha":(photoDiffusionState.haze/100)*0.36,
   "grain":photoDiffusionState.grain/100
  };
  Object.entries(vars).forEach(([key,value])=>frame.style.setProperty("--photo-diffusion-"+key,value));
@@ -49,7 +51,7 @@ function renderPhotoDiffusion() {
 function updatePhotoDiffusion(key,value) {
  if(key==="enabled")photoDiffusionState.enabled=!!value;
  else {
-  const limits={topDepth:[5,75],leftWidth:[0,55],rightWidth:[0,55],x:[-25,25],y:[0,35],blur:[0,40],blurOpacity:[0,100],feather:[0,100],haze:[0,100],grain:[0,100]};
+  const limits={topDepth:[5,75],leftWidth:[0,55],rightWidth:[0,55],x:[-25,25],y:[0,25],blur:[0,40],blurOpacity:[0,100],feather:[0,100],haze:[0,100],grain:[0,100]};
   if(!limits[key])return;
   photoDiffusionState[key]=Math.max(limits[key][0],Math.min(limits[key][1],Number(value)||0));
  }
