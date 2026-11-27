@@ -5339,10 +5339,7 @@ html.initial-load-reveal .header {
 #sideDrawer .fw-upper-section { padding: 34px 52px 60px; }
 #sideDrawer .fw-main-heading { margin: 0 0 24px; }
 #sideDrawer .fw-main-heading h1 { font-size: 50px; }
-#sideDrawer .fw-formats-list {
-  margin-left: 10mm;
-  border-top: 1px solid rgba(45,55,72,.14);
-}
+
 #sideDrawer .fw-format-entry { border-bottom-color: rgba(45,55,72,.14); }
 #sideDrawer .fw-format-btn {
   grid-template-columns: 38px 1fr 24px;
@@ -6776,15 +6773,8 @@ html.initial-load-reveal .header {
   transform-origin: right center !important;
   animation: none !important;
 }
-#sideDrawer .fw-rhythm-section.is-visible .fw-rhythm-underline {
-  animation: fwDurationLineReveal 1.2s cubic-bezier(.2, .75, .25, 1) both !important;
-}
-@media (prefers-reduced-motion: reduce) {
-  #sideDrawer .fw-rhythm-underline,
-  #sideDrawer .fw-rhythm-section.is-visible .fw-rhythm-underline {
-    animation-duration: .01ms !important;
-  }
-}
+
+
 
 
 /* =========================================================
