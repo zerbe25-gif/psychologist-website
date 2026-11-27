@@ -50,7 +50,9 @@ function renderPhotoDissolve() {
   }
   depthSoftStart.setAttribute("offset",String(1-depthSoftness));
   const grey=Math.round(255*(1-state.intensity/100));
-  intensityStop.setAttribute("stop-color",`rgb(${grey},${grey},${grey})`);
+  const intensityColor=`rgb(${grey},${grey},${grey})`;
+  intensityStop.setAttribute("stop-color",intensityColor);
+  depthSoftStart.setAttribute("stop-color",intensityColor);
   if(vertical==="top"){
    v0.setAttribute("offset","0");v1.setAttribute("offset",String(bandBottom-edge));v2.setAttribute("offset",String(bandBottom));v3.setAttribute("offset","1");
   } else {
