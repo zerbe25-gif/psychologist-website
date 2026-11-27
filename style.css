@@ -7491,19 +7491,6 @@ body > .main-content {
 }
 
 
-/* Масштаб заголовков главного меню — только настольная композиция. */
-@media (min-width:901px) {
-  .menu-item {
-    font-size: calc(clamp(55px, 4.25vw, 68px) * var(--home-menu-scale, .9)) !important;
-  }
-  .menu-item-4 {
-    font-size: calc(42.5px * var(--home-menu-scale, .9)) !important;
-  }
-}
-@media (min-width:901px) and (max-width:1120px) {
-}
-
-
 /* WHITE EDITORIAL HERO — one desktop coordinate system.
    The whole composition starts exactly 1.5cm below the viewport top;
    every hero element is centered inside that same remaining stage. */
@@ -7602,14 +7589,14 @@ body > .main-content {
     padding:0 !important;
     transform:none !important;
     text-align:left !important;
-    font-size:calc(clamp(55px,4.25vw,68px) * var(--home-menu-scale,.75) * .95) !important;
+    font-size:calc(clamp(55px,4.25vw,68px) * .75 * .95) !important;
     line-height:1 !important;
     white-space:nowrap;
   }
 
   .main-content .menu-section .section-menu > .menu-item-4 {
     margin-top:clamp(7.5px,1.025vh,12.5px) !important;
-    font-size:calc(42.5px * var(--home-menu-scale,.75) * .95) !important;
+    font-size:calc(42.5px * .75 * .95) !important;
   }
 
   .main-content .gallery-section {
