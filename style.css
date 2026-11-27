@@ -1345,15 +1345,12 @@ body.articles-page {
     margin-top: 8px;
 }
 
-#developer-panel-content[hidden],
-#animation-control-panel[hidden],
-#background-control-panel[hidden] {
+#developer-panel-content[hidden], #animation-control-panel[hidden] {
     display: none !important;
 }
 
 /* Убираем старое самостоятельное оформление панелей */
-#animation-control-panel,
-#background-control-panel {
+#animation-control-panel {
     position: relative;
     top: auto;
     right: auto;
@@ -1368,8 +1365,7 @@ body.articles-page {
 }
 
 /* Старые заголовки заменены общей верхней строкой */
-#animation-control-panel .animation-panel-title,
-#background-control-panel .background-panel-heading {
+#animation-control-panel .animation-panel-title {
     display: none;
 }
 
@@ -1387,15 +1383,6 @@ body.articles-page {
 #animation-control-panel #animation-description {
     margin-top: 8px;
     text-align: left;
-}
-
-/* Настройки фона */
-#background-control-panel #background-panel-content {
-    padding-top: 4px;
-}
-
-#background-control-panel .background-tech-tabs {
-    max-width: 420px;
 }
 
 /* Мобильное отображение */
@@ -1424,88 +1411,6 @@ body.articles-page {
         display: grid;
         grid-template-columns: 1fr 1fr;
     }
-}
-
-
-/* КОМПАКТНАЯ ГОРИЗОНТАЛЬНАЯ ПАНЕЛЬ НАСТРОЕК ФОНА */
-
-#background-control-panel {
-    width: 100%;
-    max-width: 100%;
-    padding: 5px 8px;
-    box-sizing: border-box;
-}
-
-#background-control-panel #background-panel-content {
-    max-width: 100%;
-    padding-top: 6px;
-}
-
-/* Техники визуализации — в одну строку */
-
-#background-control-panel .background-tech-tabs {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 4px;
-    max-width: 100%;
-    margin-bottom: 6px;
-}
-
-#background-control-panel .tech-tab {
-    flex: 1 1 0;
-    min-width: 0;
-    padding: 5px 3px;
-    font-size: 10px;
-    white-space: nowrap;
-}
-
-/* Все настройки — горизонтально */
-
-#background-control-panel .background-control {
-    display: inline-flex;
-    flex-direction: column;
-    vertical-align: top;
-    width: 105px;
-    max-width: 105px;
-    margin: 2px 5px 4px 0;
-    gap: 2px;
-}
-
-/* Подписи */
-
-#background-control-panel .background-control label {
-    font-size: 10px;
-    line-height: 1.2;
-    margin-bottom: 0;
-}
-
-/* Короткие ползунки */
-
-#background-control-panel .background-control input[type="range"] {
-    width: 100px;
-    max-width: 100%;
-    margin: 2px 0;
-}
-
-/* Компактные цветовые кнопки */
-
-#background-control-panel .background-color-btn,
-#background-control-panel .color-button {
-    width: 22px;
-    height: 22px;
-    min-width: 22px;
-    padding: 0;
-    margin: 2px;
-}
-
-/* Палитры — горизонтально */
-
-#background-control-panel .background-colors,
-#background-control-panel .color-palette {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 3px;
-    align-items: center;
 }
 
 /* =========================================
@@ -7506,15 +7411,8 @@ body > .main-content {
  #developer-panel .developer-panel-tab{padding:6px 10px;font-size:9px}
  #developer-panel-content{padding:5px 7px 6px!important;margin-top:4px!important;max-height:52vh!important;overflow-y:auto!important}
  #developer-panel #editorial-background-panel{padding:2px!important}
- .home-light-control{display:flex;align-items:center;gap:4px;min-width:0;color:#596660;font-size:9px;white-space:nowrap}
- .home-light-control>span{font-size:9px;flex:0 0 auto}
- .home-light-control input[type=range]{width:100%;min-width:28px;margin:0;accent-color:#55766d}
- .home-light-control output{min-width:23px;font-size:8px;color:#7a8981;text-align:right}
- .home-light-control input[type=color]{width:25px;height:19px;padding:1px;border:1px solid #d5dcd6;border-radius:4px;background:#fff}
 }
 @media (min-width:901px) and (max-width:1120px){
- .home-light-control>span{font-size:8px}
- .home-light-control output{min-width:19px}
 }
 
 
@@ -7587,7 +7485,6 @@ body > .main-content {
 .web-color-presets { display:grid;grid-template-columns:repeat(6,1fr);gap:7px; }
 .web-color-chip { width:25px;height:25px;border:1px solid rgba(35,45,55,.15);border-radius:7px;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease; }
 .web-color-chip:hover { transform:scale(1.1);box-shadow:0 0 0 2px rgba(57,122,120,.2); }
-.home-light-control .web-color-picker { grid-column:2!important;grid-row:1!important;justify-self:start!important; }
 .appointment-setting .web-color-picker { align-self:flex-start; }
 @media(max-width:600px) {
   .web-color-popover { width:min(248px,calc(100vw - 32px)); }
@@ -7602,27 +7499,8 @@ body > .main-content {
   .menu-item-4 {
     font-size: calc(42.5px * var(--home-menu-scale, .9)) !important;
   }
-  .home-type-scale-row {
-    display:flex;align-items:center;gap:12px;min-height:27px;padding:3px 7px 4px;
-    border-top:1px solid rgba(86,105,96,.13);
-  }
-  .home-type-scale-control {
-    display:inline-flex;align-items:center;gap:7px;padding:2px 4px;
-    border:1px solid rgba(65,85,76,.16);border-radius:7px;background:rgba(255,255,255,.58);
-  }
-  .home-type-scale-button {
-    display:inline-flex;align-items:center;justify-content:center;width:22px;height:21px;padding:0;
-    border:0;border-radius:4px;background:rgba(80,112,99,.09);color:#344b43;
-    font:600 15px/1 Inter,Arial,sans-serif;cursor:pointer;
-  }
-  .home-type-scale-button:hover { background:rgba(80,112,99,.18); }
-  #home-menu-scale-value {
-    min-width:36px;color:#46584f;font:600 10px/1 ui-monospace,SFMono-Regular,Consolas,monospace;text-align:center;
-  }
 }
 @media (min-width:901px) and (max-width:1120px) {
-  .home-type-scale-row { min-height:24px;gap:8px; }
-  .home-type-scale-button { width:19px;height:19px; }
 }
 
 
