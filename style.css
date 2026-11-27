@@ -6658,12 +6658,7 @@ html.initial-load-reveal .header {
   0% { transform: scaleX(0); }
   100% { transform: scaleX(1); }
 }
-@media (prefers-reduced-motion: reduce) {
-  #sideDrawer .fw-rhythm-underline,
-  #sideDrawer .fw-rhythm-section.is-visible .fw-rhythm-underline {
-    animation-duration: .01ms !important;
-  }
-}
+
 
 
 /* =========================================================
