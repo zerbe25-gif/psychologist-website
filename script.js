@@ -187,25 +187,6 @@ setMenuAnimation(1);
 
 
 
-// Масштаб заголовков главного меню: отдельная настройка, не затрагивающая шторки.
-const homeMenuScaleStorageKey='psychologistHomeMenuScaleV2';
-const homeMenuScaleDefault=75;
-let homeMenuScale=homeMenuScaleDefault;
-try {
- const savedScale=Number(localStorage.getItem(homeMenuScaleStorageKey));
- if(Number.isFinite(savedScale)&&savedScale>=75&&savedScale<=110)homeMenuScale=savedScale;
-} catch(error) {}
-function renderHomeMenuScale(){
- document.documentElement.style.setProperty('--home-menu-scale',String(homeMenuScale/100));
- const output=document.getElementById('home-menu-scale-value');
- if(output)output.textContent=homeMenuScale+'%';
-}
-function adjustHomeMenuScale(delta){
- homeMenuScale=Math.max(75,Math.min(110,homeMenuScale+Number(delta||0)));
- renderHomeMenuScale();
- try{localStorage.setItem(homeMenuScaleStorageKey,String(homeMenuScale));}catch(error){}
-}
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',renderHomeMenuScale,{once:true});else renderHomeMenuScale();
 
 // ПЕРЕКЛЮЧЕНИЕ РАЗДЕЛОВ ПАНЕЛИ РАЗРАБОТКИ
 // =======================================================
@@ -513,11 +494,6 @@ window.closeDeveloperPanel = function() {
         }
     });
 
-    // Для тестирования
-    window.openCostModal = () => openCapsule(costModal);
-    window.openContactsModal = () => openCapsule(contactsModal);
-    window.openAppointmentModal = () => openCapsule(appointmentModal);
-    window.closeCapsuleModal = closeCapsule;
 })();
 
 
@@ -684,9 +660,6 @@ function setDeveloperPanel(sectionId, button) {
   }
 }
 
-function toggleBackgroundLabBlock(panelId, button) {
-  setDeveloperPanel(panelId, button);
-}
 
 
 /* Сдвигаем информационную шторку под фактическую высоту панели управления. */
