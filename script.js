@@ -186,24 +186,6 @@ document.querySelectorAll(".animation-tab").forEach(button => {
 setMenuAnimation(1);
 
 
-// Самостоятельная система фона A/B/C с отдельным состоянием фактур и света.
-const homeBackgroundStorageKey='psychologistHomeBackgroundCompositionV1';
-const homeBackgroundDefaults={variant:'A',hatch:true,grid:false,grain:true,hatchOpacity:18,gridOpacity:14,grainOpacity:20,light1:{color:'#397A78',opacity:24,x:82,y:28,width:62,height:48},light2:{color:'#D6AD76',opacity:16,x:76,y:68,width:82,height:16}};
-let homeBackgroundState=JSON.parse(JSON.stringify(homeBackgroundDefaults));
-try{const saved=JSON.parse(localStorage.getItem(homeBackgroundStorageKey)||'{}');homeBackgroundState={...homeBackgroundDefaults,...saved,light1:{...homeBackgroundDefaults.light1,...(saved.light1||{})},light2:{...homeBackgroundDefaults.light2,...(saved.light2||{})}};}catch(error){}
-function renderHomeBackground(){
- const body=document.body,root=document.documentElement;body.classList.add('home-background-active');body.dataset.homeBackground=homeBackgroundState.variant;
- ['hatch','grid','grain'].forEach(k=>{body.dataset['home'+k[0].toUpperCase()+k.slice(1)]=homeBackgroundState[k]?'on':'off';const el=document.getElementById('home-texture-'+k);if(el)el.checked=!!homeBackgroundState[k];});
- ['hatchOpacity','gridOpacity','grainOpacity'].forEach(k=>{const css='--home-'+k.replace(/[A-Z]/g,m=>'-'+m.toLowerCase());root.style.setProperty(css,Number(homeBackgroundState[k])/100);const id='home-'+k.replace(/[A-Z]/g,m=>'-'+m.toLowerCase());const input=document.getElementById(id),out=document.getElementById(id+'-value');if(input)input.value=homeBackgroundState[k];if(out)out.textContent=homeBackgroundState[k]+'%';});
- [1,2].forEach(n=>Object.entries(homeBackgroundState['light'+n]).forEach(([k,v])=>{root.style.setProperty('--home-light'+n+'-'+k,k==='color'?v:Number(v)+'%');const input=document.getElementById('home-light'+n+'-'+k),out=document.getElementById('home-light'+n+'-'+k+'-value');if(input)input.value=v;if(out)out.textContent=v+'%';}));
- document.querySelectorAll('[data-home-variant]').forEach(b=>b.classList.toggle('is-active',b.dataset.homeVariant===homeBackgroundState.variant));
-}
-function saveHomeBackground(){renderHomeBackground();try{localStorage.setItem(homeBackgroundStorageKey,JSON.stringify(homeBackgroundState));}catch(error){}}
-function setHomeBackgroundVariant(v){if(!['A','B','C'].includes(v))return;homeBackgroundState.variant=v;saveHomeBackground();}
-function updateHomeBackgroundSetting(k,v){if(!['hatch','grid','grain','hatchOpacity','gridOpacity','grainOpacity'].includes(k))return;homeBackgroundState[k]=['hatch','grid','grain'].includes(k)?!!v:Math.max(0,Math.min(60,Number(v)||0));saveHomeBackground();}
-function updateHomeLight(n,k,v){if(![1,2].includes(Number(n))||!['color','opacity','x','y','width','height'].includes(k))return;if(k==='color'){if(!/^#[0-9a-f]{6}$/i.test(v))return;homeBackgroundState['light'+n][k]=v.toUpperCase();}else{const max=k==='opacity'?(n===1?55:45):100;homeBackgroundState['light'+n][k]=Math.max(0,Math.min(max,Number(v)||0));}saveHomeBackground();}
-function initializeHomeBackground(){if(!document.getElementById('background-lab-atmosphere')||!document.querySelector('.photo-gallery'))return;document.body.classList.remove('home-background-active');}
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initializeHomeBackground,{once:true});else initializeHomeBackground();
 
 // Масштаб заголовков главного меню: отдельная настройка, не затрагивающая шторки.
 const homeMenuScaleStorageKey='psychologistHomeMenuScaleV2';
