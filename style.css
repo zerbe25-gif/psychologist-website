@@ -5176,16 +5176,8 @@ html.initial-load-reveal .header {
   line-height: 1.55;
 }
 
-@media (max-width:760px) {
-  #sideDrawer .requests-monolith-title { font-size: 22px; }
-  #sideDrawer .requests-monolith-content > p { font-size: 19px; }
-  #sideDrawer .requests-monolith-details strong { font-size: 18px; }
-  #sideDrawer .requests-monolith-details span { font-size: 17px; }
-}
-@media (max-width:420px) {
-  #sideDrawer .requests-monolith-title { font-size: 20px; }
-  #sideDrawer .requests-monolith-content > p { font-size: 18px; }
-}
+
+
 
 
 /* =========================================================
@@ -5609,10 +5601,7 @@ html.initial-load-reveal .header {
 #sideDrawer .fw-rhythm-section.is-visible .fw-rhythm-underline {
   animation: fwDurationLineReveal .7s cubic-bezier(.22,1,.36,1) .05s forwards !important;
 }
-@keyframes fwDurationLineReveal {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
-}
+
 
 /* Заголовки колонок — Inter 18 px, как в исходном прототипе */
 #sideDrawer .fw-rhythm-head-block h2,
@@ -6419,9 +6408,7 @@ html.initial-load-reveal .header {
 
 /* Вариант A: метод сохраняет текущую поверхность; следующие страницы
    постепенно углубляются в тёплый серо-бежевый тон. */
-#sideDrawer .viewport {
-  background: #FAF9F6 !important;
-}
+
 #sideDrawer .block-section[data-drawer-panel="method"] {
   background: #FAF9F6 !important;
   background-color: #FAF9F6 !important;
@@ -6497,10 +6484,7 @@ html.initial-load-reveal .header {
 #sideDrawer .fw-rhythm-section.is-visible .fw-rhythm-underline {
   animation: fwDurationLineReveal 1.05s cubic-bezier(.22, 1, .36, 1) .04s both !important;
 }
-@keyframes fwDurationLineReveal {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
-}
+
 
 /* Линии карточек: тот же мягкий ease-out, но почти вдвое больше времени.
    Первая часть пути проходит живо, к концу движение деликатно затухает. */
